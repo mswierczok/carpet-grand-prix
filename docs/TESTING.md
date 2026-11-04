@@ -20,6 +20,8 @@ CI benutzt den zur Lockdatei gehörenden Playwright-Browser.
 Nur die temporäre Testkopie gibt Interna frei; HTML wird nicht verändert. DOM-Neuzeichnung
 ist dort ersetzt. Echte Bedienung, Rendering und Storage prüft Playwright separat.
 Die Testkopie kontrolliert `Math.random()`; das öffentliche Spiel bleibt unverändert.
+Die langen synchronen Rennläufe laufen in separaten Node-Prozessen mit hartem
+Zeitlimit und Fortschrittsausgabe, damit ein festhängendes Szenario begrenzt bleibt.
 Referenzen sichern Spielstände, Geometrie/Boxen/Ideallinien aller 22 Strecken sowie
 Bewegung, KI-Modi, Ereignisse und Zufallszustand in Rennszenarien.
 
