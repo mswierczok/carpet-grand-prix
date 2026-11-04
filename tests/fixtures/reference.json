@@ -1,0 +1,2200 @@
+{
+  "baseCommit": "ea88f1daf238431a1dbac540df7e452dd2a44e54",
+  "htmlSHA256": "b35c4fa0f2170df77597979c1a8fdf11bda9ef1fe306401b7151a6bfc1e5c4d1",
+  "seed": 12345,
+  "qualifyingSeeds": [
+    202600,
+    202601,
+    202602
+  ],
+  "raceSeed": 42,
+  "geometry": [
+    {
+      "name": "Bahrain",
+      "length": 2755.294765,
+      "width": 32.84213,
+      "points": 470,
+      "sectors": [
+        0.25792431877955485,
+        0.533640302564284
+      ],
+      "bridges": [],
+      "routeHash": "ecfa7c81a1d4e36688fb4a779cfbea9aaf27214c154f22aeecd6bcfe51bb9351",
+      "pitHash": "975f7caa08fcd95663f5bb6ad88becce7632316e394202b97cb4a1102326303d",
+      "lineHash": "0af3ed94f16c2da34d5508afc5ec11d12b4e29c0741bee42df0b1cc9aed6bcb0"
+    },
+    {
+      "name": "Luxemburg",
+      "length": 4089.845991,
+      "width": 35.595944,
+      "points": 404,
+      "sectors": [
+        0.3026568016420152,
+        0.5041198043919765
+      ],
+      "bridges": [],
+      "routeHash": "ce611514ace5edeaf5684cca18d03143a82cb502b06d19b23248355c045ebcc7",
+      "pitHash": "0dc9388339f3c206f61950caa09716cab9642526b8d43576b2285b659e45df01",
+      "lineHash": "95faba424c0217cc8cb20da89f1b87bdff21409fa8d6fc50dedeb92bbefe58ff"
+    },
+    {
+      "name": "Kanada",
+      "length": 3269.519889,
+      "width": 38.394071,
+      "points": 1062,
+      "sectors": [
+        0.2831981032810789,
+        0.7628327015979619
+      ],
+      "bridges": [],
+      "routeHash": "8568ac09d2546f89ffaa574a9e5c9a3975db929a0b50bd90652e7c3dd90db32f",
+      "pitHash": "90522cc0cd71c2c9d20526325782633f14c2642a4407ba145b4d69f99ffbd722",
+      "lineHash": "99c4e2bd6014022f13391352af483a41aa714d4f201f84819db766f022d20df2"
+    },
+    {
+      "name": "Frankreich",
+      "length": 2731.660838,
+      "width": 24.828952,
+      "points": 668,
+      "sectors": [
+        0.38264369494463285,
+        0.645096542722867
+      ],
+      "bridges": [],
+      "routeHash": "b0f374450e7feb65f8365101c5c9b115de683e2163e32a21328a86a4a605907b",
+      "pitHash": "ce090022d592946896a4e0ad27e8f571a208fcab401303e8be4d85bdfc4d206e",
+      "lineHash": "8636b174e7d3906879a4721ffbd9e9cc01058e1b4fcd7e0d34d22e03184a6d91"
+    },
+    {
+      "name": "Schweiz",
+      "length": 3312.049345,
+      "width": 40.950492,
+      "points": 494,
+      "sectors": [
+        0.25557725062455744,
+        0.6054647228892364
+      ],
+      "bridges": [],
+      "routeHash": "68bfdbf481515eda16e9079205c1e71312992988878f08748b69dea5105083f0",
+      "pitHash": "97219aebc0668a72712ffa23769928ba834b00412f3a92f166d0f057c30eeb50",
+      "lineHash": "fcf8dd0d276591747d2ca27357e5bf71b231b67c9685d05714640f6d752e70a3"
+    },
+    {
+      "name": "Portugal",
+      "length": 1809.294792,
+      "width": 29.307706,
+      "points": 375,
+      "sectors": [
+        0.407605187715921,
+        0.6810372743362775
+      ],
+      "bridges": [],
+      "routeHash": "0bd90c4b1358dd3e0b70486973a237ce435165e128c1860d5dbbc1107e870b60",
+      "pitHash": "b7554ebb70cf1a95cefa3c77e929f808b9485de958b799ce5bdc21508ec870ea",
+      "lineHash": "031a102d92b6581b61616f30dd8e1e4e94741abd0649be633c97d78e8f888566"
+    },
+    {
+      "name": "Indien",
+      "length": 3848.240193,
+      "width": 36.603765,
+      "points": 644,
+      "sectors": [
+        0.35117163297303994,
+        0.6684106587600679
+      ],
+      "bridges": [],
+      "routeHash": "8b258a86dd4d316849adec209a1bc9575f5a1c675bb36c9f38c5619151de9c07",
+      "pitHash": "976b2b125ec7ad2bcc0f900545b37d84bf14759f5229164b040b0ff8a436fa2e",
+      "lineHash": "e2a7c6b23feb746f332b9161b2822e8b1665ebb5afb3c30881fdd5ce5805d0cb"
+    },
+    {
+      "name": "Brasilien",
+      "length": 2343.426156,
+      "width": 26.047092,
+      "points": 548,
+      "sectors": [
+        0.44443349237110485,
+        0.695708915224712
+      ],
+      "bridges": [],
+      "routeHash": "ea612d224ee52e484a485ad1e5167596f709aa19a7683919adf2531e63c9a7b6",
+      "pitHash": "f2fc953a81b877124ecc7cdf4f28eb74b81047546d6163c6dbb692ce8f62f30c",
+      "lineHash": "777a55478c2f25f0f706f2eddf812f1a50ad7151df7a0e0759aadc0bd6f59046"
+    },
+    {
+      "name": "Südafrika",
+      "length": 3023.940178,
+      "width": 33.961951,
+      "points": 538,
+      "sectors": [
+        0.21542408284452108,
+        0.6126734972569366
+      ],
+      "bridges": [],
+      "routeHash": "2532717309cdda796c08a17496d2b5ab67cfa3a6d1bf92f93e61e7a7942fda2e",
+      "pitHash": "c065b6c422552b8277df46965f20a6793f6bea8b3746a9d3e4d84acc982d87f4",
+      "lineHash": "5d942b917f36fb84ac811176e756843a70aaa2f7bdd7b531d3a76410cefbf9c5"
+    },
+    {
+      "name": "Korea",
+      "length": 2838.084766,
+      "width": 31.440229,
+      "points": 550,
+      "sectors": [
+        0.5282600946195961,
+        0.7928597288824587
+      ],
+      "bridges": [
+        {
+          "over": 0.12732826311444603,
+          "under": 0.02352825622173015,
+          "point": [
+            215.99728987022615,
+            159.99939815148176
+          ]
+        }
+      ],
+      "routeHash": "3661878e419265531640224a3b860d7e14c479b4a86ab4e4792d75b09b33b7fa",
+      "pitHash": "3642e9993cbb79dd406f371f47550c81be87fbd4228c9868365f8b05551935d6",
+      "lineHash": "c20afc0646735a15addb6f7edae1de2a9bc0f3e497fbdad7f7e791edf6cb6fab"
+    },
+    {
+      "name": "USA",
+      "length": 3033.032168,
+      "width": 47.887725,
+      "points": 385,
+      "sectors": [
+        0.379553293362025,
+        0.5644815698238315
+      ],
+      "bridges": [],
+      "routeHash": "fe844127092bb6a164f05f962489815a4ee457544d5e457e57b4c4ad0906742e",
+      "pitHash": "5f1ec787d3dc694301186859343302e9544d7c7341516a35b1ac055b7eee997d",
+      "lineHash": "ff5fadf489220d21877a595ad7d90ccf36527694e51c194e73e471aa0512d56a"
+    },
+    {
+      "name": "Belgien",
+      "length": 1977.8467,
+      "width": 29.873651,
+      "points": 400,
+      "sectors": [
+        0.19421813375291352,
+        0.610891429496714
+      ],
+      "bridges": [],
+      "routeHash": "02bef714d6894d0d78ba90fc4a280b108d2e3d2fa80e10312d99c503bd2c8a0c",
+      "pitHash": "dbfdfdd6e082189bd33d62014ce394781c5c755469f5230d33355a8a1f161f02",
+      "lineHash": "41832604f175685a5780d3b95e1e543429e9aefb95ae83fec04c440d0fe70c79"
+    },
+    {
+      "name": "Schweden",
+      "length": 2138.863372,
+      "width": 32.037994,
+      "points": 406,
+      "sectors": [
+        0.23640187904147117,
+        0.6831253238556317
+      ],
+      "bridges": [],
+      "routeHash": "cacffcce3bd0620d2b6aa7af2154abe1597ed70bd5ac219d8fa1c6a24ad5e386",
+      "pitHash": "f2fdbfc9d950f9f100db971bd722262cb03d0156267c65f1d12c1da5e22d1f5f",
+      "lineHash": "d5a27187883d7a667fb32187db70cd7f707a4ad98ff63bf6601d21ca478a40bd"
+    },
+    {
+      "name": "Deutschland",
+      "length": 2393.114501,
+      "width": 26.060376,
+      "points": 557,
+      "sectors": [
+        0.3191995143948438,
+        0.6450346961886991
+      ],
+      "bridges": [],
+      "routeHash": "9015fc1e946b4a766d902029304f6d28bf7801165cf2b1332e18c27a8e261fe8",
+      "pitHash": "ecf732789d94beb24d49f9629e691499b952acb427ad627c7029ecbee12d0aa9",
+      "lineHash": "3a1102c9993a5d832d5ded90c002c34a9fc1533266cd60438b402fef44170cbc"
+    },
+    {
+      "name": "Japan",
+      "length": 3542.663404,
+      "width": 36.363994,
+      "points": 584,
+      "sectors": [
+        0.283807187171675,
+        0.5716809415450518
+      ],
+      "bridges": [],
+      "routeHash": "2e5ff5fb693aa28970353a3c939531f894b626b42c51e4510255edd3bd88864e",
+      "pitHash": "083168dd32e6ebe26f03fc8a71267582c1a04fbecffd4f042383db9453ff7926",
+      "lineHash": "2ddd0ed686b2c136a34b72181d008b70e25e0eb3fa93a3fe49770d72308ef7b7"
+    },
+    {
+      "name": "China",
+      "length": 2339.569983,
+      "width": 28.197284,
+      "points": 504,
+      "sectors": [
+        0.22999828468717087,
+        0.6244994105582143
+      ],
+      "bridges": [],
+      "routeHash": "731bb3d114f886f25f66c54f746396142ae16683805ffbebc91dc6a2aeceeb84",
+      "pitHash": "b57db49f561dc086eec327daf5b1ed9db8fbee9a7f041b2b7b76ff1fc9933528",
+      "lineHash": "712bd97803fe404b271054fd11f1f5859447a0e6885533a3f646f7467baadbff"
+    },
+    {
+      "name": "Russland",
+      "length": 2982.85112,
+      "width": 41.317726,
+      "points": 439,
+      "sectors": [
+        0.2823903364553004,
+        0.6810652054704862
+      ],
+      "bridges": [
+        {
+          "over": 0.3439119994107845,
+          "under": 0.6013196056141131,
+          "point": [
+            168.05232256364434,
+            101.24244663220898
+          ]
+        },
+        {
+          "over": 0.9179690820402943,
+          "under": 0.6514487349313575,
+          "point": [
+            166.0412878575764,
+            151.9137426347623
+          ]
+        }
+      ],
+      "routeHash": "20372b0238e286cd6b6796aacdf408b5e625c73e7793dd63a4f26201fd641216",
+      "pitHash": "a66627d9ad730be76ce1c3b834c2891fc0ef315f054c47131812e65675a9aaa6",
+      "lineHash": "57a0e9a5bd57ddacee58b720a5899e40c98ef57921dc58b8ee9dd9f7ed2f735b"
+    },
+    {
+      "name": "Australien",
+      "length": 2854.057277,
+      "width": 26.886954,
+      "points": 649,
+      "sectors": [
+        0.23327173620214722,
+        0.6825759642993312
+      ],
+      "bridges": [],
+      "routeHash": "646af490b836e54b6f4c9877c5cc3d2de953469e6786c01e1e4f46af6e5e1460",
+      "pitHash": "e5877031d0a9b2e54267df9d8f5f3d89044072507e4e2223645428d15c4e7eca",
+      "lineHash": "f5ef7f8e42d66739a81fd82561900051e557d4f8f906d284fc3be1ff9b633e59"
+    },
+    {
+      "name": "England",
+      "length": 2209.800488,
+      "width": 30.582321,
+      "points": 439,
+      "sectors": [
+        0.37811643433299735,
+        0.8097882285015952
+      ],
+      "bridges": [],
+      "routeHash": "4d4d73359d22218b264a49adc9a7dff0d528b0fa16fefff73748d7fcc9ef1183",
+      "pitHash": "6268761f619e6cc263238f243881bd9d31799489dca4744f05ca1a43811cefcf",
+      "lineHash": "e06d648077536b2a4ea2f0ae2078cc301310a97c1e1e054fac722d18bc259c0e"
+    },
+    {
+      "name": "Italien",
+      "length": 2790.119754,
+      "width": 35.739577,
+      "points": 476,
+      "sectors": [
+        0.3097768494603716,
+        0.5818041992580806
+      ],
+      "bridges": [],
+      "routeHash": "8ae235318d93a4d99768120dcefe71d8946bb1fd39838389cce3355003377a7e",
+      "pitHash": "22597e566cef3d9ac051314af20472f269213b36dd7d0c4f4f631eef0cb8e0d1",
+      "lineHash": "8eb618b62c5dc72e1029b70dac1c234567d93dbe2cb17d8052df895ae3fa630a"
+    },
+    {
+      "name": "Ungarn",
+      "length": 2816.008554,
+      "width": 34.522709,
+      "points": 494,
+      "sectors": [
+        0.43775154981945863,
+        0.6781464914384691
+      ],
+      "bridges": [],
+      "routeHash": "98b73ed422e435c2ba3539137a74d73eb336a58fd61cfa82b65ca018e7358b39",
+      "pitHash": "268c6b240550c7e742f595f5cfa2ce5325092b6f6d4a8cb0f62899a3fb538972",
+      "lineHash": "d80a8b220ca0882ed5075dd04605823a13f093df87460de42f203535db8a559a"
+    },
+    {
+      "name": "Abu Dhabi",
+      "length": 2991.683428,
+      "width": 33.060257,
+      "points": 551,
+      "sectors": [
+        0.3949365510993975,
+        0.7109508416233337
+      ],
+      "bridges": [],
+      "routeHash": "36757e3826c5bed2bd4c909a55bbc30e775466dcbb2bf38b0310d05fade63494",
+      "pitHash": "c3ab21c5ecf6a5b6bd5efbb236c56c55a564f88e20bba1c1c6be99789845af87",
+      "lineHash": "a60de721520bfce718c07bf145d225df403013ba107ec159e632e2f2b4c66d13"
+    }
+  ],
+  "samples": [
+    {
+      "index": 0,
+      "time": 10,
+      "ticks": 300,
+      "rng": 3805859895,
+      "finished": false,
+      "winner": null,
+      "eventCount": {
+        "start": 1,
+        "pass": 17
+      },
+      "cars": [
+        {
+          "id": "d033",
+          "laps": 0,
+          "progress": 1275.215233,
+          "lane": 1.501819,
+          "speed": 126.390355,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d046",
+          "laps": 0,
+          "progress": 1192.039221,
+          "lane": 10.18106,
+          "speed": 134.663107,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "ATTACKING",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d026",
+          "laps": 0,
+          "progress": 1161.304613,
+          "lane": -7.225269,
+          "speed": 88.482566,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "CHICANE_SETUP",
+          "bestLap": null
+        },
+        {
+          "id": "d002",
+          "laps": 0,
+          "progress": 1115.344598,
+          "lane": 7.882111,
+          "speed": 115.605833,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d076",
+          "laps": 0,
+          "progress": 1087.113217,
+          "lane": -3.074627,
+          "speed": 82.265831,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d047",
+          "laps": 0,
+          "progress": 1041.924393,
+          "lane": 5.002313,
+          "speed": 115.668568,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d055",
+          "laps": 0,
+          "progress": 1010.188204,
+          "lane": -10.18106,
+          "speed": 81.896624,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d015",
+          "laps": 0,
+          "progress": 976.3218,
+          "lane": 4.25959,
+          "speed": 135.40786,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d070",
+          "laps": 0,
+          "progress": 907.201096,
+          "lane": -5.784951,
+          "speed": 114.883055,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "ATTACKING",
+          "lineMode": "INSIDE_ATTACK",
+          "bestLap": null
+        },
+        {
+          "id": "d081",
+          "laps": 0,
+          "progress": 825.791621,
+          "lane": 10.18106,
+          "speed": 140.87473,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "ATTACKING",
+          "lineMode": "INSIDE_ATTACK",
+          "bestLap": null
+        },
+        {
+          "id": "d040",
+          "laps": 0,
+          "progress": 747.993824,
+          "lane": 4.675847,
+          "speed": 138.10139,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d004",
+          "laps": 0,
+          "progress": 702.558533,
+          "lane": -10.18106,
+          "speed": 121.856225,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d051",
+          "laps": 0,
+          "progress": 693.278113,
+          "lane": 5.692636,
+          "speed": 118.711653,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d080",
+          "laps": 0,
+          "progress": 638.706029,
+          "lane": 4.050529,
+          "speed": 127.938585,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d013",
+          "laps": 0,
+          "progress": 627.365977,
+          "lane": -7.882111,
+          "speed": 134.730994,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d073",
+          "laps": 0,
+          "progress": 530.038974,
+          "lane": 5.692636,
+          "speed": 103.566675,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d088",
+          "laps": 0,
+          "progress": 529.736485,
+          "lane": -7.882111,
+          "speed": 105.121076,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d031",
+          "laps": 0,
+          "progress": 463.21498,
+          "lane": -2.38608,
+          "speed": 127.437515,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d043",
+          "laps": 0,
+          "progress": 431.058322,
+          "lane": 10.18106,
+          "speed": 125.326946,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "ATTACKING",
+          "lineMode": "INSIDE_ATTACK",
+          "bestLap": null
+        },
+        {
+          "id": "d067",
+          "laps": 0,
+          "progress": 364.869607,
+          "lane": -10.18106,
+          "speed": 124.218219,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "ATTACKING",
+          "lineMode": "OUTSIDE_ATTACK",
+          "bestLap": null
+        },
+        {
+          "id": "d028",
+          "laps": 0,
+          "progress": 324.766574,
+          "lane": -3.233417,
+          "speed": 125.664845,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d041",
+          "laps": 0,
+          "progress": 271.446263,
+          "lane": 5.12919,
+          "speed": 125.638477,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "ATTACKING",
+          "lineMode": "INSIDE_ATTACK",
+          "bestLap": null
+        },
+        {
+          "id": "d064",
+          "laps": 0,
+          "progress": 227.268571,
+          "lane": -1.93015,
+          "speed": 129.853064,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "ATTACKING",
+          "lineMode": "INSIDE_ATTACK",
+          "bestLap": null
+        },
+        {
+          "id": "d086",
+          "laps": 0,
+          "progress": 181.132797,
+          "lane": 2.517897,
+          "speed": 122.005938,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "CHICANE_SETUP",
+          "bestLap": null
+        },
+        {
+          "id": "d091",
+          "laps": 0,
+          "progress": 131.513674,
+          "lane": 6.240005,
+          "speed": 87.815861,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d077",
+          "laps": 0,
+          "progress": 101.398476,
+          "lane": -10.18106,
+          "speed": 87.790803,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "ATTACKING",
+          "lineMode": "OUTSIDE_ATTACK",
+          "bestLap": null
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "time": 10,
+      "ticks": 300,
+      "rng": 3850701102,
+      "finished": false,
+      "winner": null,
+      "eventCount": {
+        "start": 1,
+        "pass": 12
+      },
+      "cars": [
+        {
+          "id": "d076",
+          "laps": 0,
+          "progress": 1353.430722,
+          "lane": -0.377567,
+          "speed": 111.20247,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d047",
+          "laps": 0,
+          "progress": 1265.90664,
+          "lane": 2.655897,
+          "speed": 133.176581,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FOLLOWING",
+          "lineMode": "SAFE_FOLLOW",
+          "bestLap": null
+        },
+        {
+          "id": "d002",
+          "laps": 0,
+          "progress": 1249.473514,
+          "lane": -7.545655,
+          "speed": 128.411608,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "SWITCHBACK",
+          "bestLap": null
+        },
+        {
+          "id": "d033",
+          "laps": 0,
+          "progress": 1205.720176,
+          "lane": 9.746471,
+          "speed": 115.355907,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FOLLOWING",
+          "lineMode": "SAFE_FOLLOW",
+          "bestLap": null
+        },
+        {
+          "id": "d055",
+          "laps": 0,
+          "progress": 1127.442208,
+          "lane": -7.545655,
+          "speed": 153.137119,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "CATCHING",
+          "lineMode": "PRESSURE_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d015",
+          "laps": 0,
+          "progress": 1122.99201,
+          "lane": 9.746471,
+          "speed": 154.061328,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d046",
+          "laps": 0,
+          "progress": 1015.359389,
+          "lane": -9.746471,
+          "speed": 152.529266,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d026",
+          "laps": 0,
+          "progress": 926.593464,
+          "lane": 9.746471,
+          "speed": 158.653205,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "CATCHING",
+          "lineMode": "PRESSURE_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d080",
+          "laps": 0,
+          "progress": 815.54039,
+          "lane": -9.746471,
+          "speed": 145.265725,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "CATCHING",
+          "lineMode": "PRESSURE_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d051",
+          "laps": 0,
+          "progress": 702.064842,
+          "lane": 2.426786,
+          "speed": 144.412895,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "ATTACKING",
+          "lineMode": "INSIDE_ATTACK",
+          "bestLap": null
+        },
+        {
+          "id": "d091",
+          "laps": 0,
+          "progress": 601.881629,
+          "lane": 3.599758,
+          "speed": 129.75388,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d064",
+          "laps": 0,
+          "progress": 502.481152,
+          "lane": 0,
+          "speed": 109.000183,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d043",
+          "laps": 0,
+          "progress": 458.079816,
+          "lane": 9.746471,
+          "speed": 87.477304,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "ATTACKING",
+          "lineMode": "INSIDE_ATTACK",
+          "bestLap": null
+        },
+        {
+          "id": "d031",
+          "laps": 0,
+          "progress": 416.90571,
+          "lane": -9.746471,
+          "speed": 130.028371,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d070",
+          "laps": 0,
+          "progress": 399.806594,
+          "lane": 6.288046,
+          "speed": 102.014293,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "ATTACKING",
+          "lineMode": "INSIDE_ATTACK",
+          "bestLap": null
+        },
+        {
+          "id": "d081",
+          "laps": 0,
+          "progress": 355.156172,
+          "lane": -9.746471,
+          "speed": 146.806067,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d041",
+          "laps": 0,
+          "progress": 279.359923,
+          "lane": 0.560263,
+          "speed": 91.765834,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d004",
+          "laps": 0,
+          "progress": 236.70261,
+          "lane": 9.746471,
+          "speed": 76.426882,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d077",
+          "laps": 0,
+          "progress": 167.990753,
+          "lane": 7.545655,
+          "speed": 87.202454,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FOLLOWING",
+          "lineMode": "SAFE_FOLLOW",
+          "bestLap": null
+        },
+        {
+          "id": "d086",
+          "laps": 0,
+          "progress": 162.769606,
+          "lane": -9.746471,
+          "speed": 87.556141,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "ATTACKING",
+          "lineMode": "OUTSIDE_ATTACK",
+          "bestLap": null
+        },
+        {
+          "id": "d028",
+          "laps": 0,
+          "progress": 95.176619,
+          "lane": 7.545655,
+          "speed": 109.185792,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d088",
+          "laps": 0,
+          "progress": 90.29292,
+          "lane": -2.696583,
+          "speed": 110.669983,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d013",
+          "laps": 0,
+          "progress": 7.629532,
+          "lane": 2.744816,
+          "speed": 135.674016,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d040",
+          "laps": 0,
+          "progress": 3.743925,
+          "lane": -7.545655,
+          "speed": 129.082873,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d067",
+          "laps": 0,
+          "progress": -72.823347,
+          "lane": -2.685521,
+          "speed": 114.804168,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FOLLOWING",
+          "lineMode": "SAFE_FOLLOW",
+          "bestLap": null
+        },
+        {
+          "id": "d073",
+          "laps": 0,
+          "progress": -133.616732,
+          "lane": 9.746471,
+          "speed": 136.199962,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "ATTACKING",
+          "lineMode": "INSIDE_ATTACK",
+          "bestLap": null
+        }
+      ]
+    },
+    {
+      "index": 16,
+      "time": 10,
+      "ticks": 300,
+      "rng": 903606601,
+      "finished": false,
+      "winner": null,
+      "eventCount": {
+        "start": 1,
+        "pass": 13
+      },
+      "cars": [
+        {
+          "id": "d047",
+          "laps": 0,
+          "progress": 1378.733427,
+          "lane": -1.767156,
+          "speed": 120.592552,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d076",
+          "laps": 0,
+          "progress": 1316.655041,
+          "lane": -4.965713,
+          "speed": 102.950949,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d033",
+          "laps": 0,
+          "progress": 1238.531148,
+          "lane": 9.916254,
+          "speed": 164.488983,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d002",
+          "laps": 0,
+          "progress": 1222.385119,
+          "lane": -12.808495,
+          "speed": 156.009485,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d055",
+          "laps": 0,
+          "progress": 1058.23793,
+          "lane": -9.916254,
+          "speed": 164.593602,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d015",
+          "laps": 0,
+          "progress": 1055.728451,
+          "lane": 4.452574,
+          "speed": 165.994854,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d026",
+          "laps": 0,
+          "progress": 920.955102,
+          "lane": -4.101486,
+          "speed": 165.763867,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d046",
+          "laps": 0,
+          "progress": 900.701445,
+          "lane": 10.998627,
+          "speed": 164.723677,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "ATTACKING",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d051",
+          "laps": 0,
+          "progress": 740.413927,
+          "lane": -5.784482,
+          "speed": 148.131384,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d080",
+          "laps": 0,
+          "progress": 712.280728,
+          "lane": 1.357824,
+          "speed": 129.743113,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d064",
+          "laps": 0,
+          "progress": 606.429396,
+          "lane": -5.784482,
+          "speed": 123.845473,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d091",
+          "laps": 0,
+          "progress": 573.383372,
+          "lane": 2.982296,
+          "speed": 85.662457,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d031",
+          "laps": 0,
+          "progress": 506.223272,
+          "lane": -9.916254,
+          "speed": 90.73909,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d043",
+          "laps": 0,
+          "progress": 478.544714,
+          "lane": 2.135676,
+          "speed": 101.229885,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d081",
+          "laps": 0,
+          "progress": 409.1064,
+          "lane": -9.916254,
+          "speed": 86.518307,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d070",
+          "laps": 0,
+          "progress": 386.064371,
+          "lane": 2.375702,
+          "speed": 94.81103,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d086",
+          "laps": 0,
+          "progress": 329.014106,
+          "lane": -9.916254,
+          "speed": 58.883731,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d041",
+          "laps": 0,
+          "progress": 312.631233,
+          "lane": 3.069049,
+          "speed": 77.312139,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d088",
+          "laps": 0,
+          "progress": 259.884662,
+          "lane": -9.916254,
+          "speed": 55.702577,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d004",
+          "laps": 0,
+          "progress": 243.249239,
+          "lane": 2.375702,
+          "speed": 78.634045,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d040",
+          "laps": 0,
+          "progress": 196.926503,
+          "lane": -9.916254,
+          "speed": 54.295024,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d077",
+          "laps": 0,
+          "progress": 179.160456,
+          "lane": 2.135676,
+          "speed": 75.036643,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d067",
+          "laps": 0,
+          "progress": 132.674167,
+          "lane": -9.916254,
+          "speed": 59.228509,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d028",
+          "laps": 0,
+          "progress": 114.439332,
+          "lane": 3.031911,
+          "speed": 64.907735,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "SIDE_BY_SIDE",
+          "lineMode": "MOMENTUM_LINE",
+          "bestLap": null
+        },
+        {
+          "id": "d073",
+          "laps": 0,
+          "progress": 74.794441,
+          "lane": -9.916254,
+          "speed": 45.637448,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "PREPARING_ATTACK",
+          "lineMode": "EXIT_PRIORITY",
+          "bestLap": null
+        },
+        {
+          "id": "d013",
+          "laps": 0,
+          "progress": 57.860046,
+          "lane": 3.029967,
+          "speed": 59.307462,
+          "damage": 0,
+          "pitVisits": 0,
+          "dnf": false,
+          "aiState": "FREE_DRIVING",
+          "lineMode": "OPTIMAL_LINE",
+          "bestLap": null
+        }
+      ]
+    }
+  ],
+  "finishedRace": {
+    "time": 398.788882,
+    "ticks": 11964,
+    "rng": 2677733923,
+    "finished": true,
+    "winner": "d026",
+    "eventCount": {
+      "start": 1,
+      "pass": 175,
+      "fastest": 2,
+      "retired": 1,
+      "finish": 2,
+      "classified": 24
+    },
+    "cars": [
+      {
+        "id": "d026",
+        "laps": 18,
+        "progress": 49595.30577,
+        "lane": -0.507548,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "CATCHING",
+        "lineMode": "PRESSURE_LINE",
+        "bestLap": 19.705769
+      },
+      {
+        "id": "d033",
+        "laps": 18,
+        "progress": 49595.30577,
+        "lane": -0.164774,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 19.581726
+      },
+      {
+        "id": "d047",
+        "laps": 18,
+        "progress": 49595.30577,
+        "lane": 0.706872,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 19.855429
+      },
+      {
+        "id": "d046",
+        "laps": 18,
+        "progress": 49595.30577,
+        "lane": 0.463232,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "SIDE_BY_SIDE",
+        "lineMode": "MOMENTUM_LINE",
+        "bestLap": 20.140018
+      },
+      {
+        "id": "d002",
+        "laps": 18,
+        "progress": 49595.30577,
+        "lane": -6.896847,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 19.613756
+      },
+      {
+        "id": "d076",
+        "laps": 18,
+        "progress": 49595.30577,
+        "lane": -0.031783,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 19.643062
+      },
+      {
+        "id": "d055",
+        "laps": 18,
+        "progress": 49595.30577,
+        "lane": 0,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 20.052061
+      },
+      {
+        "id": "d081",
+        "laps": 17,
+        "progress": 46840.011005,
+        "lane": 6.896847,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 21.240457
+      },
+      {
+        "id": "d015",
+        "laps": 17,
+        "progress": 46840.011005,
+        "lane": -10.18106,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "SIDE_BY_SIDE",
+        "lineMode": "MOMENTUM_LINE",
+        "bestLap": 20.758944
+      },
+      {
+        "id": "d080",
+        "laps": 17,
+        "progress": 46840.011005,
+        "lane": 9.633691,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 21.884341
+      },
+      {
+        "id": "d070",
+        "laps": 17,
+        "progress": 46840.011005,
+        "lane": 1.423159,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "RECOVERING_LINE",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 21.69154
+      },
+      {
+        "id": "d051",
+        "laps": 17,
+        "progress": 46840.011005,
+        "lane": 10.18106,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "SIDE_BY_SIDE",
+        "lineMode": "MOMENTUM_LINE",
+        "bestLap": 21.873502
+      },
+      {
+        "id": "d040",
+        "laps": 17,
+        "progress": 46840.011005,
+        "lane": 5.80211,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 22.492717
+      },
+      {
+        "id": "d004",
+        "laps": 16,
+        "progress": 44084.71624,
+        "lane": -0.185236,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 22.938231
+      },
+      {
+        "id": "d013",
+        "laps": 16,
+        "progress": 44084.71624,
+        "lane": -0.158583,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 22.898362
+      },
+      {
+        "id": "d073",
+        "laps": 16,
+        "progress": 44084.71624,
+        "lane": 0.019123,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 22.999072
+      },
+      {
+        "id": "d031",
+        "laps": 16,
+        "progress": 44084.71624,
+        "lane": 0.000001,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 23.23588
+      },
+      {
+        "id": "d077",
+        "laps": 16,
+        "progress": 44084.71624,
+        "lane": -10.18106,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "ATTACKING",
+        "lineMode": "INSIDE_ATTACK",
+        "bestLap": 22.891493
+      },
+      {
+        "id": "d088",
+        "laps": 16,
+        "progress": 44084.71624,
+        "lane": -9.633691,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "PREPARING_ATTACK",
+        "lineMode": "EXIT_PRIORITY",
+        "bestLap": 23.430015
+      },
+      {
+        "id": "d043",
+        "laps": 16,
+        "progress": 44084.71624,
+        "lane": 0,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 23.627886
+      },
+      {
+        "id": "d067",
+        "laps": 15,
+        "progress": 41329.421475,
+        "lane": -0.424431,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "SIDE_BY_SIDE",
+        "lineMode": "MOMENTUM_LINE",
+        "bestLap": 25.017875
+      },
+      {
+        "id": "d041",
+        "laps": 15,
+        "progress": 41329.421475,
+        "lane": 0.002744,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 24.84959
+      },
+      {
+        "id": "d091",
+        "laps": 15,
+        "progress": 41329.421475,
+        "lane": 0.000183,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "SIDE_BY_SIDE",
+        "lineMode": "MOMENTUM_LINE",
+        "bestLap": 25.070155
+      },
+      {
+        "id": "d028",
+        "laps": 15,
+        "progress": 41329.421475,
+        "lane": 1.103611,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "DEFENDING",
+        "lineMode": "DEFENSIVE_INSIDE",
+        "bestLap": 24.777417
+      },
+      {
+        "id": "d086",
+        "laps": 15,
+        "progress": 41329.421475,
+        "lane": -1.406382,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": false,
+        "aiState": "FREE_DRIVING",
+        "lineMode": "OPTIMAL_LINE",
+        "bestLap": 24.960365
+      },
+      {
+        "id": "d064",
+        "laps": 12,
+        "progress": 33617.081142,
+        "lane": -3.711307,
+        "speed": 0,
+        "damage": 0,
+        "pitVisits": 0,
+        "dnf": true,
+        "aiState": "CATCHING",
+        "lineMode": "PRESSURE_LINE",
+        "bestLap": 24.794626
+      }
+    ]
+  },
+  "qualifying": {
+    "Q1": [
+      {
+        "id": "d002",
+        "name": "V. Romi",
+        "team": "t02",
+        "time": 84.4599230512999,
+        "physical": 18.505264039329752,
+        "attempts": 2
+      },
+      {
+        "id": "d033",
+        "name": "Kolwero",
+        "team": "t02",
+        "time": 88.05999250989517,
+        "physical": 19.29404330272984,
+        "attempts": 2
+      },
+      {
+        "id": "d047",
+        "name": "Cerutti",
+        "team": "t01",
+        "time": 88.89747840914667,
+        "physical": 19.477537404251237,
+        "attempts": 2
+      },
+      {
+        "id": "d046",
+        "name": "Malviza",
+        "team": "t04",
+        "time": 89.2620828237692,
+        "physical": 19.557422641162916,
+        "attempts": 2
+      },
+      {
+        "id": "d076",
+        "name": "Soba",
+        "team": "t01",
+        "time": 89.36970863497122,
+        "physical": 19.581003577325156,
+        "attempts": 2
+      },
+      {
+        "id": "d055",
+        "name": "Enno",
+        "team": "t03",
+        "time": 90.59535901587485,
+        "physical": 19.8495449529164,
+        "attempts": 2
+      },
+      {
+        "id": "d015",
+        "name": "F. Aristi",
+        "team": "t03",
+        "time": 93.1946222850054,
+        "physical": 20.41904645570343,
+        "attempts": 2
+      },
+      {
+        "id": "d080",
+        "name": "Kaua",
+        "team": "t05",
+        "time": 93.4963088151963,
+        "physical": 20.485146313441888,
+        "attempts": 2
+      },
+      {
+        "id": "d051",
+        "name": "P. Matter",
+        "team": "t05",
+        "time": 94.20171661037011,
+        "physical": 20.6397019539575,
+        "attempts": 2
+      },
+      {
+        "id": "d081",
+        "name": "F. Bruner",
+        "team": "t08",
+        "time": 95.28694537953675,
+        "physical": 20.877476796640074,
+        "attempts": 2
+      },
+      {
+        "id": "d040",
+        "name": "S. Nasina",
+        "team": "t11",
+        "time": 96.41116203191774,
+        "physical": 21.123793928341527,
+        "attempts": 2
+      },
+      {
+        "id": "d004",
+        "name": "Alvaro Savic",
+        "team": "t10",
+        "time": 97.21989473382857,
+        "physical": 21.30098817201862,
+        "attempts": 2
+      },
+      {
+        "id": "d026",
+        "name": "Solim",
+        "team": "t04",
+        "time": 97.4191063926351,
+        "physical": 21.344635670296455,
+        "attempts": 2
+      },
+      {
+        "id": "d013",
+        "name": "Dukuzuremyi",
+        "team": "t13",
+        "time": 98.28413204578831,
+        "physical": 21.53416376284126,
+        "attempts": 2
+      },
+      {
+        "id": "d073",
+        "name": "J. Kruska",
+        "team": "t13",
+        "time": 98.61090627445988,
+        "physical": 21.605760363505254,
+        "attempts": 2
+      },
+      {
+        "id": "d043",
+        "name": "Loomis",
+        "team": "t07",
+        "time": 98.90890342640846,
+        "physical": 21.67105187432545,
+        "attempts": 2
+      },
+      {
+        "id": "d088",
+        "name": "Magaritis",
+        "team": "t10",
+        "time": 98.9110788675403,
+        "physical": 21.67152851592175,
+        "attempts": 2
+      },
+      {
+        "id": "d070",
+        "name": "P. Mitchells",
+        "team": "t08",
+        "time": 99.30597268538608,
+        "physical": 21.75805019511268,
+        "attempts": 2
+      },
+      {
+        "id": "d028",
+        "name": "Elfinso",
+        "team": "t12",
+        "time": 102.34574914094468,
+        "physical": 22.424068632004733,
+        "attempts": 2
+      },
+      {
+        "id": "d031",
+        "name": "Felix N.",
+        "team": "t07",
+        "time": 103.11206982350211,
+        "physical": 22.59197035458754,
+        "attempts": 2
+      },
+      {
+        "id": "d064",
+        "name": "Alexis Urban",
+        "team": "t06",
+        "time": 103.27370959793738,
+        "physical": 22.627385810784034,
+        "attempts": 2
+      },
+      {
+        "id": "d067",
+        "name": "Sardo",
+        "team": "t12",
+        "time": 104.73750751202094,
+        "physical": 22.9481055784765,
+        "attempts": 2
+      },
+      {
+        "id": "d091",
+        "name": "Rubens Barreto",
+        "team": "t06",
+        "time": 105.1126832903355,
+        "physical": 23.030307013051036,
+        "attempts": 2
+      },
+      {
+        "id": "d041",
+        "name": "R. Zoelner",
+        "team": "t09",
+        "time": 105.17489812099448,
+        "physical": 23.043938352352725,
+        "attempts": 2
+      },
+      {
+        "id": "d077",
+        "name": "M. Stepp",
+        "team": "t11",
+        "time": 105.66568321700673,
+        "physical": 23.151469918332936,
+        "attempts": 2
+      },
+      {
+        "id": "d086",
+        "name": "Canto",
+        "team": "t09",
+        "time": 106.36881803734455,
+        "physical": 23.305527547508078,
+        "attempts": 2
+      }
+    ],
+    "Q2": [
+      {
+        "id": "d002",
+        "name": "V. Romi",
+        "team": "t02",
+        "time": 87.72942391677434,
+        "physical": 19.22161535255168,
+        "attempts": 2
+      },
+      {
+        "id": "d026",
+        "name": "Solim",
+        "team": "t04",
+        "time": 88.15982193825751,
+        "physical": 19.315916042651928,
+        "attempts": 2
+      },
+      {
+        "id": "d047",
+        "name": "Cerutti",
+        "team": "t01",
+        "time": 89.65786076582565,
+        "physical": 19.6441380329618,
+        "attempts": 2
+      },
+      {
+        "id": "d076",
+        "name": "Soba",
+        "team": "t01",
+        "time": 89.79853075766296,
+        "physical": 19.674958986229527,
+        "attempts": 2
+      },
+      {
+        "id": "d015",
+        "name": "F. Aristi",
+        "team": "t03",
+        "time": 91.58581413079267,
+        "physical": 20.06655478146581,
+        "attempts": 2
+      },
+      {
+        "id": "d046",
+        "name": "Malviza",
+        "team": "t04",
+        "time": 92.61016041443949,
+        "physical": 20.29099020316371,
+        "attempts": 2
+      },
+      {
+        "id": "d055",
+        "name": "Enno",
+        "team": "t03",
+        "time": 93.70664282867273,
+        "physical": 20.531230732124925,
+        "attempts": 2
+      },
+      {
+        "id": "d081",
+        "name": "F. Bruner",
+        "team": "t08",
+        "time": 94.09594247355511,
+        "physical": 20.616526721733987,
+        "attempts": 2
+      },
+      {
+        "id": "d070",
+        "name": "P. Mitchells",
+        "team": "t08",
+        "time": 94.40649287776334,
+        "physical": 20.684568664229047,
+        "attempts": 2
+      },
+      {
+        "id": "d033",
+        "name": "Kolwero",
+        "team": "t02",
+        "time": 94.96143237408451,
+        "physical": 20.80615653140054,
+        "attempts": 2
+      },
+      {
+        "id": "d051",
+        "name": "P. Matter",
+        "team": "t05",
+        "time": 95.37014159761736,
+        "physical": 20.895705181500436,
+        "attempts": 2
+      },
+      {
+        "id": "d040",
+        "name": "S. Nasina",
+        "team": "t11",
+        "time": 96.04480783734117,
+        "physical": 21.043525312675875,
+        "attempts": 2
+      },
+      {
+        "id": "d080",
+        "name": "Kaua",
+        "team": "t05",
+        "time": 96.31443091164431,
+        "physical": 21.102600031202968,
+        "attempts": 2
+      },
+      {
+        "id": "d004",
+        "name": "Alvaro Savic",
+        "team": "t10",
+        "time": 97.0685569986331,
+        "physical": 21.267829904194894,
+        "attempts": 2
+      },
+      {
+        "id": "d073",
+        "name": "J. Kruska",
+        "team": "t13",
+        "time": 98.03074587895328,
+        "physical": 21.478646568984146,
+        "attempts": 2
+      },
+      {
+        "id": "d013",
+        "name": "Dukuzuremyi",
+        "team": "t13",
+        "time": 98.84971068799383,
+        "physical": 21.658082678830112,
+        "attempts": 2
+      },
+      {
+        "id": "d043",
+        "name": "Loomis",
+        "team": "t07",
+        "time": 99.97979644116255,
+        "physical": 21.905685737108648,
+        "attempts": 2
+      },
+      {
+        "id": "d088",
+        "name": "Magaritis",
+        "team": "t10",
+        "time": 101.62320283687355,
+        "physical": 22.26575792493297,
+        "attempts": 2
+      }
+    ],
+    "Q3": [
+      {
+        "id": "d046",
+        "name": "Malviza",
+        "team": "t04",
+        "time": 87.08637531999118,
+        "physical": 19.08072268246998,
+        "attempts": 2
+      },
+      {
+        "id": "d033",
+        "name": "Kolwero",
+        "team": "t02",
+        "time": 87.65470408881616,
+        "physical": 19.205244154291183,
+        "attempts": 2
+      },
+      {
+        "id": "d002",
+        "name": "V. Romi",
+        "team": "t02",
+        "time": 88.41423687828704,
+        "physical": 19.371658641871882,
+        "attempts": 2
+      },
+      {
+        "id": "d026",
+        "name": "Solim",
+        "team": "t04",
+        "time": 88.43580641498163,
+        "physical": 19.3763845515971,
+        "attempts": 2
+      },
+      {
+        "id": "d047",
+        "name": "Cerutti",
+        "team": "t01",
+        "time": 89.02723303204999,
+        "physical": 19.505966787921068,
+        "attempts": 2
+      },
+      {
+        "id": "d076",
+        "name": "Soba",
+        "team": "t01",
+        "time": 89.22247513826821,
+        "physical": 19.54874455276663,
+        "attempts": 2
+      },
+      {
+        "id": "d015",
+        "name": "F. Aristi",
+        "team": "t03",
+        "time": 91.70901833296782,
+        "physical": 20.093548960594074,
+        "attempts": 2
+      },
+      {
+        "id": "d055",
+        "name": "Enno",
+        "team": "t03",
+        "time": 93.05722392651076,
+        "physical": 20.388942320977076,
+        "attempts": 2
+      },
+      {
+        "id": "d081",
+        "name": "F. Bruner",
+        "team": "t08",
+        "time": 93.46754198971708,
+        "physical": 20.478843469657114,
+        "attempts": 2
+      },
+      {
+        "id": "d070",
+        "name": "P. Mitchells",
+        "team": "t08",
+        "time": 99.49626847677357,
+        "physical": 21.799744216821175,
+        "attempts": 2
+      }
+    ]
+  }
+}
