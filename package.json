@@ -1,0 +1,22 @@
+{
+  "name": "carpet-grand-prix",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:browser": "playwright test",
+    "test:all": "npm test && npm run test:browser",
+    "test:reference": "vitest run tests/integration/reference.test.js",
+    "test:extended": "vitest run --config vitest.extended.config.js",
+    "serve:test": "node tests/helpers/server.js",
+    "fixtures:generate": "node tests/helpers/generate-fixtures.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "vitest": "5.1.0"
+  }
+}
