@@ -1,0 +1,36 @@
+
+/* Consistent monochrome team chooser */
+.launch-panel.wide{background:#0d1017;border:2px solid #4d505d;border-radius:32px}
+.teamselect-shell{background:#131720;border:1px solid #444957;border-radius:25px;box-shadow:0 16px 55px #0006}
+.teamselect-kicker{color:#ff9853}
+.teamselect-counter{color:#f2f3f5;font-weight:800}
+.showroom{background:#0e1118;border:1px solid #343844;border-radius:23px}
+.showroom-brand{color:#fff;text-shadow:none}
+.showroom-brand small{color:#aab5bf}
+.showroom-page{color:#cbd1d8}
+.showroom-tabs span{color:#c0c8d0;background:#1e232d;border-color:#313844}
+.showroom-tabs span.active{color:#171a20;background:#f4f5f7;border-color:#f4f5f7}
+.showroom-stat{background:#f4f5f7;border:1px solid #dce2e8;border-radius:21px;box-shadow:0 8px 25px #0003}
+.showroom-stat h4{color:#596775}
+.showroom-stat .num{color:#181d25}
+.showroom-stat p{color:#626d78}
+.showroom-card{background:#f5f6f8;border:1px solid #e1e4e8;color:#212a33;border-radius:19px}
+.showroom-card .label{color:#657383}
+.showroom-team-name{color:#151b22}
+.showroom-subline{color:#5c6875}
+.showroom-colorchips span{background:#e4e9ee;color:#29323c}
+.showroom-driver{background:#e8ebef;border:1px solid #d9dfe5}
+.showroom-driver strong{color:#161d27}
+.showroom-driver div{color:#586674}
+.showroom-bar{color:#303b44}
+.showroom-bar-track{background:#dce2e9}
+.showroom-bar-track span{background:linear-gradient(90deg,var(--team-main,#ff8a39),#b8c4d1)}
+.showroom-flagbox{background:#fff}
+.team-arrow{background:#f4f5f6;color:#151920;border:0;border-radius:999px;font-size:12px}
+.teamselect-help{color:#c0c9d2}
+.launch-choice{background:#f4f5f6;color:#161a20;border:0;border-radius:20px}
+.launch-choice strong{color:#17191e}
+.launch-choice small{color:#5e6975}
+.choice-kicker{color:#e06e17}
+.launch-choice:hover{background:#e7e9ee}
+.launch-back{color:#ff8a39}

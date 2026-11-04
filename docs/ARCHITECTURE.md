@@ -1,6 +1,7 @@
 # Zielstruktur und Umbauplan
 
-Status: Vorbereitung. Die ursprüngliche `index.html` bleibt unverändert.
+Status: Vorbereitung übernommen; erster Umbau trennt CSS und Bilder ab.
+Die Spielsysteme bleiben im ursprünglichen JavaScript. Details in [ASSETS.md](ASSETS.md).
 Ziel: native JavaScript-Module und statische Dateien ohne verpflichtenden Produktions-
 Build; GitHub Pages bleibt die Auslieferungsplattform.
 
