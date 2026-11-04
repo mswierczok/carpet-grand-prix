@@ -68,7 +68,7 @@ Jeder Merge benötigt die ausdrückliche Nutzerfreigabe für den konkreten PR.
 | Andere Darstellung | CSS-Kaskade bewahren; Bildreferenzen vor visuellem Umbau festlegen |
 | Fehlende Pages-Ressourcen | Projektpfad erzwingen; Browser-Ressourcenfehler lassen Tests scheitern |
 | Performanceverlust | Dieselben Szenarien vor/nach Umbau messen, Laufzeit/Bildrate vergleichen |
-| Ein-Datei-Offlinenutzung entfällt | Dateipaket erklären; optionale reproduzierbare Ein-Datei-Ausgabe später prüfen |
+| Bisherige Ein-Datei-Offlinenutzung bricht | Vor Einführung von Modulen eine funktionierende Offline-Ausgabe bereitstellen und testen; bestehende Nutzung nicht still aufgeben |
 | Alte Fehler versehentlich mitändern | Separate Befunde und Freigabe für Verhaltensänderungen |
 
 ## Vor den empfindlichen Auslagerungen ergänzen
