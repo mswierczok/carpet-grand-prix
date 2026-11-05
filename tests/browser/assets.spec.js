@@ -7,12 +7,22 @@ import { manifest } from '../../scripts/build-offline.js';
 const initial = JSON.parse(readFileSync(new URL('../fixtures/initial.json', import.meta.url), 'utf8'));
 const state = name => JSON.parse(readFileSync(new URL(`../fixtures/${name}.json`, import.meta.url), 'utf8'));
 
-async function prepare(context, save = initial) {
-  await context.addInitScript(({ save }) => {
+async function prepare(context, save = initial, legacySprites = false) {
+  await context.addInitScript(({ save, legacySprites }) => {
     localStorage.setItem('carpet_gp_v072', JSON.stringify(save));
     let seed = 12345;
     Math.random = () => ((seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) / 4294967296);
-  }, { save });
+    // Keep historical UI screenshots meaningful outside the expressly approved
+    // sprite change. Actual new sprites have dedicated browser/renderer tests.
+    if (legacySprites) {
+      let renderer;
+      Object.defineProperty(globalThis, 'CGPRaceSprites', {
+        configurable: true,
+        get: () => renderer,
+        set: value => { renderer = { ...value, draw: () => false }; },
+      });
+    }
+  }, { save, legacySprites });
 }
 
 async function resume(page) {
@@ -58,7 +68,7 @@ async function compare(original, current, label, testInfo) {
 
 test('vergleicht Start, Teamauswahl und alle sechs Ansichten visuell mit dem Original', async ({ context }, testInfo) => {
   test.setTimeout(120_000);
-  await prepare(context);
+  await prepare(context, initial, true);
   const original = await context.newPage(), current = await context.newPage();
   const errors = [];
   for (const page of [original, current]) page.on('pageerror', e => errors.push(e.message));
@@ -80,7 +90,7 @@ test('vergleicht Start, Teamauswahl und alle sechs Ansichten visuell mit dem Ori
 
 for (const [name, label] of [['activeRace', 'pausiertes-rennen'], ['activeQualifying', 'pausiertes-qualifying']]) {
   test(`vergleicht ${label} visuell mit dem Original`, async ({ context }, testInfo) => {
-    await prepare(context, state(name));
+    await prepare(context, state(name), true);
     const original = await context.newPage(), current = await context.newPage();
     await original.goto('__reference__/index.html'); await current.goto('./');
     for (const page of [original, current]) await resume(page);

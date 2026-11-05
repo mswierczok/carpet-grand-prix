@@ -7,6 +7,7 @@
     "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
   },
   "scripts": {
+    "build:race-preview": "node scripts/build-race-preview.js",
     "build:offline": "node scripts/build-offline.js",
     "test": "vitest run",
     "test:browser": "playwright test",

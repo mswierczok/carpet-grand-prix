@@ -7,7 +7,7 @@ Erster Umbau auf Basis von `c418ed576ba9f640b295905539f3675b8513a67c`
 
 Die Online-Startdatei enthält weiterhin das ursprüngliche JavaScript. Sie ist nach
 der Auslagerung 784.095 statt 5.215.314 Bytes groß (rund 85 % kleiner). Die Website
-benötigt die Ordner `styles/` und `assets/`. Keine Installation und kein Build für
+benötigt die Ordner `styles/`, `assets/` und `src/`. Keine Installation und kein Build für
 GitHub Pages nötig.
 
 CSS wird in dieser verbindlichen Reihenfolge geladen:
@@ -31,6 +31,12 @@ dekodiert. Zwölf Teamfahrzeuge erhalten nun ausdrücklich beauftragte neue
 `assets/manifest.json` dokumentiert Reihenfolge, Herkunft, Größe und SHA-256 jeder
 Datei sowie die Reihenfolge der Stylesheets. HTML-Pfade sind projektbezogen,
 CSS-Pfade relativ zum Stylesheet. Eigene Logos bleiben im Browserspeicher.
+
+Die vier neuen [Top-Down-Rennsprites](TOPDOWN_PREVIEW.md) entstehen gemeinsam in
+`src/rendering/race-sprites.js`. Die SVG-Exporte unter `assets/cars/topdown/`
+dienen der Einzelansicht, der Renn-Canvas nutzt den Renderer direkt. Der
+Offline-Builder bettet auch dieses Script ein. Die historische Größenangabe oben
+bezieht sich auf die erste Auslagerung, vor Lackierungen und Rennsprite-Vorschau.
 
 ## Offline ohne Programmieren
 
@@ -56,7 +62,9 @@ Die Webversion funktioniert unabhängig von diesem optionalen Entwicklerbefehl.
 - Bei der ursprünglichen Auslagerung war die Offline-Ausgabe bytegenau identisch mit
   `ea88f1d`. Für die neuen Lackierungen werden im Rückvergleich ausschließlich die
   zwölf Fahrzeug-Bilddaten durch die Originaldaten ersetzt. CSS, Spielcode und Daten
-  müssen weiterhin bytegenau übereinstimmen.
+  müssen weiterhin bytegenau übereinstimmen. Für die vier ausdrücklich beauftragten
+  Rennsprites werden zusätzlich nur die beiden Einbindungsstellen ausgenommen;
+  siehe [Prüfumfang](TOPDOWN_PREVIEW.md#prüfung-und-grenzen).
 - Browserprüfungen vergleichen Original und neue Website im selben Browser mit
   denselben Spielständen/Zufallsfolgen: Start, Teamauswahl, sechs Ansichten,
   pausiertes Rennen und Qualifying auf Desktop und im Mobilformat.
@@ -71,7 +79,8 @@ Die Webversion funktioniert unabhängig von diesem optionalen Entwicklerbefehl.
 - Offline-Tests laden die Einzeldatei über den lokalen Testserver, schalten das
   Netzwerk ab und prüfen Ansichten, Qualifying, Rennen und Speicherung ohne weitere
   HTTP-Ressourcen. Das ersetzt keine Prüfung aller Browser beim Öffnen lokaler Dateien.
-  Die bytegleiche Einzeldatei erhält das bisherige Verhalten.
+  Die historische bytegleiche Einzeldatei sicherte die ursprüngliche Auslagerung ab.
+  Die aktuelle Ausgabe enthält zusätzlich die beauftragten Fahrzeugdarstellungen.
 
 Der vollständige Rückvergleich sichert diese reine Auslagerung ab. Bei später
 genehmigten UI-/Spieländerungen muss er ausdrücklich an den neuen Prüfumfang
