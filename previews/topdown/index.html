@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carpet Grand Prix – vier Top-Down-Vorschauen</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#ecede8;color:#152c32;font:15px/1.5 system-ui,sans-serif}main{max-width:1280px;margin:auto;padding:30px 24px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;color:#52736f;text-transform:uppercase}h1{font-size:clamp(25px,4vw,38px);line-height:1.15;margin:8px 0 14px}header p{max-width:850px;color:#4d666a}a{color:#0f615f;font-weight:700}button{font:inherit;color:#fff;background:#174e50;border:0;padding:9px 16px;border-radius:8px;cursor:pointer}.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:26px 0}.card{background:#fff;border:1px solid #d0d9d4;border-radius:15px;overflow:hidden}.photo{width:100%;aspect-ratio:2172/555;object-fit:cover;display:block}h2{font-size:17px;margin:14px 15px 4px;min-height:48px}.large{display:block;width:200px;height:250px;max-width:100%;margin:0 auto;background:radial-gradient(ellipse,#f8f8ef,#e7eee7);border-radius:12px}.sample-label{margin:12px 15px 5px;color:#587173;font-size:11px}.small{width:calc(100% - 30px);height:54px;max-width:100%;display:block;margin:0 auto 14px;background:#424d46;border-radius:8px}.note{font-size:12px;color:#61777a;margin:0 15px 16px}.motion-panel{background:#172d32;border-radius:16px;padding:20px;color:#ebf4ef}.motion-panel h2{margin:0;min-height:0}.motion-panel p{color:#bfd2cf;font-size:13px}.motion-panel canvas{display:block;width:100%;max-width:1000px;margin:10px auto;border-radius:12px}.row{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.explanation{margin-top:26px;max-width:950px;color:#4d666a}.explanation code{font-size:13px;background:#dce5df;padding:2px 5px;border-radius:4px}@media(max-width:900px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:500px){main{padding:22px 12px}.cards{gap:10px}h2{font-size:15px;margin:10px;min-height:48px}.large{width:150px;height:auto}.note,.sample-label{margin-left:10px;margin-right:10px}}
+</style>
+</head>
+<body><main>
+<header><div class="eyebrow">Carpet Grand Prix · Designprüfung · nur vier Teams</div>
+<h1>Ein Chassis. Vier Rennidentitäten.</h1>
+<p>Lange Nase, breite hintere Seitenkästen und freistehende Räder nach deiner weißen Top-Down-Vorlage. Oben das jeweilige Showroom-Design, darunter der Rennsprite und drei kleine Darstellungen auf Asphalt.</p>
+<a id="play-link" href="../../index.html">Spiel mit diesen vier Vorschau-Sprites öffnen →</a></header>
+<section class="cards" aria-label="Vier Fahrzeugvorschauen">
+<article class="card" data-team="t01"><img class="photo" src="../../assets/cars/team-t01.webp" alt="Showroom-Fahrzeug von Vauclair Motorsport"><h2>Vauclair Motorsport</h2><canvas class="large" width="400" height="500" aria-label="Vauclair von oben"></canvas><div class="sample-label">16 · 24 · 32 Pixel Fahrzeuglänge</div><canvas class="small" width="440" height="108"></canvas><p class="note">Türkis · gelbe Nase · marineblaue Flügel</p></article>
+<article class="card" data-team="t04"><img class="photo" src="../../assets/cars/team-t04.webp" alt="Showroom-Fahrzeug von Scuderia Bellarossa"><h2>Scuderia Bellarossa</h2><canvas class="large" width="400" height="500" aria-label="Bellarossa von oben"></canvas><div class="sample-label">16 · 24 · 32 Pixel Fahrzeuglänge</div><canvas class="small" width="440" height="108"></canvas><p class="note">Scharlachrot · weiße Rundfelder · Goldakzent</p></article>
+<article class="card" data-team="t10"><img class="photo" src="../../assets/cars/team-t10.webp" alt="Showroom-Fahrzeug von Panther Racing"><h2>Panther Racing</h2><canvas class="large" width="400" height="500" aria-label="Panther von oben"></canvas><div class="sample-label">16 · 24 · 32 Pixel Fahrzeuglänge</div><canvas class="small" width="440" height="108"></canvas><p class="note">Grün · weiße Flächen · rote Schrägbalken</p></article>
+<article class="card" data-team="t05"><img class="photo" src="../../assets/cars/team-t05.webp" alt="Showroom-Fahrzeug von Eisenbach Motorsport"><h2>Eisenbach Motorsport</h2><canvas class="large" width="400" height="500" aria-label="Eisenbach von oben"></canvas><div class="sample-label">16 · 24 · 32 Pixel Fahrzeuglänge</div><canvas class="small" width="440" height="108"></canvas><p class="note">Tiefblau · elfenbeinfarbene Nase und Seiten</p></article>
+</section>
+<section class="motion-panel"><div class="row"><h2>Bewegungsprobe in kleiner Darstellung</h2><button id="motion-toggle" aria-pressed="false">Animation starten</button></div><p>Dies ist eine reine Grafikprobe mit demselben Renderer wie im Spiel. Die Rennsimulation wird hier nicht ausgeführt.</p><canvas id="motion" width="1000" height="230" aria-label="Vier kleine Fahrzeuge auf einer Beispielstrecke"></canvas></section>
+<section class="explanation"><p><b>Einbindung im Spiel:</b> In <code>drawRace() → paint</code> zeichnet <code>CGPRaceSprites.draw()</code> diese vier Teams. Die übrigen neun Teams verwenden weiterhin <code>drawToy()</code>. Startaufstellung, Live-Qualifying und Rennen nutzen dadurch dieselbe neue Darstellung.</p><p>Position, Winkel und Streckenskalierung kommen unverändert aus dem Spiel. Kollisionskörper, Fahrphysik, Fahrerwerte und Spielstände bleiben erhalten. Diese Vorschau enthält absichtlich keine kleinen Sponsor-Schriftzüge.</p></section>
+</main>
+<script src="../../src/rendering/race-sprites.js"></script>
+<script>
+(() => {
+  const renderer = window.CGPRaceSprites;
+  for (const card of document.querySelectorAll('[data-team]')) {
+    const id = card.dataset.team, large = card.querySelector('.large').getContext('2d');
+    large.scale(2, 2);
+    renderer.draw(large, { x: 100, y: 128, ang: -Math.PI / 2 }, id, 8.4);
+    const smallCanvas = card.querySelector('.small'), width = smallCanvas.clientWidth;
+    smallCanvas.width = Math.round(width * 2);
+    const small = smallCanvas.getContext('2d'); small.scale(2, 2);
+    [16, 24, 32].forEach((length, i) => renderer.draw(small, { x: (i + 1) * width / 4, y: 27, ang: 0 }, id, length / 23));
+  }
+  const canvas = document.getElementById('motion'), ctx = canvas.getContext('2d');
+  const ids = ['t01', 't04', 't10', 't05'];
+  let running = false, frame = null, phase = 0, last = null;
+  function paint() {
+    ctx.fillStyle = '#c7b899'; ctx.fillRect(0, 0, 1000, 230);
+    ctx.beginPath(); ctx.ellipse(500, 115, 390, 70, 0, 0, Math.PI * 2); ctx.strokeStyle = '#eee1c4'; ctx.lineWidth = 55; ctx.stroke(); ctx.strokeStyle = '#424d46'; ctx.lineWidth = 46; ctx.stroke();
+    ids.forEach((id, index) => {
+      const a = phase + index * Math.PI / 2, x = 500 + Math.cos(a) * 390, y = 115 + Math.sin(a) * 70;
+      renderer.draw(ctx, { x, y, ang: Math.atan2(Math.cos(a) * 70, -Math.sin(a) * 390) }, id, 24 / 23);
+    });
+  }
+  function animate(now) { if (!running) return; if (last !== null) phase += Math.min((now - last) / 1000, .1) * .55; last = now; paint(); frame = requestAnimationFrame(animate); }
+  document.getElementById('motion-toggle').addEventListener('click', e => {
+    running = !running; e.target.setAttribute('aria-pressed', String(running)); e.target.textContent = running ? 'Animation pausieren' : 'Animation starten';
+    if (running) { last = null; frame = requestAnimationFrame(animate); } else if (frame !== null) cancelAnimationFrame(frame);
+  });
+  paint();
+})();
+</script>
+</body></html>

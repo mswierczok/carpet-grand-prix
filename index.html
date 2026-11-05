@@ -111,6 +111,9 @@
  </main>
 </div>
 <div id="toast" role="status"></div>
+<!-- race-sprites-preview:start -->
+<script src="./src/rendering/race-sprites.js"></script>
+<!-- race-sprites-preview:end -->
 <script>
 (()=>{'use strict';
 const SETTINGS_STORAGE='carpet_gp_preferences_v1';
@@ -1851,7 +1854,7 @@ function drawRace(frac,results){
    ctx.strokeStyle='#a7ffe9';ctx.lineWidth=2.6;
    ctx.beginPath();ctx.arc(0,0,radius*(.87+.09*pulse),0,Math.PI*2);ctx.stroke();ctx.restore();
   }
-  drawToy(ctx,v.p,v.r.dnf?'#737773':tm.color,g.width/64,tm.secondaryColor);
+  if(!window.CGPRaceSprites?.draw(ctx,v.p,tm.id,g.width/64,!!v.r.dnf))drawToy(ctx,v.p,v.r.dnf?'#737773':tm.color,g.width/64,tm.secondaryColor);
   if(focused){const p=v.p,sc=g.width/64;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang);ctx.scale(sc,sc);
    ctx.strokeStyle='#d6fff5';ctx.shadowColor='#6affdf';ctx.shadowBlur=15;ctx.lineWidth=1.9;
    ctx.beginPath();ctx.roundRect(-12,-8,27,16,4);ctx.stroke();ctx.restore();}
