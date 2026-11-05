@@ -41,7 +41,11 @@ Start, Teamauswahl, sechs Ansichten und pausiertes Rennen/Qualifying. Alle 36 Bi
 müssen dekodieren; die Offline-Ausgabe muss ohne weitere HTTP-Ressourcen spielbar sein.
 CSSOM-Regeln müssen in derselben Reihenfolge identisch sein. Pixelmatch verwendet
 Schwelle 0,05 und ignoriert Kantenglättung; darüber sind null abweichende Pixel erlaubt.
-Die Prüfung von Bilddateien und vollständigem Quelltext bleibt bytegenau.
+Die Prüfung der unveränderten Bilddateien und des Spielquelltexts bleibt bytegenau.
+Für die zwölf ausdrücklich beauftragten Fahrzeuglackierungen normalisiert der
+Quelltext-Rückvergleich ausschließlich deren Bilddaten. Vauclair bleibt unverändert;
+zusätzliche Tests prüfen Fotozuordnung, Prüfsummen, Bildmaße, Ladebudget und alle
+13 Fahrzeuge in der Teamauswahl. Details in [CAR_LIVERIES.md](CAR_LIVERIES.md).
 Der Testserver erzwingt den Pages-Projektpfad.
 
 Standard-CI läuft auf PRs, Pushes nach `main` und manuell. Erweiterte CI läuft

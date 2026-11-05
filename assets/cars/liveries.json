@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "34f89cc4127760cd1b22ec73f0e9486f4f8b1983",
+  "base": {
+    "path": "assets/cars/source/showroom-white.webp",
+    "sha256": "4d2ae40cca664ad4c7ce9298ced95ea4a325a256894032f7c43b0bb680a722d0",
+    "origin": "Unverändertes weißes Team-t02-Modell aus ea88f1d"
+  },
+  "preservedVauclair": {
+    "path": "assets/cars/team-t01.webp",
+    "sha256": "80f1823aa549e837bb98e57fd436b96c2a94cb18b6ece1c10992c9d9fb795213"
+  },
+  "frame": {
+    "width": 2172,
+    "height": 555
+  },
+  "encoding": {
+    "format": "WebP",
+    "quality": 88,
+    "maxBytesPerImage": 250000,
+    "preparation": "Äußeren Render-Rand mittig entfernen; Fahrzeug nicht strecken."
+  },
+  "entries": [
+    {
+      "id": "t02",
+      "team": "Alderwick Racing",
+      "reference": "assets/references/alderwick.jpg",
+      "referenceSHA256": "6de4d1cc0b4d9ea5283834d50441548db8e70c5e686b2fb42cf6e6eedb07d69f",
+      "asset": "assets/cars/team-t02.webp",
+      "sha256": "1b26fe7ae6d27514253bd16d85db17831fc2975c538f5aaf5146f29ac88ee622",
+      "bytes": 126300,
+      "width": 2172,
+      "height": 555,
+      "design": "Schwarz mit hellem Sponsoroval, roter Unterstreichung und schmalen silbernen Akzenten.",
+      "fictionalSponsors": [
+        "CIRVO",
+        "NEROVEX"
+      ],
+      "authoring": "Mit Bildbearbeitungsmodell aus gemeinsamer weißer Showroom-Vorlage und zugeordnetem Originalfoto entwickelt."
+    },
+    {
+      "id": "t03",
+      "team": "Falkenheim GP",
+      "reference": "assets/references/falkenheim.jpg",
+      "referenceSHA256": "8e4db5f4c7f308c79b96b13158f77c7237c03f7db0ee3f2b09553efed856e364",
+      "asset": "assets/cars/team-t03.webp",
+      "sha256": "6f276cacd26c619ecef23515cf845b0f884d054513754f9402ec91f20ba4181a",
+      "bytes": 157162,
+      "width": 2172,
+      "height": 555,
+      "design": "Metallisches Silber mit Graphitflächen, dunklem Nasenbereich und eigenem Falkenzeichen.",
+      "fictionalSponsors": [
+        "KALVOR",
+        "NEROVEX"
+      ],
+      "authoring": "Mit Bildbearbeitungsmodell aus gemeinsamer weißer Showroom-Vorlage und zugeordnetem Originalfoto entwickelt."
+    },
+    {
+      "id": "t04",
+      "team": "Scuderia Bellarossa",
+      "reference": "assets/references/bellarossa.jpg",
+      "referenceSHA256": "6a83e677cd42179207001c07b2565f0797c87fce61463c768f2dcb319c019522",
+      "asset": "assets/cars/team-t04.webp",
+      "sha256": "b17d0599444d455e55c109ba7e1b903eaa9b30b8c566a1b6bf336a4a0143398a",
+      "bytes": 147714,
+      "width": 2172,
+      "height": 555,
+      "design": "Scharlachrot mit weißem runden Seitenfeld, eigenem Sternzeichen und kleinem goldenen Sechseck.",
+      "fictionalSponsors": [
+        "ORVIA",
+        "SOLVEX",
+        "VELTRA"
+      ],
+      "authoring": "Mit Bildbearbeitungsmodell aus gemeinsamer weißer Showroom-Vorlage und zugeordnetem Originalfoto entwickelt."
+    },
+    {
+      "id": "t05",
+      "team": "Eisenbach Motorsport",
+      "reference": "assets/references/eisenbach.jpg",
+      "referenceSHA256": "20c03eb386901b6422c35f843d53a022fb2bfdbe713353535eeda72f6f53bd4a",
+      "asset": "assets/cars/team-t05.webp",
+      "sha256": "7d73a0193291e3bcca2299367b8b1396f233aa1e1c466fa0671a1ba9a624a92a",
+      "bytes": 133262,
+      "width": 2172,
+      "height": 555,
+      "design": "Tiefblau und Elfenbein: helle Nase, helles Seitenfeld und helle Heckflügel-Endplatte.",
+      "fictionalSponsors": [
+        "SYRO SYSTEMS",
+        "VELLORA"
+      ],
+      "authoring": "Mit Bildbearbeitungsmodell aus gemeinsamer weißer Showroom-Vorlage und zugeordnetem Originalfoto entwickelt."
+    },
+    {
+      "id": "t06",
+      "team": "Orange",
+      "reference": "assets/references/orange.jpg",
+      "referenceSHA256": "0bab3802fe6e5aeec59e0ae04c80ce449edbed6e01d695252605f1e548daf731",
+      "asset": "assets/cars/team-t06.webp",
+      "sha256": "42e533e4860c51ffc41dc0413501293f6737e39ab8270c67e98b0f3796fd6392",
+      "bytes": 128702,
+      "width": 2172,
+      "height": 555,
+      "design": "Orange Oberseite und Airbox; schwarze Flanken, orange Seitenbinde und orange vorderer Seitenkastenkeil.",
+      "fictionalSponsors": [
+        "VEXORA",
+        "KORVAN"
+      ],
+      "authoring": "Mit Bildbearbeitungsmodell aus gemeinsamer weißer Showroom-Vorlage und zugeordnetem Originalfoto entwickelt."
+    },
+    {
+      "id": "t07",
+      "team": "Ragos Racing",
+      "reference": "assets/references/ragos.jpg",
+      "referenceSHA256": "1ef338892f8c140cf0c5bc034d1c9b5b334998c5517411bd4a77a2b5a6f51241",
+      "asset": "assets/cars/team-t07.webp",
+      "sha256": "25d54afcae88a25ca5557c6421aca391cc4e80890b546abf65f67b00c0b95107",
+      "bytes": 150034,
+      "width": 2172,
+      "height": 555,
+      "design": "Metallisches Blau mit großem weißen Seitenfeld, rotem Schriftzug und roter Unterstreichung.",
+      "fictionalSponsors": [
+        "PELOR",
+        "RENVIK"
+      ],
+      "authoring": "Mit Bildbearbeitungsmodell aus gemeinsamer weißer Showroom-Vorlage und zugeordnetem Originalfoto entwickelt."
+    },
+    {
+      "id": "t08",
+      "team": "Mugan",
+      "reference": "assets/references/mugan.jpg",
+      "referenceSHA256": "9ed9b29a32a7ea042171e9a0869ac6a9bc92bcc1855fa2b00c72f6b7c416c6de",
+      "asset": "assets/cars/team-t08.webp",
+      "sha256": "c452cd4fafc2f5e0520e62262b073fba2594ac66d4bd7a0d6c0efad3127be74b",
+      "bytes": 128094,
+      "width": 2172,
+      "height": 555,
+      "design": "Goldgelb mit bernsteinfarbenen Schulterflächen, schwarzem Einlass und eigener schwarzer Grafik.",
+      "fictionalSponsors": [
+        "KIZAN",
+        "HOSEN"
+      ],
+      "authoring": "Mit Bildbearbeitungsmodell aus gemeinsamer weißer Showroom-Vorlage und zugeordnetem Originalfoto entwickelt."
+    },
+    {
+      "id": "t09",
+      "team": "Lincoln",
+      "reference": "assets/references/lincoln.jpg",
+      "referenceSHA256": "84137c039eb5d17917e0ba654628bed6f33dc4d7ee504c54b649ff5a42b9f840",
+      "asset": "assets/cars/team-t09.webp",
+      "sha256": "111cf03af9036576d69a1d448df69b183c1438091b97d3e691b9658e547e148c",
+      "bytes": 110212,
+      "width": 2172,
+      "height": 555,
+      "design": "Nahezu schwarzer Wagen mit graphitfarbener Airbox und zurückhaltenden silbernen Nasen- und Schwellerakzenten.",
+      "fictionalSponsors": [
+        "VORIX",
+        "TALVON"
+      ],
+      "authoring": "Mit Bildbearbeitungsmodell aus gemeinsamer weißer Showroom-Vorlage und zugeordnetem Originalfoto entwickelt."
+    },
+    {
+      "id": "t10",
+      "team": "Panther Racing",
+      "reference": "assets/references/panther.jpg",
+      "referenceSHA256": "da218d52fe0bfc2363cacf85d0734b1c80a4a1b89bba9f42b2c89b8ebfc242b3",
+      "asset": "assets/cars/team-t10.webp",
+      "sha256": "3834b3bdeafe949779d4fa757b41f356c4e5c48786a388bde1c8192a2b9e71ff",
+      "bytes": 144998,
+      "width": 2172,
+      "height": 555,
+      "design": "Metallisches Grün mit weißen Flächen, drei eigenständigen roten Schrägbalken und eigenem Pantherzeichen.",
+      "fictionalSponsors": [
+        "VERDAN",
+        "FENORA"
+      ],
+      "authoring": "Mit Bildbearbeitungsmodell aus gemeinsamer weißer Showroom-Vorlage und zugeordnetem Originalfoto entwickelt."
+    },
+    {
+      "id": "t11",
+      "team": "Rivage Racing",
+      "reference": "assets/references/rivage.jpg",
+      "referenceSHA256": "df6b3e823e0c5c92b7ccf754eb80041f4c9f7d051169948c1bb9c994f4c76e85",
+      "asset": "assets/cars/team-t11.webp",
+      "sha256": "f71e58c6c4a614dc35dbccba724093bc3bcbd70bd5d79cecda540107a4200c48",
+      "bytes": 132606,
+      "width": 2172,
+      "height": 555,
+      "design": "Gelbe Nase und vorderer Seitenkasten, scharf abgesetztes blaues Heck und blaue Airbox mit gelber Vorderkante.",
+      "fictionalSponsors": [
+        "ORELIO",
+        "NERYX"
+      ],
+      "authoring": "Mit Bildbearbeitungsmodell aus gemeinsamer weißer Showroom-Vorlage und zugeordnetem Originalfoto entwickelt."
+    },
+    {
+      "id": "t12",
+      "team": "Scuderia Vespera",
+      "reference": "assets/references/vespera.jpg",
+      "referenceSHA256": "c64923ee5d73f997eaaaf86b0565bb7ce2a36565b3f0d646e922d8b3ea38cfce",
+      "asset": "assets/cars/team-t12.webp",
+      "sha256": "a4680c3be951f8e5c313fae2bd0cfc4ad5e09024e6283bfcd4cdafbf1437dda3",
+      "bytes": 129718,
+      "width": 2172,
+      "height": 555,
+      "design": "Burgunderrot mit dunkelgrüner Airbox und grünem Nasenstreifen, feiner heller Kante und goldenen Zeichen.",
+      "fictionalSponsors": [
+        "VELUNAR",
+        "ORVEN"
+      ],
+      "authoring": "Mit Bildbearbeitungsmodell aus gemeinsamer weißer Showroom-Vorlage und zugeordnetem Originalfoto entwickelt."
+    },
+    {
+      "id": "t13",
+      "team": "Redwood GP",
+      "reference": "assets/references/redwood.jpg",
+      "referenceSHA256": "cb64ecb99b9509aed540f7e7af828f41cd1472293678f79701d5591d7d65711f",
+      "asset": "assets/cars/team-t13.webp",
+      "sha256": "0dfc79d1d3ffe1e07fbfdc08ee21aebcee8d218324f68feddfcfa428f3e0c0f0",
+      "bytes": 117992,
+      "width": 2172,
+      "height": 555,
+      "design": "Perlweiß mit burgunderrotem Cockpitrand, feinen burgunderroten Linien und eigenem Blattzeichen.",
+      "fictionalSponsors": [
+        "SEQUOR",
+        "AERVON"
+      ],
+      "authoring": "Mit Bildbearbeitungsmodell aus gemeinsamer weißer Showroom-Vorlage und zugeordnetem Originalfoto entwickelt."
+    }
+  ]
+}

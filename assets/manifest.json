@@ -29,85 +29,97 @@
       "path": "assets/cars/team-t02.webp",
       "label": "t02",
       "mime": "image/webp",
-      "bytes": 93066,
-      "sha256": "4d2ae40cca664ad4c7ce9298ced95ea4a325a256894032f7c43b0bb680a722d0"
+      "bytes": 126300,
+      "sha256": "1b26fe7ae6d27514253bd16d85db17831fc2975c538f5aaf5146f29ac88ee622",
+      "liveryReference": "assets/references/alderwick.jpg"
     },
     {
       "path": "assets/cars/team-t03.webp",
       "label": "t03",
       "mime": "image/webp",
-      "bytes": 94252,
-      "sha256": "f576632a88a32607dbc8f1217f1b9b00f74b8fb626289854e96328ec7288b2f2"
+      "bytes": 157162,
+      "sha256": "6f276cacd26c619ecef23515cf845b0f884d054513754f9402ec91f20ba4181a",
+      "liveryReference": "assets/references/falkenheim.jpg"
     },
     {
       "path": "assets/cars/team-t04.webp",
       "label": "t04",
       "mime": "image/webp",
-      "bytes": 97520,
-      "sha256": "5db99a94fd4ea929150c158a996d92887536d7312b84de17dd640b1f5a808bce"
+      "bytes": 147714,
+      "sha256": "b17d0599444d455e55c109ba7e1b903eaa9b30b8c566a1b6bf336a4a0143398a",
+      "liveryReference": "assets/references/bellarossa.jpg"
     },
     {
       "path": "assets/cars/team-t05.webp",
       "label": "t05",
       "mime": "image/webp",
-      "bytes": 97684,
-      "sha256": "a0659ebc7cc5abc79d0bc0c04a50d96218a22b508c6d795edff92c124a7764e1"
+      "bytes": 133262,
+      "sha256": "7d73a0193291e3bcca2299367b8b1396f233aa1e1c466fa0671a1ba9a624a92a",
+      "liveryReference": "assets/references/eisenbach.jpg"
     },
     {
       "path": "assets/cars/team-t06.webp",
       "label": "t06",
       "mime": "image/webp",
-      "bytes": 97788,
-      "sha256": "48783cad8093464202739d4282efa770506949cd7f9e308bd0a700a2f6e9e508"
+      "bytes": 128702,
+      "sha256": "42e533e4860c51ffc41dc0413501293f6737e39ab8270c67e98b0f3796fd6392",
+      "liveryReference": "assets/references/orange.jpg"
     },
     {
       "path": "assets/cars/team-t07.webp",
       "label": "t07",
       "mime": "image/webp",
-      "bytes": 95480,
-      "sha256": "9bcb60484bd71e4f3fbad85831f72a2669e2744bf2b597c49a5f28eed10d6cb3"
+      "bytes": 150034,
+      "sha256": "25d54afcae88a25ca5557c6421aca391cc4e80890b546abf65f67b00c0b95107",
+      "liveryReference": "assets/references/ragos.jpg"
     },
     {
       "path": "assets/cars/team-t08.webp",
       "label": "t08",
       "mime": "image/webp",
-      "bytes": 97350,
-      "sha256": "724da7d9cd939f595485f914c434c8cb0ba98fba176c5ab0fe2f2be948bac81a"
+      "bytes": 128094,
+      "sha256": "c452cd4fafc2f5e0520e62262b073fba2594ac66d4bd7a0d6c0efad3127be74b",
+      "liveryReference": "assets/references/mugan.jpg"
     },
     {
       "path": "assets/cars/team-t09.webp",
       "label": "t09",
       "mime": "image/webp",
-      "bytes": 93926,
-      "sha256": "87b35d2a6c0ce443b8275b755b38b4dc687c028a2c2547d0bb66ecd2c5178219"
+      "bytes": 110212,
+      "sha256": "111cf03af9036576d69a1d448df69b183c1438091b97d3e691b9658e547e148c",
+      "liveryReference": "assets/references/lincoln.jpg"
     },
     {
       "path": "assets/cars/team-t10.webp",
       "label": "t10",
       "mime": "image/webp",
-      "bytes": 95920,
-      "sha256": "78c7b7a4407dfc2d36789a9b1c2926b13ecaddbbd6d9b2377d1ca1d646413ead"
+      "bytes": 144998,
+      "sha256": "3834b3bdeafe949779d4fa757b41f356c4e5c48786a388bde1c8192a2b9e71ff",
+      "liveryReference": "assets/references/panther.jpg"
     },
     {
       "path": "assets/cars/team-t11.webp",
       "label": "t11",
       "mime": "image/webp",
-      "bytes": 95634,
-      "sha256": "66bcf480eb511769df398fd66f171836c8cce1320c858fa5d36bb61e55883d6e"
+      "bytes": 132606,
+      "sha256": "f71e58c6c4a614dc35dbccba724093bc3bcbd70bd5d79cecda540107a4200c48",
+      "liveryReference": "assets/references/rivage.jpg"
     },
     {
       "path": "assets/cars/team-t12.webp",
       "label": "t12",
       "mime": "image/webp",
-      "bytes": 94514,
-      "sha256": "c448932a1090d87fc25e4e665963c54308a828b56618b1b6e1f7ad918c8525ff"
+      "bytes": 129718,
+      "sha256": "a4680c3be951f8e5c313fae2bd0cfc4ad5e09024e6283bfcd4cdafbf1437dda3",
+      "liveryReference": "assets/references/vespera.jpg"
     },
     {
       "path": "assets/cars/team-t13.webp",
       "label": "t13",
       "mime": "image/webp",
-      "bytes": 93516,
-      "sha256": "15203f9d4d0f13e0abe84dc4d461d377331317377661ef8e42adf4551476c17b"
+      "bytes": 117992,
+      "sha256": "0dfc79d1d3ffe1e07fbfdc08ee21aebcee8d218324f68feddfcfa428f3e0c0f0",
+      "liveryReference": "assets/references/redwood.jpg"
     },
     {
       "path": "assets/tracks/01-bahrain.webp",
