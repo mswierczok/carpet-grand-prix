@@ -24,8 +24,10 @@ Die ursprüngliche Kaskade ist absichtlich erhalten. Historische Überschreibung
 nicht als vermeintlich doppelte Regeln entfernen oder umsortieren. Das wäre ein
 separater, visuell zu prüfender Schritt.
 
-36 WebP-Dateien liegen unter `assets/cars/` (13), `assets/tracks/` (22) und
-`assets/backgrounds/` (1). Sie wurden aus Base64 dekodiert, nicht neu komprimiert.
+36 Laufzeit-WebP-Dateien liegen unter `assets/cars/` (13), `assets/tracks/` (22) und
+`assets/backgrounds/` (1). Die erste Auslagerung hat sie verlustfrei aus Base64
+dekodiert. Zwölf Teamfahrzeuge erhalten nun ausdrücklich beauftragte neue
+[Lackierungen nach Referenzfotos](CAR_LIVERIES.md); Vauclair bleibt erhalten.
 `assets/manifest.json` dokumentiert Reihenfolge, Herkunft, Größe und SHA-256 jeder
 Datei sowie die Reihenfolge der Stylesheets. HTML-Pfade sind projektbezogen,
 CSS-Pfade relativ zum Stylesheet. Eigene Logos bleiben im Browserspeicher.
@@ -48,9 +50,13 @@ Die Webversion funktioniert unabhängig von diesem optionalen Entwicklerbefehl.
 
 ## Nachweise und Grenzen
 
-- Alle Bilddateien sind bytegenau mit den eingebetteten Originalen identisch.
-- Die Offline-Ausgabe ist in diesem Umbau bytegenau identisch mit der ursprünglichen
-  HTML-Datei aus `ea88f1d`. Damit sind CSS-Reihenfolge, Spielcode und Daten abgesichert.
+- Vauclair, Strecken und Hintergrund bleiben bytegenau mit den eingebetteten
+  Originalen identisch. Die zwölf beauftragten neuen Fahrzeugbilder besitzen eigene
+  dokumentierte Prüfsummen und Referenzzuordnungen.
+- Bei der ursprünglichen Auslagerung war die Offline-Ausgabe bytegenau identisch mit
+  `ea88f1d`. Für die neuen Lackierungen werden im Rückvergleich ausschließlich die
+  zwölf Fahrzeug-Bilddaten durch die Originaldaten ersetzt. CSS, Spielcode und Daten
+  müssen weiterhin bytegenau übereinstimmen.
 - Browserprüfungen vergleichen Original und neue Website im selben Browser mit
   denselben Spielständen/Zufallsfolgen: Start, Teamauswahl, sechs Ansichten,
   pausiertes Rennen und Qualifying auf Desktop und im Mobilformat.
