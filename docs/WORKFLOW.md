@@ -8,7 +8,8 @@
 5. Verständliches Ergebnis zeigen; ausdrückliche Freigabe des konkreten PR abwarten.
 6. Erst danach zusammenführen, Pages-Auslieferung und Start/Laden prüfen.
 
-Diese Vorbereitung autorisiert weder Merge noch vollständigen Modulumbau.
+Die Freigabe eines Vorbereitungsschritts ist keine pauschale Freigabe zum
+Zusammenführen späterer PRs. Jeder konkrete PR benötigt eine eigene Freigabe.
 Kein Auto-Merge; keine Produktionsveröffentlichung aus Entwicklungszweigen.
 
 ## Wiederherstellung

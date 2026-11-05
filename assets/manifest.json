@@ -1,0 +1,268 @@
+{
+  "referenceCommit": "ea88f1daf238431a1dbac540df7e452dd2a44e54",
+  "referenceHTMLSHA256": "b35c4fa0f2170df77597979c1a8fdf11bda9ef1fe306401b7151a6bfc1e5c4d1",
+  "styles": [
+    "styles/base.css",
+    "styles/race.css",
+    "styles/launch.css",
+    "styles/studio.css",
+    "styles/live-layout.css",
+    "styles/team-select.css",
+    "styles/workshop.css"
+  ],
+  "images": [
+    {
+      "path": "assets/backgrounds/studio-event.webp",
+      "label": "Studio-Veranstaltungsbild",
+      "mime": "image/webp",
+      "bytes": 69252,
+      "sha256": "8a521376801de055665612273d3395e81ef3a7884c503a40cf6b84078105b115"
+    },
+    {
+      "path": "assets/cars/team-t01.webp",
+      "label": "t01",
+      "mime": "image/webp",
+      "bytes": 186920,
+      "sha256": "80f1823aa549e837bb98e57fd436b96c2a94cb18b6ece1c10992c9d9fb795213"
+    },
+    {
+      "path": "assets/cars/team-t02.webp",
+      "label": "t02",
+      "mime": "image/webp",
+      "bytes": 93066,
+      "sha256": "4d2ae40cca664ad4c7ce9298ced95ea4a325a256894032f7c43b0bb680a722d0"
+    },
+    {
+      "path": "assets/cars/team-t03.webp",
+      "label": "t03",
+      "mime": "image/webp",
+      "bytes": 94252,
+      "sha256": "f576632a88a32607dbc8f1217f1b9b00f74b8fb626289854e96328ec7288b2f2"
+    },
+    {
+      "path": "assets/cars/team-t04.webp",
+      "label": "t04",
+      "mime": "image/webp",
+      "bytes": 97520,
+      "sha256": "5db99a94fd4ea929150c158a996d92887536d7312b84de17dd640b1f5a808bce"
+    },
+    {
+      "path": "assets/cars/team-t05.webp",
+      "label": "t05",
+      "mime": "image/webp",
+      "bytes": 97684,
+      "sha256": "a0659ebc7cc5abc79d0bc0c04a50d96218a22b508c6d795edff92c124a7764e1"
+    },
+    {
+      "path": "assets/cars/team-t06.webp",
+      "label": "t06",
+      "mime": "image/webp",
+      "bytes": 97788,
+      "sha256": "48783cad8093464202739d4282efa770506949cd7f9e308bd0a700a2f6e9e508"
+    },
+    {
+      "path": "assets/cars/team-t07.webp",
+      "label": "t07",
+      "mime": "image/webp",
+      "bytes": 95480,
+      "sha256": "9bcb60484bd71e4f3fbad85831f72a2669e2744bf2b597c49a5f28eed10d6cb3"
+    },
+    {
+      "path": "assets/cars/team-t08.webp",
+      "label": "t08",
+      "mime": "image/webp",
+      "bytes": 97350,
+      "sha256": "724da7d9cd939f595485f914c434c8cb0ba98fba176c5ab0fe2f2be948bac81a"
+    },
+    {
+      "path": "assets/cars/team-t09.webp",
+      "label": "t09",
+      "mime": "image/webp",
+      "bytes": 93926,
+      "sha256": "87b35d2a6c0ce443b8275b755b38b4dc687c028a2c2547d0bb66ecd2c5178219"
+    },
+    {
+      "path": "assets/cars/team-t10.webp",
+      "label": "t10",
+      "mime": "image/webp",
+      "bytes": 95920,
+      "sha256": "78c7b7a4407dfc2d36789a9b1c2926b13ecaddbbd6d9b2377d1ca1d646413ead"
+    },
+    {
+      "path": "assets/cars/team-t11.webp",
+      "label": "t11",
+      "mime": "image/webp",
+      "bytes": 95634,
+      "sha256": "66bcf480eb511769df398fd66f171836c8cce1320c858fa5d36bb61e55883d6e"
+    },
+    {
+      "path": "assets/cars/team-t12.webp",
+      "label": "t12",
+      "mime": "image/webp",
+      "bytes": 94514,
+      "sha256": "c448932a1090d87fc25e4e665963c54308a828b56618b1b6e1f7ad918c8525ff"
+    },
+    {
+      "path": "assets/cars/team-t13.webp",
+      "label": "t13",
+      "mime": "image/webp",
+      "bytes": 93516,
+      "sha256": "15203f9d4d0f13e0abe84dc4d461d377331317377661ef8e42adf4551476c17b"
+    },
+    {
+      "path": "assets/tracks/01-bahrain.webp",
+      "label": "Bahrain",
+      "mime": "image/webp",
+      "bytes": 72726,
+      "sha256": "e98af0f08c5f7190ea32ed436f81dd309f3971868a4e6a30d5640d2a2fc62a3f"
+    },
+    {
+      "path": "assets/tracks/02-luxemburg.webp",
+      "label": "Luxemburg",
+      "mime": "image/webp",
+      "bytes": 78758,
+      "sha256": "c4050cff75eab098dd3491f431cf1c68ee00d25b4a17ed4c8ffa2d10467d81ad"
+    },
+    {
+      "path": "assets/tracks/03-kanada.webp",
+      "label": "Kanada",
+      "mime": "image/webp",
+      "bytes": 67048,
+      "sha256": "82c5affee25d2cbffa30abe225e8368d409ffc4f6323924ed1bccf44417bbac2"
+    },
+    {
+      "path": "assets/tracks/04-frankreich.webp",
+      "label": "Frankreich",
+      "mime": "image/webp",
+      "bytes": 97278,
+      "sha256": "1c0391d1409ffa9a7ef884e93cfeaf527fe0afae3eacb8e42efa019e87b72ccf"
+    },
+    {
+      "path": "assets/tracks/05-schweiz.webp",
+      "label": "Schweiz",
+      "mime": "image/webp",
+      "bytes": 73296,
+      "sha256": "9bc9482e2c70956dd5f6e5a35e7f31accad37ddd9ace27619c2e773bbe1d9196"
+    },
+    {
+      "path": "assets/tracks/06-portugal.webp",
+      "label": "Portugal",
+      "mime": "image/webp",
+      "bytes": 69118,
+      "sha256": "48be6a43a14d1bb8102d2a76055f1a8349fdf9525b63271869a10662e4bf17d5"
+    },
+    {
+      "path": "assets/tracks/07-indien.webp",
+      "label": "Indien",
+      "mime": "image/webp",
+      "bytes": 81470,
+      "sha256": "f0810726a5d4ab08c4d337e97144f270efe43ff3b97aee36b696b968fbbcf40d"
+    },
+    {
+      "path": "assets/tracks/08-brasilien.webp",
+      "label": "Brasilien",
+      "mime": "image/webp",
+      "bytes": 96220,
+      "sha256": "c55b4af46b62af3c5dac1048b92642bb82edd3eb337585a4cfe0b5c13882f3df"
+    },
+    {
+      "path": "assets/tracks/09-südafrika.webp",
+      "label": "Südafrika",
+      "mime": "image/webp",
+      "bytes": 85132,
+      "sha256": "0b8da1c4127e7c46260010b2e369eb415680b1f548e5d4acfa5ab70ab8552126"
+    },
+    {
+      "path": "assets/tracks/10-korea.webp",
+      "label": "Korea",
+      "mime": "image/webp",
+      "bytes": 82934,
+      "sha256": "c3b50d59973dc20eaf7db923e35da1e8ae30da30975fbbba0d2ed6d0cacca631"
+    },
+    {
+      "path": "assets/tracks/11-usa.webp",
+      "label": "USA",
+      "mime": "image/webp",
+      "bytes": 68322,
+      "sha256": "e9d0ff0f1c2e1c2f4a17a8287a03687bd3ed61a8f7f4e3cf1377d2aaf8e93ff2"
+    },
+    {
+      "path": "assets/tracks/12-belgien.webp",
+      "label": "Belgien",
+      "mime": "image/webp",
+      "bytes": 85600,
+      "sha256": "aff445e806334e824db4891b0bd17814ba4ba9095e548d81569524b7268537e4"
+    },
+    {
+      "path": "assets/tracks/13-schweden.webp",
+      "label": "Schweden",
+      "mime": "image/webp",
+      "bytes": 76006,
+      "sha256": "f0748f293dd43380eb9d0e22c0c6757574fba6620c1e579a1be14115193240e9"
+    },
+    {
+      "path": "assets/tracks/14-deutschland.webp",
+      "label": "Deutschland",
+      "mime": "image/webp",
+      "bytes": 89000,
+      "sha256": "c07c2023c0d9ac96190a3f4749f829060a632a1856842c6a8997948fb2207639"
+    },
+    {
+      "path": "assets/tracks/15-japan.webp",
+      "label": "Japan",
+      "mime": "image/webp",
+      "bytes": 67312,
+      "sha256": "7b99f61c9f8a21a92ef55ce7fa931ed885625269f69a35b1d6fcd48d90e546cd"
+    },
+    {
+      "path": "assets/tracks/16-china.webp",
+      "label": "China",
+      "mime": "image/webp",
+      "bytes": 86360,
+      "sha256": "99b70d5b106844eb45119594248bdfaa50461ed0771044713bf12b49d38b7aa8"
+    },
+    {
+      "path": "assets/tracks/17-russland.webp",
+      "label": "Russland",
+      "mime": "image/webp",
+      "bytes": 93356,
+      "sha256": "f2594fc9976109dca000dddbb926b8d0851dd6050b5fdd444095e381f8fa0353"
+    },
+    {
+      "path": "assets/tracks/18-australien.webp",
+      "label": "Australien",
+      "mime": "image/webp",
+      "bytes": 111526,
+      "sha256": "7a7dd2dfb8c20c313001df785f36de54f81a70c2764a927675d424bb5a974a7d"
+    },
+    {
+      "path": "assets/tracks/19-england.webp",
+      "label": "England",
+      "mime": "image/webp",
+      "bytes": 87596,
+      "sha256": "6aaf112e41909a6dcf05b12b20e8a07bab9191141999983c38d8084a5a55056e"
+    },
+    {
+      "path": "assets/tracks/20-italien.webp",
+      "label": "Italien",
+      "mime": "image/webp",
+      "bytes": 83422,
+      "sha256": "088ba80e913cbad4094efe44c4759d248d9e14e0914e43ca0da6d9a7dabb616d"
+    },
+    {
+      "path": "assets/tracks/21-ungarn.webp",
+      "label": "Ungarn",
+      "mime": "image/webp",
+      "bytes": 95330,
+      "sha256": "9e490e698007249ca96e3cd21121cb1eb55834b55992e229da2008fae6dcf7ca"
+    },
+    {
+      "path": "assets/tracks/22-abu-dhabi.webp",
+      "label": "Abu Dhabi",
+      "mime": "image/webp",
+      "bytes": 130474,
+      "sha256": "0df7378dd596973166d0c3bbe093c1fe16dc1f3f02495527eba863634c41c00b"
+    }
+  ],
+  "styleTail": "\n"
+}

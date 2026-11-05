@@ -4,8 +4,11 @@ Browser-Rennspiel mit Teammanagement, 13 Rennställen, 92 Fahrern und 22 Origina
 
 [Spiel auf GitHub Pages](https://mswierczok.github.io/carpet-grand-prix/)
 
-Das Spiel startet aus `index.html` ohne Installation oder Build. Node-Werkzeuge
-dienen ausschließlich der Entwicklung und den Tests.
+Das Spiel startet aus `index.html` mit den Ordnern `styles/` und `assets/`, ohne
+Installation oder Build. Node-Werkzeuge dienen ausschließlich Entwicklung und Tests.
+Für die bisherige Nutzung als einzelne Offline-Datei stellt die automatische Prüfung
+das Download-Artefakt **carpet-grand-prix-offline** bereit: entpacken und die enthaltene
+HTML-Datei öffnen. [Dateiaufteilung und Offline-Ausgabe](docs/ASSETS.md)
 
 ## Entwicklung durch natürlichsprachliche Aufträge
 
@@ -17,6 +20,7 @@ Balancing benötigen eine vorherige Zustimmung.
 - [Bestand und Referenz](docs/BASELINE.md)
 - [Zielstruktur, Umbauplan und Risiken](docs/ARCHITECTURE.md)
 - [Tests](docs/TESTING.md)
+- [CSS, Bilder und Offline-Ausgabe](docs/ASSETS.md)
 - [Spielstandformat](docs/SAVE_FORMAT.md)
 - [Arbeitsablauf und Freigabe](docs/WORKFLOW.md)
 - [Verbindliche Entwicklerregeln](AGENTS.md)

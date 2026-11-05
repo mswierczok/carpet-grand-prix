@@ -1,0 +1,144 @@
+
+/* v0.9.12 · unified studio interface, gameplay functions remain unchanged */
+:root{--ink:#17202a;--muted:#66717c;--pine:#f7f7f8;--dark:#eef0f3;--panel:#ffffff;--panel2:#f3f5f7;--line:#dce0e6;--gold:#ff7c22;--paper:#101217;--warn:#b84c39;--mint:#1d8f93}
+body{background:radial-gradient(circle at 50% 0,#434650,#14161d 65%,#0a0a0e);color:#edf1f5;padding:20px 16px 35px;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.app-frame{max-width:1770px;min-height:calc(100vh - 50px);margin:0 auto;display:grid;grid-template-columns:104px minmax(0,1fr);gap:18px;background:#0e1015;padding:16px;border:3px solid #585a64;border-radius:42px;box-shadow:0 0 0 4px #15161c,0 22px 90px #000a,inset 0 0 0 1px #8f909a44}
+.app-sidebar{grid-column:1;display:flex;flex-direction:column;align-items:center;background:#fff;border:none;border-radius:34px;padding:19px 8px 12px;min-width:0;position:sticky;top:20px;align-self:start;min-height:min(920px,calc(100vh - 48px));color:#14191d;box-shadow:inset 0 1px 8px #00000009}
+.rail-brand{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;margin-bottom:20px}
+.rail-symbol{width:62px;height:62px;border-radius:50%;background:#12151c;color:white;display:grid;place-items:center;font-size:40px;font-weight:900;line-height:1}
+.rail-brand-text{font-size:10px;letter-spacing:.22em;font-weight:900;color:#15181d}
+.app-sidebar nav{width:100%;display:flex;flex-direction:column;gap:5px;overflow:visible;padding:4px 0;margin:0;align-items:stretch}
+.app-sidebar nav button{border:0;background:transparent;border-radius:19px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:12px 3px;white-space:normal;color:#273038;font-size:14px;min-height:73px;transition:background .15s,color .15s}
+.app-sidebar nav button>span{font-size:26px;line-height:1}
+.app-sidebar nav button small{font-size:10px;font-weight:700;letter-spacing:-.015em}
+.app-sidebar nav button:hover{background:#f2f3f5}
+.app-sidebar nav button.active{background:#e9ebef;border:none;color:#13171c;font-weight:800}
+.app-sidebar nav button.active:before{content:"";height:26px;width:3px;background:#ff7c22;border-radius:4px;position:absolute;left:8px}
+.rail-bottom{display:flex;flex-direction:column;align-items:center;margin-top:auto;gap:12px;width:100%}
+.rail-utility{width:100%;border:0;background:transparent;border-radius:14px;display:flex;flex-direction:column;align-items:center;gap:1px;color:#333c47;padding:8px}
+.rail-utility>span{font-size:22px}.rail-utility small{font-size:10px;font-weight:750}
+.rail-avatar{width:53px;height:53px;border-radius:50%;display:grid;place-items:center;background:#e7e9eb;border:4px solid #f5f6f6;font-size:26px}
+.shell{grid-column:2;min-width:0;padding:5px 8px 20px;max-width:none;margin:0}
+.app-topbar{display:flex;justify-content:space-between;gap:12px;align-items:center;min-height:57px;padding:2px 7px 13px}
+.app-wordmark{color:#fbfbfd;font-size:20px;line-height:1.05;font-weight:950;letter-spacing:-.06em;font-style:italic;white-space:nowrap}
+.app-wordmark em{color:#ff8a38;font-style:inherit}
+.app-wordmark small{display:block;letter-spacing:.21em;color:#aeb3bb;font-style:normal;font-size:8px;font-weight:650;margin:4px 0 0 35px}
+.wordmark-flag{display:inline-block;color:#fff;font-style:normal;font-size:28px;vertical-align:middle;margin-right:5px}
+.app-actions{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.top-season{color:#f2f2f2;font-size:11px;letter-spacing:.08em;font-weight:800}
+.app-actions .mode{background:#252831;border-radius:999px;display:flex;padding:4px;gap:3px}
+.app-actions .mode button{background:transparent;border:0;border-radius:999px;color:#d5d6db;font-size:11px;padding:8px 10px}
+.app-actions .mode button.active{color:#151821;background:white;font-weight:900}
+.topline{margin:0 0 14px;padding:0 6px;align-items:end}
+.topline h1{font:800 clamp(21px,2.4vw,30px)/1.15 Inter,ui-sans-serif,sans-serif;color:#fff;letter-spacing:-.04em}
+.kicker{color:#ff9d55;font-size:10px;letter-spacing:.17em}
+.meta{gap:7px}.chip{background:#2b303b;border:1px solid #414754;border-radius:999px;color:#eceff6;padding:7px 10px;font-size:10px;font-weight:650}.chip strong{color:#fff}
+.studio-dashboard{display:grid;grid-template-columns:minmax(0,1fr) minmax(290px,330px);gap:17px;align-items:start}
+.studio-center,.studio-right,.studio-extras{min-width:0;display:flex;flex-direction:column;gap:14px}
+.studio-race-card{background:#161a22;border:1px solid #323641;border-radius:29px;padding:12px 12px 14px;overflow:hidden;position:relative}
+.studio-race-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#fff;padding:7px 9px 13px}
+.studio-eyebrow{color:#b8c1c9;font-size:10px;letter-spacing:.15em;font-weight:900}
+.studio-race-heading h2{font-size:clamp(18px,2.1vw,25px);margin:5px 0 0;font-weight:850;letter-spacing:-.035em;color:#fff}
+.studio-live-status{border-radius:999px;background:#32343d;border:1px solid #51545f;color:#e4e6ea;font-size:10px;letter-spacing:.1em;font-weight:800;padding:8px 10px;white-space:nowrap}
+.studio-race-card .racebox{border:2px solid #303741;border-radius:22px;background:#cabb9d;box-shadow:0 0 0 1px #ffffff12;overflow:hidden}
+.studio-race-card .racebox canvas{aspect-ratio:1180/740;max-height:650px}
+.studio-race-card .raceoverlay:not(.summary){background:#121925e6;border:1px solid #ffffff3b;border-radius:999px;padding:7px 12px;color:#fff;max-width:80%;font-size:11px}
+.studio-race-card .raceoverlay.summary{background:#121822f5;color:#fff;border-color:#ffb15f;z-index:3}
+.studio-race-card .raceoverlay.summary .podium-title,.studio-race-card .raceoverlay.summary .driver-name,.studio-race-card .raceoverlay.summary .fastest-lap strong{color:#fff}
+.studio-race-card .raceoverlay.summary .team-name{color:#d5d8df}
+.studio-race-card .raceoverlay.summary .place{color:#cfd4df}
+.studio-weekend{background:#fff;border-radius:30px;padding:22px;color:#141a20;box-shadow:0 8px 24px #00000022}
+.studio-weekend .studio-eyebrow{color:#5d666e}
+.studio-weekend-title{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.studio-weekend-title h2{font-size:clamp(24px,2vw,32px);font-style:italic;letter-spacing:-.04em;margin:4px 0 12px;line-height:1}
+.studio-weekend-title span{font-size:11px;color:#66717c;font-weight:750}
+.studio-weekend .card{border:none;background:transparent;padding:0;margin:0}
+.studio-weekend .card h2{font-size:21px;font-family:inherit;font-weight:850;color:#171b21}
+.studio-weekend .card .kicker{color:#ff7c22}
+.studio-weekend .card .small{color:#647180}
+.studio-weekend .buttons{margin-top:8px}
+.studio-weekend .btn{background:#e9ebef;color:#141821;border:0;border-radius:15px;padding:11px 15px}
+.studio-weekend .btn.primary{color:#fff;background:#161920}
+.studio-weekend #raceControls{margin-top:15px;padding-top:14px;border-top:1px solid #e5e8ed;color:#202a32}
+.studio-weekend #raceControls .small,.studio-weekend #raceEvents .small{color:#68737d}
+.studio-weekend .race-events{border-color:#dce0e6;color:#29333c}
+.studio-shortcuts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:18px}
+.studio-shortcuts button{border:0;background:#f0f1f4;color:#17191d;padding:12px 5px;border-radius:20px;display:flex;flex-direction:column;align-items:center;gap:8px;font-weight:800;font-size:11px;min-height:85px}
+.studio-shortcuts button:hover{background:#e2e5e9}.shortcut-icon{font-size:24px;line-height:1.15}
+.studio-widget{background:#fff;border-radius:28px;color:#161b21;padding:19px;min-width:0;box-shadow:0 8px 24px #00000020}
+.widget-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.widget-heading h3{margin:0;font-size:14px;font-weight:900;letter-spacing:.005em}
+.widget-heading button{border:0;background:transparent;font-weight:800;font-size:21px;color:#171b22;line-height:1}
+.widget-sub{font-size:11px;color:#68737e;margin:4px 0 12px}
+.studio-leaders{display:flex;flex-direction:column;gap:2px}
+.leader-row{min-height:45px;display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:14px;background:#f2f3f6;color:#19212a;font-size:12px}
+.leader-rank{width:23px;height:23px;flex:0 0 23px;display:grid;place-items:center;border-radius:7px;background:#dedfe5;font-weight:900}
+.leader-row:nth-child(1) .leader-rank{background:#ffcb61}.leader-row:nth-child(2) .leader-rank{background:#d4dee6}.leader-row:nth-child(3) .leader-rank{background:#e4b593}
+.leader-color{width:5px;align-self:stretch;min-height:22px;border-radius:8px}
+.leader-name{font-weight:800;flex:1;min-width:0;overflow-wrap:anywhere}
+.leader-row>b{white-space:nowrap;font-size:11px}
+.studio-widget-footer{display:flex;justify-content:space-between;gap:12px;font-size:10px;color:#7a8691;margin-top:13px;align-items:center}
+.studio-widget-footer button{background:none;border:0;color:#232934;font-weight:850;font-size:10px}
+.studio-event-image{height:180px;border-radius:20px;overflow:hidden;margin-top:13px;background-image:linear-gradient(0deg,#080d18df,#080d181c 67%),url("../assets/backgrounds/studio-event.webp");background-size:cover;background-position:center}
+.studio-event-inner{display:flex;flex-direction:column;justify-content:flex-end;height:100%;padding:18px;color:#fff;gap:5px}
+.event-index{font-size:9px;font-weight:850;letter-spacing:.15em;color:#e5e3df}
+.studio-event-inner strong{font-size:21px;line-height:1.1;font-weight:900;text-shadow:0 1px 8px #000a}
+.studio-event-inner>span:last-child{font-size:11px;color:#f0f0f0}
+.studio-event-footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#424c56;font-weight:750;font-size:10px;padding:11px 2px 0}
+.studio-team-photo{margin-top:14px;width:100%;height:165px;background:linear-gradient(120deg,#e7ecf2,#f7f7f8);border-radius:20px;overflow:hidden;position:relative;display:flex;justify-content:center;align-items:center}
+.studio-team-photo img{height:100%;width:100%;object-fit:cover;object-position:50% 48%}
+.studio-team-title{display:flex;align-items:center;gap:8px;margin:12px 0 3px;font-size:17px;line-height:1.2}
+.studio-team-title i{display:block;width:7px;height:25px;border-radius:3px}
+.studio-team-driver{font-size:11px;color:#687480;line-height:1.4;min-height:16px}
+.studio-team-strength{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#6c7884;margin:12px 0 8px;font-weight:750}
+.studio-team-strength b{color:#1c2430}
+.studio-progress{background:#e4e8ed;border-radius:14px;height:9px;overflow:hidden}
+.studio-progress span{display:block;height:100%;border-radius:14px}
+.studio-extras{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.studio-extras>.card{min-width:0}.studio-extras>.card:nth-child(1),.studio-extras>.card:nth-child(2){grid-column:span 2}
+#content.other-view{padding-top:5px}
+#content.other-view .card{background:white;border:1px solid #e5e8eb;border-radius:23px;color:#1d252e;box-shadow:0 8px 24px #00000020}
+#content.other-view .card h2{font-family:inherit;font-weight:850;color:#1c222a}
+#content.other-view .card h3{color:#44515c}
+#content.other-view .card .small{color:#62707d}
+#content.other-view .part,#content.other-view .driver,#content.other-view .record{background:#f2f3f6;color:#1d232a;border-color:#d7dde4}
+#content.other-view .part h3{color:#1c2027}
+#content.other-view .results th{color:#737d86}
+#content.other-view .results td{border-bottom-color:#e6e8ea}
+#content.other-view .trackcard{background:#f2f4f7;color:#21252c;border:1px solid #d5dbe2}
+#content.other-view .trackcard.on{border:2px solid #ff7c22;background:#f8f1e9}
+#content.other-view .btn,.studio-extras .btn{background:#141a21;color:#fff;border:0;border-radius:12px}
+#content.other-view .btn.primary,.studio-extras .btn.primary{background:#ff7c22;color:#131820}
+#content.other-view select,#content.other-view input[type=text],#content.other-view .segment{background:#edf0f3;border:1px solid #d2d8df;color:#27313c}
+#content.other-view .segment button{color:#333b44}
+#content.other-view .segment button.active{background:#141a21;color:white}
+#content.other-view .news{border-color:#ff7c22}
+#content.other-view .news time,#content.other-view .news p{color:#636e79}
+#content.other-view .stat,#content.other-view .notice{border-color:#dbe1e8;background:#f3f4f6;color:#333f4a}
+#content.other-view .stat .num{color:#121920}
+#content.other-view .bar{background:#e2e7ed}
+#content.other-view .bar span{background:linear-gradient(90deg,#ff7c22,#ffd290)}
+.studio-extras .card{background:#fff;color:#222d36;border:1px solid #e0e5ea;border-radius:23px}
+.studio-extras .card h2{color:#192028;font-weight:800;font-family:inherit}
+.studio-extras .card h3{color:#515b64}
+.studio-extras .card .small,.studio-extras .part p{color:#64727e}
+.studio-extras .stat{border-color:#dce2e6;background:#f7f8fa}.studio-extras .stat .num{color:#171d23}
+.studio-extras .notice{background:#f9eadc;border:1px solid #e9cbae;color:#44352a}
+.studio-extras .segment{background:#eaedf1;border:1px solid #dbe1e5}
+.studio-extras .segment button{color:#4e5c69}.studio-extras .segment button.active{background:#12171e;color:white}
+.studio-extras .results th,.studio-extras .results td{border-color:#e5eaee}.studio-extras .results th{color:#7a858e}.studio-extras .news p,.studio-extras .news time{color:#75808c}
+.race-stage.is-live{grid-template-columns:265px minmax(0,1fr)}
+.race-timing{border:1px solid #434a56;border-radius:17px;background:#151921;color:#f3f6f7;min-width:0}
+.race-timing-head{background:#1d2430;border-color:#384050}
+.race-timing-row.focused{background:#315662!important}
+.footer{color:#78808c;text-align:center;font-size:9px;letter-spacing:.1em}
+#startScreen{background:radial-gradient(circle at 44% 10%,#494d5b,#12141b 60%,#08080c)}
+.launch-panel{background:linear-gradient(135deg,#171a23ee,#101217f5);border:1px solid #777b8555;border-top:2px solid #ff8a39;border-radius:30px;color:#f7f7fa}
+.launch-btn.primary{background:#f2f2f4;color:#11141b;border-color:#f2f2f4}
+.launch-btn{background:#262b34;color:#eef2f4;border:1px solid #4e5661;border-radius:16px}
+.launch-kicker,.launch-back{color:#ff9957}.launch-logo{font-family:Inter,system-ui,sans-serif;font-weight:950;font-style:italic;letter-spacing:-.035em}
+.launch-note{color:#c9d1d8}
+@media(max-width:1390px){.studio-dashboard{grid-template-columns:minmax(0,1fr) 286px}.studio-widget{padding:14px}.race-stage.is-live{grid-template-columns:235px minmax(0,1fr)}}
+@media(max-width:1120px){.studio-dashboard{grid-template-columns:minmax(0,1fr)}.studio-right{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.studio-event-image{height:135px}.studio-widget{padding:14px}.studio-team-photo{height:135px}}
+@media(max-width:800px){body{padding:7px}.app-frame{grid-template-columns:72px minmax(0,1fr);padding:9px;gap:9px;border-radius:25px}.app-sidebar{min-height:620px;border-radius:22px;padding:12px 4px;top:9px}.app-sidebar nav button{min-height:61px;padding:7px 1px}.app-sidebar nav button>span{font-size:22px}.app-sidebar nav button small{font-size:9px}.app-sidebar nav button.active:before{left:2px}.rail-symbol{width:46px;height:46px;font-size:29px}.rail-avatar{width:39px;height:39px;font-size:19px}.shell{padding:4px 2px 12px}.app-topbar{flex-wrap:wrap}.app-wordmark{font-size:15px}.studio-right{grid-template-columns:1fr 1fr}.studio-right>.studio-team{grid-column:span 2}.studio-race-card{padding:8px;border-radius:20px}.studio-extras{display:flex;flex-direction:column}.studio-extras>.card:nth-child(1),.studio-extras>.card:nth-child(2){grid-column:auto}.race-stage.is-live{grid-template-columns:1fr}.race-timing{max-height:280px;overflow:auto}}
+@media(max-width:540px){.app-frame{display:block;padding:7px;border-radius:22px}.app-sidebar{position:relative;top:auto;min-height:auto;width:100%;padding:7px 7px 5px;border-radius:17px;display:flex;flex-direction:row;gap:5px;align-items:center;margin-bottom:10px}.rail-brand{width:35px;margin:0;flex:0 0 35px}.rail-symbol{width:32px;height:32px;font-size:21px}.rail-brand-text{display:none}.app-sidebar nav{display:flex;flex-direction:row;justify-content:space-evenly;gap:1px;flex:1}.app-sidebar nav button{min-height:42px;flex:1;padding:4px 1px;border-radius:11px}.app-sidebar nav button>span{font-size:16px}.app-sidebar nav button small{font-size:8px}.app-sidebar nav button.active:before{display:none}.rail-bottom{width:33px;flex:0 0 33px;margin:0}.rail-utility{padding:4px}.rail-utility>span{font-size:19px}.rail-utility small,.rail-avatar{display:none}.app-topbar{padding:5px 4px 12px}.app-actions{gap:4px}.app-actions .mode button{font-size:9px;padding:6px}.top-season{font-size:9px}.topline{gap:4px}.topline h1{font-size:21px}.meta .chip{font-size:9px;padding:4px 6px}.studio-race-heading h2{font-size:17px}.studio-race-card .raceoverlay:not(.summary){font-size:9px;padding:4px 6px}.studio-weekend{border-radius:20px;padding:14px}.studio-shortcuts{grid-template-columns:repeat(2,1fr)}.studio-shortcuts button{min-height:65px}.studio-right{display:flex;flex-direction:column}.studio-widget{border-radius:20px}.studio-event-image{height:150px}.studio-extras>.card{padding:14px}}

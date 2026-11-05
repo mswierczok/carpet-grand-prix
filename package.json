@@ -7,6 +7,7 @@
     "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
   },
   "scripts": {
+    "build:offline": "node scripts/build-offline.js",
     "test": "vitest run",
     "test:browser": "playwright test",
     "test:all": "npm test && npm run test:browser",
@@ -17,6 +18,8 @@
   },
   "devDependencies": {
     "@playwright/test": "1.64.1",
+    "pixelmatch": "8.0.0",
+    "pngjs": "7.0.0",
     "vitest": "5.1.0"
   }
 }
