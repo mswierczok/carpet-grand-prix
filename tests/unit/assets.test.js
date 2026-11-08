@@ -38,11 +38,15 @@ it('erhält CSS-Kaskade, Spielcode und Daten beim Zusammenbauen vollständig', (
   const workshopBlock = / \/\/ shared-workshop-sprite:start\n[\s\S]*? \/\/ shared-workshop-sprite:end\n/;
   expect(normalized.match(workshopBlock)).not.toBeNull();
   normalized = normalized.replace(workshopBlock, '');
-  for (const marker of ['race-camera', 'race-camera-restore']) {
+  for (const marker of ['race-camera', 'race-camera-restore', 'race-camera-layout']) {
     const block = new RegExp(` \\/\\/ ${marker}:start\\n[\\s\\S]*? \\/\\/ ${marker}:end\\n`);
     expect(normalized.match(block)).not.toBeNull();
     normalized = normalized.replace(block, '');
   }
+  expect(normalized).toContain('y<c.height-35;');
+  normalized = normalized.replace('y<c.height-35;', 'y<705;');
+  expect(normalized).toContain('590,window.CGPRaceCamera?.resize?c.height-8:716);');
+  normalized = normalized.replace('590,window.CGPRaceCamera?.resize?c.height-8:716);', '590,716);');
   const originalImages = [...originalHTML().matchAll(/data:image\/[\w+.-]+;base64,[A-Za-z0-9+/=]+/g)];
   manifest.images.forEach((image, index) => {
     if (!authoredCars.has(image.path)) return;

@@ -15,7 +15,8 @@ export function createOfflineHTML() {
   html = html.replace(links, `<style>${css}</style>`);
   for (const name of ['race-sprites', 'race-camera']) {
     const path = `src/rendering/${name}.js`;
-    html = html.replace(`<script src="./${path}"></script>`, () =>
+    const version = name === 'race-camera' ? '?v=2' : '';
+    html = html.replace(`<script src="./${path}${version}"></script>`, () =>
       `<script>\n${readFileSync(new URL(path, root), 'utf8')}\n</script>`);
   }
   for (const image of manifest.images) {

@@ -66,3 +66,29 @@ it('passt auch das bisherige Ersatzoval ohne Quelldaten-Modell ein', () => {
   expect(c.scale).toBeGreaterThan(1);
   expect(Number.isFinite(c.x) && Number.isFinite(c.y)).toBe(true);
 });
+
+it('passt die Rennfläche an jede Strecke an und nutzt bei Bahrain beide Achsen bis auf schmale Ränder', () => {
+  const { game } = createGame();
+  for (const track of game.trackDefs) {
+    const g = game.makeGeometry(track), before = JSON.stringify(g);
+    const canvas = { width: 1180, height: 740, style: {} };
+    const height = camera.resize(canvas, g, game.trackAt);
+    expect(height).toBeGreaterThanOrEqual(620);
+    expect(height).toBeLessThanOrEqual(1000);
+    expect(canvas.style).toEqual({ aspectRatio: 'auto', maxHeight: 'none' });
+    const c = camera.fit(g, canvas.width, height, game.trackAt), b = c.bounds;
+    expect(b.left * c.scale + c.x).toBeGreaterThanOrEqual(8 - 1e-8);
+    expect(b.right * c.scale + c.x).toBeLessThanOrEqual(1172 + 1e-8);
+    expect(b.top * c.scale + c.y).toBeGreaterThanOrEqual(48 - 1e-8);
+    expect(b.bottom * c.scale + c.y).toBeLessThanOrEqual(height - 24 + 1e-8);
+    if (track[0] === 'Bahrain') {
+      expect(c.scale).toBeGreaterThan(1.5);
+      expect(b.left * c.scale + c.x).toBeCloseTo(8, 6);
+      expect(b.right * c.scale + c.x).toBeCloseTo(1172, 6);
+      expect(b.top * c.scale + c.y).toBeLessThan(49);
+      expect(b.bottom * c.scale + c.y).toBeGreaterThan(height - 25);
+    }
+    expect(camera.resize(canvas, g, game.trackAt)).toBe(height);
+    expect(JSON.stringify(g)).toBe(before);
+  }
+});

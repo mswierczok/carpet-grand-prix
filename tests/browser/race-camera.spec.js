@@ -24,7 +24,7 @@ for (const name of ['initial', 'activeQualifying', 'activeRace']) {
     await page.locator('[data-launch="load-view"]').click();
     await page.locator('#launchResume').click();
     const c = await page.evaluate(() => globalThis.__cameraFrame);
-    expect(c.scale).toBeGreaterThan(1.25);
+    expect(c.scale).toBeGreaterThan(1.5);
     expect(c.matrix.a).toBeCloseTo(c.scale, 6);
     expect(c.matrix.d).toBeCloseTo(c.scale, 6);
     expect(c.matrix.e).toBeCloseTo(c.x, 5);
@@ -33,6 +33,17 @@ for (const name of ['initial', 'activeQualifying', 'activeRace']) {
       const m = canvas.getContext('2d').getTransform(); return { a: m.a, b: m.b, c: m.c, d: m.d, e: m.e, f: m.f };
     });
     expect(transform).toEqual({ a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 });
+    const size = await page.locator('#raceCanvas').evaluate(canvas => {
+      const r = canvas.getBoundingClientRect();
+      return { width: canvas.width, height: canvas.height, ratio: r.width / r.height, maxHeight: getComputedStyle(canvas).maxHeight };
+    });
+    expect(size.height).toBeGreaterThan(740);
+    expect(size.ratio).toBeCloseTo(size.width / size.height, 2);
+    expect(size.maxHeight).toBe('none');
+    expect(c.bounds.left * c.scale + c.x).toBeCloseTo(8, 5);
+    expect(c.bounds.right * c.scale + c.x).toBeCloseTo(size.width - 8, 5);
+    expect(c.bounds.top * c.scale + c.y).toBeGreaterThanOrEqual(48 - 1e-8);
+    expect(c.bounds.bottom * c.scale + c.y).toBeLessThanOrEqual(size.height - 24 + 1e-8);
     expect(await page.evaluate(() => globalThis.__cameraStorageChanged)).toBe(false);
     expect(errors).toEqual([]);
   });
