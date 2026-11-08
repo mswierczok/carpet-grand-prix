@@ -19,7 +19,7 @@ async function prepare(context, save = initial, legacySprites = false) {
       Object.defineProperty(globalThis, 'CGPRaceSprites', {
         configurable: true,
         get: () => renderer,
-        set: value => { renderer = { ...value, draw: () => false }; },
+        set: value => { renderer = { ...value, draw: () => false, svg: () => null }; },
       });
     }
   }, { save, legacySprites });

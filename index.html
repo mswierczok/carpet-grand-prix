@@ -940,6 +940,13 @@ function cgWorkshopCar(t){
  const brand=esc(t.name.replace(/\s+(Motorsport|Racing|GP|Grand Prix)$/i,'').split(/\s+/)[0].toUpperCase().slice(0,13));
  const acronym=esc(t.name.split(' ').map(x=>x.charAt(0)).join('').slice(0,3).toUpperCase());
  const saved=cgWorkshopLogos[t.id];
+ // shared-workshop-sprite:start
+ const sprite=window.CGPRaceSprites?.svg(t.id);
+ if(sprite){
+  const logo=saved&&/^data:image\/(png|webp|jpeg);base64,/.test(saved)?`<image data-cg-custom-logo="true" href="${saved}" x="176" y="510" width="48" height="48" preserveAspectRatio="xMidYMid meet"/>`:'';
+  return `<svg class="cg-garage-car" data-cg-team="${esc(t.id)}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 760" role="img" aria-label="Top-down Rennwagen von ${esc(t.name)}"><g transform="translate(200 380) rotate(-90) scale(2.25)">${sprite.replace('<svg ','<svg x="-140" y="-60" aria-hidden="true" ')}</g>${logo}</svg>`;
+ }
+ // shared-workshop-sprite:end
  const emblem=saved&&/^data:image\/(png|webp|jpeg);base64,/.test(saved)?`<image href="${saved}" x="162" y="328" width="76" height="76" preserveAspectRatio="xMidYMid meet"/>`:
    `<g transform="translate(200 362)"><circle r="26" fill="#061a22" stroke="${secondary}" stroke-width="3"/><text x="0" y="8" font-size="21" fill="#ffffff" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900">${acronym}</text></g>`;
  return `<svg class="cg-garage-car" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 760" role="img" aria-label="Top-down Rennwagen von ${esc(t.name)}">
