@@ -13,8 +13,11 @@ export function createOfflineHTML() {
   if (!html.includes(links)) throw Error('Reihenfolge der Stylesheets stimmt nicht mit dem Manifest überein.');
   const css = manifest.styles.map(path => readFileSync(new URL(path, root), 'utf8')).join('') + manifest.styleTail;
   html = html.replace(links, `<style>${css}</style>`);
-  html = html.replace('<script src="./src/rendering/race-sprites.js"></script>', () =>
-    `<script>\n${readFileSync(new URL('src/rendering/race-sprites.js', root), 'utf8')}\n</script>`);
+  for (const name of ['race-sprites', 'race-camera']) {
+    const path = `src/rendering/${name}.js`;
+    html = html.replace(`<script src="./${path}"></script>`, () =>
+      `<script>\n${readFileSync(new URL(path, root), 'utf8')}\n</script>`);
+  }
   for (const image of manifest.images) {
     const uri = `data:${image.mime};base64,${readFileSync(new URL(image.path, root)).toString('base64')}`;
     html = html.replaceAll(`../${image.path}`, uri).replaceAll(`./${image.path}`, uri);

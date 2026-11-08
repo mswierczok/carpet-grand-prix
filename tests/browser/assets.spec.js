@@ -15,6 +15,9 @@ async function prepare(context, save = initial, legacySprites = false) {
     // Keep historical UI screenshots meaningful outside the expressly approved
     // sprite change. Actual new sprites have dedicated browser/renderer tests.
     if (legacySprites) {
+      Object.defineProperty(globalThis, 'CGPRaceCamera', {
+        configurable: true, get: () => ({ apply() {} }), set() {},
+      });
       let renderer;
       Object.defineProperty(globalThis, 'CGPRaceSprites', {
         configurable: true,

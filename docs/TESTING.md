@@ -66,6 +66,15 @@ Eigene Desktop-/Mobiltests prüfen die gemeinsamen SVG-Flächen für alle 13 Tea
 Bereichsfokus, Logo-Upload/-Entfernung samt Neuladen und Paketentwicklung.
 Details in [WORKSHOP_CARS.md](WORKSHOP_CARS.md).
 
+Die Rennkamera hat eigene Tests für alle 22 unveränderten Streckengeometrien,
+Straßenränder, Boxengassen und Beschriftungen in zwei Canvas-Größen. Browsertests
+prüfen die tatsächliche Vergrößerung und das Zurücksetzen der Canvas-Transformation
+in Startaufstellung, Qualifying und Rennen auf Desktop und im Mobilformat.
+Historische Bildvergleiche deaktivieren ausschließlich im Test die neue Kamera;
+Spiel- und Offline-Tests verwenden den tatsächlichen Zoom. Der Quelltextvergleich
+nimmt nur die beiden markierten Kamera-Aufrufe zusätzlich aus.
+Details in [RACE_CAMERA.md](RACE_CAMERA.md).
+
 Standard-CI läuft auf PRs, Pushes nach `main` und manuell. Erweiterte CI läuft
 wöchentlich und manuell. Keine der Prüfungen veröffentlicht das Spiel. Fehlerberichte
 enthalten Traces und Screenshots. Visuelle Referenzen stammen aus dem unveränderten,

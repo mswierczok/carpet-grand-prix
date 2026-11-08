@@ -113,6 +113,7 @@
 <div id="toast" role="status"></div>
 <!-- race-sprites-preview:start -->
 <script src="./src/rendering/race-sprites.js"></script>
+<script src="./src/rendering/race-camera.js"></script>
 <!-- race-sprites-preview:end -->
 <script>
 (()=>{'use strict';
@@ -1802,6 +1803,9 @@ function drawRace(frac,results){
  ctx.clearRect(0,0,c.width,c.height);ctx.fillStyle='#cabb9d';ctx.fillRect(0,0,c.width,c.height);
  ctx.strokeStyle='#aa967526';ctx.lineWidth=1;for(let y=55;y<705;y+=16){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(c.width,y);ctx.stroke()}
  ctx.lineJoin='round';ctx.lineCap='round';
+ // race-camera:start
+ ctx.save();window.CGPRaceCamera?.apply(ctx,g,c.width,c.height,trackAt);
+ // race-camera:end
  traceTrack(ctx,g);ctx.strokeStyle='#ae9e83';ctx.lineWidth=g.width*1.28;ctx.stroke();
  traceTrack(ctx,g);ctx.strokeStyle='#f5e8cc';ctx.lineWidth=g.width*1.15;ctx.stroke();
  ctx.setLineDash([g.width*.4,g.width*.4]);traceTrack(ctx,g);ctx.strokeStyle='#ae5345';ctx.stroke();ctx.setLineDash([]);
@@ -1882,6 +1886,9 @@ function drawRace(frac,results){
    ctx.fillStyle='#ffe19c';ctx.font='bold 12px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('P1',0,-24.5);ctx.restore();
   }
  }
+ // race-camera-restore:start
+ ctx.restore();
+ // race-camera-restore:end
  ctx.fillStyle='#314e41';ctx.font='bold 20px Georgia';ctx.textAlign='center';ctx.fillText((track?.[0]||'Carpet')+(qualifying?' · '+qualifying.phase:' Grand Prix'),590,32);
  ctx.font='11px system-ui';ctx.fillText('Drei Wagen nebeneinander · S/Z → S1 → S2 → S/Z'+(g.bridges.length?' · '+g.bridges.length+' Überführung'+(g.bridges.length>1?'en':''):''),590,716);
 }
