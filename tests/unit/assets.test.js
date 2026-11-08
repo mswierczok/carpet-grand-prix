@@ -24,6 +24,15 @@ it('erhält CSS-Kaskade, Spielcode und Daten beim Zusammenbauen vollständig', (
   // image payloads in memory; all game code, data, CSS and other images must still
   // reconstruct the byte-identical original. Never regenerate the original oracle.
   let normalized = createOfflineHTML();
+  // Approved four-team rendering preview: exclude exactly its separate module
+  // and restore exactly the single former paint call. All simulation stays under
+  // the original byte-for-byte guard.
+  const previewBlock = /<!-- race-sprites-preview:start -->[\s\S]*?<!-- race-sprites-preview:end -->\n/;
+  expect(normalized.match(previewBlock)).not.toBeNull();
+  normalized = normalized.replace(previewBlock, '');
+  const previewCall = "if(!window.CGPRaceSprites?.draw(ctx,v.p,tm.id,g.width/64,!!v.r.dnf))";
+  expect(normalized.split(previewCall)).toHaveLength(2);
+  normalized = normalized.replace(previewCall, '');
   const originalImages = [...originalHTML().matchAll(/data:image\/[\w+.-]+;base64,[A-Za-z0-9+/=]+/g)];
   manifest.images.forEach((image, index) => {
     if (!authoredCars.has(image.path)) return;

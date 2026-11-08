@@ -11,6 +11,7 @@ Node.js 24 LTS verwenden. `npm ci`, anschließend einmalig
 | `npm run test:all` | Standardtests plus Browserprüfungen |
 | `npm run serve:test` | Anwendung nur unter `/carpet-grand-prix/` |
 | `npm run build:offline` | Eigenständige HTML-Datei mit allen Bildern und Styles unter `dist/` |
+| `npm run build:race-preview` | Vier reproduzierbare Rennsprite-SVGs und eigenständige Grafikvorschau unter `dist/` |
 
 Optional lokal `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` setzen.
 CI benutzt den zur Lockdatei gehörenden Playwright-Browser.
@@ -46,6 +47,15 @@ Für die zwölf ausdrücklich beauftragten Fahrzeuglackierungen normalisiert der
 Quelltext-Rückvergleich ausschließlich deren Bilddaten. Vauclair bleibt unverändert;
 zusätzliche Tests prüfen Fotozuordnung, Prüfsummen, Bildmaße, Ladebudget und alle
 13 Fahrzeuge in der Teamauswahl. Details in [CAR_LIVERIES.md](CAR_LIVERIES.md).
+Für die vier beauftragten Top-Down-Vorschauen entfernt der Quelltext-Rückvergleich
+zusätzlich exakt den neuen Script-Tag und den Renderer-Aufruf vor `drawToy()`.
+Der übrige Spielcode bleibt bytegenau abgesichert. Historische Bildvergleiche
+verwenden ausschließlich im Test den alten Fahrzeugrenderer; zusätzliche Tests
+prüfen die neuen Sprites im echten Renn-Canvas auf Desktop und Mobilformat,
+unveränderten Speicher beim Neuzeichnen und die separate Bewegungsvorschau.
+Die Offline-Prüfung verwendet ebenfalls den tatsächlichen neuen Renderer.
+Formgleichheit, unterschiedliche Muster, SVG-Reproduzierbarkeit und Canvas-Cache
+prüfen eigene Modultests. Details in [TOPDOWN_PREVIEW.md](TOPDOWN_PREVIEW.md).
 Der Testserver erzwingt den Pages-Projektpfad.
 
 Standard-CI läuft auf PRs, Pushes nach `main` und manuell. Erweiterte CI läuft

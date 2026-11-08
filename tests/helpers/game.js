@@ -23,7 +23,9 @@ export function createGame(seed = 12345) {
     confirm: () => true,
     __notice: message => notices.push(message),
   });
-  const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)];
+  // External presentation-only scripts have separate renderer tests. Execute only
+  // the original inline game IIFE in this simulation adapter.
+  const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)].filter(match => match[1].trim());
   if (scripts.length !== 1) throw Error('Testadapter an die neue Scriptstruktur anpassen.');
   const source = scripts[0][1];
   const end = source.lastIndexOf('})();');
