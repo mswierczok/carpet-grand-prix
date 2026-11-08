@@ -1,4 +1,4 @@
-/* Carpet Grand Prix: four-team rendering preview. No simulation/state access. */
+/* Carpet Grand Prix: shared top-down geometry for all teams. No simulation/state access. */
 (() => {
   'use strict';
   const bounds = Object.freeze({ x: -140, y: -60, width: 280, height: 120 });
@@ -17,6 +17,15 @@
     t04: Object.freeze({ name: 'Scuderia Bellarossa', body: '#e32329', wing: '#d71923', pod: '#ed2830', spine: '#ef3035', nose: '#e32329', accent: '#fff7ed', mark: '#f4c94e' }),
     t10: Object.freeze({ name: 'Panther Racing', body: '#567e16', wing: '#eff2dc', pod: '#f5f2df', spine: '#6d941f', nose: '#648c1d', accent: '#d62328', mark: '#d62328' }),
     t05: Object.freeze({ name: 'Eisenbach Motorsport', body: '#163c91', wing: '#fff0d3', pod: '#fff0d3', spine: '#19499e', nose: '#fff0d3', accent: '#fff0d3', mark: '#163c91' }),
+    t02: Object.freeze({ name: 'Alderwick Racing', body: '#191b1e', wing: '#17191c', pod: '#212326', spine: '#15171a', nose: '#17191c', accent: '#eee6d4', mark: '#d82c32' }),
+    t03: Object.freeze({ name: 'Falkenheim GP', body: '#c7cdd3', wing: '#a7afb9', pod: '#b9c1c9', spine: '#e3e7eb', nose: '#414b56', accent: '#eef2f5', mark: '#444e59' }),
+    t06: Object.freeze({ name: 'Orange', body: '#f76b08', wing: '#1d2022', pod: '#1d2022', spine: '#ff7b0b', nose: '#f76b08', accent: '#ff7b0b', mark: '#f5e9da' }),
+    t07: Object.freeze({ name: 'Ragos Racing', body: '#0875b5', wing: '#086ca5', pod: '#0875b5', spine: '#118ccd', nose: '#1085c4', accent: '#f5f2e8', mark: '#da2736' }),
+    t08: Object.freeze({ name: 'Mugan', body: '#f2c512', wing: '#efbc0b', pod: '#f6cd18', spine: '#e9a40d', nose: '#ffdb26', accent: '#1a2024', mark: '#a96c08' }),
+    t09: Object.freeze({ name: 'Lincoln', body: '#22262b', wing: '#25292e', pod: '#292d32', spine: '#363b42', nose: '#2b3036', accent: '#b9c2ca', mark: '#777f87' }),
+    t11: Object.freeze({ name: 'Rivage Racing', body: '#f7d41a', wing: '#f7d41a', pod: '#f7d41a', spine: '#174c9c', nose: '#ffe02b', accent: '#174c9c', mark: '#f7d41a' }),
+    t12: Object.freeze({ name: 'Scuderia Vespera', body: '#791e2c', wing: '#791e2c', pod: '#8e2332', spine: '#155339', nose: '#155339', accent: '#e9d8b1', mark: '#d5aa49' }),
+    t13: Object.freeze({ name: 'Redwood GP', body: '#f6f2e9', wing: '#f6f2e9', pod: '#fffbf2', spine: '#f1e8dc', nose: '#fffbf2', accent: '#79273a', mark: '#79273a' }),
   });
   const bitmapCache = new Map();
   const pathCache = new Map();
@@ -67,6 +76,71 @@
         out.push(path(`M99 ${side * 41}L121 ${side * 43}`, 'none', palette.body, 4));
       }
       out.push(path('M-134-19L-122-19L-122 19L-134 19Z', palette.body, 'none', 0));
+    } else if (id === 't02') {
+      // Ivory ovals and red underlines distinguish Alderwick from dark Lincoln.
+      for (const side of [-1, 1]) {
+        out.push(ellipse(-64, side * 36, 29, 11, palette.accent));
+        out.push(path(`M-85 ${side * 46}L-40 ${side * 43}`, 'none', palette.mark, 3));
+        out.push(path(`M-94 ${side * 49}L-26 ${side * 49}M48 ${side * 10}L122 ${side * 4}`, 'none', palette.accent, 1.8));
+      }
+    } else if (id === 't03') {
+      // Graphite shoulder wedges over a silver shell; abstract swept falcon mark.
+      for (const side of [-1, 1]) {
+        out.push(path(`M-103 ${side * 48}L-82 ${side * 48}L-12 ${side * 35}L-33 ${side * 26}Z`, palette.mark, 'none', 0));
+        out.push(path(`M-92 ${side * 30}L-46 ${side * 28}`, 'none', palette.accent, 2));
+      }
+      out.push(path('M65-7L96 0L65 7L77 0Z', palette.accent, 'none', 0));
+    } else if (id === 't06') {
+      // Orange upper shell, black sidepods, orange bands and leading wedges.
+      for (const side of [-1, 1]) {
+        out.push(path(`M-101 ${side * 34}L-26 ${side * 34}L-35 ${side * 43}L-101 ${side * 43}Z`, palette.accent, 'none', 0));
+        out.push(path(`M-31 ${side * 49}L-6 ${side * 39}L-31 ${side * 26}Z`, palette.accent, 'none', 0));
+      }
+      out.push(path('M-131-26L-131 26', 'none', palette.accent, 4));
+    } else if (id === 't07') {
+      // Large white pointed plaques with a red underline on metallic blue.
+      for (const side of [-1, 1]) {
+        out.push(path(`M-100 ${side * 29}L-27 ${side * 28}L-17 ${side * 35}L-42 ${side * 47}L-95 ${side * 47}Z`, palette.accent, 'none', 0));
+        out.push(path(`M-88 ${side * 43}L-48 ${side * 41}L-26 ${side * 34}`, 'none', palette.mark, 4));
+      }
+      out.push(path('M-132-22L-126-16L-132-10M-132 10L-126 16L-132 22', 'none', palette.accent, 3));
+    } else if (id === 't08') {
+      // Amber shoulders and black inlet/chevrons keep Mugan distinct from Rivage.
+      for (const side of [-1, 1]) {
+        out.push(path(`M-102 ${side * 47}L-32 ${side * 47}L-9 ${side * 38}L-34 ${side * 35}Z`, palette.mark, 'none', 0));
+        out.push(path(`M-36 ${side * 27}L-20 ${side * 29}L-29 ${side * 42}L-41 ${side * 40}Z`, palette.accent, 'none', 0));
+        out.push(path(`M-90 ${side * 29}L-80 ${side * 35}L-70 ${side * 29}L-60 ${side * 35}`, 'none', palette.accent, 4));
+      }
+    } else if (id === 't09') {
+      // Restrained silver nose/sill strokes on a graphite-black car; no oval badges.
+      for (const side of [-1, 1]) {
+        out.push(path(`M-103 ${side * 48}L-34 ${side * 48}L-14 ${side * 39}`, 'none', palette.accent, 2));
+        out.push(path(`M88 ${side * 7}L135 ${side * 3}`, 'none', palette.accent, 2.5));
+      }
+      out.push(path('M-133-15L-125-7M-133-3L-125 5', 'none', palette.accent, 3));
+    } else if (id === 't11') {
+      // Sharp yellow-front/blue-rear division, including sidepods and rear wing.
+      out.push(path('M-138-32L-121-34L-118-26L-118 26L-121 34L-138 32Z', palette.accent, 'none', 0));
+      for (const side of [-1, 1]) {
+        out.push(path(`M-104 ${side * 48}L-60 ${side * 48}L-46 ${side * 25}L-104 ${side * 25}Z`, palette.accent, 'none', 0));
+        out.push(path(`M-34 ${side * 29}L-18 ${side * 36}L-38 ${side * 42}`, 'none', palette.accent, 4));
+      }
+      out.push(path('M-132-18L-122-5L-132 5L-123 18', 'none', palette.mark, 4));
+    } else if (id === 't12') {
+      // Green spine/nose within burgundy, with fine ivory edging and gold badges.
+      for (const side of [-1, 1]) {
+        out.push(path(`M-109 ${side * 15}L-28 ${side * 16}M43 ${side * 13}L133 ${side * 6}`, 'none', palette.accent, 1.8));
+        out.push(ellipse(-63, side * 36, 8, 8, palette.mark));
+        out.push(ellipse(-60, side * 34, 7, 6, palette.pod));
+      }
+    } else if (id === 't13') {
+      // Pearl white, burgundy cockpit surround, fine pinstripes and leaf symbols.
+      out.push(path(geometry.cockpit, palette.accent, palette.accent, 7));
+      for (const side of [-1, 1]) {
+        out.push(path(`M-106 ${side * 47}L-32 ${side * 47}L-12 ${side * 36}`, 'none', palette.accent, 1.8));
+        out.push(path(`M-71 ${side * 29}Q-44 ${side * 29}-49 ${side * 43}Q-65 ${side * 44}-71 ${side * 29}Z`, palette.mark, 'none', 0));
+        out.push(path(`M46 ${side * 10}L128 ${side * 4}`, 'none', palette.accent, 1.8));
+      }
     }
     // Common cockpit/helmet, subdued relief and tire geometry. No sponsor text.
     out.push(path(geometry.cockpit, '#111922', palette.nose, 2));

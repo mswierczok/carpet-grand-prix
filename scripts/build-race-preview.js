@@ -19,4 +19,4 @@ for (const id of Object.keys(renderer.teams)) {
 html = html.replace('../../index.html', './carpet-grand-prix-offline.html');
 mkdirSync(new URL('dist/', root), { recursive: true });
 writeFileSync(new URL('dist/carpet-grand-prix-topdown-preview.html', root), html);
-console.log('Vier SVG-Sprites und eigenständige Vorschauseite erstellt.');
+console.log('13 SVG-Sprites und eigenständige Vorschauseite erstellt.');

@@ -32,7 +32,7 @@ dekodiert. Zwölf Teamfahrzeuge erhalten nun ausdrücklich beauftragte neue
 Datei sowie die Reihenfolge der Stylesheets. HTML-Pfade sind projektbezogen,
 CSS-Pfade relativ zum Stylesheet. Eigene Logos bleiben im Browserspeicher.
 
-Die vier neuen [Top-Down-Rennsprites](TOPDOWN_PREVIEW.md) entstehen gemeinsam in
+Die 13 [Top-Down-Rennsprites](TOPDOWN_PREVIEW.md) entstehen gemeinsam in
 `src/rendering/race-sprites.js`. Die SVG-Exporte unter `assets/cars/topdown/`
 dienen der Einzelansicht, der Renn-Canvas nutzt den Renderer direkt. Der
 Offline-Builder bettet auch dieses Script ein. Die historische Größenangabe oben
@@ -62,7 +62,7 @@ Die Webversion funktioniert unabhängig von diesem optionalen Entwicklerbefehl.
 - Bei der ursprünglichen Auslagerung war die Offline-Ausgabe bytegenau identisch mit
   `ea88f1d`. Für die neuen Lackierungen werden im Rückvergleich ausschließlich die
   zwölf Fahrzeug-Bilddaten durch die Originaldaten ersetzt. CSS, Spielcode und Daten
-  müssen weiterhin bytegenau übereinstimmen. Für die vier ausdrücklich beauftragten
+  müssen weiterhin bytegenau übereinstimmen. Für die ausdrücklich beauftragten
   Rennsprites werden zusätzlich nur die beiden Einbindungsstellen ausgenommen;
   siehe [Prüfumfang](TOPDOWN_PREVIEW.md#prüfung-und-grenzen).
 - Browserprüfungen vergleichen Original und neue Website im selben Browser mit
