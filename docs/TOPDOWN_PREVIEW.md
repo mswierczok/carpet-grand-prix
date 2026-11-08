@@ -1,16 +1,17 @@
-# Vier Top-Down-Rennfahrzeuge zur Designprüfung
+# Top-Down-Rennfahrzeuge für alle 13 Teams
 
-Entwicklungsbranch `codex/topdown-four-car-preview`, Ausgangspunkt `4f29ee3`
-auf `main`. Noch keine Übernahme nach `main` und keine Änderung der veröffentlichten
-GitHub-Pages-Version. Zunächst werden nur die vier beauftragten Teams ersetzt.
+Entwicklungsbranch `codex/topdown-all-teams`, Ausgangspunkt `38c0dbc` auf `main`.
+Die ersten vier Fahrzeuge wurden mit PR #4 freigegeben und übernommen. Dieser
+Folgeschritt ergänzt die übrigen neun Teams; die vier freigegebenen SVGs und die
+Grundgeometrie bleiben unverändert. Der neue Branch ist noch nicht gemergt.
 
-![Vier Rennsprites mit ihren Showroom-Referenzen](previews/topdown-four-preview.png)
+![Alle 13 Rennsprites mit Showroom-Referenzen](previews/topdown-all-preview.png)
 
 ## Gestaltung
 
 Die gemeinsame Grundform folgt `assets/references/car_topdown_base.jpg`: lange,
 schmale Nase, breite hintere Seitenkästen, freistehende Räder, geschwungener
-Frontflügel und kurzer Heckflügel. Alle vier Modelle verwenden identische
+Frontflügel und kurzer Heckflügel. Alle 13 Modelle verwenden identische
 Geometrie und dieselbe senkrechte Draufsicht, Kontur und dezente Beleuchtung.
 Das Seitenverhältnis der Vorlage wird angenähert; es handelt sich um eine
 stilistische Umsetzung, keine maßstäbliche Vermessung des Spielzeugautos.
@@ -21,6 +22,16 @@ stilistische Umsetzung, keine maßstäbliche Vermessung des Spielzeugautos.
 | Scuderia Bellarossa | t04 | Scharlachrot, weiße runde Seitenfelder, kleiner Goldakzent |
 | Panther Racing | t10 | Moosgrün, weiße Seitenfelder und Flügel, drei rote Schrägbalken |
 | Eisenbach Motorsport | t05 | Tiefblau, elfenbeinfarbene Nase, Seitenfelder und Flügel |
+
+| Alderwick Racing | t02 | Schwarz, elfenbeinfarbene Ovale, rote Unterstriche |
+| Falkenheim GP | t03 | Silber, Graphitkeile, dunkle Nase, helles Pfeilzeichen |
+| Orange | t06 | Orange Oberseite, schwarze Seitenkästen, orange Bänder und Keile |
+| Ragos Racing | t07 | Blau, weiße spitze Seitenfelder, rote Unterstriche |
+| Mugan | t08 | Goldgelb, Bernsteinschultern, schwarze Einlässe und Winkel |
+| Lincoln | t09 | Graphitschwarz, schmale silberne Nasen- und Seitenkonturen |
+| Rivage Racing | t11 | Gelbe Front, scharf abgesetztes blaues Heck und Heckflügel |
+| Scuderia Vespera | t12 | Burgunderrot, grüne Mitte und Nase, helle Kanten, Goldzeichen |
+| Redwood GP | t13 | Perlweiß, burgunderroter Cockpitrand, feine Linien und Blattzeichen |
 
 Die unterschiedlichen Farbflächen und Muster gehen über ein einfaches Umfärben
 hinaus. Kleine Sponsorenschriften entfallen; reduzierte geometrische Zeichen
@@ -34,7 +45,7 @@ Im erfolgreichen automatischen PR-Testlauf das Artefakt
 Beide HTML-Dateien im selben Ordner lassen. Zuerst
 `carpet-grand-prix-topdown-preview.html` öffnen: oben Showroom und große Draufsicht,
 darunter echte Fahrzeuglängen von 16, 24 und 32 Pixeln sowie eine startbare
-Bewegungsprobe. Der Link oben öffnet die enthaltene Spielversion mit diesen vier
+Bewegungsprobe. Der Link oben öffnet die enthaltene Spielversion mit allen 13
 Fahrzeugen. Dafür ist keine Installation erforderlich.
 
 Die Bewegungsprobe ist nur eine Grafikanimation; sie verwendet weder die
@@ -49,21 +60,21 @@ Die Webversion benötigt keinen Build und funktioniert unter dem Pages-Projektpf
 
 ## Einbindung und ersetzte Darstellung
 
-- `src/rendering/race-sprites.js` enthält die gemeinsame Geometrie, die vier
+- `src/rendering/race-sprites.js` enthält die gemeinsame Geometrie, alle 13
   Lackierungen und `CGPRaceSprites.draw()`. Das Modul liest keinen Spielzustand
   und verwendet keinen Zufall.
 - `index.html` lädt das klassische Script direkt vor dem bisherigen Spielscript.
   In `drawRace()` ruft die bestehende Funktion `paint` jetzt zuerst
   `CGPRaceSprites.draw(ctx, v.p, tm.id, g.width/64, !!v.r.dnf)` auf.
-- Bei diesen vier Team-IDs zeichnet der Renderer den neuen Sprite. Für die übrigen
-  neun Teams gibt er `false` zurück; derselbe Aufruf verwendet dann unverändert
+- Bei allen 13 Team-IDs zeichnet der Renderer den neuen Sprite. Für unbekannte
+  IDs gibt er `false` zurück; derselbe Aufruf verwendet dann unverändert
   `drawToy()`. Auch ein fehlendes neues Modul lässt diesen alten Renderer greifen.
 - Startaufstellung, Live-Qualifying und Rennen laufen durch dieselbe Zeichenstelle.
   Fokusmarkierung, Schadensanzeige und Brückenreihenfolge bleiben im vorhandenen
   Spielcode. Ausgeschiedene Fahrzeuge erhalten eine graue Variante.
 - Das Modul zeichnet jede Variante einmal in einen unsichtbaren 280 × 120-Pixel-
   Canvas und verwendet danach diesen Zwischenspeicher. Dadurch entfallen erneute
-  Pfadberechnungen und Bildladevorgänge pro Rennbild. Die vier SVGs unter
+  Pfadberechnungen und Bildladevorgänge pro Rennbild. Die 13 SVGs unter
   `assets/cars/topdown/` werden aus derselben Quelle erzeugt und dienen zur
   Einzelansicht; der Renn-Canvas lädt keine SVG-Dateien nach.
 - Position, Winkel und Streckenskalierung stammen unverändert aus dem Spiel.
@@ -74,7 +85,7 @@ Die Webversion benötigt keinen Build und funktioniert unter dem Pages-Projektpf
 - Der Offline-Builder bettet das neue Modul ein. Es gibt keine neue Abhängigkeit
   von einem Server, Bilddienst oder Build zur Laufzeit.
 
-![Die vier neuen Teams zwischen den bisherigen Streckenfahrzeugen](previews/topdown-in-race.png)
+![Alle Teams im echten Rennen](previews/topdown-all-in-race.png)
 
 ## Prüfung und Grenzen
 
@@ -83,10 +94,10 @@ Geometriereferenzen. Der vollständige Quelltextvergleich nimmt ausschließlich 
 bereits freigegebenen Showroom-Bilder sowie die zwei genau benannten neuen
 Renderer-Einbindungen aus. Der übrige Spielcode muss bytegenau zum Original passen.
 
-Neue Tests prüfen gemeinsame Form und Räder, vier unterschiedliche Lackierungen,
+Neue Tests prüfen gemeinsame Form und Räder, 13 unterschiedliche Lackierungsmuster,
 reproduzierbare SVGs, unveränderte Eingabepositionen, Canvas-Zustand, Zwischenspeicher,
-graue Ausfallvarianten und den Rückfall für andere Teams. Browsertests auf Desktop
-und Mobilformat zählen die tatsächlich gezeichneten vier Teams im echten
+graue Ausfallvarianten und den Rückfall für unbekannte Team-IDs. Browsertests auf Desktop
+und Mobilformat zählen die tatsächlich gezeichneten 13 Teams im echten
 Renn-Canvas und prüfen, dass reines Neuzeichnen den gespeicherten Stand nicht ändert.
 Die separate Vorschau und ihre Start-/Pause-Schaltfläche werden ebenfalls geprüft.
 
@@ -97,6 +108,6 @@ Es wurden keine alten Bild- oder Simulationsreferenzen neu erzeugt.
 
 Die endgültige Wirkung der kleinen Farbflächen braucht deine Designprüfung.
 Große Zoomstufen, andere Browser und echte Mobilgeräte können die Kantenglättung
-anders darstellen. Vor den übrigen neun Teams erst Form, Lesbarkeit und
-Farbverteilung dieser vier Fahrzeuge beurteilen. Übernahme nach `main` nur nach
+anders darstellen. Insbesondere die beiden dunklen Teams und die gelben
+Fahrzeuge anhand ihrer Kontrastflächen vergleichen. Übernahme nach `main` nur nach
 ausdrücklicher Freigabe dieses konkreten PRs.

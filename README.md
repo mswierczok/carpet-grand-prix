@@ -22,7 +22,7 @@ Balancing benötigen eine vorherige Zustimmung.
 - [Tests](docs/TESTING.md)
 - [CSS, Bilder und Offline-Ausgabe](docs/ASSETS.md)
 - [Fahrzeuglackierungen und Fotovergleich](docs/CAR_LIVERIES.md)
-- [Vier Top-Down-Rennfahrzeuge: Vorschau und Einbindung](docs/TOPDOWN_PREVIEW.md)
+- [Alle 13 Top-Down-Rennfahrzeuge: Vorschau und Einbindung](docs/TOPDOWN_PREVIEW.md)
 - [Spielstandformat](docs/SAVE_FORMAT.md)
 - [Arbeitsablauf und Freigabe](docs/WORKFLOW.md)
 - [Verbindliche Entwicklerregeln](AGENTS.md)
