@@ -39,7 +39,7 @@ export function createGame(seed = 12345) {
       createQualSession, qualStep, concludeQualSession, qualifyingDone,
       createRace, stepRace, runRaceToEnd, raceResults, recordRace,
       finishSeason, startNextSeason, makeWearPlan, makeRegulationPlan,
-      makeGeometry, raceMeta, raceGrid, bodyContact, racePose, trafficBlocks,
+      makeGeometry, trackAt, raceMeta, raceGrid, bodyContact, racePose, trafficBlocks,
       officialSeconds, raceOrder, safeLaneChange,
       MASTER, trackDefs, digitizedTracks, STORAGE, RACE_STEP, RACE_LAPS,
       get state() { return s; },
