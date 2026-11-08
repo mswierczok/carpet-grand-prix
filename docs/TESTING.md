@@ -58,6 +58,14 @@ Formgleichheit, unterschiedliche Muster, SVG-Reproduzierbarkeit und Canvas-Cache
 prüfen eigene Modultests. Details in [TOPDOWN_PREVIEW.md](TOPDOWN_PREVIEW.md).
 Der Testserver erzwingt den Pages-Projektpfad.
 
+Die Werkstatt verwendet ebenfalls die gemeinsamen SVGs. Ihr genau markierter
+Darstellungsaufruf wird zusätzlich im Quelltextvergleich ausgenommen; die alte
+Werkstatt und die gesamte Upgrade-Logik bleiben bytegenau abgesichert.
+Historische UI-Vergleiche verwenden nur im Test die alte Werkstattgrafik.
+Eigene Desktop-/Mobiltests prüfen die gemeinsamen SVG-Flächen für alle 13 Teams,
+Bereichsfokus, Logo-Upload/-Entfernung samt Neuladen und Paketentwicklung.
+Details in [WORKSHOP_CARS.md](WORKSHOP_CARS.md).
+
 Standard-CI läuft auf PRs, Pushes nach `main` und manuell. Erweiterte CI läuft
 wöchentlich und manuell. Keine der Prüfungen veröffentlicht das Spiel. Fehlerberichte
 enthalten Traces und Screenshots. Visuelle Referenzen stammen aus dem unveränderten,

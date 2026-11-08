@@ -33,6 +33,11 @@ it('erhält CSS-Kaskade, Spielcode und Daten beim Zusammenbauen vollständig', (
   const previewCall = "if(!window.CGPRaceSprites?.draw(ctx,v.p,tm.id,g.width/64,!!v.r.dnf))";
   expect(normalized.split(previewCall)).toHaveLength(2);
   normalized = normalized.replace(previewCall, '');
+  // Explicitly requested workshop presentation: remove only the shared-SVG
+  // early return; the complete legacy workshop and all upgrade logic stay guarded.
+  const workshopBlock = / \/\/ shared-workshop-sprite:start\n[\s\S]*? \/\/ shared-workshop-sprite:end\n/;
+  expect(normalized.match(workshopBlock)).not.toBeNull();
+  normalized = normalized.replace(workshopBlock, '');
   const originalImages = [...originalHTML().matchAll(/data:image\/[\w+.-]+;base64,[A-Za-z0-9+/=]+/g)];
   manifest.images.forEach((image, index) => {
     if (!authoredCars.has(image.path)) return;
