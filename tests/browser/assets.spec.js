@@ -15,6 +15,7 @@ async function prepare(context, save = initial, legacySprites = false) {
     // Keep historical UI screenshots meaningful outside the expressly approved
     // sprite change. Actual new sprites have dedicated browser/renderer tests.
     if (legacySprites) {
+      Object.defineProperty(globalThis, 'CGPPilotWorld', { configurable: true, get: () => ({ draw: () => false }), set() {} });
       Object.defineProperty(globalThis, 'CGPTeamDriverHud', {
         configurable: true, get: () => ({ update() {} }), set() {},
       });
@@ -54,7 +55,7 @@ async function screenshot(page) {
 
 async function compare(original, current, label, testInfo) {
   // Compare the browser-parsed cascade as well, independently of rasterization.
-  const rules = page => page.evaluate(() => [...document.styleSheets].filter(sheet => !sheet.href?.endsWith('/team-driver-hud.css')).flatMap(sheet =>
+  const rules = page => page.evaluate(() => [...document.styleSheets].filter(sheet => !['/team-driver-hud.css', '/art-pilot.css'].some(path => sheet.href?.endsWith(path))).flatMap(sheet =>
     [...sheet.cssRules].map(rule => rule.cssText.replace(/url\([^)]*\)/g, 'url(asset)'))));
   expect(await rules(current), `${label}: CSS-Kaskade`).toEqual(await rules(original));
   const before = await screenshot(original), after = await screenshot(current);

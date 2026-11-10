@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="./styles/team-select.css">
 <link rel="stylesheet" href="./styles/workshop.css">
 <link rel="stylesheet" href="./styles/team-driver-hud.css">
+<link rel="stylesheet" href="./styles/art-pilot.css">
 </head>
 <body class="menu-open">
 <section id="startScreen" role="dialog" aria-modal="true" aria-labelledby="launchTitle">
@@ -114,6 +115,10 @@
 <div id="toast" role="status"></div>
 <!-- race-sprites-preview:start -->
 <script src="./src/rendering/race-sprites.js"></script>
+<script src="./src/rendering/pilot-vehicles.js?v=1"></script>
+<script src="./src/rendering/pilot-world.js?v=1"></script>
+<script src="./src/rendering/render-motion.js?v=1"></script>
+<script src="./src/ui/live-dom.js?v=1"></script>
 <script src="./src/rendering/race-camera.js?v=3"></script>
 <script src="./src/ui/team-driver-hud.js?v=2"></script>
 <!-- race-sprites-preview:end -->
@@ -131,6 +136,15 @@ function persistPreferences(){try{localStorage.setItem(SETTINGS_STORAGE,JSON.str
 const COUNTRY_FLAG={Frankreich:'🇫🇷','Großbritannien':'🇬🇧',Deutschland:'🇩🇪',Italien:'🇮🇹',Niederlande:'🇳🇱',Japan:'🇯🇵',Irland:'🇮🇪',USA:'🇺🇸',Spanien:'🇪🇸',Schweiz:'🇨🇭',Portugal:'🇵🇹',Schweden:'🇸🇪'};
 const launchFlow={previewState:null,teamIndex:0,touchStartX:null};
 const TEAMSELECT_CAR_ASSETS={"t01":"./assets/cars/team-t01.webp","t02":"./assets/cars/team-t02.webp","t03":"./assets/cars/team-t03.webp","t04":"./assets/cars/team-t04.webp","t05":"./assets/cars/team-t05.webp","t06":"./assets/cars/team-t06.webp","t07":"./assets/cars/team-t07.webp","t08":"./assets/cars/team-t08.webp","t09":"./assets/cars/team-t09.webp","t10":"./assets/cars/team-t10.webp","t11":"./assets/cars/team-t11.webp","t12":"./assets/cars/team-t12.webp","t13":"./assets/cars/team-t13.webp"};
+// illustrated-pilot-bridge:start
+function illustratedTeamCar(id){return window.CGPPilotVehicles?.assets[id]||TEAMSELECT_CAR_ASSETS[id]||'';}
+function renderCarPose(session,car,pose){
+ const live=qualAnim||anim,alpha=!live||live.needsResume||session.paused?1:Math.min(1,(live.accumulator||0)/RACE_STEP);
+ return window.CGPRenderMotion?.sample(session,car.id,pose,alpha,raceMeta(session.trackIndex).g.width*1.5)||pose;
+}
+function setLiveHTML(root,html){if(window.CGPLiveDOM)window.CGPLiveDOM.setHTML(root,html);else root.innerHTML=html;}
+// illustrated-pilot-bridge:end
+
 function countryFlag(name){return COUNTRY_FLAG[name]||'🏁'}
 function overallStrengthValue(t){return Math.round((Number(t.aero||t.baseStrength||0)+Number(t.power||t.baseStrength||0)+Number(t.handling||t.baseStrength||0)+Number(t.reliability||t.baseStrength||0))/4)}
 function teamPreviewDrivers(state,teamId){return (state?.drivers||[]).filter(d=>d.team===teamId).sort((a,b)=>(b.skill+b.consistency)-(a.skill+a.consistency))}
@@ -160,7 +174,7 @@ function renderLaunchTeamSelect(){
    <div class="showroom-stat country"><h4>Rennstall-Herkunft</h4><div class="num">${flag}</div><p>${esc(t.country)}<br>${esc(t.name)}</p></div>
   </div>
   <div class="showroom-stage">
-   <img class="showroom-car-image" src="${TEAMSELECT_CAR_ASSETS[t.id]||TEAMSELECT_CAR_ASSETS.t07}" alt="Konzeptfahrzeug von ${esc(t.name)} in den Teamfarben">
+   <img class="showroom-car-image${window.CGPPilotVehicles?.assets[t.id]?' pilot-illustrated':''}" src="${illustratedTeamCar(t.id)||TEAMSELECT_CAR_ASSETS.t07}" alt="Konzeptfahrzeug von ${esc(t.name)} in den Teamfarben">
    <div class="showroom-stage-label">${esc(t.name)} – KONZEPTFAHRZEUG</div>
   </div>
   <div class="showroom-footer">
@@ -910,7 +924,7 @@ function studioNextRace(){
  return `<section class="studio-widget studio-event"><div class="widget-heading"><h3>${ended?'SAISON ABSCHLUSS':'NÄCHSTES RENNEN'}</h3><button type="button" data-action="tab" data-value="calendar" aria-label="Rennkalender öffnen">↗</button></div><div class="studio-event-image"><div class="studio-event-inner"><span class="event-index">${ended?'🏆 SAISON '+s.season:'RUNDE '+(s.round+1)+' / '+seasonLength()}</span><strong>${esc(race[0])} GP</strong><span>${ended?'Meisterschaft beendet':q?.phase==='DONE'?'Startaufstellung steht':'Qualifying '+(q?.phase||'Q1')+' steht an'}</span></div></div><div class="studio-event-footer"><span>🏁 ${ended?'Finale':esc(race[1])}</span><span>◷ ${clockText(TRACK_LAP_TARGETS[s.round%22])} / Rd.</span></div></section>`;
 }
 function studioTeamCard(){
- const t=team(s.team),d=teamDrivers(s.team),avg=overallStrengthValue(t),image=TEAMSELECT_CAR_ASSETS[t.id]||'';
+ const t=team(s.team),d=teamDrivers(s.team),avg=overallStrengthValue(t),image=illustratedTeamCar(t.id)||'';
  const more=t.secondaryColor?'linear-gradient(90deg,'+t.color+' 65%,'+t.secondaryColor+' 65%)':t.color;
  return `<section class="studio-widget studio-team"><div class="widget-heading"><h3>${s.mode==='manager'?'MEIN TEAM':'TEAM IM FOKUS'}</h3><button type="button" data-action="tab" data-value="workshop" aria-label="Team ansehen">↗</button></div><div class="studio-team-photo" style="--team-hue:${t.color}">${image?`<img src="${image}" loading="lazy" alt="${esc(t.name)} Fahrzeug im Kinderzimmer">`:`<span>🏎</span>`}</div><div class="studio-team-title"><i style="background:${more}"></i><b>${esc(t.name)}</b></div><div class="studio-team-driver">${d.map(x=>esc(x.name)).join(' · ')}</div><div class="studio-team-strength"><span>Fahrzeugstärke</span><b>${avg}/100</b></div><div class="studio-progress"><span style="width:${clamp(avg,0,100)}%;background:${more}"></span></div></section>`;
 }
@@ -1721,13 +1735,13 @@ function refreshLive(){
  // team-driver-hud-refresh:end
  if(qualAnim){
   const q=qualAnim.session,tower=document.getElementById('qualTimingTower'),ctrl=document.getElementById('raceControls'),events=document.getElementById('raceEvents'),overlay=document.getElementById('raceOverlay');
-  if(tower)tower.innerHTML=qualTower(q);
-  if(ctrl)ctrl.innerHTML=qualifyControls();
-  if(events)events.innerHTML=`<div class="race-events">${q.events.slice(0,7).map(e=>`<div>${esc(e.text)}</div>`).join('')}</div>`;
+  if(tower)setLiveHTML(tower,qualTower(q));
+  if(ctrl)setLiveHTML(ctrl,qualifyControls());
+  if(events)setLiveHTML(events,`<div class="race-events">${q.events.slice(0,7).map(e=>`<div>${esc(e.text)}</div>`).join('')}</div>`);
   if(overlay)overlay.textContent=`${q.paused||qualAnim.needsResume?'Ⅱ PAUSE':'● LIVE'} · ${q.phase} · ${q.cars.filter(c=>c.finished).length}/${q.cars.length} Fahrer fertig`;
   return;
  }
- const r=shownRace();if(!r)return;const timing=document.getElementById('raceTimingTower'),tower=document.getElementById('liveTower'),controls=document.getElementById('raceControls'),events=document.getElementById('raceEvents'),overlay=document.getElementById('raceOverlay');if(timing)timing.innerHTML=liveTimingTower(r);if(controls)controls.innerHTML=raceControls();if(events)events.innerHTML=liveEvents(r);if(overlay){overlay.classList.toggle('summary',!!(r.finished&&r.awaitingSummary));overlay.innerHTML=raceOverlayContent(r);}}
+ const r=shownRace();if(!r)return;const timing=document.getElementById('raceTimingTower'),tower=document.getElementById('liveTower'),controls=document.getElementById('raceControls'),events=document.getElementById('raceEvents'),overlay=document.getElementById('raceOverlay');if(timing)setLiveHTML(timing,liveTimingTower(r));if(controls)setLiveHTML(controls,raceControls());if(events)setLiveHTML(events,liveEvents(r));if(overlay){overlay.classList.toggle('summary',!!(r.finished&&r.awaitingSummary));setLiveHTML(overlay,raceOverlayContent(r));}}
 function persistRace(){if(anim)s.activeRace=anim.race;save()}
 function restoreRace(){autoSequence++;anim=null;qualAnim=null;if(s.activeRace&&(!s.activeRace.finished||s.activeRace.awaitingSummary)){anim={race:s.activeRace,track:trackDefs[s.activeRace.trackIndex],lastFrame:performance.now(),accumulator:0,needsResume:true,lastUi:0,lastSave:0};}}
 function startRace(){if(anim||qualAnim||seasonFinished())return;if(!qualifyingDone()){notify('Zuerst das Qualifying abschließen.');return;}focusedDriverId=null;s.activeRace=createRace();anim={race:s.activeRace,track:nextTrack(),lastFrame:performance.now(),accumulator:0,needsResume:false,lastUi:0,lastSave:0};activeTab='dashboard';s.tab='dashboard';save();render();refreshLive();requestAnimationFrame(frame)}
@@ -1736,10 +1750,10 @@ function advanceVisible(realSeconds){
  if(qualAnim){
   if(qualAnim.needsResume||qualAnim.session.paused)return;
   qualAnim.accumulator+=realSeconds*qualAnim.session.speed;
-  while(qualAnim&&qualAnim.accumulator>=RACE_STEP){qualAnim.accumulator-=RACE_STEP;qualStep(qualAnim.session);if(qualAnim.session.finished){concludeQualSession(qualAnim.session);break;}}
+  while(qualAnim&&qualAnim.accumulator>=RACE_STEP){qualAnim.accumulator-=RACE_STEP;window.CGPRenderMotion?.remember(qualAnim.session,qualAnim.session.cars,car=>qualPose(qualAnim.session,car));qualStep(qualAnim.session);if(qualAnim.session.finished){concludeQualSession(qualAnim.session);break;}}
   return;
  }
- if(!anim||anim.needsResume||anim.race.paused)return;anim.accumulator+=realSeconds*anim.race.speed;while(anim&&anim.accumulator>=RACE_STEP){anim.accumulator-=RACE_STEP;stepRace(anim.race);if(anim.race.finished){if(anim.auto)finishLiveRace();else showRaceSummary();break;}}}
+ if(!anim||anim.needsResume||anim.race.paused)return;anim.accumulator+=realSeconds*anim.race.speed;while(anim&&anim.accumulator>=RACE_STEP){anim.accumulator-=RACE_STEP;window.CGPRenderMotion?.remember(anim.race,anim.race.cars,car=>racePose(anim.race,car));stepRace(anim.race);if(anim.race.finished){if(anim.auto)finishLiveRace();else showRaceSummary();break;}}}
 function frame(now){
  const live=qualAnim||anim;if(!live)return;
  const elapsed=Math.max(0,(now-live.lastFrame)/1000);live.lastFrame=now;
@@ -1806,7 +1820,7 @@ function traceOpen(ctx,pts){ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,
 // Two staggered columns. Slot geometry and parked cars share the same pose.
 function startingGrid(g,count=26){return Array.from({length:count},(_,i)=>{const row=Math.floor(i/2),col=i%2,u=-(.60+row*.78+col*.32)*g.width/g.len,lane=(col?-.24:.24)*g.width;return {index:i,u,lane,p:trackAt(g,u,lane)}})}
 function onBridgeDeck(g,u){return g.bridges.some(b=>{let d=Math.abs(((u%1)+1)%1-b.over);return Math.min(d,1-d)*g.len<g.width*1.6})}
-function drawGridSlot(ctx,slot,w){const p=slot.p;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang);ctx.strokeStyle='#fff3d9';ctx.lineWidth=Math.max(.8,w*.025);ctx.lineCap='butt';ctx.beginPath();ctx.moveTo(-w*.24,-w*.16);ctx.lineTo(w*.29,-w*.16);ctx.lineTo(w*.29,w*.16);ctx.lineTo(-w*.24,w*.16);ctx.stroke();ctx.restore()}
+function drawGridSlot(ctx,slot,w,ink='#fff3d9'){const p=slot.p;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang);ctx.strokeStyle=ink;ctx.lineWidth=Math.max(.8,w*.025);ctx.lineCap='butt';ctx.beginPath();ctx.moveTo(-w*.24,-w*.16);ctx.lineTo(w*.29,-w*.16);ctx.lineTo(w*.29,w*.16);ctx.lineTo(-w*.24,w*.16);ctx.stroke();ctx.restore()}
 function drawStripe(ctx,p,half){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang);for(let i=0;i<8;i++)for(let r=0;r<2;r++){ctx.fillStyle=(i+r)%2?'#202d29':'#fff6db';ctx.fillRect(-half*.22+r*half*.22,-half+i*half/4,half*.22,half/4)}ctx.restore()}
 function drawBridge(ctx,t,g){
  for(const b of g.bridges){const pts=pathPoints(g,b.over,g.width*1.15);
@@ -1838,25 +1852,32 @@ function drawRace(frac,results){
  if(window.CGPRaceCamera?.follow&&focusedDriverId){
   const q=qualAnim?.session,selected=(q?.cars||race?.cars||[]).find(car=>car.id===focusedDriverId);
   const visible=selected&&(q?selected.active&&!selected.finished:race&&!race.finished&&!selected.raceComplete);
-  if(visible)followedPose=q?qualPose(q,selected):racePose(race,selected);
+  if(visible)followedPose=renderCarPose(q||race,selected,q?qualPose(q,selected):racePose(race,selected));
   else{focusedDriverId=null;refreshLive();}
  }
  ctx.save();window.CGPRaceCamera?.apply(ctx,g,c.width,c.height,trackAt,followedPose,followedPose?c.clientWidth:c.width);
  // race-camera:end
+ // illustrated-pilot-surface:start
+ const pilotSurface=!!window.CGPPilotWorld?.draw(ctx,trackDefs.indexOf(track),g,trackAt);
+ if(!pilotSurface){
+ // illustrated-pilot-surface:end
  traceTrack(ctx,g);ctx.strokeStyle='#ae9e83';ctx.lineWidth=g.width*1.28;ctx.stroke();
  traceTrack(ctx,g);ctx.strokeStyle='#f5e8cc';ctx.lineWidth=g.width*1.15;ctx.stroke();
  ctx.setLineDash([g.width*.4,g.width*.4]);traceTrack(ctx,g);ctx.strokeStyle='#ae5345';ctx.stroke();ctx.setLineDash([]);
  traceTrack(ctx,g);ctx.strokeStyle='#424d46';ctx.lineWidth=g.width;ctx.stroke();
  traceOpen(ctx,g.pit);ctx.strokeStyle='#b7a689';ctx.lineWidth=g.width*.48;ctx.stroke();ctx.strokeStyle='#5b6257';ctx.lineWidth=g.width*.35;ctx.stroke();
+ // illustrated-pilot-surface-close:start
+ }
+ // illustrated-pilot-surface-close:end
  const pm={x:(g.pit[1].x+g.pit[2].x)/2,y:(g.pit[1].y+g.pit[2].y)/2};
  ctx.font='bold 11px system-ui';ctx.textAlign='center';ctx.fillStyle='#25483e';ctx.fillText('PIT',pm.x,pm.y-g.width*.28);
  for(let i=0;i<2;i++){const p=trackAt(g,g.sectors[i]);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang);
-  ctx.strokeStyle='#91d7c2';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-g.width/2);ctx.lineTo(0,g.width/2);ctx.stroke();ctx.restore();
+  ctx.strokeStyle=pilotSurface?'#42766b':'#91d7c2';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-g.width/2);ctx.lineTo(0,g.width/2);ctx.stroke();ctx.restore();
   ctx.fillStyle='#16493e';ctx.fillText('S'+(i+1),p.x-Math.sin(p.ang)*(g.width*.7+8),p.y+Math.cos(p.ang)*(g.width*.7+8));
  }
  drawStripe(ctx,trackAt(g,0),g.width/2);
  const start=trackAt(g,0);ctx.fillStyle='#25483e';ctx.fillText('S/Z',start.x+Math.sin(start.ang)*(g.width*.7+8),start.y-Math.cos(start.ang)*(g.width*.7+8));
- for(const u of [.035,.34,.68]){const p=trackAt(g,u);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang);ctx.strokeStyle='#f5e9bb';ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(-5,-4);ctx.lineTo(2,0);ctx.lineTo(-5,4);ctx.stroke();ctx.restore()}
+ for(const u of [.035,.34,.68]){const p=trackAt(g,u);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang);ctx.strokeStyle=pilotSurface?'#78634b':'#f5e9bb';ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(-5,-4);ctx.lineTo(2,0);ctx.lineTo(-5,4);ctx.stroke();ctx.restore()}
  if(race&&raceAiDebug){
   const m=raceMeta(race.trackIndex),w=m.g.width;ctx.save();ctx.lineWidth=1.25;
   const lines=[
@@ -1885,7 +1906,7 @@ function drawRace(frac,results){
  const qualifying=qualAnim?.session||null;
  const cars=qualifying?qualifying.cars.filter(car=>car.active&&!car.finished):race?race.cars.filter(car=>!car.raceComplete):(qualifyingDone()?validQual().gridIds.map((id,i)=>({id,team:driver(id)?.team,pos:i+1,dnf:false})):s.drivers.map((d,i)=>({id:d.id,team:d.team,pos:i+1,dnf:false})));
  const grid=raceGrid(raceMeta(trackDefs.indexOf(track)),26);
- const visual=cars.map((r,i)=>{const p=qualifying?qualPose(qualifying,r):(race?racePose(race,r):grid[i].p);return {p,r,upper:qualifying||race?p.level===1:onBridgeDeck(g,grid[i].u)}});
+ const visual=cars.map((r,i)=>{const raw=qualifying?qualPose(qualifying,r):(race?racePose(race,r):grid[i].p),p=qualifying||race?renderCarPose(qualifying||race,r,raw):raw;return {p,r,upper:qualifying||race?p.level===1:onBridgeDeck(g,grid[i].u)}});
  const paint=v=>{const tm=team(v.r.team);if(!tm)return;
   const focused=!!((race&&!race.finished||qualifying)&&focusedDriverId===v.r.id)&&!window.CGPRaceCamera?.follow;
   if(focused){
@@ -1907,9 +1928,9 @@ function drawRace(frac,results){
    ctx.strokeStyle='#d6fff5';ctx.shadowColor='#6affdf';ctx.shadowBlur=15;ctx.lineWidth=1.9;
    ctx.beginPath();ctx.roundRect(-12,-8,27,16,4);ctx.stroke();ctx.restore();}
   if(v.r.damage){ctx.save();ctx.translate(v.p.x,v.p.y);ctx.fillStyle=['','#ffcc62','#ef9043','#ef5148'][v.r.damage];ctx.beginPath();ctx.arc(0,-g.width*.23,3,0,Math.PI*2);ctx.fill();ctx.restore();}};
- if(!qualifying)grid.filter(slot=>!onBridgeDeck(g,slot.u)).forEach(slot=>drawGridSlot(ctx,slot,g.width));
+ if(!qualifying)grid.filter(slot=>!onBridgeDeck(g,slot.u)).forEach(slot=>drawGridSlot(ctx,slot,g.width,pilotSurface?'#78634b':undefined));
  visual.filter(v=>!v.upper).forEach(paint);drawBridge(ctx,track,g);
- if(!qualifying)grid.filter(slot=>onBridgeDeck(g,slot.u)).forEach(slot=>drawGridSlot(ctx,slot,g.width));
+ if(!qualifying)grid.filter(slot=>onBridgeDeck(g,slot.u)).forEach(slot=>drawGridSlot(ctx,slot,g.width,pilotSurface?'#78634b':undefined));
  visual.filter(v=>v.upper).forEach(paint);
  // Leader beacon is a visual HUD marker; it does not affect car physics or ranking.
  if(appPrefs.showLeaderMarker&&race&&!race.finished&&!followedPose){

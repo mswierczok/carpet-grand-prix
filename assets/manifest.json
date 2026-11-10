@@ -9,7 +9,8 @@
     "styles/live-layout.css",
     "styles/team-select.css",
     "styles/workshop.css",
-    "styles/team-driver-hud.css"
+    "styles/team-driver-hud.css",
+    "styles/art-pilot.css"
   ],
   "images": [
     {

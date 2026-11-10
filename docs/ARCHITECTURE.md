@@ -79,3 +79,14 @@ Jeder Merge benötigt die ausdrückliche Nutzerfreigabe für den konkreten PR.
 - Mehrsaisonfälle für Reglementjahre, Transfers, Rücktritte und Poolende.
 - Historische Nutzerspielstände, sobald verfügbar.
 - Visuelle Referenzen in fest versionierter Browserumgebung und zusätzliche Browser.
+
+## Gezeichneter Pilot und Darstellungszeit
+
+Vier Teams werden über `pilot-vehicles.js` als transparenter Showroom sowie über
+dieselbe SVG-Quelle in Rennen/Werkstatt dargestellt. Bahrain nutzt
+`pilot-world.js`; alle anderen Umgebungen behalten den bisherigen Renderer.
+`render-motion.js` hält ausschließlich sichtbare Posen in einer WeakMap und
+interpoliert Auto/Kamera zwischen den unveränderten 1/30-Sekunden-Schritten.
+`live-dom.js` erhält Live-Buttons bei Aktualisierung und Sortierung.
+Integration, Ausgangsstand und Messungen: [ART_PILOT.md](ART_PILOT.md).
+Stilgrundlage und freigabepflichtiger weiterer Rollout: [ART_STYLE.md](ART_STYLE.md).

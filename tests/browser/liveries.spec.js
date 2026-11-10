@@ -17,7 +17,7 @@ test('zeigt alle dreizehn Teamfahrzeuge passend zu ihren Teams in einheitlicher 
     await expect(page.locator('#launchTeamCounter')).toHaveText(`${index} / 13`);
     await expect(page.locator('.showroom-team-name')).toHaveText(names.get(id));
     const image = page.locator('.showroom-car-image');
-    await expect(image).toHaveAttribute('src', `./assets/cars/team-${id}.webp`);
+    await expect(image).toHaveAttribute('src', ['t01','t04','t10','t05'].includes(id) ? `./assets/cars/illustrated/team-${id}.svg` : `./assets/cars/team-${id}.webp`);
     await expect(image).toHaveAttribute('alt', new RegExp(names.get(id)));
     const decoded = await image.evaluate(async img => {
       await img.decode(); return { width: img.naturalWidth, height: img.naturalHeight, src: img.src };

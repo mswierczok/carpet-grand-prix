@@ -24,6 +24,15 @@ jobs:
       - run: npm run test:browser
       - run: npm run build:offline
       - run: npm run build:race-preview
+      - run: npm run build:pilot-preview
+      - uses: actions/upload-artifact@v4
+        with:
+          name: carpet-grand-prix-art-pilot
+          path: |
+            dist/carpet-grand-prix-art-pilot.html
+            dist/carpet-grand-prix-offline.html
+          if-no-files-found: error
+          retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
           name: carpet-grand-prix-topdown-preview

@@ -112,3 +112,19 @@ Künstliche Referenzstände ersetzen keine historischen Nutzerdateien. Mobilform
 ersetzt keine echten Safari-/iPhone-Tests. Gezielte Verkehr-/Kontakt-/Boxenszenarien,
 Langzeitreglementtests und Performancevergleiche vor der jeweiligen
 Auslagerung ergänzen. Ein grüner Lauf beweist nicht jede mögliche Spielsituation.
+
+## Art-Pilot
+
+`npm run build:pilot-art` exportiert die vier Pilotfahrzeuge reproduzierbar.
+`npm run build:pilot-preview` erstellt die Vergleichsgalerie und deren
+Standalone-HTML; CI liefert sie zusammen mit dem Offline-Spiel als Artefakt
+`carpet-grand-prix-art-pilot`. Entwickleraufnahmen können bei laufendem Testserver
+mit `node scripts/capture-pilot-preview.js` aktualisiert werden.
+
+Neue Modul-/Browsertests prüfen Konturen/Export, Requisitenabstände,
+zustandsfreie Interpolation, DOM-Erhalt, tatsächliche Canvas-Pilotbilder,
+Galerie und netzwerkfreie Team-Auswahl. Historische Vergleiche schalten allein
+für ihren Vergleich den Bahrain-Pilot aus und filtern sein Stylesheet.
+Der Quelltextschutz erlaubt nur einzeln aufgeführte Präsentationsaufrufe;
+abschließend wird weiterhin die vollständige Originaldatei per SHA-256 verglichen.
+Benchmarkmethode, Rohdaten und Grenzen: [ART_PILOT.md](ART_PILOT.md).
