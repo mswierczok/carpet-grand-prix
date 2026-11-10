@@ -15,7 +15,7 @@ export function createOfflineHTML() {
   html = html.replace(links, `<style>${css}</style>`);
   for (const name of ['race-sprites', 'race-camera', 'team-driver-hud']) {
     const path = `src/${name === 'team-driver-hud' ? 'ui' : 'rendering'}/${name}.js`;
-    const version = name === 'race-camera' ? '?v=2' : '';
+    const version = { 'race-camera': '?v=3', 'team-driver-hud': '?v=2' }[name] || '';
     html = html.replace(`<script src="./${path}${version}"></script>`, () =>
       `<script>\n${readFileSync(new URL(path, root), 'utf8')}\n</script>`);
   }

@@ -40,7 +40,7 @@ Fußzeile wandert an den unteren Rand; das Hintergrundmuster reicht über die
 gesamte Höhe. Die Gesamtfläche kann insbesondere bei schmalen Strecken höher
 werden. Die Höhengrenze verhindert eine beliebig lange Karte.
 
-Die Kameradatei wird mit `?v=2` geladen, um eine zuvor gespeicherte Scriptfassung
+Die Kameradatei wird aktuell mit `?v=3` geladen, um eine zuvor gespeicherte Scriptfassung
 nicht erneut zu verwenden. Der Offline-Builder bettet auch diesen versionierten
 Verweis ein. Das Spiel benötigt weiterhin keinen Produktions-Build.
 
@@ -75,8 +75,8 @@ Offline-Builder bettet das zusätzliche Script ein; GitHub Pages benötigt keine
   Streckenerzeugung und der gesamte Simulationscode bleiben unter dem Originalvergleich.
 
 Die Strecke wird weder gestreckt noch beschnitten. Dies ist ein automatischer
-Gesamtstreckenzoom; eine manuell steuerbare oder einem Fahrer folgende Kamera
-ist nicht Bestandteil dieser Änderung.
+Gesamtstreckenzoom. Der ergänzende [Verfolgungsmodus](FOLLOW_CAMERA.md) zoomt
+per Fahrerwahl in diese Ansicht hinein und kehrt per erneutem Klick zurück.
 
 Zum Prüfen das Artefakt **carpet-grand-prix-offline** aus dem erfolgreichen
 PR-Testlauf herunterladen und die HTML-Datei öffnen. Bestehende Spielstände

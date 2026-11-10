@@ -92,3 +92,41 @@ it('passt die Rennfläche an jede Strecke an und nutzt bei Bahrain beide Achsen 
     expect(JSON.stringify(g)).toBe(before);
   }
 });
+
+it('hält ein bewegtes Ziel auf allen Strecken und in mehreren Fenstergrößen exakt mittig', () => {
+  const { game } = createGame();
+  for (const track of game.trackDefs) {
+    const g = game.makeGeometry(track), before = JSON.stringify(g);
+    for (const u of [0, .25, .5, .75]) for (const cssWidth of [320, 971, 1920]) {
+      const pose = Object.freeze(game.trackAt(g, u));
+      const view = camera.follow(g, 1180, 860, game.trackAt, pose, cssWidth);
+      expect(view.mode).toBe('follow');
+      expect(pose.x * view.scale + view.x).toBeCloseTo(590, 6);
+      expect(pose.y * view.scale + view.y).toBeCloseTo(430, 6);
+      expect(23 * g.width / 64 * view.scale * cssWidth / 1180).toBeGreaterThanOrEqual(56 - 1e-8);
+      expect(view.scale).toBeGreaterThan(camera.fit(g, 1180, 860, game.trackAt).scale);
+    }
+    expect(JSON.stringify(g)).toBe(before);
+  }
+});
+
+it('folgt auch an Streckenrändern und in der Boxengasse ohne Kamerabegrenzung oder Lageänderung', () => {
+  const { game } = createGame(), g = game.makeGeometry(game.trackDefs[0]);
+  const poses = [...g.pit, { x: -2000, y: 4000 }];
+  for (const pose of poses) {
+    const before = JSON.stringify(pose), calls = [];
+    const view = camera.apply({ translate: (...args) => calls.push(['translate', ...args]), scale: (...args) => calls.push(['scale', ...args]) }, g, 1180, 860, game.trackAt, pose, 393);
+    expect(calls).toEqual([['translate', view.x, view.y], ['scale', view.scale, view.scale]]);
+    expect(pose.x * view.scale + view.x).toBeCloseTo(590, 6);
+    expect(pose.y * view.scale + view.y).toBeCloseTo(430, 6);
+    expect(JSON.stringify(pose)).toBe(before);
+  }
+});
+
+it('verwendet ohne sichtbares Ziel wieder unverändert die Gesamtansicht', () => {
+  const { game } = createGame(), g = game.makeGeometry(game.trackDefs[0]);
+  const overview = camera.fit(g, 1180, 860, game.trackAt);
+  for (const target of [null, undefined, { x: NaN, y: 4 }]) {
+    expect(camera.follow(g, 1180, 860, game.trackAt, target)).toBe(overview);
+  }
+});

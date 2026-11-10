@@ -114,8 +114,8 @@
 <div id="toast" role="status"></div>
 <!-- race-sprites-preview:start -->
 <script src="./src/rendering/race-sprites.js"></script>
-<script src="./src/rendering/race-camera.js?v=2"></script>
-<script src="./src/ui/team-driver-hud.js"></script>
+<script src="./src/rendering/race-camera.js?v=3"></script>
+<script src="./src/ui/team-driver-hud.js?v=2"></script>
 <!-- race-sprites-preview:end -->
 <script>
 (()=>{'use strict';
@@ -870,7 +870,7 @@ function qualTower(q){
  return `<div class="race-timing-head"><div class="race-timing-brand"><b>CGP</b> ${q.phase}</div><div class="race-timing-lap"><span>${clockText(officialSeconds(q,q.elapsed))} · ${q.cars.length} FAHRER</span><span>${q.paused?'Ⅱ PAUSE':'● LIVE'}</span></div></div><div class="race-timing-caption"><span>POS · FAHRER</span><span>BESTE / GAP</span></div><div class="race-timing-list">${ranked.map((c,i)=>{
  const tm=team(c.team),label=c.bestLap===null?(c.active?(c.crosses===0?'OUTLAP':'FLYING'):'BOX'):(i===0?clockText(officialSeconds(q,c.bestLap)):'+'+officialSeconds(q,c.bestLap-leader).toFixed(3));
  return `<button type="button" class="race-timing-row ${i===0?'leader':''} ${i>=cut&&q.phase!=='Q3'?'qual-out':''} ${focusedDriverId===c.id?'focused':''}" data-action="focus-driver" data-value="${esc(c.id)}" aria-pressed="${focusedDriverId===c.id}" title="${esc(c.name)}"><span class="position">${i+1}</span><span class="colorbar" style="--car-color:${tm?.color||'#bbb'}"></span><span class="driver-name">${esc(c.name)}</span><span class="interval">${label}</span></button>`;
- }).join('')}</div><div class="race-timing-help">${q.phase!=='Q3'?`Rote Zone: Plätze ${cut+1}–${q.cars.length} scheiden aus · `:''}Fahrer anklicken: Auto hervorheben</div>`;
+ }).join('')}</div><div class="race-timing-help">${q.phase!=='Q3'?`Rote Zone: Plätze ${cut+1}–${q.cars.length} scheiden aus · `:''}${window.CGPRaceCamera?.follow?'Aktiven Fahrer anklicken: Kamera folgt · erneut klicken: Gesamtstrecke':'Fahrer anklicken: Auto hervorheben'}</div>`;
 }
 function qualSummary(){
  if(seasonFinished())return '';
@@ -1676,8 +1676,8 @@ function liveTimingTower(r){
  const tm=team(c.team),interval=i===0?'LEADER':raceInterval(r,c,order[i-1]);
  const pit=c.pit!==null&&!c.dnf;
  const label=pit?'BOX':interval;
- return `<button type="button" class="race-timing-row ${i===0?'leader':''} ${pit?'pit':''} ${c.dnf?'out':''} ${focusedDriverId===c.id?'focused':''}" data-action="focus-driver" data-value="${esc(c.id)}" aria-pressed="${focusedDriverId===c.id}" aria-label="${esc(c.name)} auf der Strecke ${focusedDriverId===c.id?'nicht mehr hervorheben':'hervorheben'}" title="${esc(c.name)} · ${esc(tm?.name||'')} · ${focusedDriverId===c.id?'Markierung aufheben':'Auf der Strecke markieren'}"><span class="position">${i+1}</span><span class="colorbar" style="--car-color:${tm?.color||'#bbbbbb'}"></span><span class="driver-name">${esc(c.name)}</span><span class="interval">${label}</span></button>`;
- }).join('')}</div><div class="race-timing-help">Fahrer antippen: Auto leuchtet auf · erneut tippen: abwählen</div>`;
+ return `<button type="button" class="race-timing-row ${i===0?'leader':''} ${pit?'pit':''} ${c.dnf?'out':''} ${focusedDriverId===c.id?'focused':''}" data-action="focus-driver" data-value="${esc(c.id)}" aria-pressed="${focusedDriverId===c.id}" aria-label="${esc(c.name)} auf der Strecke ${window.CGPRaceCamera?.follow?(focusedDriverId===c.id?'nicht mehr verfolgen':'verfolgen'):(focusedDriverId===c.id?'nicht mehr hervorheben':'hervorheben')}" title="${esc(c.name)} · ${esc(tm?.name||'')} · ${window.CGPRaceCamera?.follow?(focusedDriverId===c.id?'Gesamtstrecke anzeigen':'Mit Kamera verfolgen'):(focusedDriverId===c.id?'Markierung aufheben':'Auf der Strecke markieren')}"><span class="position">${i+1}</span><span class="colorbar" style="--car-color:${tm?.color||'#bbbbbb'}"></span><span class="driver-name">${esc(c.name)}</span><span class="interval">${label}</span></button>`;
+ }).join('')}</div><div class="race-timing-help">${window.CGPRaceCamera?.follow?'Fahrer antippen: Kamera folgt · erneut tippen: Gesamtstrecke':'Fahrer antippen: Auto leuchtet auf · erneut tippen: abwählen'}</div>`;
 }
 function raceControls(){const r=anim?.race;if(!r)return `<p class="small">18 Runden · 1× zum Beobachten · 2× / 4× verfügbar · Pausieren jederzeit möglich</p>`;if(r.finished&&r.awaitingSummary)return `<div class="row wrap"><div class="buttons"><button class="btn primary" data-action="race-continue">Weiter</button><button class="btn small ghost" data-action="export">Spielstand sichern</button></div><span class="small">Zielflagge · ${officialClock(r)} Rennzeit <span title="Unveränderte Simulationsdauer der Fahrzeugbewegung">(sichtbare Simulationszeit ${clockText(r.time)})</span></span></div><p class="small">Podium und schnellste Runde werden im Streckenfenster eingeblendet. Erst nach Weiter springt das Spiel zum nächsten Rennwochenende.</p>`;const paused=r.paused||anim.needsResume;return `<div class="row wrap"><div class="buttons">${anim.auto?'Saison-Schnellberechnung': [1,2,4].map(n=>`<button class="btn small ${r.speed===n?'primary':''}" data-action="race-speed" data-value="${n}" aria-pressed="${r.speed===n}">${n}×</button>`).join('')}<button class="btn small" data-action="race-pause">${paused?'▶ Fortsetzen':'Ⅱ Pause'}</button><button class="btn small ghost" data-action="ai-debug">${raceAiDebug?'KI-Debug aus':'KI-Debug an'}</button><button class="btn small ghost" data-action="export">Spielstand sichern</button></div><span class="small">${paused?'PAUSIERT':anim.auto?'SCHNELLBERECHNUNG':'LIVE'} · ${officialClock(r)} Rennzeit <span title="Unveränderte Simulationsdauer der Fahrzeugbewegung">(sichtbare Simulationszeit ${clockText(r.time)})</span></span></div><p class="small">Runde ${Math.min(r.distance,r.completed+1)} / ${r.distance} · ${r.completed} vollständige Runden · ${r.fastest?'Schnellste: '+esc(r.fastest.name)+' · '+officialLap(r,r.fastest.time):'Erste volle Runde läuft'}</p>`}
 function podiumOverlay(r){
@@ -1834,7 +1834,14 @@ function drawRace(frac,results){
  ctx.strokeStyle='#aa967526';ctx.lineWidth=1;for(let y=55;y<c.height-35;y+=16){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(c.width,y);ctx.stroke()}
  ctx.lineJoin='round';ctx.lineCap='round';
  // race-camera:start
- ctx.save();window.CGPRaceCamera?.apply(ctx,g,c.width,c.height,trackAt);
+ let followedPose=null;
+ if(window.CGPRaceCamera?.follow&&focusedDriverId){
+  const q=qualAnim?.session,selected=(q?.cars||race?.cars||[]).find(car=>car.id===focusedDriverId);
+  const visible=selected&&(q?selected.active&&!selected.finished:race&&!race.finished&&!selected.raceComplete);
+  if(visible)followedPose=q?qualPose(q,selected):racePose(race,selected);
+  else{focusedDriverId=null;refreshLive();}
+ }
+ ctx.save();window.CGPRaceCamera?.apply(ctx,g,c.width,c.height,trackAt,followedPose,followedPose?c.clientWidth:c.width);
  // race-camera:end
  traceTrack(ctx,g);ctx.strokeStyle='#ae9e83';ctx.lineWidth=g.width*1.28;ctx.stroke();
  traceTrack(ctx,g);ctx.strokeStyle='#f5e8cc';ctx.lineWidth=g.width*1.15;ctx.stroke();
@@ -1880,7 +1887,7 @@ function drawRace(frac,results){
  const grid=raceGrid(raceMeta(trackDefs.indexOf(track)),26);
  const visual=cars.map((r,i)=>{const p=qualifying?qualPose(qualifying,r):(race?racePose(race,r):grid[i].p);return {p,r,upper:qualifying||race?p.level===1:onBridgeDeck(g,grid[i].u)}});
  const paint=v=>{const tm=team(v.r.team);if(!tm)return;
-  const focused=!!((race&&!race.finished||qualifying)&&focusedDriverId===v.r.id);
+  const focused=!!((race&&!race.finished||qualifying)&&focusedDriverId===v.r.id)&&!window.CGPRaceCamera?.follow;
   if(focused){
    // The beacon is decorative only. Draw before the car so its colors stay legible.
    const p=v.p,scale=g.width/64,phase=race?.time||qualifying?.elapsed||0;
@@ -1905,7 +1912,7 @@ function drawRace(frac,results){
  if(!qualifying)grid.filter(slot=>onBridgeDeck(g,slot.u)).forEach(slot=>drawGridSlot(ctx,slot,g.width));
  visual.filter(v=>v.upper).forEach(paint);
  // Leader beacon is a visual HUD marker; it does not affect car physics or ranking.
- if(appPrefs.showLeaderMarker&&race&&!race.finished){
+ if(appPrefs.showLeaderMarker&&race&&!race.finished&&!followedPose){
   const leader=raceOrder(race).find(car=>!car.dnf);
   const leadVisual=leader&&visual.find(v=>v.r.id===leader.id);
   if(leadVisual){const p=leadVisual.p;ctx.save();ctx.translate(p.x,p.y);
@@ -1918,6 +1925,9 @@ function drawRace(frac,results){
  }
  // race-camera-restore:start
  ctx.restore();
+ if(followedPose){
+  ctx.save();ctx.fillStyle='#cabb9df0';ctx.beginPath();ctx.roundRect(c.width/2-225,7,450,36,8);ctx.fill();ctx.fillRect(0,c.height-25,c.width,25);ctx.restore();
+ }
  // race-camera-restore:end
  ctx.fillStyle='#314e41';ctx.font='bold 20px Georgia';ctx.textAlign='center';ctx.fillText((track?.[0]||'Carpet')+(qualifying?' · '+qualifying.phase:' Grand Prix'),590,32);
  ctx.font='11px system-ui';ctx.fillText('Drei Wagen nebeneinander · S/Z → S1 → S2 → S/Z'+(g.bridges.length?' · '+g.bridges.length+' Überführung'+(g.bridges.length>1?'en':''):''),590,window.CGPRaceCamera?.resize?c.height-8:716);

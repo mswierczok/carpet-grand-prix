@@ -7,7 +7,7 @@
     status: card.status || 'AUF DER STRECKE', front: gap(card.front), rear: gap(card.rear),
     frontLabel: `Vorn${card.frontName ? ' · ' + card.frontName : ''}`,
     rearLabel: `Hinten${card.rearName ? ' · ' + card.rearName : ''}` });
-  const label = card => `${card.name} auf der Strecke ${card.focused ? 'nicht mehr hervorheben' : 'hervorheben'}`;
+  const label = card => `${card.name}: ${card.focused ? 'Gesamtstrecke anzeigen' : 'Mit Kamera verfolgen'}`;
 
   function render(cards) {
     return cards.map(card => {
