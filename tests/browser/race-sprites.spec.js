@@ -25,7 +25,7 @@ test('bindet alle 13 Sprites im echten Renn-Canvas ein und verändert beim Neuze
   for (const id of save.teams.map(team => team.id)) expect(counts[id]).toBeGreaterThan(0);
   const before = await page.evaluate(() => localStorage.getItem('carpet_gp_v072'));
   const focused = save.activeRace.cars.find(car => car.team === 't01').id;
-  await page.locator(`[data-action="focus-driver"][data-value="${focused}"]`).click();
+  await page.locator(`#raceTimingTower [data-action="focus-driver"][data-value="${focused}"]`).click();
   expect(await page.evaluate(() => localStorage.getItem('carpet_gp_v072'))).toBe(before);
   expect(await page.evaluate(() => globalThis.__spriteDraws.t01)).toBeGreaterThan(counts.t01);
   expect(errors).toEqual([]);

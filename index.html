@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="./styles/live-layout.css">
 <link rel="stylesheet" href="./styles/team-select.css">
 <link rel="stylesheet" href="./styles/workshop.css">
+<link rel="stylesheet" href="./styles/team-driver-hud.css">
 </head>
 <body class="menu-open">
 <section id="startScreen" role="dialog" aria-modal="true" aria-labelledby="launchTitle">
@@ -114,6 +115,7 @@
 <!-- race-sprites-preview:start -->
 <script src="./src/rendering/race-sprites.js"></script>
 <script src="./src/rendering/race-camera.js?v=2"></script>
+<script src="./src/ui/team-driver-hud.js"></script>
 <!-- race-sprites-preview:end -->
 <script>
 (()=>{'use strict';
@@ -920,7 +922,7 @@ let champ=s.history[0];let prize=champ?.prizes?.find(p=>p.id===s.team);let done=
 return `<div class="studio-dashboard ${anim||qualAnim?'studio-live':''}">
  <div class="studio-center">
   <div class="studio-race-card"><div class="studio-race-heading"><div><div class="studio-eyebrow">🏁 DIE RENNZENTRALE</div><h2>${seasonFinished()?'Saisonfinale':esc(nextTrack()[0])+' Grand Prix'}</h2></div><span class="studio-live-status">${qualAnim?'● QUALIFYING':anim?'● LIVE':'● BEREIT'}</span></div>
-   <div class="race-stage ${anim||qualAnim?'is-live':''}">${qualAnim?`<aside class="race-timing" id="qualTimingTower" aria-label="Qualifying Live-Timing">${qualTower(qualAnim.session)}</aside>`:anim?`<aside class="race-timing" id="raceTimingTower" aria-label="Live-Intervallanzeige">${liveTimingTower(anim.race)}</aside>`:''}<div class="racebox"><canvas id="raceCanvas" width="1180" height="740" aria-label="Original-Rennstrecke als Top-down-Simulation"></canvas><div class="raceoverlay ${anim?.race?.finished&&anim?.race?.awaitingSummary?'summary':''}" id="raceOverlay">${anim?.race?raceOverlayContent(anim.race):(seasonFinished()?`🏁 Saison ${s.season} beendet`:`<b>${esc(nextTrack()[0])}</b> · Original-Kinderzimmer-Piste`)}</div></div></div>
+   <div class="race-stage ${anim||qualAnim?'is-live':''}">${qualAnim?`<aside class="race-timing" id="qualTimingTower" aria-label="Qualifying Live-Timing">${qualTower(qualAnim.session)}</aside>`:anim?`<aside class="race-timing" id="raceTimingTower" aria-label="Live-Intervallanzeige">${liveTimingTower(anim.race)}</aside>`:''}<div class="racebox"><canvas id="raceCanvas" width="1180" height="740" aria-label="Original-Rennstrecke als Top-down-Simulation"></canvas><div class="raceoverlay ${anim?.race?.finished&&anim?.race?.awaitingSummary?'summary':''}" id="raceOverlay">${anim?.race?raceOverlayContent(anim.race):(seasonFinished()?`🏁 Saison ${s.season} beendet`:`<b>${esc(nextTrack()[0])}</b> · Original-Kinderzimmer-Piste`)}</div><section id="teamDriverHud" class="team-driver-hud" aria-label="Deine Fahrer" hidden></section></div></div>
   </div>
   <div class="studio-weekend"><div class="studio-weekend-intro"><span class="studio-eyebrow">AKTUELLES WOCHENENDE</span><div class="studio-weekend-title"><h2>${seasonFinished()?'Saison abgeschlossen':esc(nextTrack()[0])+' GP'}</h2><span>Saison ${s.season} · Lauf ${Math.min(s.round+1,seasonLength())}/${seasonLength()}</span></div></div><div class="studio-weekend-controls">${championshipHeader()}<div id="raceControls">${qualAnim?qualifyControls():raceControls()}</div><div id="raceEvents">${qualAnim?`<div class="race-events">${qualAnim.session.events.slice(0,7).map(e=>`<div>${esc(e.text)}</div>`).join('')}</div>`:liveEvents(shownRace())}</div></div>${studioQuickButtons()}</div>
   <div class="studio-extras">${!seasonFinished()?qualSummary():''}${done}${seasonFinished()&&s.regulationPlan?`<div class="notice"><b>⚙ Technisches Reglement für Saison ${s.regulationPlan.forSeason}:</b> ${s.regulationPlan.entries.map(e=>focusText(e.key)).join(' & ')}. <button class="btn small" data-action="tab" data-value="workshop">Details ansehen</button></div>`:''}${seasonFinished()&&s.wearPlan?.entries.length?`<div class="notice"><b>⚠ Vorsaison-Wartung:</b> ${s.wearPlan.entries.map(e=>parts.find(p=>p[0]===e.key)[1]).join(' & ')}. <button class="btn small" data-action="tab" data-value="workshop">Werte ansehen</button></div>`:''}${s.mode==='manager'&&!seasonFinished()&&!qualifyingDone()&&!qualAnim?`<div class="card"><h3>Qualifying-Einstellung · ${esc(mine.name)}</h3><div class="qual-strategy"><label>Risikostufe</label><div class="segment">${[['safe','Sicher'],['normal','Ausgewogen'],['attack','Angriff']].map(a=>`<button data-action="qual-risk" data-value="${a[0]}" class="${(s.qualRisk||'normal')===a[0]?'active':''}">${a[1]}</button>`).join('')}</div></div><div class="qual-strategy"><label>Ausfahrt</label><div class="segment">${[['early','Früh'],['middle','Mittig'],['late','Spät']].map(a=>`<button data-action="qual-release" data-value="${a[0]}" class="${(s.qualRelease||'middle')===a[0]?'active':''}">${a[1]}</button>`).join('')}</div></div><p class="small">Diese Entscheidungen betreffen nur deine beiden Fahrer.</p></div>`:''}${total}${s.mode==='manager'&&!seasonFinished()?`<div class="card"><h3>Rennstrategie · ${esc(mine.name)}</h3><div class="segment">${[['safe','Schonend'],['normal','Ausgewogen'],['attack','Angriff']].map(a=>`<button data-action="strategy" data-value="${a[0]}" class="${s.strategy===a[0]?'active':''}">${a[1]}</button>`).join('')}</div><p class="small">Schonend reduziert das Risiko, Angriff erhöht Tempo und Risiko.</p></div>`:''}<div class="card"><div class="row"><h2>${s.round?'Letztes Rennergebnis':'Startaufstellung'}</h2><span class="small">${s.round?esc(s.results.filter(r=>r.season===s.season).at(-1)?.track||''):`${s.drivers.length} Fahrer`}</span></div>${s.round?resultHtml():`<p class="small">${qualifyingDone()?'Die Startaufstellung ist nach dem Qualifying ermittelt.':'Noch kein Qualifying abgeschlossen. Die Startplätze werden aus den Zeiten ermittelt.'}</p>`}</div><div class="card"><h2>Konstrukteurswertung</h2>${htmlStandings('team')}</div><div class="card"><h2>Aus dem Fahrerlager</h2>${newsHtml(4)}<button class="btn ghost small" data-action="tab" data-value="chronicle">Zur Chronik →</button></div></div>
@@ -1127,6 +1129,9 @@ function render(){
  document.getElementById('content').classList.toggle('other-view',activeTab!=='dashboard');
  document.getElementById('content').innerHTML=({dashboard,workshop,market,chronicle,calendar,universe})[activeTab]();
  if(activeTab==='dashboard')drawRace(0);
+ // team-driver-hud-render:start
+ updateTeamDriverHud();
+ // team-driver-hud-render:end
 }
 
 // One fixed-step, serializable race state drives both visible and automatic races.
@@ -1691,7 +1696,29 @@ function showRaceSummary(){if(!anim)return;const r=anim.race;r.awaitingSummary=t
 function finalizeRace(){if(!anim)return;const r=anim.race;r.awaitingSummary=false;anim=null;focusedDriverId=null;recordRace(r);delete s.activeRace;if(seasonFinished())finishSeason();save();render();refreshLive();notify('Zielflagge! Die tatsächliche Rennklassifikation ist gespeichert.');}
 function liveEvents(r){return r?`<div class="race-events" aria-label="Rennereignisse">${r.events.slice(0,5).map(e=>`<div><span class="small">${clockText(officialSeconds(r,e.time))}</span> ${esc(e.text)}</div>`).join('')}</div>`:''}
 
+// team-driver-hud-model:start
+function teamDriverHudCards(r){
+ if(!r||s.mode!=='manager'||qualAnim||r.finished)return [];
+ const order=raceOrder(r);
+ return r.cars.filter(c=>c.team===s.team).slice(0,2).map(c=>{
+  const index=order.findIndex(other=>other.id===c.id),front=order[index-1],rear=order.slice(index+1).find(other=>!other.dnf);
+  const active=!c.dnf&&!c.raceComplete;
+  return {id:c.id,name:c.name,position:index+1,color:team(c.team)?.color,focused:focusedDriverId===c.id,status:raceStatus(c),
+   front:active?(front?raceInterval(r,c,front):'FÜHRT'):'—',
+   rear:active&&rear&&!rear.raceComplete?raceInterval(r,rear,c):'—',
+   frontName:active&&front?driverCode(front.name):'',rearName:active&&rear&&!rear.raceComplete?driverCode(rear.name):''};
+ });
+}
+function updateTeamDriverHud(){
+ const root=document.getElementById('teamDriverHud');if(!root||!window.CGPTeamDriverHud)return;
+ window.CGPTeamDriverHud.update(root,teamDriverHudCards(anim?.race));
+}
+// team-driver-hud-model:end
+
 function refreshLive(){
+ // team-driver-hud-refresh:start
+ updateTeamDriverHud();
+ // team-driver-hud-refresh:end
  if(qualAnim){
   const q=qualAnim.session,tower=document.getElementById('qualTimingTower'),ctrl=document.getElementById('raceControls'),events=document.getElementById('raceEvents'),overlay=document.getElementById('raceOverlay');
   if(tower)tower.innerHTML=qualTower(q);

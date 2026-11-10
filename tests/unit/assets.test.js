@@ -24,6 +24,20 @@ it('erhält CSS-Kaskade, Spielcode und Daten beim Zusammenbauen vollständig', (
   // image payloads in memory; all game code, data, CSS and other images must still
   // reconstruct the byte-identical original. Never regenerate the original oracle.
   let normalized = createOfflineHTML();
+  const hudCSS = readFileSync(new URL('styles/team-driver-hud.css', ROOT), 'utf8');
+  expect(normalized.split(hudCSS)).toHaveLength(2);
+  normalized = normalized.replace(hudCSS, '');
+  const hudSlot = '<section id="teamDriverHud" class="team-driver-hud" aria-label="Deine Fahrer" hidden></section>';
+  expect(normalized.split(hudSlot)).toHaveLength(2);
+  normalized = normalized.replace(hudSlot, '');
+  for (const marker of ['render', 'refresh']) {
+    const block = new RegExp(` \\/\\/ team-driver-hud-${marker}:start\\n[\\s\\S]*? \\/\\/ team-driver-hud-${marker}:end\\n`);
+    expect(normalized.match(block)).not.toBeNull();
+    normalized = normalized.replace(block, '');
+  }
+  const hudModel = /\/\/ team-driver-hud-model:start\n[\s\S]*?\/\/ team-driver-hud-model:end\n\n/;
+  expect(normalized.match(hudModel)).not.toBeNull();
+  normalized = normalized.replace(hudModel, '');
   // Approved four-team rendering preview: exclude exactly its separate module
   // and restore exactly the single former paint call. All simulation stays under
   // the original byte-for-byte guard.

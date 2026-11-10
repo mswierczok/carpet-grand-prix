@@ -78,6 +78,17 @@ für alle 22 Strecken; Browsertests sichern randnahe Einpassung, unverzerrte
 Canvas-Proportionen und die aufgehobene CSS-Höhenbegrenzung ab.
 Details in [RACE_CAMERA.md](RACE_CAMERA.md).
 
+Die eigenen Fahreranzeigen haben Modulprüfungen für Teamzuordnung, Reihenfolge,
+Abstände nach vorn/hinten, Sonderfälle und sichere Ausgabe. Browsertests prüfen
+Tower-/Karten-Fokus in beide Richtungen, Tastatur, unveränderte Speicherung,
+stabile Schaltflächen bei Live-Updates und die Anordnung ohne Fahrbahnüberdeckung.
+Der bestehende Sprite-Test wählt seinen Fokusknopf jetzt ausdrücklich im Tower,
+da derselbe Fahrer zusätzlich eine Karte besitzt. Historische Bildvergleiche
+deaktivieren nur im Test die Karten und filtern ausschließlich ihr neues
+Stylesheet aus dem CSS-Vergleich. Der Quelltextvergleich normalisiert zusätzlich
+nur dieses Stylesheet, den Platzhalter und die markierten Darstellungsblöcke.
+Details in [TEAM_DRIVER_HUD.md](TEAM_DRIVER_HUD.md).
+
 Standard-CI läuft auf PRs, Pushes nach `main` und manuell. Erweiterte CI läuft
 wöchentlich und manuell. Keine der Prüfungen veröffentlicht das Spiel. Fehlerberichte
 enthalten Traces und Screenshots. Visuelle Referenzen stammen aus dem unveränderten,

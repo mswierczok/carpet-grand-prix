@@ -8,7 +8,8 @@
     "styles/studio.css",
     "styles/live-layout.css",
     "styles/team-select.css",
-    "styles/workshop.css"
+    "styles/workshop.css",
+    "styles/team-driver-hud.css"
   ],
   "images": [
     {
