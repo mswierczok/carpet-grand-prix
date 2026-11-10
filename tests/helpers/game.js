@@ -40,7 +40,7 @@ export function createGame(seed = 12345) {
       createRace, stepRace, runRaceToEnd, raceResults, recordRace,
       finishSeason, startNextSeason, makeWearPlan, makeRegulationPlan,
       makeGeometry, trackAt, raceMeta, raceGrid, bodyContact, racePose, trafficBlocks,
-      officialSeconds, raceOrder, safeLaneChange,
+      officialSeconds, raceOrder, raceInterval, teamDriverHudCards, safeLaneChange,
       MASTER, trackDefs, digitizedTracks, STORAGE, RACE_STEP, RACE_LAPS,
       get state() { return s; },
       set state(value) { s = safeClone(value); anim = null; qualAnim = null; },

@@ -1,0 +1,17 @@
+/* Bottom corners inside the race frame; keep the road unobscured. */
+.team-driver-hud{display:flex;justify-content:space-between;gap:16px;padding:8px 10px 10px;background:#cabb9d}
+.team-driver-hud[hidden]{display:none}
+.team-driver-card{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px 10px;width:245px;max-width:calc(50% - 8px);min-width:0;padding:11px 12px;border:1px solid #758a87;border-top:3px solid var(--driver-color);border-radius:13px;background:#14282bf5;color:#f3f6ee;text-align:left;box-shadow:0 4px 12px #0003;font:inherit;cursor:pointer}
+.team-driver-card:hover{background:#203a3d;border-color:#d1e7d8}
+.team-driver-card.is-focused{border-color:#8affdf;box-shadow:0 0 0 2px #63edc77a,0 4px 12px #0003;background:#224844}
+.team-driver-card:focus-visible{outline:3px solid #fff1bd;outline-offset:2px}
+.team-driver-position{align-self:center;font-size:25px;line-height:1;font-weight:850;letter-spacing:-.04em;color:#ffe5a1;font-variant-numeric:tabular-nums}
+.team-driver-identity{min-width:0;align-self:center}
+.team-driver-identity strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px;line-height:1.3}
+.team-driver-identity small{display:block;margin-top:3px;font-size:9px;letter-spacing:.04em;color:#b5cac6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team-driver-metrics{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.team-driver-gap{display:flex;flex-direction:column;gap:3px;min-width:0}
+.team-driver-gap small{font-size:10px;color:#b5cac6;white-space:nowrap}
+.team-driver-gap b{font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+@media(max-width:560px){.team-driver-hud{gap:8px;padding:7px 7px 9px}.team-driver-card{flex:1;width:auto;max-width:calc(50% - 4px);padding:9px 8px;gap:8px;grid-template-columns:36px minmax(0,1fr)}.team-driver-position{font-size:22px}.team-driver-identity strong{font-size:12px}.team-driver-gap b{font-size:12px}.team-driver-gap small{font-size:9px}}
+@media(max-width:400px){.team-driver-metrics{grid-template-columns:1fr;gap:6px}}

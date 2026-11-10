@@ -19,6 +19,7 @@ CSS wird in dieser verbindlichen Reihenfolge geladen:
 5. `styles/live-layout.css`: spätere Anpassungen der Live-Ansicht.
 6. `styles/team-select.css`: spätere Teamauswahl-Anpassungen.
 7. `styles/workshop.css`: Werkstatt und Fahrzeugdarstellung.
+8. `styles/team-driver-hud.css`: eigene Fahreranzeigen unten im Rennfenster.
 
 Die ursprüngliche Kaskade ist absichtlich erhalten. Historische Überschreibungen
 nicht als vermeintlich doppelte Regeln entfernen oder umsortieren. Das wäre ein
