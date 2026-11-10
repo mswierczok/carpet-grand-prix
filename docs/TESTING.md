@@ -128,3 +128,10 @@ für ihren Vergleich den Bahrain-Pilot aus und filtern sein Stylesheet.
 Der Quelltextschutz erlaubt nur einzeln aufgeführte Präsentationsaufrufe;
 abschließend wird weiterhin die vollständige Originaldatei per SHA-256 verglichen.
 Benchmarkmethode, Rohdaten und Grenzen: [ART_PILOT.md](ART_PILOT.md).
+
+Der vollständige Rollout ergänzt exakte 92-ID-Abdeckung, Helm-/Identitätsstabilität,
+reproduzierbare Porträt-SVGs und sichere Dekoration auf allen 22 Geometrien.
+Zusätzliche Desktop-/Mobiltests prüfen die Gesamtgalerie, Anzugwechsel,
+Profil-Tastaturbedienung, Vertragswahl, Speicherunveränderlichkeit und Offlineprofile.
+`npm run build:world-review` erstellt die Gesamtvorschau; CI bietet sie mit dem
+spielbaren Offline-HTML als `carpet-grand-prix-world-and-drivers` an.

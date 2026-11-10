@@ -1,5 +1,8 @@
 # Gezeichneter Pilot und flüssige Darstellung
 
+Historische Dokumentation des ersten Piloten. Der aktuelle vollständige Ausbau
+und die Rückkehr zur bisherigen Team-Auswahl stehen in [WORLD_AND_DRIVERS.md](WORLD_AND_DRIVERS.md).
+
 Ausgangsbasis: freigegebenes `main` nach PR #10,
 `0df7eb0c72bede00479bf12a528198f4ad6149a1`.
 Auftrag: hochgeladenes „COMPLETE VISUAL ART DIRECTION & IMPLEMENTATION“,

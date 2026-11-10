@@ -25,6 +25,14 @@ jobs:
       - run: npm run build:offline
       - run: npm run build:race-preview
       - run: npm run build:pilot-preview
+      - run: npm run build:world-review
+      - uses: actions/upload-artifact@v4
+        with:
+          name: carpet-grand-prix-world-and-drivers
+          path: |
+            dist/carpet-grand-prix-world-and-drivers.html
+            dist/carpet-grand-prix-offline.html
+          retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
           name: carpet-grand-prix-art-pilot

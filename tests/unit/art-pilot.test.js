@@ -7,7 +7,7 @@ for (const file of ['race-sprites', 'pilot-vehicles', 'pilot-world', 'render-mot
 
 it('erzeugt vier transparente Illustrationen reproduzierbar und erhält alle gemeinsamen Geometriepfade', () => {
   const api = scope.CGPPilotVehicles;
-  expect([...api.ids]).toEqual(['t01','t04','t10','t05']);
+  expect(api.ids).toHaveLength(13);
   for (const id of api.ids) {
     const top = api.svg(id), showroom = api.showroomSvg(id);
     expect(top + '\n').toBe(readFileSync(new URL(`assets/cars/illustrated/topdown-${id}.svg`, ROOT), 'utf8'));

@@ -15,7 +15,7 @@ test('hält Live-Schaltflächen beim Aktualisieren und Sortieren stabil und bedi
   expect(result).toEqual({same:true,focused:true,labels:['b neu','a neu'],pressed:'true',empty:true});
 });
 
-test('zeichnet alle vier Pilotautos und aktualisiert aktive Rennsteuerung ohne ihre DOM-Knoten zu ersetzen', async ({ page }) => {
+test('zeichnet alle 13 illustrierten Autos und aktualisiert aktive Rennsteuerung ohne ihre DOM-Knoten zu ersetzen', async ({ page }) => {
   const errors=[]; page.on('pageerror',e=>errors.push(e.message));
   await page.addInitScript(save=>localStorage.setItem('carpet_gp_v072',JSON.stringify(save)),save);
   await page.goto('./'); await page.locator('[data-launch="load-view"]').click(); await page.locator('#launchResume').click();
@@ -24,7 +24,7 @@ test('zeichnet alle vier Pilotautos und aktualisiert aktive Rennsteuerung ohne i
     const ctx=canvas.getContext('2d'); const results=[];
     for(const id of CGPPilotVehicles.ids){ctx.clearRect(0,0,280,120);CGPRaceSprites.draw(ctx,{x:140,y:60,ang:0},id,8,false);const pixels=ctx.getImageData(0,0,280,120).data;results.push([...pixels].some((v,i)=>i%4===3&&v>0));}return results;
   });
-  expect(rendered).toEqual([true,true,true,true]);
+  expect(rendered).toEqual(Array(13).fill(true));
   const pause = page.locator('[data-action="race-pause"]');
   await pause.evaluate(button=>globalThis.__pauseButton=button);
   await pause.click(); await page.waitForTimeout(650);
@@ -52,7 +52,7 @@ test('zeigt alle vier Pilotfahrzeuge auch vollständig offline ohne weitere Ress
   for(let i=1;i<=10;i++){
     const img=page.locator('.showroom-car-image');
     if([1,4,5,10].includes(i)){
-      expect(await img.getAttribute('src')).toMatch(/^data:image\/svg\+xml;base64,/);
+      expect(await img.getAttribute('src')).toMatch(/^data:image\/webp;base64,/);
       pilots.push(await img.evaluate(async img=>{await img.decode();return [img.naturalWidth,img.naturalHeight];}));
     }
     await page.locator('[data-launch="team-next"]').click();

@@ -1,11 +1,11 @@
-# Visuelle Grundlage – Vorschlag zur Pilotabnahme
+# Visuelle Grundlage – freigegebener Zeichenstil
 
 ## Gemeinsame Regeln
 
 - Kontrollierte Cartoonzeichnung: dunkle, saubere Kontur; flächige Farben;
   eine gezielte Schattenfläche und kleine helle Kanten. Kein Fotorealismus.
 - Rennwelt und Werkstattauto exakt von oben, ohne Perspektivverzerrung.
-  Showroom mit einer einheitlichen räumlichen Projektion aller vier Pilotautos.
+  Die Team-Auswahl behält auf Wunsch die bisherigen Showroom-Bilder.
 - Kontur Fahrzeuge `#26323b`, warme Umgebungskontur `#443f37`.
   Bahrain: Teppich `#c7b28f`, saubere Fasern `#d4c09c`, Garn `#f3e5bf`,
   Papier `#fff3d2`, gedämpftes Rot `#ad5147`, Blau `#526e86`, Grün `#788c66`.
@@ -26,42 +26,38 @@
 - Wiederverwendung: SVG-Fahrzeuge, reine Layoutdaten, Canvas-Pfad-/Bitmapcache;
   keine zufälligen Weltänderungen oder Bilderzeugung zur Laufzeit.
 
-## Rollout nach Stilabnahme
+## Vollständiger Rollout nach Stilabnahme
 
-Die folgenden Umgebungen sind der vom Nutzer vorgeschlagene Plan, **keine
-Kalenderänderung**. Nur Bahrain ist in diesem PR neu gezeichnet.
+Die folgenden Umgebungen sind nach Nutzerfreigabe vollständig umgesetzt.
+Sie verändern **nicht** den Kalender oder die Streckengeometrie.
 
 | Strecke | Material und Dekoridee | Stand |
 | --- | --- | --- |
-| Bahrain | Beiger Teppich, Garn, Stifte, Stoffbär, Papier/Blöcke | Pilot implementiert |
-| Luxemburg | Helles Holzparkett | Geplant |
-| Kanada | Großer Kinderschreibtisch | Geplant |
-| Frankreich | Kariertes Bettlaken | Geplant |
-| Schweiz | Grauer Teppich, Spielzeugberge | Geplant |
-| Portugal | Sonnige Gartenterrasse | Geplant |
-| Indien | Bunte Spielmatte | Geplant |
-| Brasilien | Wohnzimmerteppich, Pflanzen | Geplant |
-| Südafrika | Terrassensteinplatten | Geplant |
-| Korea | Schreibtisch, Bauklotzbrücken | Geplant |
-| USA | Dunkler Teppich | Geplant |
-| Belgien | Holz neben Spielzeugkiste | Geplant |
-| Schweden | Helle Dielen | Geplant |
-| Deutschland | Technikschreibtisch, Lineale | Geplant |
-| Japan | Spielmatte, Miniaturgebäude | Geplant |
-| China | Gemusterte Decke | Geplant |
-| Russland | Holz, große Spielzeugbrücke | Geplant |
-| Australien | Warme Terrassenplatten | Geplant |
-| England | Gemusterter Teppich | Geplant |
-| Italien | Heller Stein/Fliesen | Geplant |
-| Ungarn | Farbige Bettdecke | Geplant |
-| Abu Dhabi | Sandteppich, Spielzeugarchitektur | Geplant |
+| Bahrain | Beiger Teppich, Garn, Stifte, Stoffbär, Papier/Blöcke | Umgesetzt |
+| Luxemburg | Helles Holzparkett | Umgesetzt |
+| Kanada | Großer Kinderschreibtisch | Umgesetzt |
+| Frankreich | Kariertes Bettlaken | Umgesetzt |
+| Schweiz | Grauer Teppich, Spielzeugberge | Umgesetzt |
+| Portugal | Sonnige Gartenterrasse | Umgesetzt |
+| Indien | Bunte Spielmatte | Umgesetzt |
+| Brasilien | Wohnzimmerteppich, Pflanzen | Umgesetzt |
+| Südafrika | Terrassensteinplatten | Umgesetzt |
+| Korea | Schreibtisch, Bauklotzbrücken | Umgesetzt |
+| USA | Dunkler Teppich | Umgesetzt |
+| Belgien | Holz neben Spielzeugkiste | Umgesetzt |
+| Schweden | Helle Dielen | Umgesetzt |
+| Deutschland | Technikschreibtisch, Lineale | Umgesetzt |
+| Japan | Spielmatte, Miniaturgebäude | Umgesetzt |
+| China | Gemusterte Decke | Umgesetzt |
+| Russland | Holz, große Spielzeugbrücke | Umgesetzt |
+| Australien | Warme Terrassenplatten | Umgesetzt |
+| England | Gemusterter Teppich | Umgesetzt |
+| Italien | Heller Stein/Fliesen | Umgesetzt |
+| Ungarn | Farbige Bettdecke | Umgesetzt |
+| Abu Dhabi | Sandteppich, Spielzeugarchitektur | Umgesetzt |
 
-Nach Freigabe zuerst drei Materialfamilien (Holz, Stoff, Stein) mit je einer
-weiteren überprüfbaren Strecke ausarbeiten; anschließend die übrigen Varianten.
-Bei jeder Strecke ursprüngliche Wege, Ebenen, Boxengasse, Start-/Sektorpositionen
-gegen die Geometriereferenz prüfen. Neun weitere Teamillustrationen in kleinen
-Gruppen mit derselben Quelle für Rennen und Werkstatt, separater Showroom-
-Projektion und Vergleich zur jeweiligen freigegebenen Fotolackierung.
-
-Pro Schritt Desktop/Mobil, Kamera, Logos/Upgrades, Offline/Pages-Projektpfad und
-Replays prüfen; anschließend Vorschau und separater PR zur Freigabe.
+Die Materialfamilien und alle 13 Renn-/Werkstattfahrzeuge sind umgesetzt.
+Die Team-Auswahl verwendet auf ausdrücklichen Wunsch weiterhin die bisherigen
+WebPs. Das zusätzliche Porträtsystem deckt die 92 vorhandenen Fahrer ab.
+Integration und Grenzen: [WORLD_AND_DRIVERS.md](WORLD_AND_DRIVERS.md).
+Weitere grafische Feinarbeit erfolgt in eigenen überprüfbaren Schritten.

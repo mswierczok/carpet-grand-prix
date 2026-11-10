@@ -90,3 +90,11 @@ interpoliert Auto/Kamera zwischen den unveränderten 1/30-Sekunden-Schritten.
 `live-dom.js` erhält Live-Buttons bei Aktualisierung und Sortierung.
 Integration, Ausgangsstand und Messungen: [ART_PILOT.md](ART_PILOT.md).
 Stilgrundlage und freigabepflichtiger weiterer Rollout: [ART_STYLE.md](ART_STYLE.md).
+
+## Freigegebener Rollout und Fahreridentitäten
+
+Aktueller Ausbau: alle 22 Umgebungen und 13 Renn-/Werkstattfahrzeuge.
+Team-Auswahl wieder mit den bisherigen WebPs. 92 feste Illustrationsprofile
+in `src/data/driver-identities.js`, SVG-Komposition in `driver-portraits.js`,
+lesender Profil-Dialog in `driver-profiles.js`. Kein neues Speicherfeld.
+Vollständige Integration und Vorschau: [WORLD_AND_DRIVERS.md](WORLD_AND_DRIVERS.md).

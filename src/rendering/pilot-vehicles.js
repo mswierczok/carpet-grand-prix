@@ -3,7 +3,7 @@
   'use strict';
   const original = globalThis.CGPRaceSprites;
   if (!original?.svg('t01')) return;
-  const ids = Object.freeze(['t01', 't04', 't10', 't05']);
+  const ids = Object.freeze(Object.keys(original.teams));
   const assets = Object.freeze({ t01: './assets/cars/illustrated/team-t01.svg', t04: './assets/cars/illustrated/team-t04.svg',
     t10: './assets/cars/illustrated/team-t10.svg', t05: './assets/cars/illustrated/team-t05.svg' });
   const cache = new Map();
@@ -48,7 +48,7 @@
       t01: '<path d="M-132 23L-45 23L-54 41L-127 39Z" fill="#102b56"/><text x="-90" y="35" fill="#ffdf46">VOLTIER</text>',
       t04: '<ellipse cx="-89" cy="31" rx="30" ry="12" fill="#fff3da" stroke="#a31c28" stroke-width="1.3"/><text x="-89" y="34" fill="#b71927">ORVIA</text>',
       t10: '<path d="M-135 21L-40 22L-48 41L-132 39Z" fill="#f5f0d9"/><path d="M-127 25L-122 25L-125 35L-130 35ZM-119 25L-114 25L-117 35L-122 35ZM-111 25L-106 25L-109 35L-114 35Z" fill="#ca2936"/><text x="-76" y="34" fill="#3f6419">VERDAN</text>',
-      t05: '<path d="M-135 21L-39 22L-47 41L-133 39Z" fill="#fff0d3"/><path d="M-121 24L-108 24L-119 30L-108 36L-121 36L-110 30Z" fill="#163c91"/><text x="-75" y="34" fill="#163c91">SYRO</text>' }[id];
+      t05: '<path d="M-135 21L-39 22L-47 41L-133 39Z" fill="#fff0d3"/><path d="M-121 24L-108 24L-119 30L-108 36L-121 36L-110 30Z" fill="#163c91"/><text x="-75" y="34" fill="#163c91">SYRO</text>' }[id] || '';
     return `<svg xmlns="http://www.w3.org/2000/svg" width="2172" height="555" viewBox="-225 -42 450 115" role="img" aria-label="Illustriertes Fahrzeug von ${t.name}"><ellipse cx="-5" cy="49" rx="199" ry="12" fill="#29373c" opacity=".16"/>${wheel(-104.5, -48)}${wheel(81.5, -48)}<g transform="translate(0 13)"><path transform="${project}" d="${geometry.body}" fill="${t.body}" stroke="#26323b" stroke-width="2.5"/><path transform="${project}" d="${geometry.body}" fill="#26333c" opacity=".24"/></g><g transform="${project}">${svg(id).replace('<svg ', '<svg x="-140" y="-60" aria-hidden="true" ')}</g><g font-family="Arial,sans-serif" font-weight="900" font-size="8" text-anchor="middle" transform="rotate(4 -90 30)">${badge}</g>${wheel(-104.5, 48)}${wheel(81.5, 48)}</svg>`;
   }
   globalThis.CGPPilotVehicles = Object.freeze({ ids, assets, svg, draw, showroomSvg });

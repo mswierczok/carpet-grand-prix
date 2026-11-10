@@ -24,6 +24,13 @@ it('erhält CSS-Kaskade, Spielcode und Daten beim Zusammenbauen vollständig', (
   // twelve earlier livery payloads. All remaining code/data/styles/images must
   // reconstruct the byte-identical original. Never regenerate the oracle.
   let normalized = createOfflineHTML();
+  const portraitCSS=readFileSync(new URL('styles/driver-portraits.css',ROOT),'utf8');
+  expect(normalized.split(portraitCSS)).toHaveLength(2);normalized=normalized.replace(portraitCSS,'');
+  normalized=normalized.replace(/\n\/\/ driver-portraits-bridge:start[\s\S]*?\/\/ driver-portraits-bridge:end\n/,'');
+  normalized=normalized.replace("const illustratedMarkup=`<svg","return `<svg").replace(/\n \/\/ illustrated-thumbnail:start[\s\S]*? \/\/ illustrated-thumbnail:end/,'');
+  const portraitCopies=[["${portraitName(p.driver)}","${esc(p.driver?.name||'—')}"],["${portraitName(driver(e.id)||e)}","${esc(e.name)}"],["${portraitName(d,'medium')}",'${esc(d.name)}'],['${portraitName(d)}','${esc(d.name)}'],["${portraitName(driver(e.id))}","${esc(driver(e.id)?.name||'—')}"],['${portraitLabel(h.champName,h.champ)}','${esc(h.champName)}'],['${portraitLabel(champ?.champName||posRank()[0].name,champ?.champ)}','${esc(champ?.champName||posRank()[0].name)}'],["${portraitName(driver(id))}","${esc(driver(id)?.name||'—')}"],['${portraitName(driver(c.id)||c)}','${esc(c.name)}']];
+  for(const [current,original]of portraitCopies)normalized=normalized.replaceAll(current,original);
+  normalized=normalized.replace(/ \/\/ illustrated-bridges:start\n[\s\S]*? \/\/ illustrated-bridges:end\n/,'');
   const pilotCSS = readFileSync(new URL('styles/art-pilot.css', ROOT), 'utf8');
   expect(normalized.split(pilotCSS)).toHaveLength(2);
   normalized = normalized.replace(pilotCSS, '');
@@ -38,7 +45,6 @@ it('erhält CSS-Kaskade, Spielcode und Daten beim Zusammenbauen vollständig', (
     ["ctx.strokeStyle=ink;ctx.lineWidth=Math.max", "ctx.strokeStyle='#fff3d9';ctx.lineWidth=Math.max"],
     ["ctx.strokeStyle=pilotSurface?'#42766b':'#91d7c2'", "ctx.strokeStyle='#91d7c2'"],
     ["ctx.strokeStyle=pilotSurface?'#78634b':'#f5e9bb'", "ctx.strokeStyle='#f5e9bb'"],
-    ["${window.CGPPilotVehicles?.assets[t.id]?' pilot-illustrated':''}", ''],
     ['illustratedTeamCar(t.id)||TEAMSELECT_CAR_ASSETS.t07', 'TEAMSELECT_CAR_ASSETS[t.id]||TEAMSELECT_CAR_ASSETS.t07'],
     ["image=illustratedTeamCar(t.id)||''", "image=TEAMSELECT_CAR_ASSETS[t.id]||''"],
     ['window.CGPRenderMotion?.remember(qualAnim.session,qualAnim.session.cars,car=>qualPose(qualAnim.session,car));', ''],

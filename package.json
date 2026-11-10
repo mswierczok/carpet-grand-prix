@@ -17,7 +17,8 @@
     "serve:test": "node tests/helpers/server.js",
     "fixtures:generate": "node tests/helpers/generate-fixtures.js",
     "build:pilot-art": "node scripts/build-pilot-art.js",
-    "build:pilot-preview": "node scripts/build-pilot-preview.js"
+    "build:pilot-preview": "node scripts/build-pilot-preview.js",
+    "build:world-review": "node scripts/build-world-review.js"
   },
   "devDependencies": {
     "@playwright/test": "1.64.1",

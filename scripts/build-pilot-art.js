@@ -7,4 +7,4 @@ for (const id of scope.CGPPilotVehicles.ids) {
   writeFileSync(new URL(`assets/cars/illustrated/team-${id}.svg`, root), scope.CGPPilotVehicles.showroomSvg(id) + '\n');
   writeFileSync(new URL(`assets/cars/illustrated/topdown-${id}.svg`, root), scope.CGPPilotVehicles.svg(id) + '\n');
 }
-console.log('Vier transparente Showroom-Illustrationen und gemeinsame Renn-/Werkstatt-SVGs erstellt.');
+console.log('13 gemeinsame Renn-/Werkstatt-SVGs und archivierte Showroom-Illustrationen erstellt.');
