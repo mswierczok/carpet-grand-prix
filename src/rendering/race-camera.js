@@ -23,7 +23,7 @@
       include(p.x + sign * Math.sin(p.ang) * distance,
         p.y - sign * Math.cos(p.ang) * distance - 5, 16, 9);
     }
-    const viewport = Object.freeze({ left: 20, right: width - 20, top: 64, bottom: height - 34 });
+    const viewport = Object.freeze({ left: 8, right: width - 8, top: 48, bottom: height - 24 });
     const scale = Math.min((viewport.right - viewport.left) / (right - left),
       (viewport.bottom - viewport.top) / (bottom - top));
     const result = Object.freeze({ scale,
@@ -41,5 +41,17 @@
     return camera;
   }
 
-  globalThis.CGPRaceCamera = Object.freeze({ fit, apply });
+  function resize(canvas, g, trackAt) {
+    const { bounds: b } = fit(g, canvas.width, canvas.height, trackAt);
+    // Match the frame to the track instead of leaving a fixed landscape letterbox.
+    // Tall tracks remain bounded so the race panel does not become a scrolling map.
+    const height = Math.max(620, Math.min(1000,
+      Math.ceil((b.bottom - b.top) * (canvas.width - 16) / (b.right - b.left) + 72)));
+    if (canvas.height !== height) canvas.height = height;
+    if (canvas.style.aspectRatio !== 'auto') canvas.style.aspectRatio = 'auto';
+    if (canvas.style.maxHeight !== 'none') canvas.style.maxHeight = 'none';
+    return height;
+  }
+
+  globalThis.CGPRaceCamera = Object.freeze({ fit, apply, resize });
 })();

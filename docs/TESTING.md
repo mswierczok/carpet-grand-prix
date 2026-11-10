@@ -72,7 +72,10 @@ prüfen die tatsächliche Vergrößerung und das Zurücksetzen der Canvas-Transf
 in Startaufstellung, Qualifying und Rennen auf Desktop und im Mobilformat.
 Historische Bildvergleiche deaktivieren ausschließlich im Test die neue Kamera;
 Spiel- und Offline-Tests verwenden den tatsächlichen Zoom. Der Quelltextvergleich
-nimmt nur die beiden markierten Kamera-Aufrufe zusätzlich aus.
+nimmt nur die markierten Kamera-Aufrufe sowie die Darstellungskoordinaten für
+Hintergrund und Fußzeile zusätzlich aus. Der adaptive Rahmen hat eigene Prüfungen
+für alle 22 Strecken; Browsertests sichern randnahe Einpassung, unverzerrte
+Canvas-Proportionen und die aufgehobene CSS-Höhenbegrenzung ab.
 Details in [RACE_CAMERA.md](RACE_CAMERA.md).
 
 Standard-CI läuft auf PRs, Pushes nach `main` und manuell. Erweiterte CI läuft
