@@ -61,6 +61,18 @@ it('erhält CSS-Kaskade, Spielcode und Daten beim Zusammenbauen vollständig', (
   normalized = normalized.replace('y<c.height-35;', 'y<705;');
   expect(normalized).toContain('590,window.CGPRaceCamera?.resize?c.height-8:716);');
   normalized = normalized.replace('590,window.CGPRaceCamera?.resize?c.height-8:716);', '590,716);');
+  const followCopies = [
+    ["window.CGPRaceCamera?.follow?(focusedDriverId===c.id?'nicht mehr verfolgen':'verfolgen'):(focusedDriverId===c.id?'nicht mehr hervorheben':'hervorheben')", "focusedDriverId===c.id?'nicht mehr hervorheben':'hervorheben'"],
+    ["window.CGPRaceCamera?.follow?(focusedDriverId===c.id?'Gesamtstrecke anzeigen':'Mit Kamera verfolgen'):(focusedDriverId===c.id?'Markierung aufheben':'Auf der Strecke markieren')", "focusedDriverId===c.id?'Markierung aufheben':'Auf der Strecke markieren'"],
+    ["${window.CGPRaceCamera?.follow?'Fahrer antippen: Kamera folgt · erneut tippen: Gesamtstrecke':'Fahrer antippen: Auto leuchtet auf · erneut tippen: abwählen'}", 'Fahrer antippen: Auto leuchtet auf · erneut tippen: abwählen'],
+    ["${window.CGPRaceCamera?.follow?'Aktiven Fahrer anklicken: Kamera folgt · erneut klicken: Gesamtstrecke':'Fahrer anklicken: Auto hervorheben'}", 'Fahrer anklicken: Auto hervorheben'],
+    ['focusedDriverId===v.r.id)&&!window.CGPRaceCamera?.follow;', 'focusedDriverId===v.r.id);'],
+    ['appPrefs.showLeaderMarker&&race&&!race.finished&&!followedPose', 'appPrefs.showLeaderMarker&&race&&!race.finished'],
+  ];
+  for (const [current, original] of followCopies) {
+    expect(normalized.split(current)).toHaveLength(2);
+    normalized = normalized.replace(current, original);
+  }
   const originalImages = [...originalHTML().matchAll(/data:image\/[\w+.-]+;base64,[A-Za-z0-9+/=]+/g)];
   manifest.images.forEach((image, index) => {
     if (!authoredCars.has(image.path)) return;

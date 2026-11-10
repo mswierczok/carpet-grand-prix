@@ -35,8 +35,19 @@
     return result;
   }
 
-  function apply(ctx, g, width, height, trackAt) {
-    const camera = fit(g, width, height, trackAt);
+  function follow(g, width, height, trackAt, target, displayWidth = width) {
+    const overview = fit(g, width, height, trackAt);
+    if (!target || !Number.isFinite(target.x) || !Number.isFinite(target.y)) return overview;
+    const cssWidth = Number.isFinite(displayWidth) && displayWidth > 0 ? displayWidth : width;
+    // Preserve the same useful car size on phones and desktop screens.
+    const carLength = 23 * g.width / 64;
+    const scale = Math.max(overview.scale * 2, 56 * width / (cssWidth * carLength));
+    return Object.freeze({ scale, x: width / 2 - target.x * scale, y: height / 2 - target.y * scale,
+      target: Object.freeze({ x: target.x, y: target.y }), mode: 'follow', bounds: overview.bounds, viewport: overview.viewport });
+  }
+
+  function apply(ctx, g, width, height, trackAt, target = null, displayWidth = width) {
+    const camera = follow(g, width, height, trackAt, target, displayWidth);
     ctx.translate(camera.x, camera.y); ctx.scale(camera.scale, camera.scale);
     return camera;
   }
@@ -53,5 +64,5 @@
     return height;
   }
 
-  globalThis.CGPRaceCamera = Object.freeze({ fit, apply, resize });
+  globalThis.CGPRaceCamera = Object.freeze({ fit, follow, apply, resize });
 })();

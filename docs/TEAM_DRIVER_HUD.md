@@ -4,7 +4,7 @@ Entwicklungsbranch `codex/team-driver-cards`, Ausgangspunkt `2695f42` auf `main`
 Im laufenden oder pausierten Rennen erscheinen die beiden Fahrer des eigenen
 Teams unten links und rechts innerhalb des Streckenfensters.
 
-![Fahreranzeigen und gemeinsames Highlight](previews/team-driver-hud.png)
+![Fahreranzeigen mit Kameraauswahl](previews/driver-follow-desktop.png)
 
 Jede Karte zeigt Name, aktuelle Position, Status und den Abstand zum Fahrer
 unmittelbar davor und dahinter in der Rennreihenfolge. Die Karten bleiben ihren
@@ -20,9 +20,10 @@ Ausgeschiedene und bereits angekommene eigene Fahrer zeigen ihren Status und
 keine irreführenden laufenden Abstände. Boxenaufenthalt beziehungsweise Reparatur
 verwenden den vorhandenen Status. Positionen entsprechen dem Tower.
 
-Ein Klick setzt dieselbe `focus-driver`-Aktion wie der Timing-Tower ab. Erneuter
-Klick hebt die Markierung auf; Klick auf den anderen Fahrer wechselt den Fokus.
-Tower, Karte und Leuchteffekt auf der Strecke bleiben synchron. Die Schaltflächen
+Ein Klick setzt dieselbe `focus-driver`-Aktion wie der Timing-Tower ab und
+aktiviert die [Verfolgungskamera](FOLLOW_CAMERA.md). Erneuter Klick zeigt die
+Gesamtstrecke; Klick auf den anderen Fahrer wechselt das Kameraziel.
+Tower, Karte und Kamera bleiben synchron. Die Schaltflächen
 sind auch per Tastatur bedienbar und zeigen den Fokus mit `aria-pressed` an.
 
 ## Anordnung
@@ -33,7 +34,7 @@ verändern den freigegebenen Rennzoom nicht. Der gesamte Rahmen wird dafür etwa
 höher. Auf kleinen Bildschirmen bleiben die zwei Karten nebeneinander; ihre
 Abstandswerte werden bei sehr schmalen Fenstern untereinander angeordnet.
 
-![Mobile Ansicht](previews/team-driver-hud-mobile.png)
+![Mobile Ansicht](previews/driver-follow-mobile.png)
 
 [Ansicht bei 320 Pixeln Fensterbreite](previews/team-driver-hud-small.png)
 
@@ -64,8 +65,8 @@ ohne Platzhalter für fremde Fahrer behandelt.
   Quelltextvergleich nimmt nur das neue Stylesheet, den Kartenplatzhalter und
   die markierten Darstellungsblöcke zusätzlich aus. Alte Referenzen bleiben erhalten.
 
-Physik, KI, Balancing, Rennzeiten, Spielstandformat und vorhandene
-Fahrer-Markierung bleiben unverändert. Die Karten werden nicht gespeichert;
+Physik, KI, Balancing, Rennzeiten und Spielstandformat bleiben unverändert.
+Die frühere Leuchtmarkierung wird durch die Verfolgungskamera ersetzt. Die Karten werden nicht gespeichert;
 sie entstehen beim Laden wieder aus den vorhandenen Renndaten.
 
 Zum Prüfen das Artefakt **carpet-grand-prix-offline** aus einem erfolgreichen

@@ -89,6 +89,15 @@ Stylesheet aus dem CSS-Vergleich. Der Quelltextvergleich normalisiert zusätzlic
 nur dieses Stylesheet, den Platzhalter und die markierten Darstellungsblöcke.
 Details in [TEAM_DRIVER_HUD.md](TEAM_DRIVER_HUD.md).
 
+Die Verfolgungskamera hat zusätzliche Modultests für Zielzentrierung auf allen
+22 Strecken, Boxengassen, Randpositionen und mobil lesbaren Zoom. Browsertests
+prüfen anhand der tatsächlich gezeichneten Fahrzeugposition die Bildmitte,
+Bewegung, Fensteränderung, Wechsel/Rückkehr und Qualifying. Die bisherigen
+Fahreranzeigen-Tests prüfen weiterhin dieselbe gemeinsame Auswahl; der Effekt
+auf der Strecke ist nun die Kamera. Neue Kamerahinweise und die zwei geänderten
+Markierungsbedingungen werden im Quelltextvergleich gezielt normalisiert.
+Details in [FOLLOW_CAMERA.md](FOLLOW_CAMERA.md).
+
 Standard-CI läuft auf PRs, Pushes nach `main` und manuell. Erweiterte CI läuft
 wöchentlich und manuell. Keine der Prüfungen veröffentlicht das Spiel. Fehlerberichte
 enthalten Traces und Screenshots. Visuelle Referenzen stammen aus dem unveränderten,
