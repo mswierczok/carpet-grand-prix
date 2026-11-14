@@ -20,10 +20,51 @@ it('erhält Vauclair, Strecken und Hintergrund bytegenau und prüft die zwölf f
 });
 
 it('erhält CSS-Kaskade, Spielcode und Daten beim Zusammenbauen vollständig', () => {
-  // The user authorized exactly twelve new car graphics. Restore ONLY those
-  // image payloads in memory; all game code, data, CSS and other images must still
-  // reconstruct the byte-identical original. Never regenerate the original oracle.
+  // Normalize only the approved presentation changes listed below and the
+  // twelve earlier livery payloads. All remaining code/data/styles/images must
+  // reconstruct the byte-identical original. Never regenerate the oracle.
   let normalized = createOfflineHTML();
+  const portraitCSS=readFileSync(new URL('styles/driver-portraits.css',ROOT),'utf8');
+  expect(normalized.split(portraitCSS)).toHaveLength(2);normalized=normalized.replace(portraitCSS,'');
+  normalized=normalized.replace(/\n\/\/ driver-portraits-bridge:start[\s\S]*?\/\/ driver-portraits-bridge:end\n/,'');
+  normalized=normalized.replace("const illustratedMarkup=`<svg","return `<svg").replace(/\n \/\/ illustrated-thumbnail:start[\s\S]*? \/\/ illustrated-thumbnail:end/,'');
+  const portraitCopies=[["${portraitName(p.driver)}","${esc(p.driver?.name||'—')}"],["${portraitName(driver(e.id)||e)}","${esc(e.name)}"],["${portraitName(d,'medium')}",'${esc(d.name)}'],['${portraitName(d)}','${esc(d.name)}'],["${portraitName(driver(e.id))}","${esc(driver(e.id)?.name||'—')}"],['${portraitLabel(h.champName,h.champ)}','${esc(h.champName)}'],['${portraitLabel(champ?.champName||posRank()[0].name,champ?.champ)}','${esc(champ?.champName||posRank()[0].name)}'],["${portraitName(driver(id))}","${esc(driver(id)?.name||'—')}"],['${portraitName(driver(c.id)||c)}','${esc(c.name)}']];
+  for(const [current,original]of portraitCopies)normalized=normalized.replaceAll(current,original);
+  normalized=normalized.replace(/ \/\/ illustrated-bridges:start\n[\s\S]*? \/\/ illustrated-bridges:end\n/,'');
+  const pilotCSS = readFileSync(new URL('styles/art-pilot.css', ROOT), 'utf8');
+  expect(normalized.split(pilotCSS)).toHaveLength(2);
+  normalized = normalized.replace(pilotCSS, '');
+  for (const marker of ['illustrated-pilot-bridge', 'illustrated-pilot-surface', 'illustrated-pilot-surface-close']) {
+    const block = new RegExp(` *// ${marker}:start\\n[\\s\\S]*? *// ${marker}:end\\n`);
+    expect(normalized.match(block)).not.toBeNull();
+    normalized = normalized.replace(block, '');
+    if (marker === 'illustrated-pilot-bridge') normalized = normalized.replace('\n\nfunction countryFlag', '\nfunction countryFlag');
+  }
+  const pilotCalls = [
+    ["function drawGridSlot(ctx,slot,w,ink='#fff3d9')", 'function drawGridSlot(ctx,slot,w)'],
+    ["ctx.strokeStyle=ink;ctx.lineWidth=Math.max", "ctx.strokeStyle='#fff3d9';ctx.lineWidth=Math.max"],
+    ["ctx.strokeStyle=pilotSurface?'#42766b':'#91d7c2'", "ctx.strokeStyle='#91d7c2'"],
+    ["ctx.strokeStyle=pilotSurface?'#78634b':'#f5e9bb'", "ctx.strokeStyle='#f5e9bb'"],
+    ['illustratedTeamCar(t.id)||TEAMSELECT_CAR_ASSETS.t07', 'TEAMSELECT_CAR_ASSETS[t.id]||TEAMSELECT_CAR_ASSETS.t07'],
+    ["image=illustratedTeamCar(t.id)||''", "image=TEAMSELECT_CAR_ASSETS[t.id]||''"],
+    ['window.CGPRenderMotion?.remember(qualAnim.session,qualAnim.session.cars,car=>qualPose(qualAnim.session,car));', ''],
+    ['window.CGPRenderMotion?.remember(anim.race,anim.race.cars,car=>racePose(anim.race,car));', ''],
+    ['const raw=qualifying?qualPose(qualifying,r):(race?racePose(race,r):grid[i].p),p=qualifying||race?renderCarPose(qualifying||race,r,raw):raw;', 'const p=qualifying?qualPose(qualifying,r):(race?racePose(race,r):grid[i].p);'],
+    ['setLiveHTML(tower,qualTower(q))', 'tower.innerHTML=qualTower(q)'],
+    ['setLiveHTML(ctrl,qualifyControls())', 'ctrl.innerHTML=qualifyControls()'],
+    ['setLiveHTML(timing,liveTimingTower(r))', 'timing.innerHTML=liveTimingTower(r)'],
+    ['setLiveHTML(controls,raceControls())', 'controls.innerHTML=raceControls()'],
+    ['setLiveHTML(events,liveEvents(r))', 'events.innerHTML=liveEvents(r)'],
+    ['setLiveHTML(overlay,raceOverlayContent(r))', 'overlay.innerHTML=raceOverlayContent(r)'],
+    ["setLiveHTML(events,`<div class=\"race-events\">${q.events.slice(0,7).map(e=>`<div>${esc(e.text)}</div>`).join('')}</div>`)", "events.innerHTML=`<div class=\"race-events\">${q.events.slice(0,7).map(e=>`<div>${esc(e.text)}</div>`).join('')}</div>`"],
+  ];
+  for (const [current, original] of pilotCalls) {
+    expect(normalized.split(current), current).toHaveLength(2);
+    normalized = normalized.replace(current, original);
+  }
+  const gridInk = "drawGridSlot(ctx,slot,g.width,pilotSurface?'#78634b':undefined)";
+  expect(normalized.split(gridInk)).toHaveLength(3);
+  normalized = normalized.replaceAll(gridInk, 'drawGridSlot(ctx,slot,g.width)');
   const hudCSS = readFileSync(new URL('styles/team-driver-hud.css', ROOT), 'utf8');
   expect(normalized.split(hudCSS)).toHaveLength(2);
   normalized = normalized.replace(hudCSS, '');
@@ -80,7 +121,7 @@ it('erhält CSS-Kaskade, Spielcode und Daten beim Zusammenbauen vollständig', (
     expect(normalized.split(uri)).toHaveLength(2);
     normalized = normalized.replace(uri, originalImages[index][0]);
   });
-  expect(normalized).toBe(originalHTML());
+  expect(createHash('sha256').update(normalized).digest('hex')).toBe(createHash('sha256').update(originalHTML()).digest('hex'));
 });
 
 it('liefert die Online-Version ohne eingebettete Bilddaten oder Inline-Stylesheet aus', () => {

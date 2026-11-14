@@ -9,7 +9,9 @@
     "styles/live-layout.css",
     "styles/team-select.css",
     "styles/workshop.css",
-    "styles/team-driver-hud.css"
+    "styles/team-driver-hud.css",
+    "styles/art-pilot.css",
+    "styles/driver-portraits.css"
   ],
   "images": [
     {
@@ -179,8 +181,8 @@
       "sha256": "c55b4af46b62af3c5dac1048b92642bb82edd3eb337585a4cfe0b5c13882f3df"
     },
     {
-      "path": "assets/tracks/09-südafrika.webp",
-      "label": "Südafrika",
+      "path": "assets/tracks/09-s\u00fcdafrika.webp",
+      "label": "S\u00fcdafrika",
       "mime": "image/webp",
       "bytes": 85132,
       "sha256": "0b8da1c4127e7c46260010b2e369eb415680b1f548e5d4acfa5ab70ab8552126"

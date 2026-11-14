@@ -1,0 +1,11 @@
+/* Pilot styling is deliberately limited to the four illustrated cars. */
+.showroom-stage:has(.pilot-illustrated){background:repeating-linear-gradient(0deg,#b6a58a 0 2px,transparent 2px 54px),linear-gradient(135deg,#ddcfb4,#b9a68b);border:2px solid #3d4243;box-shadow:inset 0 0 0 5px #e9ddc6,0 7px 0 #0002}
+.showroom-stage:has(.pilot-illustrated)::before{content:"";position:absolute;inset:8% 5%;border:2px dashed #7f6a5140;border-radius:9px}
+.showroom-car-image.pilot-illustrated{object-fit:contain;filter:drop-shadow(0 6px 0 #473e3020)}
+.showroom-stage:has(.pilot-illustrated) .showroom-stage-label{background:#fff1cf;color:#33414a;border:2px solid #39434a;box-shadow:2px 3px 0 #0002;padding:7px 12px;font-size:11px}
+.cg-workshop-hero:has([data-pilot-art]){border:2px solid #3e474c;background:#273b3e;box-shadow:0 6px 0 #0003}
+.cg-workshop-hero:has([data-pilot-art]) .cg-garage{background:repeating-linear-gradient(0deg,#b9a386 0 2px,transparent 2px 62px),#c9b798;border:2px solid #3e474c;box-shadow:inset 0 0 0 7px #e2d4b8}
+.cg-workshop-hero:has([data-pilot-art]) .cg-garage::after{border:2px dashed #8a6c4c;box-shadow:none;inset:11% 13%}
+.cg-workshop-hero:has([data-pilot-art]) .cg-garage::before{inset:15px 12px auto auto;width:74px;height:39px;opacity:1;background:linear-gradient(90deg,#a84b40 0 17%,#d7b96e 17% 23%,#a84b40 23% 74%,#d7b96e 74% 80%,#a84b40 80%);border:2px solid #443e34;border-radius:5px;transform:rotate(8deg);box-shadow:3px 4px 0 #0002}
+.cg-workshop-hero:has([data-pilot-art]) .cg-garage-car{filter:drop-shadow(3px 7px 0 #40392b2b)}
+.cg-workshop-hero:has([data-pilot-art]) .cg-ws-part{border:2px solid #39484b;box-shadow:0 4px 0 #0002}

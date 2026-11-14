@@ -1,0 +1,9 @@
+{
+  "viewport": "1440x1100",
+  "scenario": "Bahrain, 26 cars, 1x, own driver follow camera",
+  "frames": 238,
+  "meanFrameCallbackMs": 1.9836134434748096,
+  "p95FrameCallbackMs": 4.600000023841858,
+  "identicalCameraFramesPercent": 49.36708860759494,
+  "longFrameGaps": 0
+}

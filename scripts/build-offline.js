@@ -13,12 +13,15 @@ export function createOfflineHTML() {
   if (!html.includes(links)) throw Error('Reihenfolge der Stylesheets stimmt nicht mit dem Manifest überein.');
   const css = manifest.styles.map(path => readFileSync(new URL(path, root), 'utf8')).join('') + manifest.styleTail;
   html = html.replace(links, `<style>${css}</style>`);
-  for (const name of ['race-sprites', 'race-camera', 'team-driver-hud']) {
-    const path = `src/${name === 'team-driver-hud' ? 'ui' : 'rendering'}/${name}.js`;
-    const version = { 'race-camera': '?v=3', 'team-driver-hud': '?v=2' }[name] || '';
-    html = html.replace(`<script src="./${path}${version}"></script>`, () =>
-      `<script>\n${readFileSync(new URL(path, root), 'utf8')}\n</script>`);
+  for (const match of [...html.matchAll(/<script src="\.\/(src\/[^"?]+)(?:\?[^" ]*)?"><\/script>/g)]) {
+    html = html.replace(match[0], () => `<script>\n${readFileSync(new URL(match[1], root), 'utf8')}\n</script>`);
   }
+  for (const id of ['t01', 't04', 't10', 't05']) {
+    const path = `assets/cars/illustrated/team-${id}.svg`;
+    html = html.replaceAll(`./${path}`, `data:image/svg+xml;base64,${readFileSync(new URL(path, root)).toString('base64')}`);
+  }
+  const portraits=JSON.parse(readFileSync(new URL('assets/drivers/portraits/manifest.json',root),'utf8'));
+  for(const art of portraits.entries){html=html.replaceAll(art.src,`data:image/webp;base64,${readFileSync(new URL(art.src.slice(2),root)).toString('base64')}`);}
   for (const image of manifest.images) {
     const uri = `data:${image.mime};base64,${readFileSync(new URL(image.path, root)).toString('base64')}`;
     html = html.replaceAll(`../${image.path}`, uri).replaceAll(`./${image.path}`, uri);

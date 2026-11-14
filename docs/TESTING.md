@@ -112,3 +112,32 @@ Künstliche Referenzstände ersetzen keine historischen Nutzerdateien. Mobilform
 ersetzt keine echten Safari-/iPhone-Tests. Gezielte Verkehr-/Kontakt-/Boxenszenarien,
 Langzeitreglementtests und Performancevergleiche vor der jeweiligen
 Auslagerung ergänzen. Ein grüner Lauf beweist nicht jede mögliche Spielsituation.
+
+## Art-Pilot
+
+`npm run build:pilot-art` exportiert die vier Pilotfahrzeuge reproduzierbar.
+`npm run build:pilot-preview` erstellt die Vergleichsgalerie und deren
+Standalone-HTML; CI liefert sie zusammen mit dem Offline-Spiel als Artefakt
+`carpet-grand-prix-art-pilot`. Entwickleraufnahmen können bei laufendem Testserver
+mit `node scripts/capture-pilot-preview.js` aktualisiert werden.
+
+Neue Modul-/Browsertests prüfen Konturen/Export, Requisitenabstände,
+zustandsfreie Interpolation, DOM-Erhalt, tatsächliche Canvas-Pilotbilder,
+Galerie und netzwerkfreie Team-Auswahl. Historische Vergleiche schalten allein
+für ihren Vergleich den Bahrain-Pilot aus und filtern sein Stylesheet.
+Der Quelltextschutz erlaubt nur einzeln aufgeführte Präsentationsaufrufe;
+abschließend wird weiterhin die vollständige Originaldatei per SHA-256 verglichen.
+Benchmarkmethode, Rohdaten und Grenzen: [ART_PILOT.md](ART_PILOT.md).
+
+Der vollständige Rollout ergänzt exakte 92-ID-Abdeckung, Helm-/Identitätsstabilität,
+reproduzierbare Porträt-SVGs und sichere Dekoration auf allen 22 Geometrien.
+Zusätzliche Desktop-/Mobiltests prüfen die Gesamtgalerie, Anzugwechsel,
+Profil-Tastaturbedienung, Vertragswahl, Speicherunveränderlichkeit und Offlineprofile.
+`npm run build:world-review` erstellt die Gesamtvorschau; CI bietet sie mit dem
+spielbaren Offline-HTML als `carpet-grand-prix-world-and-drivers` an.
+
+Für die 35 hochgeladenen Porträts prüfen zusätzliche Tests ID/Kürzel-Zuordnung,
+Original- und Export-Prüfsummen, Dateibudget, unveränderte Quelle bei Transfers,
+Rückfall auf 57 Vektorfiguren sowie Dekodierung aller WebPs online und offline.
+`build:uploaded-portraits` ist ein optionaler Entwicklerexport mit ImageMagick;
+CI und das veröffentlichte Spiel benötigen nur die versionierten WebP-Dateien.

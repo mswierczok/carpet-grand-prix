@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="./styles/team-select.css">
 <link rel="stylesheet" href="./styles/workshop.css">
 <link rel="stylesheet" href="./styles/team-driver-hud.css">
+<link rel="stylesheet" href="./styles/art-pilot.css">
+<link rel="stylesheet" href="./styles/driver-portraits.css">
 </head>
 <body class="menu-open">
 <section id="startScreen" role="dialog" aria-modal="true" aria-labelledby="launchTitle">
@@ -114,6 +116,15 @@
 <div id="toast" role="status"></div>
 <!-- race-sprites-preview:start -->
 <script src="./src/rendering/race-sprites.js"></script>
+<script src="./src/rendering/pilot-vehicles.js?v=2"></script>
+<script src="./src/data/world-environments.js?v=1"></script>
+<script src="./src/rendering/pilot-world.js?v=2"></script>
+<script src="./src/data/driver-identities.js?v=1"></script>
+<script src="./src/data/uploaded-portraits.js?v=1"></script>
+<script src="./src/rendering/driver-portraits.js?v=2"></script>
+<script src="./src/ui/driver-profiles.js?v=2"></script>
+<script src="./src/rendering/render-motion.js?v=1"></script>
+<script src="./src/ui/live-dom.js?v=1"></script>
 <script src="./src/rendering/race-camera.js?v=3"></script>
 <script src="./src/ui/team-driver-hud.js?v=2"></script>
 <!-- race-sprites-preview:end -->
@@ -131,6 +142,26 @@ function persistPreferences(){try{localStorage.setItem(SETTINGS_STORAGE,JSON.str
 const COUNTRY_FLAG={Frankreich:'🇫🇷','Großbritannien':'🇬🇧',Deutschland:'🇩🇪',Italien:'🇮🇹',Niederlande:'🇳🇱',Japan:'🇯🇵',Irland:'🇮🇪',USA:'🇺🇸',Spanien:'🇪🇸',Schweiz:'🇨🇭',Portugal:'🇵🇹',Schweden:'🇸🇪'};
 const launchFlow={previewState:null,teamIndex:0,touchStartX:null};
 const TEAMSELECT_CAR_ASSETS={"t01":"./assets/cars/team-t01.webp","t02":"./assets/cars/team-t02.webp","t03":"./assets/cars/team-t03.webp","t04":"./assets/cars/team-t04.webp","t05":"./assets/cars/team-t05.webp","t06":"./assets/cars/team-t06.webp","t07":"./assets/cars/team-t07.webp","t08":"./assets/cars/team-t08.webp","t09":"./assets/cars/team-t09.webp","t10":"./assets/cars/team-t10.webp","t11":"./assets/cars/team-t11.webp","t12":"./assets/cars/team-t12.webp","t13":"./assets/cars/team-t13.webp"};
+// illustrated-pilot-bridge:start
+function illustratedTeamCar(id){return TEAMSELECT_CAR_ASSETS[id]||'';}
+function renderCarPose(session,car,pose){
+ const live=qualAnim||anim,alpha=!live||live.needsResume||session.paused?1:Math.min(1,(live.accumulator||0)/RACE_STEP);
+ return window.CGPRenderMotion?.sample(session,car.id,pose,alpha,raceMeta(session.trackIndex).g.width*1.5)||pose;
+}
+function setLiveHTML(root,html){if(window.CGPLiveDOM)window.CGPLiveDOM.setHTML(root,html);else root.innerHTML=html;}
+// illustrated-pilot-bridge:end
+// driver-portraits-bridge:start
+function portraitName(d,size='small'){
+ if(!d)return '—';
+ const api=window.CGPDriverPortraits;
+ if(!api?.identity(d.id))return esc(d.name);
+ window.CGPDriverProfiles?.configure(allDrivers(),s.teams);
+ return `<span class="driver-portrait-name" data-portrait-id="${esc(d.id)}" tabindex="0" role="button" aria-label="Fahrerprofil von ${esc(d.name)} öffnen">${api.svg(d,team(d.team),size)}<span>${esc(d.name)}</span></span>`;
+}
+function portraitLabel(name,id){const d=allDrivers().find(d=>id?d.id===id:d.name===name);return d?portraitName(d):esc(name);}
+// driver-portraits-bridge:end
+
+
 function countryFlag(name){return COUNTRY_FLAG[name]||'🏁'}
 function overallStrengthValue(t){return Math.round((Number(t.aero||t.baseStrength||0)+Number(t.power||t.baseStrength||0)+Number(t.handling||t.baseStrength||0)+Number(t.reliability||t.baseStrength||0))/4)}
 function teamPreviewDrivers(state,teamId){return (state?.drivers||[]).filter(d=>d.team===teamId).sort((a,b)=>(b.skill+b.consistency)-(a.skill+a.consistency))}
@@ -160,7 +191,7 @@ function renderLaunchTeamSelect(){
    <div class="showroom-stat country"><h4>Rennstall-Herkunft</h4><div class="num">${flag}</div><p>${esc(t.country)}<br>${esc(t.name)}</p></div>
   </div>
   <div class="showroom-stage">
-   <img class="showroom-car-image" src="${TEAMSELECT_CAR_ASSETS[t.id]||TEAMSELECT_CAR_ASSETS.t07}" alt="Konzeptfahrzeug von ${esc(t.name)} in den Teamfarben">
+   <img class="showroom-car-image" src="${illustratedTeamCar(t.id)||TEAMSELECT_CAR_ASSETS.t07}" alt="Konzeptfahrzeug von ${esc(t.name)} in den Teamfarben">
    <div class="showroom-stage-label">${esc(t.name)} – KONZEPTFAHRZEUG</div>
   </div>
   <div class="showroom-footer">
@@ -878,7 +909,7 @@ function qualSummary(){
  const finished=q.phase==='DONE';const last=finished?'Q3':q.results.Q2?'Q2':q.results.Q1?'Q1':null;
  const all=finished?q.gridIds.map((id,i)=>{const phase=i<10?'Q3':i<18?'Q2':'Q1';return {...q.results[phase].find(x=>x.id===id),position:i+1};}):(last?q.results[last].map((x,i)=>({...x,position:i+1})):[]);
  const cut=last==='Q1'?18:last==='Q2'?10:0;
- return `<div class="card"><div class="row wrap"><div><h3>${finished?'Startaufstellung für den Grand Prix':`${last?last+' abgeschlossen':'Qualifying noch offen'}`}</h3><p class="small">${finished?'26 Startplätze nach Q3 / Q2 / Q1 vergeben.':`Nächster Abschnitt: ${q.phase} · ${last?'Ausscheidungen nach der besten gefahrenen Runde':'Noch keine Zeiten'}`}</p></div>${finished?`<span class="chip"><strong>POLE ${esc(driver(q.pole)?.name||'')}</strong></span>`:''}</div>${all.length?`<div class="qual-summary-list">${all.map((e,i)=>`<div class="qual-summary-row ${!finished&&cut&&i>=cut?'eliminated':''}"><span>${e.position}.</span><span class="colorbar" style="--car-color:${team(e.team)?.color||'#aaa'}"></span><b>${driverCode(e.name)}</b><span class="qual-summary-name">${esc(e.name)}</span><span class="qual-summary-time">${e.time===null?'KEINE ZEIT':clockText(e.time)}</span></div>`).join('')}</div>`:''}</div>`;
+ return `<div class="card"><div class="row wrap"><div><h3>${finished?'Startaufstellung für den Grand Prix':`${last?last+' abgeschlossen':'Qualifying noch offen'}`}</h3><p class="small">${finished?'26 Startplätze nach Q3 / Q2 / Q1 vergeben.':`Nächster Abschnitt: ${q.phase} · ${last?'Ausscheidungen nach der besten gefahrenen Runde':'Noch keine Zeiten'}`}</p></div>${finished?`<span class="chip"><strong>POLE ${esc(driver(q.pole)?.name||'')}</strong></span>`:''}</div>${all.length?`<div class="qual-summary-list">${all.map((e,i)=>`<div class="qual-summary-row ${!finished&&cut&&i>=cut?'eliminated':''}"><span>${e.position}.</span><span class="colorbar" style="--car-color:${team(e.team)?.color||'#aaa'}"></span><b>${driverCode(e.name)}</b><span class="qual-summary-name">${portraitName(driver(e.id)||e)}</span><span class="qual-summary-time">${e.time===null?'KEINE ZEIT':clockText(e.time)}</span></div>`).join('')}</div>`:''}</div>`;
 }
 
 let anim=null,activeTab=s.tab||'dashboard',selection=teamDrivers(s.team)[1]?.id||'',notificationTimer;
@@ -886,12 +917,12 @@ function notify(msg){const el=document.getElementById('toast');el.textContent=ms
 const pointFmt=x=>Number.isFinite(x)?Math.round(x).toLocaleString('de-DE'):'—';const dot=id=>teamDot(id);
 function htmlStandings(type,limit=Infinity){
  if(type==='team')return `<div class="table-scroll"><table class="results"><thead><tr><th>#</th><th>Rennstall</th><th>Pkt.</th></tr></thead><tbody>${teamRank().slice(0,limit).map((t,i)=>`<tr><td>${i+1}</td><td>${dot(t.id)} ${esc(t.name)}${t.id===s.team?' ★':''}</td><td>${teamPts(t.id)}</td></tr>`).join('')}</tbody></table></div>`;
- return `<div class="table-scroll"><table class="results"><thead><tr><th>#</th><th>Fahrer</th><th>Team(s)</th><th>Pkt.</th></tr></thead><tbody>${posRank().slice(0,limit).map((d,i)=>`<tr><td>${i+1}</td><td>${esc(d.name)}<div class="small">${esc(d.countryCode)}${!d.team?' · nicht im Cockpit':''}</div></td><td>${seasonTeamIds(d).map(id=>`${dot(id)} ${esc(team(id)?.name||'')}`).join('<br>')||'—'}</td><td>${points(d.id)}</td></tr>`).join('')}</tbody></table></div>`;
+ return `<div class="table-scroll"><table class="results"><thead><tr><th>#</th><th>Fahrer</th><th>Team(s)</th><th>Pkt.</th></tr></thead><tbody>${posRank().slice(0,limit).map((d,i)=>`<tr><td>${i+1}</td><td>${portraitName(d)}<div class="small">${esc(d.countryCode)}${!d.team?' · nicht im Cockpit':''}</div></td><td>${seasonTeamIds(d).map(id=>`${dot(id)} ${esc(team(id)?.name||'')}`).join('<br>')||'—'}</td><td>${points(d.id)}</td></tr>`).join('')}</tbody></table></div>`;
 }
 function teamDot(id){const t=team(id);if(!t)return '';const bg=t.secondaryColor?`linear-gradient(135deg, ${t.color} 0%, ${t.color} 52%, ${t.secondaryColor} 52%, ${t.secondaryColor} 100%)`:t.color;return `<span class="dot team-swatch" title="${esc(t.name)} · ${t.color}${t.secondaryColor?' / '+t.secondaryColor:''}" style="background:${bg};border:1px solid #b7c2b1;box-shadow:0 0 0 1px #102c2a;width:14px;height:14px;flex-shrink:0"></span>`}
 function driverNationality(d){return `${esc(d.countryCode)} · ${esc(d.nationality)}`}
 function newsHtml(limit=5){return s.news.slice(0,limit).map(n=>`<div class="news"><time>SAISON ${n.season} · ${n.round===0?'VORSAISON':'LAUF '+n.round}</time><b>${esc(n.title)}</b><p>${esc(n.body)}</p></div>`).join('')}
-function resultHtml(){const res=s.results.filter(x=>x.season===s.season).at(-1);if(!res)return '<p class="small">Die Rennstrecke ist vorbereitet. Das erste Rennen wartet auf den Start.</p>';return `<div class="table-scroll"><table class="results"><thead><tr><th>#</th><th>Fahrer</th><th>Rennstall</th>${res.raceVersion>=7?'<th>Abstand</th><th>Rd.</th><th>Box</th>':''}<th>PKT</th></tr></thead><tbody>${res.order.map(e=>`<tr><td>${e.dnf?'OUT':e.pos}</td><td>${esc(driver(e.id)?.name||'—')}</td><td>${dot(e.team)} ${esc(team(e.team)?.name||'—')}</td>${res.raceVersion>=7?`<td>${esc(e.gap||'—')}</td><td>${e.laps}</td><td>${e.pitVisits}</td>`:''}<td>${e.pts}</td></tr>`).join('')}</tbody></table></div>`}
+function resultHtml(){const res=s.results.filter(x=>x.season===s.season).at(-1);if(!res)return '<p class="small">Die Rennstrecke ist vorbereitet. Das erste Rennen wartet auf den Start.</p>';return `<div class="table-scroll"><table class="results"><thead><tr><th>#</th><th>Fahrer</th><th>Rennstall</th>${res.raceVersion>=7?'<th>Abstand</th><th>Rd.</th><th>Box</th>':''}<th>PKT</th></tr></thead><tbody>${res.order.map(e=>`<tr><td>${e.dnf?'OUT':e.pos}</td><td>${portraitName(driver(e.id))}</td><td>${dot(e.team)} ${esc(team(e.team)?.name||'—')}</td>${res.raceVersion>=7?`<td>${esc(e.gap||'—')}</td><td>${e.laps}</td><td>${e.pitVisits}</td>`:''}<td>${e.pts}</td></tr>`).join('')}</tbody></table></div>`}
 
 function championshipHeader(){
  let ended=seasonFinished(),tk=ended?null:nextTrack(),q=ended?null:validQual(),ready=ended?false:qualifyingDone(),stage=q?.phase||'Q1';
@@ -903,14 +934,14 @@ function championshipHeader(){
 }
 function studioRanking(){
  const top=posRank().slice(0,4);
- return `<section class="studio-widget studio-ranking"><div class="widget-heading"><h3>FAHRERWERTUNG</h3><button type="button" data-action="tab" data-value="market" aria-label="Fahrer ansehen">↗</button></div><p class="widget-sub">Saison ${s.season} · Top 4</p><div class="studio-leaders">${top.map((d,i)=>`<div class="leader-row"><span class="leader-rank">${i+1}</span><span class="leader-color" style="background:${team(d.team)?.color||'#999'}"></span><span class="leader-name">${esc(d.name)}</span><b>${points(d.id)} Pkt.</b></div>`).join('')}</div><div class="studio-widget-footer"><span>13 Teams · 26 Cockpits</span><button data-action="tab" data-value="chronicle">Alle Ergebnisse →</button></div></section>`;
+ return `<section class="studio-widget studio-ranking"><div class="widget-heading"><h3>FAHRERWERTUNG</h3><button type="button" data-action="tab" data-value="market" aria-label="Fahrer ansehen">↗</button></div><p class="widget-sub">Saison ${s.season} · Top 4</p><div class="studio-leaders">${top.map((d,i)=>`<div class="leader-row"><span class="leader-rank">${i+1}</span><span class="leader-color" style="background:${team(d.team)?.color||'#999'}"></span><span class="leader-name">${portraitName(d)}</span><b>${points(d.id)} Pkt.</b></div>`).join('')}</div><div class="studio-widget-footer"><span>13 Teams · 26 Cockpits</span><button data-action="tab" data-value="chronicle">Alle Ergebnisse →</button></div></section>`;
 }
 function studioNextRace(){
  const ended=seasonFinished(),race=ended?currentTracks().at(-1):nextTrack(),q=validQual();
  return `<section class="studio-widget studio-event"><div class="widget-heading"><h3>${ended?'SAISON ABSCHLUSS':'NÄCHSTES RENNEN'}</h3><button type="button" data-action="tab" data-value="calendar" aria-label="Rennkalender öffnen">↗</button></div><div class="studio-event-image"><div class="studio-event-inner"><span class="event-index">${ended?'🏆 SAISON '+s.season:'RUNDE '+(s.round+1)+' / '+seasonLength()}</span><strong>${esc(race[0])} GP</strong><span>${ended?'Meisterschaft beendet':q?.phase==='DONE'?'Startaufstellung steht':'Qualifying '+(q?.phase||'Q1')+' steht an'}</span></div></div><div class="studio-event-footer"><span>🏁 ${ended?'Finale':esc(race[1])}</span><span>◷ ${clockText(TRACK_LAP_TARGETS[s.round%22])} / Rd.</span></div></section>`;
 }
 function studioTeamCard(){
- const t=team(s.team),d=teamDrivers(s.team),avg=overallStrengthValue(t),image=TEAMSELECT_CAR_ASSETS[t.id]||'';
+ const t=team(s.team),d=teamDrivers(s.team),avg=overallStrengthValue(t),image=illustratedTeamCar(t.id)||'';
  const more=t.secondaryColor?'linear-gradient(90deg,'+t.color+' 65%,'+t.secondaryColor+' 65%)':t.color;
  return `<section class="studio-widget studio-team"><div class="widget-heading"><h3>${s.mode==='manager'?'MEIN TEAM':'TEAM IM FOKUS'}</h3><button type="button" data-action="tab" data-value="workshop" aria-label="Team ansehen">↗</button></div><div class="studio-team-photo" style="--team-hue:${t.color}">${image?`<img src="${image}" loading="lazy" alt="${esc(t.name)} Fahrzeug im Kinderzimmer">`:`<span>🏎</span>`}</div><div class="studio-team-title"><i style="background:${more}"></i><b>${esc(t.name)}</b></div><div class="studio-team-driver">${d.map(x=>esc(x.name)).join(' · ')}</div><div class="studio-team-strength"><span>Fahrzeugstärke</span><b>${avg}/100</b></div><div class="studio-progress"><span style="width:${clamp(avg,0,100)}%;background:${more}"></span></div></section>`;
 }
@@ -918,7 +949,7 @@ function studioQuickButtons(){
  return `<div class="studio-shortcuts"><button data-action="tab" data-value="calendar"><span class="shortcut-icon">⚑</span>Rennkalender</button><button data-action="tab" data-value="workshop"><span class="shortcut-icon">⚒</span>Entwicklung</button><button data-action="tab" data-value="market"><span class="shortcut-icon">♙</span>Fahrermarkt</button><button data-action="tab" data-value="chronicle"><span class="shortcut-icon">▤</span>Archiv</button></div>`;
 }
 function dashboard(){let mine=team(s.team);let total=s.mode==='manager'?`<div class="statgrid"><div class="stat"><div class="num">${pointFmt(s.credits)}</div><div class="txt">Credits</div></div><div class="stat"><div class="num">${pointFmt(s.research)}</div><div class="txt">F&E-Punkte</div></div><div class="stat"><div class="num">${s.upgrades}/4</div><div class="txt">Upgrades</div></div></div>`:`<div class="notice">Beobachtermodus aktiv: Die Teams entwickeln sich selbstständig. Du kannst Rennen und Saisons simulieren.</div>`;
-let champ=s.history[0];let prize=champ?.prizes?.find(p=>p.id===s.team);let done=seasonFinished()?`<div class="notice">🏆 <b>${esc(champ?.champName||posRank()[0].name)}</b> gewinnt die Fahrer-WM. <b>${esc(champ?.teamName||teamRank()[0].name)}</b> holt den Teamtitel.${prize?` Dein Team: P${prize.place} · +${prize.credits} Credits · +${prize.researchAwarded??prize.research} F&E.`:''}</div>`:'';
+let champ=s.history[0];let prize=champ?.prizes?.find(p=>p.id===s.team);let done=seasonFinished()?`<div class="notice">🏆 <b>${portraitLabel(champ?.champName||posRank()[0].name,champ?.champ)}</b> gewinnt die Fahrer-WM. <b>${esc(champ?.teamName||teamRank()[0].name)}</b> holt den Teamtitel.${prize?` Dein Team: P${prize.place} · +${prize.credits} Credits · +${prize.researchAwarded??prize.research} F&E.`:''}</div>`:'';
 return `<div class="studio-dashboard ${anim||qualAnim?'studio-live':''}">
  <div class="studio-center">
   <div class="studio-race-card"><div class="studio-race-heading"><div><div class="studio-eyebrow">🏁 DIE RENNZENTRALE</div><h2>${seasonFinished()?'Saisonfinale':esc(nextTrack()[0])+' Grand Prix'}</h2></div><span class="studio-live-status">${qualAnim?'● QUALIFYING':anim?'● LIVE':'● BEREIT'}</span></div>
@@ -1107,9 +1138,9 @@ function workshop(){
 function market(){
  const active=teamDrivers(s.team),outgoing=active.find(d=>d.id===selection)||active[0];
  const available=s.free.slice().sort((a,b)=>desirability(b)-desirability(a));
- return `<div class="layout"><div class="stack"><div class="card"><div class="kicker">VERTRÄGE & FAHRERENTWICKLUNG</div><h2>Dein Fahrerduo</h2><div class="drivergrid">${active.map(d=>`<div class="driver"><span>${dot(d.team)} ${esc(team(d.team).name)}</span><strong>${esc(d.name)}</strong><div class="small">${driverNationality(d)} · ${d.age} Jahre</div><span class="num">${d.skill.toFixed(1)}</span><span class="small">Tempo · ${d.consistency.toFixed(1)} Konstanz</span><div class="small">Potenzial ${d.potential} · Marktwert ${driverValue(d)} Credits<br>Vertrag bis Saison ${d.contractUntil}<br>${d.wins} Siege · ${d.titles} Titel · ${d.careerPoints} Karrierepunkte</div></div>`).join('')}</div><label class="small" for="replaceDriver">Welches Cockpit soll neu besetzt werden?</label><select id="replaceDriver" style="margin-top:8px">${active.map(d=>`<option value="${d.id}" ${outgoing.id===d.id?'selected':''}>${esc(d.name)}</option>`).join('')}</select></div><div class="card"><h2>Fahrermarkt · ${available.length} verfügbar</h2><p class="small">Ablösen berücksichtigen Tempo, Talent und Erfolge in dieser Karriere. Ein laufender Vertrag im eigenen Cockpit kann eine zusätzliche Ablöse kosten. Die angezeigten Preise enthalten diese bereits.</p>${available.map(d=>`<div class="listitem"><div class="row wrap"><div><b>${esc(d.name)}</b><div class="small">${driverNationality(d)} · ${d.age} Jahre<br>Tempo ${d.skill.toFixed(1)} · Potenzial ${d.potential} · Konstanz ${d.consistency.toFixed(1)}<br>${d.wins} Siege · ${d.titles} Titel · Saisonpunkte ${points(d.id)}</div></div><button class="btn small" data-action="sign" data-value="${d.id}" ${s.mode!=='manager'||seasonFinished()||s.credits<transferCost(d,outgoing)?'disabled':''}>${transferCost(d,outgoing)} Credits · Verpflichten</button></div></div>`).join('')||'<p class="small">Zurzeit ist kein Fahrer verfügbar.</p>'}</div></div><div class="stack"><div class="card"><h2>Alle 13 Rennställe</h2>${s.teams.map(t=>`<div class="listitem"><div class="tag"><b>${dot(t.id)} ${esc(t.name)}</b></div><div class="small">${esc(t.country)} · ${teamDrivers(t.id).map(d=>`${esc(d.name)} (${d.skill.toFixed(1)}, Vertrag ${d.contractUntil})`).join(' · ')}</div></div>`).join('')}</div><div class="card"><h2>Karrieren statt Automatismus</h2><p class="small">Das Potenzial aus Excel ist eine Einschätzung: Entwicklung kann stocken oder die Erwartung leicht übertreffen. Junge Fahrer haben unterschiedliche Lernraten; ältere Fahrer verlieren allmählich Tempo. Weltmeister und erfolgreiche Stammfahrer genießen bei KI-Teams besonderen Schutz.</p><p class="small">Der Pool besteht dauerhaft aus genau 92 Personen. Es werden keine neuen Namen erfunden. Wenn nicht mehr 26 Fahrer für eine weitere Saison verfügbar sind, endet das Universum mit vollständig erhaltenem Archiv.</p></div><div class="card"><h2>Letzte Transfers</h2>${s.transfers.slice(0,12).map(t=>`<div class="listitem"><b>${esc(driver(t.incoming)?.name)} → ${esc(team(t.team)?.name)}</b><div class="small">Saison ${t.season}, Rennen ${t.round} · ${t.fee} Credits<br>${esc(t.reason)}</div></div>`).join('')||'<p class="small">Noch keine Transfers in diesem Universum.</p>'}</div><div class="card"><h2>Karriereende · ${s.retired.length}</h2>${s.retired.map(d=>`<div class="listitem"><b>${esc(d.name)}</b><div class="small">${driverNationality(d)} · Rücktritt ${d.retiredSeason}<br>${d.starts} Starts · ${d.wins} Siege · ${d.titles} Titel</div></div>`).join('')||'<p class="small">Noch keine Rücktritte.</p>'}</div></div></div>`;
+ return `<div class="layout"><div class="stack"><div class="card"><div class="kicker">VERTRÄGE & FAHRERENTWICKLUNG</div><h2>Dein Fahrerduo</h2><div class="drivergrid">${active.map(d=>`<div class="driver"><span>${dot(d.team)} ${esc(team(d.team).name)}</span><strong>${portraitName(d,'medium')}</strong><div class="small">${driverNationality(d)} · ${d.age} Jahre</div><span class="num">${d.skill.toFixed(1)}</span><span class="small">Tempo · ${d.consistency.toFixed(1)} Konstanz</span><div class="small">Potenzial ${d.potential} · Marktwert ${driverValue(d)} Credits<br>Vertrag bis Saison ${d.contractUntil}<br>${d.wins} Siege · ${d.titles} Titel · ${d.careerPoints} Karrierepunkte</div></div>`).join('')}</div><label class="small" for="replaceDriver">Welches Cockpit soll neu besetzt werden?</label><select id="replaceDriver" style="margin-top:8px">${active.map(d=>`<option value="${d.id}" ${outgoing.id===d.id?'selected':''}>${esc(d.name)}</option>`).join('')}</select></div><div class="card"><h2>Fahrermarkt · ${available.length} verfügbar</h2><p class="small">Ablösen berücksichtigen Tempo, Talent und Erfolge in dieser Karriere. Ein laufender Vertrag im eigenen Cockpit kann eine zusätzliche Ablöse kosten. Die angezeigten Preise enthalten diese bereits.</p>${available.map(d=>`<div class="listitem"><div class="row wrap"><div><b>${portraitName(d)}</b><div class="small">${driverNationality(d)} · ${d.age} Jahre<br>Tempo ${d.skill.toFixed(1)} · Potenzial ${d.potential} · Konstanz ${d.consistency.toFixed(1)}<br>${d.wins} Siege · ${d.titles} Titel · Saisonpunkte ${points(d.id)}</div></div><button class="btn small" data-action="sign" data-value="${d.id}" ${s.mode!=='manager'||seasonFinished()||s.credits<transferCost(d,outgoing)?'disabled':''}>${transferCost(d,outgoing)} Credits · Verpflichten</button></div></div>`).join('')||'<p class="small">Zurzeit ist kein Fahrer verfügbar.</p>'}</div></div><div class="stack"><div class="card"><h2>Alle 13 Rennställe</h2>${s.teams.map(t=>`<div class="listitem"><div class="tag"><b>${dot(t.id)} ${esc(t.name)}</b></div><div class="small">${esc(t.country)} · ${teamDrivers(t.id).map(d=>`${portraitName(d)} (${d.skill.toFixed(1)}, Vertrag ${d.contractUntil})`).join(' · ')}</div></div>`).join('')}</div><div class="card"><h2>Karrieren statt Automatismus</h2><p class="small">Das Potenzial aus Excel ist eine Einschätzung: Entwicklung kann stocken oder die Erwartung leicht übertreffen. Junge Fahrer haben unterschiedliche Lernraten; ältere Fahrer verlieren allmählich Tempo. Weltmeister und erfolgreiche Stammfahrer genießen bei KI-Teams besonderen Schutz.</p><p class="small">Der Pool besteht dauerhaft aus genau 92 Personen. Es werden keine neuen Namen erfunden. Wenn nicht mehr 26 Fahrer für eine weitere Saison verfügbar sind, endet das Universum mit vollständig erhaltenem Archiv.</p></div><div class="card"><h2>Letzte Transfers</h2>${s.transfers.slice(0,12).map(t=>`<div class="listitem"><b>${esc(driver(t.incoming)?.name)} → ${esc(team(t.team)?.name)}</b><div class="small">Saison ${t.season}, Rennen ${t.round} · ${t.fee} Credits<br>${esc(t.reason)}</div></div>`).join('')||'<p class="small">Noch keine Transfers in diesem Universum.</p>'}</div><div class="card"><h2>Karriereende · ${s.retired.length}</h2>${s.retired.map(d=>`<div class="listitem"><b>${portraitName(d)}</b><div class="small">${driverNationality(d)} · Rücktritt ${d.retiredSeason}<br>${d.starts} Starts · ${d.wins} Siege · ${d.titles} Titel</div></div>`).join('')||'<p class="small">Noch keine Rücktritte.</p>'}</div></div></div>`;
 }
-function chronicle(){return `<div class="layout"><div class="stack"><div class="card"><div class="kicker">DAS HANDGESCHRIEBENE RENNHEFT</div><h2 style="margin:5px 0">Das Chronik-Archiv</h2><p class="small">Jede Saison hinterlässt Spuren. Sieger, Meisterschaften und wichtige Nachrichten bleiben in deinem Universum erhalten.</p><div class="history">${s.history.map(h=>`<div class="record"><div class="kicker">SAISON ${h.season}</div><b>🏆 ${esc(h.champName)}</b><div class="small">Fahrermeister · ${h.champPoints} Punkte</div><b style="font-weight:500">${esc(h.teamName)}</b><div class="small">Teammeister · ${h.points} Punkte</div>${h.prizes?`<div class="small" style="margin-top:4px">Eigene Saisonprämie: ${h.prizes.find(p=>p.id===s.team)?.credits??'—'} Credits · ${h.prizes.find(p=>p.id===s.team)?.researchAwarded??h.prizes.find(p=>p.id===s.team)?.research??'—'} F&E</div>`:''}<div style="margin-top:9px" class="small">${h.roundWins.map(r=>`${esc(r.track)}: ${esc(r.name)}`).join('<br>')}</div></div>`).join('')||'<p class="small">Noch keine abgeschlossene Saison. Nach ${seasonLength()} Rennen wird die erste Meisterschaft hier dokumentiert.</p>'}</div></div><div class="card"><h2>Karrierebestenliste</h2><table class="results"><thead><tr><th>Fahrer</th><th>Siege</th><th>Podien</th><th>Titel</th></tr></thead><tbody>${[...s.drivers,...s.free,...(s.retired||[])].sort((a,b)=>b.titles-a.titles||b.wins-a.wins).map(d=>`<tr><td>${esc(d.name)}</td><td>${d.wins}</td><td>${d.podiums}</td><td>${d.titles}</td></tr>`).join('')}</tbody></table></div></div><div class="stack"><div class="card"><h2>The Paddock Chronicle</h2><div style="background:var(--paper);color:#30291e;text-align:center;padding:14px;margin-bottom:15px"><div style="font-family:Georgia,serif;font-weight:bold;font-size:22px">THE PADDOCK CHRONICLE</div><div style="border-top:1px solid #806d53;margin-top:5px;padding-top:5px;letter-spacing:.18em;font-size:10px">RACING THROUGH THE YEARS</div></div>${newsHtml(30)}</div></div></div>`}
+function chronicle(){return `<div class="layout"><div class="stack"><div class="card"><div class="kicker">DAS HANDGESCHRIEBENE RENNHEFT</div><h2 style="margin:5px 0">Das Chronik-Archiv</h2><p class="small">Jede Saison hinterlässt Spuren. Sieger, Meisterschaften und wichtige Nachrichten bleiben in deinem Universum erhalten.</p><div class="history">${s.history.map(h=>`<div class="record"><div class="kicker">SAISON ${h.season}</div><b>🏆 ${portraitLabel(h.champName,h.champ)}</b><div class="small">Fahrermeister · ${h.champPoints} Punkte</div><b style="font-weight:500">${esc(h.teamName)}</b><div class="small">Teammeister · ${h.points} Punkte</div>${h.prizes?`<div class="small" style="margin-top:4px">Eigene Saisonprämie: ${h.prizes.find(p=>p.id===s.team)?.credits??'—'} Credits · ${h.prizes.find(p=>p.id===s.team)?.researchAwarded??h.prizes.find(p=>p.id===s.team)?.research??'—'} F&E</div>`:''}<div style="margin-top:9px" class="small">${h.roundWins.map(r=>`${esc(r.track)}: ${esc(r.name)}`).join('<br>')}</div></div>`).join('')||'<p class="small">Noch keine abgeschlossene Saison. Nach ${seasonLength()} Rennen wird die erste Meisterschaft hier dokumentiert.</p>'}</div></div><div class="card"><h2>Karrierebestenliste</h2><table class="results"><thead><tr><th>Fahrer</th><th>Siege</th><th>Podien</th><th>Titel</th></tr></thead><tbody>${[...s.drivers,...s.free,...(s.retired||[])].sort((a,b)=>b.titles-a.titles||b.wins-a.wins).map(d=>`<tr><td>${portraitName(d)}</td><td>${d.wins}</td><td>${d.podiums}</td><td>${d.titles}</td></tr>`).join('')}</tbody></table></div></div><div class="stack"><div class="card"><h2>The Paddock Chronicle</h2><div style="background:var(--paper);color:#30291e;text-align:center;padding:14px;margin-bottom:15px"><div style="font-family:Georgia,serif;font-weight:bold;font-size:22px">THE PADDOCK CHRONICLE</div><div style="border-top:1px solid #806d53;margin-top:5px;padding-top:5px;letter-spacing:.18em;font-size:10px">RACING THROUGH THE YEARS</div></div>${newsHtml(30)}</div></div></div>`}
 function calendar(){
  const index=Math.max(0,Math.min(21,s.previewTrack||0)),chosen=trackDefs[index],m=digitizedTracks[index];
  const weights=[chosen[2],chosen[3],chosen[4]],total=weights.reduce((a,b)=>a+b,0);
@@ -1684,7 +1715,7 @@ function podiumOverlay(r){
  const order=raceOrder(r);
  const podium=order.slice(0,3).map((c,i)=>({place:i+1,driver:driver(c.id),team:team(c.team)}));
  const fastest=r.fastest?driver(r.fastest.id):null,track=trackDefs[r.trackIndex]?.[0]||'Grand Prix';
- return `<div class="podium-title">🏁 Podium</div><div class="podium-track">${esc(track)} · Rennen beendet</div><div class="podium-grid">${[podium[1],podium[0],podium[2]].filter(Boolean).map(p=>`<div class="podium-step ${p.place===1?'first':p.place===2?'second':'third'}" style="--podium-color:${esc(p.team?.color||'#8a9591')};--podium-secondary:${esc(p.team?.secondaryColor||p.team?.color||'#8a9591')}"><div class="podium-stripe" aria-hidden="true"></div><div class="place">P${p.place}</div><div class="driver-name">${esc(p.driver?.name||'—')}</div><div class="team-name"><span class="podium-team-dot" aria-hidden="true"></span>${esc(p.team?.name||'')}</div></div>`).join('')}</div><div class="fastest-lap"><strong>Schnellste Runde</strong><div>${r.fastest&&fastest?`${esc(fastest.name)} · ${officialLap(r,r.fastest.time)}`:'Keine gewertete Runde'}</div></div><div class="podium-actions"><button class="btn primary" data-action="race-continue">Weiter</button></div>`;
+ return `<div class="podium-title">🏁 Podium</div><div class="podium-track">${esc(track)} · Rennen beendet</div><div class="podium-grid">${[podium[1],podium[0],podium[2]].filter(Boolean).map(p=>`<div class="podium-step ${p.place===1?'first':p.place===2?'second':'third'}" style="--podium-color:${esc(p.team?.color||'#8a9591')};--podium-secondary:${esc(p.team?.secondaryColor||p.team?.color||'#8a9591')}"><div class="podium-stripe" aria-hidden="true"></div><div class="place">P${p.place}</div><div class="driver-name">${portraitName(p.driver)}</div><div class="team-name"><span class="podium-team-dot" aria-hidden="true"></span>${esc(p.team?.name||'')}</div></div>`).join('')}</div><div class="fastest-lap"><strong>Schnellste Runde</strong><div>${r.fastest&&fastest?`${esc(fastest.name)} · ${officialLap(r,r.fastest.time)}`:'Keine gewertete Runde'}</div></div><div class="podium-actions"><button class="btn primary" data-action="race-continue">Weiter</button></div>`;
 }
 function raceOverlayContent(r){
  if(r?.finished&&r.awaitingSummary)return podiumOverlay(r);
@@ -1721,13 +1752,13 @@ function refreshLive(){
  // team-driver-hud-refresh:end
  if(qualAnim){
   const q=qualAnim.session,tower=document.getElementById('qualTimingTower'),ctrl=document.getElementById('raceControls'),events=document.getElementById('raceEvents'),overlay=document.getElementById('raceOverlay');
-  if(tower)tower.innerHTML=qualTower(q);
-  if(ctrl)ctrl.innerHTML=qualifyControls();
-  if(events)events.innerHTML=`<div class="race-events">${q.events.slice(0,7).map(e=>`<div>${esc(e.text)}</div>`).join('')}</div>`;
+  if(tower)setLiveHTML(tower,qualTower(q));
+  if(ctrl)setLiveHTML(ctrl,qualifyControls());
+  if(events)setLiveHTML(events,`<div class="race-events">${q.events.slice(0,7).map(e=>`<div>${esc(e.text)}</div>`).join('')}</div>`);
   if(overlay)overlay.textContent=`${q.paused||qualAnim.needsResume?'Ⅱ PAUSE':'● LIVE'} · ${q.phase} · ${q.cars.filter(c=>c.finished).length}/${q.cars.length} Fahrer fertig`;
   return;
  }
- const r=shownRace();if(!r)return;const timing=document.getElementById('raceTimingTower'),tower=document.getElementById('liveTower'),controls=document.getElementById('raceControls'),events=document.getElementById('raceEvents'),overlay=document.getElementById('raceOverlay');if(timing)timing.innerHTML=liveTimingTower(r);if(controls)controls.innerHTML=raceControls();if(events)events.innerHTML=liveEvents(r);if(overlay){overlay.classList.toggle('summary',!!(r.finished&&r.awaitingSummary));overlay.innerHTML=raceOverlayContent(r);}}
+ const r=shownRace();if(!r)return;const timing=document.getElementById('raceTimingTower'),tower=document.getElementById('liveTower'),controls=document.getElementById('raceControls'),events=document.getElementById('raceEvents'),overlay=document.getElementById('raceOverlay');if(timing)setLiveHTML(timing,liveTimingTower(r));if(controls)setLiveHTML(controls,raceControls());if(events)setLiveHTML(events,liveEvents(r));if(overlay){overlay.classList.toggle('summary',!!(r.finished&&r.awaitingSummary));setLiveHTML(overlay,raceOverlayContent(r));}}
 function persistRace(){if(anim)s.activeRace=anim.race;save()}
 function restoreRace(){autoSequence++;anim=null;qualAnim=null;if(s.activeRace&&(!s.activeRace.finished||s.activeRace.awaitingSummary)){anim={race:s.activeRace,track:trackDefs[s.activeRace.trackIndex],lastFrame:performance.now(),accumulator:0,needsResume:true,lastUi:0,lastSave:0};}}
 function startRace(){if(anim||qualAnim||seasonFinished())return;if(!qualifyingDone()){notify('Zuerst das Qualifying abschließen.');return;}focusedDriverId=null;s.activeRace=createRace();anim={race:s.activeRace,track:nextTrack(),lastFrame:performance.now(),accumulator:0,needsResume:false,lastUi:0,lastSave:0};activeTab='dashboard';s.tab='dashboard';save();render();refreshLive();requestAnimationFrame(frame)}
@@ -1736,10 +1767,10 @@ function advanceVisible(realSeconds){
  if(qualAnim){
   if(qualAnim.needsResume||qualAnim.session.paused)return;
   qualAnim.accumulator+=realSeconds*qualAnim.session.speed;
-  while(qualAnim&&qualAnim.accumulator>=RACE_STEP){qualAnim.accumulator-=RACE_STEP;qualStep(qualAnim.session);if(qualAnim.session.finished){concludeQualSession(qualAnim.session);break;}}
+  while(qualAnim&&qualAnim.accumulator>=RACE_STEP){qualAnim.accumulator-=RACE_STEP;window.CGPRenderMotion?.remember(qualAnim.session,qualAnim.session.cars,car=>qualPose(qualAnim.session,car));qualStep(qualAnim.session);if(qualAnim.session.finished){concludeQualSession(qualAnim.session);break;}}
   return;
  }
- if(!anim||anim.needsResume||anim.race.paused)return;anim.accumulator+=realSeconds*anim.race.speed;while(anim&&anim.accumulator>=RACE_STEP){anim.accumulator-=RACE_STEP;stepRace(anim.race);if(anim.race.finished){if(anim.auto)finishLiveRace();else showRaceSummary();break;}}}
+ if(!anim||anim.needsResume||anim.race.paused)return;anim.accumulator+=realSeconds*anim.race.speed;while(anim&&anim.accumulator>=RACE_STEP){anim.accumulator-=RACE_STEP;window.CGPRenderMotion?.remember(anim.race,anim.race.cars,car=>racePose(anim.race,car));stepRace(anim.race);if(anim.race.finished){if(anim.auto)finishLiveRace();else showRaceSummary();break;}}}
 function frame(now){
  const live=qualAnim||anim;if(!live)return;
  const elapsed=Math.max(0,(now-live.lastFrame)/1000);live.lastFrame=now;
@@ -1806,9 +1837,12 @@ function traceOpen(ctx,pts){ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,
 // Two staggered columns. Slot geometry and parked cars share the same pose.
 function startingGrid(g,count=26){return Array.from({length:count},(_,i)=>{const row=Math.floor(i/2),col=i%2,u=-(.60+row*.78+col*.32)*g.width/g.len,lane=(col?-.24:.24)*g.width;return {index:i,u,lane,p:trackAt(g,u,lane)}})}
 function onBridgeDeck(g,u){return g.bridges.some(b=>{let d=Math.abs(((u%1)+1)%1-b.over);return Math.min(d,1-d)*g.len<g.width*1.6})}
-function drawGridSlot(ctx,slot,w){const p=slot.p;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang);ctx.strokeStyle='#fff3d9';ctx.lineWidth=Math.max(.8,w*.025);ctx.lineCap='butt';ctx.beginPath();ctx.moveTo(-w*.24,-w*.16);ctx.lineTo(w*.29,-w*.16);ctx.lineTo(w*.29,w*.16);ctx.lineTo(-w*.24,w*.16);ctx.stroke();ctx.restore()}
+function drawGridSlot(ctx,slot,w,ink='#fff3d9'){const p=slot.p;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang);ctx.strokeStyle=ink;ctx.lineWidth=Math.max(.8,w*.025);ctx.lineCap='butt';ctx.beginPath();ctx.moveTo(-w*.24,-w*.16);ctx.lineTo(w*.29,-w*.16);ctx.lineTo(w*.29,w*.16);ctx.lineTo(-w*.24,w*.16);ctx.stroke();ctx.restore()}
 function drawStripe(ctx,p,half){ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang);for(let i=0;i<8;i++)for(let r=0;r<2;r++){ctx.fillStyle=(i+r)%2?'#202d29':'#fff6db';ctx.fillRect(-half*.22+r*half*.22,-half+i*half/4,half*.22,half/4)}ctx.restore()}
 function drawBridge(ctx,t,g){
+ // illustrated-bridges:start
+ if(window.CGPPilotWorld?.bridge?.(ctx,trackDefs.indexOf(t),g,pathPoints,traceOpen))return;
+ // illustrated-bridges:end
  for(const b of g.bridges){const pts=pathPoints(g,b.over,g.width*1.15);
   ctx.save();ctx.lineCap='butt';ctx.shadowColor='#16262088';ctx.shadowBlur=7;ctx.shadowOffsetY=5;
   traceOpen(ctx,pts);ctx.strokeStyle='#eed59a';ctx.lineWidth=g.width*1.16;ctx.stroke();ctx.shadowBlur=0;ctx.shadowOffsetY=0;
@@ -1838,25 +1872,32 @@ function drawRace(frac,results){
  if(window.CGPRaceCamera?.follow&&focusedDriverId){
   const q=qualAnim?.session,selected=(q?.cars||race?.cars||[]).find(car=>car.id===focusedDriverId);
   const visible=selected&&(q?selected.active&&!selected.finished:race&&!race.finished&&!selected.raceComplete);
-  if(visible)followedPose=q?qualPose(q,selected):racePose(race,selected);
+  if(visible)followedPose=renderCarPose(q||race,selected,q?qualPose(q,selected):racePose(race,selected));
   else{focusedDriverId=null;refreshLive();}
  }
  ctx.save();window.CGPRaceCamera?.apply(ctx,g,c.width,c.height,trackAt,followedPose,followedPose?c.clientWidth:c.width);
  // race-camera:end
+ // illustrated-pilot-surface:start
+ const pilotSurface=!!window.CGPPilotWorld?.draw(ctx,trackDefs.indexOf(track),g,trackAt);
+ if(!pilotSurface){
+ // illustrated-pilot-surface:end
  traceTrack(ctx,g);ctx.strokeStyle='#ae9e83';ctx.lineWidth=g.width*1.28;ctx.stroke();
  traceTrack(ctx,g);ctx.strokeStyle='#f5e8cc';ctx.lineWidth=g.width*1.15;ctx.stroke();
  ctx.setLineDash([g.width*.4,g.width*.4]);traceTrack(ctx,g);ctx.strokeStyle='#ae5345';ctx.stroke();ctx.setLineDash([]);
  traceTrack(ctx,g);ctx.strokeStyle='#424d46';ctx.lineWidth=g.width;ctx.stroke();
  traceOpen(ctx,g.pit);ctx.strokeStyle='#b7a689';ctx.lineWidth=g.width*.48;ctx.stroke();ctx.strokeStyle='#5b6257';ctx.lineWidth=g.width*.35;ctx.stroke();
+ // illustrated-pilot-surface-close:start
+ }
+ // illustrated-pilot-surface-close:end
  const pm={x:(g.pit[1].x+g.pit[2].x)/2,y:(g.pit[1].y+g.pit[2].y)/2};
  ctx.font='bold 11px system-ui';ctx.textAlign='center';ctx.fillStyle='#25483e';ctx.fillText('PIT',pm.x,pm.y-g.width*.28);
  for(let i=0;i<2;i++){const p=trackAt(g,g.sectors[i]);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang);
-  ctx.strokeStyle='#91d7c2';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-g.width/2);ctx.lineTo(0,g.width/2);ctx.stroke();ctx.restore();
+  ctx.strokeStyle=pilotSurface?'#42766b':'#91d7c2';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-g.width/2);ctx.lineTo(0,g.width/2);ctx.stroke();ctx.restore();
   ctx.fillStyle='#16493e';ctx.fillText('S'+(i+1),p.x-Math.sin(p.ang)*(g.width*.7+8),p.y+Math.cos(p.ang)*(g.width*.7+8));
  }
  drawStripe(ctx,trackAt(g,0),g.width/2);
  const start=trackAt(g,0);ctx.fillStyle='#25483e';ctx.fillText('S/Z',start.x+Math.sin(start.ang)*(g.width*.7+8),start.y-Math.cos(start.ang)*(g.width*.7+8));
- for(const u of [.035,.34,.68]){const p=trackAt(g,u);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang);ctx.strokeStyle='#f5e9bb';ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(-5,-4);ctx.lineTo(2,0);ctx.lineTo(-5,4);ctx.stroke();ctx.restore()}
+ for(const u of [.035,.34,.68]){const p=trackAt(g,u);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.ang);ctx.strokeStyle=pilotSurface?'#78634b':'#f5e9bb';ctx.lineWidth=1.8;ctx.beginPath();ctx.moveTo(-5,-4);ctx.lineTo(2,0);ctx.lineTo(-5,4);ctx.stroke();ctx.restore()}
  if(race&&raceAiDebug){
   const m=raceMeta(race.trackIndex),w=m.g.width;ctx.save();ctx.lineWidth=1.25;
   const lines=[
@@ -1885,7 +1926,7 @@ function drawRace(frac,results){
  const qualifying=qualAnim?.session||null;
  const cars=qualifying?qualifying.cars.filter(car=>car.active&&!car.finished):race?race.cars.filter(car=>!car.raceComplete):(qualifyingDone()?validQual().gridIds.map((id,i)=>({id,team:driver(id)?.team,pos:i+1,dnf:false})):s.drivers.map((d,i)=>({id:d.id,team:d.team,pos:i+1,dnf:false})));
  const grid=raceGrid(raceMeta(trackDefs.indexOf(track)),26);
- const visual=cars.map((r,i)=>{const p=qualifying?qualPose(qualifying,r):(race?racePose(race,r):grid[i].p);return {p,r,upper:qualifying||race?p.level===1:onBridgeDeck(g,grid[i].u)}});
+ const visual=cars.map((r,i)=>{const raw=qualifying?qualPose(qualifying,r):(race?racePose(race,r):grid[i].p),p=qualifying||race?renderCarPose(qualifying||race,r,raw):raw;return {p,r,upper:qualifying||race?p.level===1:onBridgeDeck(g,grid[i].u)}});
  const paint=v=>{const tm=team(v.r.team);if(!tm)return;
   const focused=!!((race&&!race.finished||qualifying)&&focusedDriverId===v.r.id)&&!window.CGPRaceCamera?.follow;
   if(focused){
@@ -1907,9 +1948,9 @@ function drawRace(frac,results){
    ctx.strokeStyle='#d6fff5';ctx.shadowColor='#6affdf';ctx.shadowBlur=15;ctx.lineWidth=1.9;
    ctx.beginPath();ctx.roundRect(-12,-8,27,16,4);ctx.stroke();ctx.restore();}
   if(v.r.damage){ctx.save();ctx.translate(v.p.x,v.p.y);ctx.fillStyle=['','#ffcc62','#ef9043','#ef5148'][v.r.damage];ctx.beginPath();ctx.arc(0,-g.width*.23,3,0,Math.PI*2);ctx.fill();ctx.restore();}};
- if(!qualifying)grid.filter(slot=>!onBridgeDeck(g,slot.u)).forEach(slot=>drawGridSlot(ctx,slot,g.width));
+ if(!qualifying)grid.filter(slot=>!onBridgeDeck(g,slot.u)).forEach(slot=>drawGridSlot(ctx,slot,g.width,pilotSurface?'#78634b':undefined));
  visual.filter(v=>!v.upper).forEach(paint);drawBridge(ctx,track,g);
- if(!qualifying)grid.filter(slot=>onBridgeDeck(g,slot.u)).forEach(slot=>drawGridSlot(ctx,slot,g.width));
+ if(!qualifying)grid.filter(slot=>onBridgeDeck(g,slot.u)).forEach(slot=>drawGridSlot(ctx,slot,g.width,pilotSurface?'#78634b':undefined));
  visual.filter(v=>v.upper).forEach(paint);
  // Leader beacon is a visual HUD marker; it does not affect car physics or ranking.
  if(appPrefs.showLeaderMarker&&race&&!race.finished&&!followedPose){
@@ -1940,7 +1981,10 @@ function trackSvg(t,large=false){
  let markers=[0,...g.sectors].map((u,i)=>{const p=trackAt(g,u),a=p.ang*180/Math.PI;const color=i?'#8cf2d0':'#ffdb86';return `<g transform="translate(${p.x} ${p.y}) rotate(${a})"><path d="M0 ${-w/2}V${w/2}" stroke="${color}" stroke-width="${i?4:8}"/></g><text x="${p.x-Math.sin(p.ang)*(w*.7+10)}" y="${p.y+Math.cos(p.ang)*(w*.7+10)}" fill="#173e33" font-size="22" font-weight="700" paint-order="stroke" stroke="#d6c8ab" stroke-width="4">${i?'S'+i:'S/Z'}</text>`}).join('');
  let arrows=[.035,.34,.68].map(u=>{const p=trackAt(g,u);return `<path d="M-8 -7L3 0L-8 7" transform="translate(${p.x} ${p.y}) rotate(${p.ang*180/Math.PI})" fill="none" stroke="#ffe7af" stroke-width="3"/>`}).join('');
  const grid=startingGrid(g), cars=grid.map((slot,i)=>{const p=slot.p,tm=team(s.drivers[i]?.team)||s.teams[Math.floor(i/2)];return `<g class="grid-slot" transform="translate(${p.x} ${p.y}) rotate(${p.ang*180/Math.PI})"><path d="M${-w*.24} ${-w*.16}H${w*.29}V${w*.16}H${-w*.24}" fill="none" stroke="#fff3d9" stroke-width="${Math.max(.8,w*.025)}"/><rect x="${-w*10/54}" y="${-w*7/54}" width="${w*23/54}" height="${w*14/54}" rx="2" fill="${tm.color}"/>${tm.secondaryColor?`<rect x="${-w*8/54}" y="${-w*2/54}" width="${w*20/54}" height="${w*4/54}" fill="${tm.secondaryColor}"/>`:''}</g>`}).join('');
- return `<svg viewBox="0 0 1180 740" role="img" aria-label="${esc(t[0])}: Rennstrecke mit 26 Startplätzen, Start/Ziel, Fahrtrichtung, S1 und S2" style="width:100%;display:block;background:#d6c8ab;border-radius:9px"><g stroke-linecap="round" stroke-linejoin="round"><polyline points="${pts}" fill="none" stroke="#f4e6cb" stroke-width="${w*1.18}"/><polyline points="${pts}" fill="none" stroke="#45524a" stroke-width="${w}"/><polyline points="${svgLine(g.pit)}" fill="none" stroke="#717968" stroke-width="${w*.35}"/>${deck}${markers}${arrows}${cars}</g><text x="${(g.pit[1].x+g.pit[2].x)/2}" y="${(g.pit[1].y+g.pit[2].y)/2-12}" fill="#25483e" font-size="18" text-anchor="middle">PIT</text></svg>`;
+ const illustratedMarkup=`<svg viewBox="0 0 1180 740" role="img" aria-label="${esc(t[0])}: Rennstrecke mit 26 Startplätzen, Start/Ziel, Fahrtrichtung, S1 und S2" style="width:100%;display:block;background:#d6c8ab;border-radius:9px"><g stroke-linecap="round" stroke-linejoin="round"><polyline points="${pts}" fill="none" stroke="#f4e6cb" stroke-width="${w*1.18}"/><polyline points="${pts}" fill="none" stroke="#45524a" stroke-width="${w}"/><polyline points="${svgLine(g.pit)}" fill="none" stroke="#717968" stroke-width="${w*.35}"/>${deck}${markers}${arrows}${cars}</g><text x="${(g.pit[1].x+g.pit[2].x)/2}" y="${(g.pit[1].y+g.pit[2].y)/2-12}" fill="#25483e" font-size="18" text-anchor="middle">PIT</text></svg>`;
+ // illustrated-thumbnail:start
+ return window.CGPPilotWorld?.skinSVG?.(illustratedMarkup,trackDefs.indexOf(t))||illustratedMarkup;
+ // illustrated-thumbnail:end
 }
 function originalOverlay(index){
  const m=digitizedTracks[index];if(m.preserved)return `<img src="${m.source}" alt="Originalzeichnung ${esc(m.name)}" style="width:100%;max-height:400px;object-fit:contain"><p class="small">Bereits bearbeitete Streckenführung aus Version 0.55 beibehalten.</p>`;
