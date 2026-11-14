@@ -1,0 +1,490 @@
+{
+  "baseline": "194f6e491dcd91d43f7d5d417008a3d53d0e962b",
+  "indexSHA256": "f45472ab205c84e952d02dea781bf34d194f2f1c45bbb51220977890b5f7ef7d",
+  "teamCount": 13,
+  "driverCount": 92,
+  "classicActiveDrivers": 26,
+  "classicFixedStep": 0.03333333333333333,
+  "portraits": [
+    {
+      "id": "d001",
+      "path": "assets/drivers/portraits/d001.png",
+      "bytes": 1165156,
+      "width": 1136,
+      "height": 1385,
+      "sha256": "57524546b9acf3d8f5aac1f6209abe0e2e2faf2a25482cf233aaec26eab96be9"
+    },
+    {
+      "id": "d002",
+      "path": "assets/drivers/portraits/d002.png",
+      "bytes": 1094843,
+      "width": 1127,
+      "height": 1396,
+      "sha256": "cef4f7c06891788bd1db4702103c4418d90a91553f945b20edfab2a46de2fffb"
+    },
+    {
+      "id": "d003",
+      "path": "assets/drivers/portraits/d003.png",
+      "bytes": 1171576,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "1500a52fb7fec5fc5f74dcf6496720cff5f37230853971f65d0e843b2dff2dc1"
+    },
+    {
+      "id": "d004",
+      "path": "assets/drivers/portraits/d004.png",
+      "bytes": 1184195,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "97f34ae0494413d877c48d86e71badbcfa6f99b33357515c19574e319b0b4fcd"
+    },
+    {
+      "id": "d005",
+      "path": "assets/drivers/portraits/d005.png",
+      "bytes": 1253921,
+      "width": 1196,
+      "height": 1315,
+      "sha256": "b6e6f49591b23b07ff3efbe6135becfc396238422d0c1a0d286ca2da31b254aa"
+    },
+    {
+      "id": "d006",
+      "path": "assets/drivers/portraits/d006.png",
+      "bytes": 1439767,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "a3293e7d15f49b7773a215dedd19ea604984a9eeb5b1595b8ca755f6116f315e"
+    },
+    {
+      "id": "d007",
+      "path": "assets/drivers/portraits/d007.png",
+      "bytes": 1333839,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "03eae3b6563f76ebf945dc171532bf0e1dfa871176a804376e6a54ffeb023651"
+    },
+    {
+      "id": "d008",
+      "path": "assets/drivers/portraits/d008.png",
+      "bytes": 1276544,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "edac35cb2dfeee21685032dc1c43a10116cf8792f87d0857a8e6f34910ab7ccc"
+    },
+    {
+      "id": "d009",
+      "path": "assets/drivers/portraits/d009.png",
+      "bytes": 1149071,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "0d75f921365ca002c0b3ec5cd2c54c7c0437a0007bd7ecebd58c170cea8a095f"
+    },
+    {
+      "id": "d010",
+      "path": "assets/drivers/portraits/d010.png",
+      "bytes": 1407533,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "5c3762f5044adec39dd34b9cc4f2bb10c4cf3646f2515da651c0b4f85170f8bc"
+    },
+    {
+      "id": "d011",
+      "path": "assets/drivers/portraits/d011.png",
+      "bytes": 1459928,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "7152a6c47c05bcd6b8384b36689725e7275d576d4ac9d0e221c99d2b79bd0761"
+    },
+    {
+      "id": "d012",
+      "path": "assets/drivers/portraits/d012.png",
+      "bytes": 1700180,
+      "width": 1024,
+      "height": 1536,
+      "sha256": "ba32ccdcbe73b52a0d4109ce6032fccec557a2653aebf292d23b688a78fab295"
+    },
+    {
+      "id": "d013",
+      "path": "assets/drivers/portraits/d013.png",
+      "bytes": 1616546,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "af616fe64866a60410b0d4edae299dba0c81296227baf464b867020fcf876305"
+    },
+    {
+      "id": "d014",
+      "path": "assets/drivers/portraits/d014.png",
+      "bytes": 1577548,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "662589426d738d10fd8dfd0ce30913b91505645c3660acc843aac61630af02f5"
+    },
+    {
+      "id": "d015",
+      "path": "assets/drivers/portraits/d015.png",
+      "bytes": 1780889,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "58d797fa34480cc0da3a7b21ae079ac80b63f40172fad641495431f6e342ede9"
+    },
+    {
+      "id": "d016",
+      "path": "assets/drivers/portraits/d016.png",
+      "bytes": 1267898,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "c22c3f24193479a7d13dc4ddb3a6476d0e3ea710fcba93b50dd4671636d5cb30"
+    },
+    {
+      "id": "d017",
+      "path": "assets/drivers/portraits/d017.png",
+      "bytes": 1748485,
+      "width": 1024,
+      "height": 1536,
+      "sha256": "6c8f2ebf716d185da728162446c5c01de980fe1270058163e12061d6c6eae985"
+    },
+    {
+      "id": "d018",
+      "path": "assets/drivers/portraits/d018.png",
+      "bytes": 1454878,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "43b04f3c4b9340bfeebdd60a815c8feb771d64c0e71f2b92a57d915bf221abaa"
+    },
+    {
+      "id": "d019",
+      "path": "assets/drivers/portraits/d019.png",
+      "bytes": 1283093,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "28bbaceb7d52b9ad2ee7fc4b74fa63d752f6046d4de3c542c6088c7a349ccf47"
+    },
+    {
+      "id": "d020",
+      "path": "assets/drivers/portraits/d020.png",
+      "bytes": 2081924,
+      "width": 1024,
+      "height": 1536,
+      "sha256": "6f5ceb057f235bebbae3e334c1362f0f23120d7dcfedcbebc6924b89aaf71a7c"
+    },
+    {
+      "id": "d021",
+      "path": "assets/drivers/portraits/d021.png",
+      "bytes": 1778489,
+      "width": 1024,
+      "height": 1536,
+      "sha256": "67d956b8bdc324a03623730e7ce42f0fa742f16b0a6eb84cdc1f02b96e3762e8"
+    },
+    {
+      "id": "d022",
+      "path": "assets/drivers/portraits/d022.png",
+      "bytes": 1481042,
+      "width": 1254,
+      "height": 1254,
+      "sha256": "5b62da0e5925dcb87ef25cabdf17f43ee01f67a31c410bc637b3237d2242b9c6"
+    },
+    {
+      "id": "d023",
+      "path": "assets/drivers/portraits/d023.png",
+      "bytes": 1295141,
+      "width": 1199,
+      "height": 1312,
+      "sha256": "e0281889d860c0c17c86b2655ede556d72391b2125cecef0266e058b71728c10"
+    },
+    {
+      "id": "d024",
+      "path": "assets/drivers/portraits/d024.png",
+      "bytes": 1182328,
+      "width": 1301,
+      "height": 1209,
+      "sha256": "5dc3db346beb45bd3e8d682de4568c5250bb5e17a0c49412585763ef5a2353bb"
+    },
+    {
+      "id": "d025",
+      "path": "assets/drivers/portraits/d025.png",
+      "bytes": 1700377,
+      "width": 1024,
+      "height": 1536,
+      "sha256": "c3e341752c0776d65eb12f9fe15048403623f29ff7fb0434c168eb5e8da615d2"
+    },
+    {
+      "id": "d026",
+      "path": "assets/drivers/portraits/d026.png",
+      "bytes": 1346854,
+      "width": 1199,
+      "height": 1312,
+      "sha256": "0bdbc2cd79cfb4adc834e7ce24eae5038249a2896db0429087ccab7ce21397ef"
+    },
+    {
+      "id": "d027",
+      "path": "assets/drivers/portraits/d027.png",
+      "bytes": 1297661,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "be8adf172a93bcf7d1e72d3a5eee15c42b409b5736c540c640038700fd46da8d"
+    },
+    {
+      "id": "d028",
+      "path": "assets/drivers/portraits/d028.png",
+      "bytes": 1300381,
+      "width": 1199,
+      "height": 1312,
+      "sha256": "eef445cf3d9348b95d2f44e194a7c0070262027b9c417faf91e68565143a4a8d"
+    },
+    {
+      "id": "d029",
+      "path": "assets/drivers/portraits/d029.png",
+      "bytes": 1565644,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "c42a55602e656e29628a85f57ad6ed8a11d9353902d845e6b84a9b469291d822"
+    },
+    {
+      "id": "d030",
+      "path": "assets/drivers/portraits/d030.png",
+      "bytes": 1525632,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "033a6582c1c1196fa09cc51f251860cc4acfff4eb5a5ed8ac951f72befabc0be"
+    },
+    {
+      "id": "d031",
+      "path": "assets/drivers/portraits/d031.png",
+      "bytes": 1274839,
+      "width": 1122,
+      "height": 1402,
+      "sha256": "5565c124edae9dbfd93de319a1f102e84ec28a59dd6bbcf884e01dc82c1a9009"
+    },
+    {
+      "id": "d032",
+      "path": "assets/drivers/portraits/d032.png",
+      "bytes": 1994778,
+      "width": 1086,
+      "height": 1448,
+      "sha256": "853fb1e5928b2f2cdc9930d03ecb1e8ae10462cde6cfc5a4bb8675ccec98087e"
+    },
+    {
+      "id": "d033",
+      "path": "assets/drivers/portraits/d033.png",
+      "bytes": 1451847,
+      "width": 1122,
+      "height": 1402,
+      "sha256": "0685af74d3911a96233d3a65f1fc0e48d116b228a0876bce10b86d31f70d902f"
+    },
+    {
+      "id": "d034",
+      "path": "assets/drivers/portraits/d034.png",
+      "bytes": 1325379,
+      "width": 1199,
+      "height": 1312,
+      "sha256": "441c723b43ff3844ec379dee123913aa25560dfa576a2a490fcc16f3ff7cb65e"
+    },
+    {
+      "id": "d035",
+      "path": "assets/drivers/portraits/d035.png",
+      "bytes": 1572016,
+      "width": 1122,
+      "height": 1402,
+      "sha256": "9a8c4ab1dd24b69337024af915c7cb6c17df80618fbf0ec13919ba4b88666e1c"
+    }
+  ],
+  "tracks": [
+    {
+      "index": 0,
+      "name": "Bahrain",
+      "points": 470,
+      "width": 32.84212987766387,
+      "length": 2755.2947650191,
+      "bridges": 0,
+      "sha256": "70502ce29e43c46349e67864a1653abb9509ab77d08c229d45d35d4e0d0c6501"
+    },
+    {
+      "index": 1,
+      "name": "Luxemburg",
+      "points": 404,
+      "width": 35.595943924197925,
+      "length": 4089.8459907640117,
+      "bridges": 0,
+      "sha256": "737ac08f7f066e3909069174990eab7521015fb5a3df5f55e2b37e71859022a7"
+    },
+    {
+      "index": 2,
+      "name": "Kanada",
+      "points": 1062,
+      "width": 38.39407115215085,
+      "length": 3269.519889221092,
+      "bridges": 0,
+      "sha256": "4a3766936e086e9b71f79049382bcb32261d46136cfcfefd7f19db355a65b3fa"
+    },
+    {
+      "index": 3,
+      "name": "Frankreich",
+      "points": 668,
+      "width": 24.82895172384472,
+      "length": 2731.6608377927946,
+      "bridges": 0,
+      "sha256": "6cdeb989cc93d669686268e813e2e54a53d82f4ada2cf70b974d17df807edabc"
+    },
+    {
+      "index": 4,
+      "name": "Schweiz",
+      "points": 494,
+      "width": 40.95049160862451,
+      "length": 3312.0493448194793,
+      "bridges": 0,
+      "sha256": "89811d7f380929b5ce1c163775e099b92bb9d525c1d2321a5d8e7b2d30fea296"
+    },
+    {
+      "index": 5,
+      "name": "Portugal",
+      "points": 375,
+      "width": 29.307705818884397,
+      "length": 1809.2947924134155,
+      "bridges": 0,
+      "sha256": "2ad8d53b2042d75114b080a81a495d8e8bf4f791041c86f587b60648dc37f259"
+    },
+    {
+      "index": 6,
+      "name": "Indien",
+      "points": 644,
+      "width": 36.60376513777897,
+      "length": 3848.240192960691,
+      "bridges": 0,
+      "sha256": "7406ecb1794a7e72d4439eca6f292fdf0e22fe10335bfbd0f823b8686a9aeb9e"
+    },
+    {
+      "index": 7,
+      "name": "Brasilien",
+      "points": 548,
+      "width": 26.047092480558664,
+      "length": 2343.4261555949206,
+      "bridges": 0,
+      "sha256": "f2c4d3f3936ea76352bbadacd2b1a98f1919647bce51e6fa2991c563158619d0"
+    },
+    {
+      "index": 8,
+      "name": "Südafrika",
+      "points": 538,
+      "width": 33.961950652155856,
+      "length": 3023.940177664184,
+      "bridges": 0,
+      "sha256": "6e1993f2eafa574e4860f156dea12e2e34ff9c9e76b6e19065919991894ccf2a"
+    },
+    {
+      "index": 9,
+      "name": "Korea",
+      "points": 550,
+      "width": 31.44022857230753,
+      "length": 2838.084766250075,
+      "bridges": 1,
+      "sha256": "7ed5f748b0a177cb86d7d84d0b4e1988e7a54fd27c76dbc0cf461e30dc8cbc20"
+    },
+    {
+      "index": 10,
+      "name": "USA",
+      "points": 385,
+      "width": 47.88772462187663,
+      "length": 3033.0321675548157,
+      "bridges": 0,
+      "sha256": "35a826952bd5cfad77acd1997b77cc517e176d259c4a208442520427b565943e"
+    },
+    {
+      "index": 11,
+      "name": "Belgien",
+      "points": 400,
+      "width": 29.873650826129207,
+      "length": 1977.846699664465,
+      "bridges": 0,
+      "sha256": "799e9e617bc5662e78f3f18ec6b63fe71b43e5d69c14eb767bb31fc622f661a4"
+    },
+    {
+      "index": 12,
+      "name": "Schweden",
+      "points": 406,
+      "width": 32.03799417704753,
+      "length": 2138.863371831985,
+      "bridges": 0,
+      "sha256": "53159ed2b7ec5aa1a96215d2a41b3ef820fc65235c2408693a3a55541bd116ed"
+    },
+    {
+      "index": 13,
+      "name": "Deutschland",
+      "points": 557,
+      "width": 26.060376179745198,
+      "length": 2393.1145007507803,
+      "bridges": 0,
+      "sha256": "f7d7ff2d4db07c6adc3461da6cfcb87a41052c59059c7e7b1c303fa7a586ff09"
+    },
+    {
+      "index": 14,
+      "name": "Japan",
+      "points": 584,
+      "width": 36.363994053696494,
+      "length": 3542.6634037458048,
+      "bridges": 0,
+      "sha256": "4c118b67f98e0a0494a1cdee9e289f1bf755ef431d6099f45c69b1ffbed75b7d"
+    },
+    {
+      "index": 15,
+      "name": "China",
+      "points": 504,
+      "width": 28.197284424931972,
+      "length": 2339.5699834667976,
+      "bridges": 0,
+      "sha256": "dfe1a4f04e6efd764e37b70013173d574b24d6ca4e843bfc8c0d82bbf37db824"
+    },
+    {
+      "index": 16,
+      "name": "Russland",
+      "points": 439,
+      "width": 41.317725713417445,
+      "length": 2982.851119703618,
+      "bridges": 2,
+      "sha256": "da06e88f479b7595ddd64c65df715938a0b66b995ab7cdf70e58e1618eb2afba"
+    },
+    {
+      "index": 17,
+      "name": "Australien",
+      "points": 649,
+      "width": 26.886953776538373,
+      "length": 2854.057276768521,
+      "bridges": 0,
+      "sha256": "1ed6b832d3bb5a76a306b3e7001674c2f90d5d2349cb760e9f874b01247e622f"
+    },
+    {
+      "index": 18,
+      "name": "England",
+      "points": 439,
+      "width": 30.582320904901547,
+      "length": 2209.8004880578274,
+      "bridges": 0,
+      "sha256": "c5f3d5618aa04a79698c2565fa6c5b51f418bf7b238def60754ae6342681bd4c"
+    },
+    {
+      "index": 19,
+      "name": "Italien",
+      "points": 476,
+      "width": 35.7395766853466,
+      "length": 2790.119754126679,
+      "bridges": 0,
+      "sha256": "7ee08cf4f728af381e62a559c0bfc35c02909fbd4b65125129518b8b1252a0b8"
+    },
+    {
+      "index": 20,
+      "name": "Ungarn",
+      "points": 494,
+      "width": 34.52270851114615,
+      "length": 2816.008553932914,
+      "bridges": 0,
+      "sha256": "18f64641b4b37bb1c828778937956cc5bd55ff87f0d0924df19b11f56db669fd"
+    },
+    {
+      "index": 21,
+      "name": "Abu Dhabi",
+      "points": 551,
+      "width": 33.06025733302064,
+      "length": 2991.6834283444573,
+      "bridges": 0,
+      "sha256": "cb4444172b313a38fc1d279bc8a7257719d9b68e0e84faebc578373998b5d29f"
+    }
+  ]
+}
