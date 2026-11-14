@@ -104,3 +104,37 @@ nur dessen damalige Stichprobe.
 auf alle 13 Fahrzeuge erfolgreich nachgeprüft. Abschließender Originalvergleich
 und Identitätsprüfungen zusätzlich erneut bestanden. Alle vier Vorschau-/
 Offline-Builds erfolgreich. Keine Original-Referenzwerte geändert.
+
+## Hochgeladene Originalporträts d001–d035
+
+Nach dem Upload wurden alle 35 Original-PNGs über ihre Dateinamen fest den
+Fahrer-IDs zugeordnet. Namen und Kürzel stammen aus der vorhandenen Datenbank
+bzw. derselben Nachnamenregel wie im Timing-Tower (d001 = Marcello Robin = ROB).
+Die PNG-Dateien in `assets/drivers/portraits/` bleiben unverändert erhalten.
+
+`npm run build:uploaded-portraits` erzeugt lediglich kleinere WebP-Spielversionen
+(maximal 640 × 800, Qualität 90) und Prüfsummen im Porträtmanifest. Es verändert
+keine Motive oder Originale. Dieser Entwicklerbefehl benötigt ImageMagick;
+Spieler und CI nutzen die bereits exportierten Dateien ohne diese Abhängigkeit.
+Die 35 WebPs benötigen zusammen 2.870.382 Bytes. PNGs werden im Spiel nicht
+zusätzlich heruntergeladen. Quellen und Exporte sind über SHA-256 geprüft.
+
+`src/data/uploaded-portraits.js` enthält die feste Bild-/Kürzelzuordnung.
+`CGPDriverPortraits.svg` zeigt für diese IDs das hochgeladene Motiv; kleine
+Ansichten verwenden einen Kopf-Bildausschnitt, mittlere/große Ansichten den
+Oberkörper. Die Motive werden bei Transfers nicht übermalt. Stattdessen zeigen
+Rahmen und Beschriftung das aktuelle Team, vertragsfreie Fahrer einen neutralen
+Rahmen. Die übrigen 57 Fahrer behalten ihre Vektorfiguren samt persönlichen
+Helmen und Teamanzügen. `vectorSVG` und die 92 archivierten SVGs bleiben erhalten.
+
+Alle vorhandenen Porträt-Einbindungsstellen verwenden automatisch dieselbe
+Zuordnung. Große Profile zeigen zusätzlich das bereits etablierte Fahrerkürzel.
+Offline-Spiel und eigenständige Galerie betten die WebPs ein. Der normale
+Pages-Aufruf verwendet relative, statische Bildpfade. Team-Auswahl bleibt bei
+den bisherigen Fahrzeugbildern; Rennmechanik, Save-Schema und Werte sind unverändert.
+
+Zusätzliche Modul- und Desktop-/Mobiltests prüfen alle 35 IDs, Originalhashes,
+Bildgröße/Dateibudget, unveränderte Bildquelle bei Teamwechsel/Alterung,
+Kürzel ROB, aktuellen Teamrahmen, alle 57 Rückfälle und vollständiges Dekodieren
+ohne Netzwerk. Echte Spielaufnahmen: [Profil](../previews/world-and-drivers/profile.png)
+und [erste fünf Fahrer](../previews/world-and-drivers/drivers.png).

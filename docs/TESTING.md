@@ -135,3 +135,9 @@ Zusätzliche Desktop-/Mobiltests prüfen die Gesamtgalerie, Anzugwechsel,
 Profil-Tastaturbedienung, Vertragswahl, Speicherunveränderlichkeit und Offlineprofile.
 `npm run build:world-review` erstellt die Gesamtvorschau; CI bietet sie mit dem
 spielbaren Offline-HTML als `carpet-grand-prix-world-and-drivers` an.
+
+Für die 35 hochgeladenen Porträts prüfen zusätzliche Tests ID/Kürzel-Zuordnung,
+Original- und Export-Prüfsummen, Dateibudget, unveränderte Quelle bei Transfers,
+Rückfall auf 57 Vektorfiguren sowie Dekodierung aller WebPs online und offline.
+`build:uploaded-portraits` ist ein optionaler Entwicklerexport mit ImageMagick;
+CI und das veröffentlichte Spiel benötigen nur die versionierten WebP-Dateien.

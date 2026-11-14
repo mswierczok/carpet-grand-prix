@@ -20,6 +20,8 @@ export function createOfflineHTML() {
     const path = `assets/cars/illustrated/team-${id}.svg`;
     html = html.replaceAll(`./${path}`, `data:image/svg+xml;base64,${readFileSync(new URL(path, root)).toString('base64')}`);
   }
+  const portraits=JSON.parse(readFileSync(new URL('assets/drivers/portraits/manifest.json',root),'utf8'));
+  for(const art of portraits.entries){html=html.replaceAll(art.src,`data:image/webp;base64,${readFileSync(new URL(art.src.slice(2),root)).toString('base64')}`);}
   for (const image of manifest.images) {
     const uri = `data:${image.mime};base64,${readFileSync(new URL(image.path, root)).toString('base64')}`;
     html = html.replaceAll(`../${image.path}`, uri).replaceAll(`./${image.path}`, uri);

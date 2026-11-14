@@ -1,0 +1,355 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "d001",
+      "code": "ROB",
+      "name": "Marcello Robin",
+      "source": "assets/drivers/portraits/d001.png",
+      "sourceSHA256": "57524546b9acf3d8f5aac1f6209abe0e2e2faf2a25482cf233aaec26eab96be9",
+      "src": "./assets/drivers/portraits/webp/d001.webp",
+      "bytes": 83996,
+      "sha256": "d3ca1746845428a5801a410be4ff3f5505f83f2a53960e464efdc5c05e8a4648"
+    },
+    {
+      "id": "d002",
+      "code": "ROM",
+      "name": "V. Romi",
+      "source": "assets/drivers/portraits/d002.png",
+      "sourceSHA256": "cef4f7c06891788bd1db4702103c4418d90a91553f945b20edfab2a46de2fffb",
+      "src": "./assets/drivers/portraits/webp/d002.webp",
+      "bytes": 72938,
+      "sha256": "2c466cdbd1095ce579ec7776c72aeb6e028beaafde3f9a86895fe45948129b6e"
+    },
+    {
+      "id": "d003",
+      "code": "WUX",
+      "name": "Thi Wu",
+      "source": "assets/drivers/portraits/d003.png",
+      "sourceSHA256": "1500a52fb7fec5fc5f74dcf6496720cff5f37230853971f65d0e843b2dff2dc1",
+      "src": "./assets/drivers/portraits/webp/d003.webp",
+      "bytes": 90470,
+      "sha256": "6370e7250887fea6bdf501863fde2669cead0606181f972467182744c0a41e25"
+    },
+    {
+      "id": "d004",
+      "code": "SAV",
+      "name": "Alvaro Savic",
+      "source": "assets/drivers/portraits/d004.png",
+      "sourceSHA256": "97f34ae0494413d877c48d86e71badbcfa6f99b33357515c19574e319b0b4fcd",
+      "src": "./assets/drivers/portraits/webp/d004.webp",
+      "bytes": 77872,
+      "sha256": "65282becc54b932b7b22f2d3d923fedc5d7c4952d0e6bd50ee433ff013956a29"
+    },
+    {
+      "id": "d005",
+      "code": "CAL",
+      "name": "M. Callivaro",
+      "source": "assets/drivers/portraits/d005.png",
+      "sourceSHA256": "b6e6f49591b23b07ff3efbe6135becfc396238422d0c1a0d286ca2da31b254aa",
+      "src": "./assets/drivers/portraits/webp/d005.webp",
+      "bytes": 84512,
+      "sha256": "49a59bd9b53ead73d5634d08500d21e5386257fc2306c0332f297d840b1c35bb"
+    },
+    {
+      "id": "d006",
+      "code": "SAL",
+      "name": "Malik Salvaro",
+      "source": "assets/drivers/portraits/d006.png",
+      "sourceSHA256": "a3293e7d15f49b7773a215dedd19ea604984a9eeb5b1595b8ca755f6116f315e",
+      "src": "./assets/drivers/portraits/webp/d006.webp",
+      "bytes": 98158,
+      "sha256": "0db5efd71b06b800f03bca978aa244f154c95f698457aa34572e67b80fcaccf9"
+    },
+    {
+      "id": "d007",
+      "code": "DEN",
+      "name": "R. Dénes",
+      "source": "assets/drivers/portraits/d007.png",
+      "sourceSHA256": "03eae3b6563f76ebf945dc171532bf0e1dfa871176a804376e6a54ffeb023651",
+      "src": "./assets/drivers/portraits/webp/d007.webp",
+      "bytes": 78846,
+      "sha256": "201fb76d5bed1e206e5992bc9a9703448369a48bf7c2567fbf613ac1faae1565"
+    },
+    {
+      "id": "d008",
+      "code": "OCO",
+      "name": "N. O'Conner",
+      "source": "assets/drivers/portraits/d008.png",
+      "sourceSHA256": "edac35cb2dfeee21685032dc1c43a10116cf8792f87d0857a8e6f34910ab7ccc",
+      "src": "./assets/drivers/portraits/webp/d008.webp",
+      "bytes": 77824,
+      "sha256": "079e06cee9dd912ac0f7fe2889234e626ae5c8650c436eb0f05b5775f7176cbb"
+    },
+    {
+      "id": "d009",
+      "code": "MIG",
+      "name": "N. Miguel",
+      "source": "assets/drivers/portraits/d009.png",
+      "sourceSHA256": "0d75f921365ca002c0b3ec5cd2c54c7c0437a0007bd7ecebd58c170cea8a095f",
+      "src": "./assets/drivers/portraits/webp/d009.webp",
+      "bytes": 77020,
+      "sha256": "baf6b51a3dcffba573fb0ff8ee8a8e494e76378d36784f8003330f4c941ddfeb"
+    },
+    {
+      "id": "d010",
+      "code": "HUT",
+      "name": "Dylon Hutton",
+      "source": "assets/drivers/portraits/d010.png",
+      "sourceSHA256": "5c3762f5044adec39dd34b9cc4f2bb10c4cf3646f2515da651c0b4f85170f8bc",
+      "src": "./assets/drivers/portraits/webp/d010.webp",
+      "bytes": 75460,
+      "sha256": "8865cd9389d3dc33e485e675df303c4b49f65c296eb562cb122ec1dffcae15cc"
+    },
+    {
+      "id": "d011",
+      "code": "PAR",
+      "name": "A. Parelli",
+      "source": "assets/drivers/portraits/d011.png",
+      "sourceSHA256": "7152a6c47c05bcd6b8384b36689725e7275d576d4ac9d0e221c99d2b79bd0761",
+      "src": "./assets/drivers/portraits/webp/d011.webp",
+      "bytes": 87726,
+      "sha256": "1b4b26458fd06e163d6ad3c52c5416b55d005d1c60f6342ba5590534274df5cf"
+    },
+    {
+      "id": "d012",
+      "code": "COL",
+      "name": "S. Colbe",
+      "source": "assets/drivers/portraits/d012.png",
+      "sourceSHA256": "ba32ccdcbe73b52a0d4109ce6032fccec557a2653aebf292d23b688a78fab295",
+      "src": "./assets/drivers/portraits/webp/d012.webp",
+      "bytes": 84026,
+      "sha256": "65b29d17eb36d55844e97d8568e5aa1631e3e49840af788bd593f3c4bfa25bb6"
+    },
+    {
+      "id": "d013",
+      "code": "DUK",
+      "name": "Dukuzuremyi",
+      "source": "assets/drivers/portraits/d013.png",
+      "sourceSHA256": "af616fe64866a60410b0d4edae299dba0c81296227baf464b867020fcf876305",
+      "src": "./assets/drivers/portraits/webp/d013.webp",
+      "bytes": 74484,
+      "sha256": "2626f07d7d3dc7cbe73a60782b38ccc12c8db4d8f94aa524d837aecc376c4047"
+    },
+    {
+      "id": "d014",
+      "code": "FRA",
+      "name": "Y. Francais",
+      "source": "assets/drivers/portraits/d014.png",
+      "sourceSHA256": "662589426d738d10fd8dfd0ce30913b91505645c3660acc843aac61630af02f5",
+      "src": "./assets/drivers/portraits/webp/d014.webp",
+      "bytes": 78900,
+      "sha256": "c3d733dd39f5ce5f9552e71406295eb133509b58d58987e5cfd44bc0ff982f44"
+    },
+    {
+      "id": "d015",
+      "code": "ARI",
+      "name": "F. Aristi",
+      "source": "assets/drivers/portraits/d015.png",
+      "sourceSHA256": "58d797fa34480cc0da3a7b21ae079ac80b63f40172fad641495431f6e342ede9",
+      "src": "./assets/drivers/portraits/webp/d015.webp",
+      "bytes": 95056,
+      "sha256": "f747287f47ed6f1bb7bbc5be0fc3f99c76c62a3c03a3802bea94e006c7045ef2"
+    },
+    {
+      "id": "d016",
+      "code": "EVA",
+      "name": "S. Evans",
+      "source": "assets/drivers/portraits/d016.png",
+      "sourceSHA256": "c22c3f24193479a7d13dc4ddb3a6476d0e3ea710fcba93b50dd4671636d5cb30",
+      "src": "./assets/drivers/portraits/webp/d016.webp",
+      "bytes": 86206,
+      "sha256": "280ccb2e592d8e5c8fb2dd4a93c991e7c511f4ec234d60fe78d17fb110e9b15f"
+    },
+    {
+      "id": "d017",
+      "code": "AND",
+      "name": "L. Anderson",
+      "source": "assets/drivers/portraits/d017.png",
+      "sourceSHA256": "6c8f2ebf716d185da728162446c5c01de980fe1270058163e12061d6c6eae985",
+      "src": "./assets/drivers/portraits/webp/d017.webp",
+      "bytes": 72302,
+      "sha256": "4632904931afcee3b5eca022e7607b093b81660fd2f4d2f89aff9841cbd67418"
+    },
+    {
+      "id": "d018",
+      "code": "MON",
+      "name": "G. A. Montoya",
+      "source": "assets/drivers/portraits/d018.png",
+      "sourceSHA256": "43b04f3c4b9340bfeebdd60a815c8feb771d64c0e71f2b92a57d915bf221abaa",
+      "src": "./assets/drivers/portraits/webp/d018.webp",
+      "bytes": 88468,
+      "sha256": "fd4e8d1990e8c566806871e8e1f3e9f2ac6a0a61b6c3c5b283f850dd5ae9c11f"
+    },
+    {
+      "id": "d019",
+      "code": "VAL",
+      "name": "Valentino",
+      "source": "assets/drivers/portraits/d019.png",
+      "sourceSHA256": "28bbaceb7d52b9ad2ee7fc4b74fa63d752f6046d4de3c542c6088c7a349ccf47",
+      "src": "./assets/drivers/portraits/webp/d019.webp",
+      "bytes": 81884,
+      "sha256": "0dcc7a6f3a9257c6b9b1f1ebb5bba9a052a605d36386cf2cfe113caa1faa80f3"
+    },
+    {
+      "id": "d020",
+      "code": "LUC",
+      "name": "Di Luccio",
+      "source": "assets/drivers/portraits/d020.png",
+      "sourceSHA256": "6f5ceb057f235bebbae3e334c1362f0f23120d7dcfedcbebc6924b89aaf71a7c",
+      "src": "./assets/drivers/portraits/webp/d020.webp",
+      "bytes": 98170,
+      "sha256": "ea8ad8904fac57bb1d70e4a748b098a84175aa4f2f097d604026caf9ed009711"
+    },
+    {
+      "id": "d021",
+      "code": "YOU",
+      "name": "Li Young",
+      "source": "assets/drivers/portraits/d021.png",
+      "sourceSHA256": "67d956b8bdc324a03623730e7ce42f0fa742f16b0a6eb84cdc1f02b96e3762e8",
+      "src": "./assets/drivers/portraits/webp/d021.webp",
+      "bytes": 75144,
+      "sha256": "28b94f96f8d2670ba4d647aee517e7788c5fdca7c33f3ff1049ff3d3227cce0c"
+    },
+    {
+      "id": "d022",
+      "code": "BEZ",
+      "name": "Bezetti",
+      "source": "assets/drivers/portraits/d022.png",
+      "sourceSHA256": "5b62da0e5925dcb87ef25cabdf17f43ee01f67a31c410bc637b3237d2242b9c6",
+      "src": "./assets/drivers/portraits/webp/d022.webp",
+      "bytes": 85418,
+      "sha256": "03e0902ea6dfd02278f0034fe5131fb4dd43535bf784189857b171bb4e09f22e"
+    },
+    {
+      "id": "d023",
+      "code": "JAN",
+      "name": "Janssen",
+      "source": "assets/drivers/portraits/d023.png",
+      "sourceSHA256": "e0281889d860c0c17c86b2655ede556d72391b2125cecef0266e058b71728c10",
+      "src": "./assets/drivers/portraits/webp/d023.webp",
+      "bytes": 67500,
+      "sha256": "51d6ef8469963d672dd501ee612b35cf51c0d5b06233a05de4a6cc8718f0b498"
+    },
+    {
+      "id": "d024",
+      "code": "MOK",
+      "name": "H. Mokahashi",
+      "source": "assets/drivers/portraits/d024.png",
+      "sourceSHA256": "5dc3db346beb45bd3e8d682de4568c5250bb5e17a0c49412585763ef5a2353bb",
+      "src": "./assets/drivers/portraits/webp/d024.webp",
+      "bytes": 58288,
+      "sha256": "04ca1b60ac60e0417db3c32a761171ab559a1d84ab0417eb7e717bebe3e1b563"
+    },
+    {
+      "id": "d025",
+      "code": "KUN",
+      "name": "Kuno",
+      "source": "assets/drivers/portraits/d025.png",
+      "sourceSHA256": "c3e341752c0776d65eb12f9fe15048403623f29ff7fb0434c168eb5e8da615d2",
+      "src": "./assets/drivers/portraits/webp/d025.webp",
+      "bytes": 73220,
+      "sha256": "7bbe3389143cac013c5650ae57ed5892f116c97d3315bb1d6fa7944cb6e2b15e"
+    },
+    {
+      "id": "d026",
+      "code": "SOL",
+      "name": "Solim",
+      "source": "assets/drivers/portraits/d026.png",
+      "sourceSHA256": "0bdbc2cd79cfb4adc834e7ce24eae5038249a2896db0429087ccab7ce21397ef",
+      "src": "./assets/drivers/portraits/webp/d026.webp",
+      "bytes": 85392,
+      "sha256": "9836f76038c87bc6ef81d7a626b5acc4225e1214b27cf482d448a2ea9eb6bbb0"
+    },
+    {
+      "id": "d027",
+      "code": "ZAC",
+      "name": "Zacharias",
+      "source": "assets/drivers/portraits/d027.png",
+      "sourceSHA256": "be8adf172a93bcf7d1e72d3a5eee15c42b409b5736c540c640038700fd46da8d",
+      "src": "./assets/drivers/portraits/webp/d027.webp",
+      "bytes": 68744,
+      "sha256": "73c16d301e310d10e075cba533e0528800de08d118a0fd91decc9542536a2917"
+    },
+    {
+      "id": "d028",
+      "code": "ELF",
+      "name": "Elfinso",
+      "source": "assets/drivers/portraits/d028.png",
+      "sourceSHA256": "eef445cf3d9348b95d2f44e194a7c0070262027b9c417faf91e68565143a4a8d",
+      "src": "./assets/drivers/portraits/webp/d028.webp",
+      "bytes": 77014,
+      "sha256": "31045ecbf1afac3c9391fdf23e5f31393dc2319b286a5a3d5da8ac1e9e0c5edd"
+    },
+    {
+      "id": "d029",
+      "code": "NXX",
+      "name": "Sven N.",
+      "source": "assets/drivers/portraits/d029.png",
+      "sourceSHA256": "c42a55602e656e29628a85f57ad6ed8a11d9353902d845e6b84a9b469291d822",
+      "src": "./assets/drivers/portraits/webp/d029.webp",
+      "bytes": 83318,
+      "sha256": "be46314ceaafcc8eaff30af39cfb3a88778589ebfe7338ee4c2a2160562b12d7"
+    },
+    {
+      "id": "d030",
+      "code": "PAS",
+      "name": "E. Pastelli",
+      "source": "assets/drivers/portraits/d030.png",
+      "sourceSHA256": "033a6582c1c1196fa09cc51f251860cc4acfff4eb5a5ed8ac951f72befabc0be",
+      "src": "./assets/drivers/portraits/webp/d030.webp",
+      "bytes": 79300,
+      "sha256": "acca2d4aa238c14a8e09da142e5177338c59efbb82959f75adbd2fba4ece380e"
+    },
+    {
+      "id": "d031",
+      "code": "NXX",
+      "name": "Felix N.",
+      "source": "assets/drivers/portraits/d031.png",
+      "sourceSHA256": "5565c124edae9dbfd93de319a1f102e84ec28a59dd6bbcf884e01dc82c1a9009",
+      "src": "./assets/drivers/portraits/webp/d031.webp",
+      "bytes": 74402,
+      "sha256": "aa8fbb453953ce975d1e0cbe0a03d92f2197ab8395fffd52b610ce7568771c12"
+    },
+    {
+      "id": "d032",
+      "code": "BUD",
+      "name": "Budi",
+      "source": "assets/drivers/portraits/d032.png",
+      "sourceSHA256": "853fb1e5928b2f2cdc9930d03ecb1e8ae10462cde6cfc5a4bb8675ccec98087e",
+      "src": "./assets/drivers/portraits/webp/d032.webp",
+      "bytes": 132486,
+      "sha256": "0f21745f88a86db91a782b5e8b84f4c34870fbe8eb865936fac32039df43da93"
+    },
+    {
+      "id": "d033",
+      "code": "KOL",
+      "name": "Kolwero",
+      "source": "assets/drivers/portraits/d033.png",
+      "sourceSHA256": "0685af74d3911a96233d3a65f1fc0e48d116b228a0876bce10b86d31f70d902f",
+      "src": "./assets/drivers/portraits/webp/d033.webp",
+      "bytes": 83388,
+      "sha256": "ac1acec2616a5efe1644478931026f27a1335960e74d45ec0d6b58a2849b0d55"
+    },
+    {
+      "id": "d034",
+      "code": "KUN",
+      "name": "Z. H. Kung",
+      "source": "assets/drivers/portraits/d034.png",
+      "sourceSHA256": "441c723b43ff3844ec379dee123913aa25560dfa576a2a490fcc16f3ff7cb65e",
+      "src": "./assets/drivers/portraits/webp/d034.webp",
+      "bytes": 82794,
+      "sha256": "963b20618ed4570edda130f6ec8f9ba3e8059314ddf0c74e2d3d7af8c680bbb6"
+    },
+    {
+      "id": "d035",
+      "code": "KLU",
+      "name": "D. Kluszic",
+      "source": "assets/drivers/portraits/d035.png",
+      "sourceSHA256": "9a8c4ab1dd24b69337024af915c7cb6c17df80618fbf0ec13919ba4b88666e1c",
+      "src": "./assets/drivers/portraits/webp/d035.webp",
+      "bytes": 79656,
+      "sha256": "30470930ef61d44e5c01869b4355f1e437d3e8205994e2b4ba8a79f1e118d28f"
+    }
+  ]
+}

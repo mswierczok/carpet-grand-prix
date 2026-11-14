@@ -20,7 +20,7 @@
  'M87 114Q75 69 97 61L112 79Q149 49 178 69L185 103L173 113L164 86Q125 104 95 91Z',
  'M82 123Q67 100 87 69L100 78L96 115L90 141ZM165 78Q189 73 190 116L178 141L169 117Z',
  'M82 117L79 78Q89 50 118 52L106 68L133 58L149 35L156 52L177 49L172 66L187 74L180 112L166 85L99 88L94 119Z'];
- function svg(driver,team=null,size='large'){
+ function vectorSVG(driver,team=null,size='large'){
   if(!driver?.id)return '';
   const p=globalThis.CGPDriverIdentities?.[driver.id];if(!p)return '';
   const key=[driver.id,team?.id,team?.color,team?.secondaryColor,size,driver.age].join(':');if(cache.has(key))return cache.get(key);
@@ -79,5 +79,14 @@
   const result=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${size==='small'?'68 28 133 166':'0 20 270 355'}" width="270" height="355" role="img" aria-label="Porträt von ${esc(driver.name)}" data-driver-portrait="${esc(driver.id)}"><g stroke-linejoin="round">${art}</g></svg>`;
   if(cache.size>512)cache.clear();cache.set(key,result);return result;
  }
- globalThis.CGPDriverPortraits=Object.freeze({svg,identity:id=>globalThis.CGPDriverIdentities?.[id],escape:esc});
+ function code(name){const words=String(name||'').trim().split(/\s+/),clean=(words.at(-1)||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z]/g,'').toUpperCase();return(clean.slice(0,3)||'???').padEnd(3,'X');}
+ function uploaded(id){return globalThis.CGPUploadedPortraits?.[id]||null;}
+ function svg(driver,team=null,size='large'){
+  const art=uploaded(driver?.id);if(!art)return vectorSVG(driver,team,size);
+  const color=/^#[\da-f]{3,8}$/i.test(team?.color||'')?team.color:'#536974';
+  const box=size==='small'?'55 0 160 178':'0 0 270 355';
+  const border=size==='small'?'<rect x="57" y="2" width="156" height="174" rx="6"':'<rect x="2" y="2" width="266" height="351" rx="8"';
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${box}" width="270" height="355" role="img" aria-label="${esc(driver.name)} · ${esc(art.code)} · ${esc(driver.id)}" data-driver-portrait="${esc(driver.id)}" data-portrait-source="uploaded"><image href="${esc(art.src)}" x="0" y="0" width="270" height="338" preserveAspectRatio="xMidYMin meet"/>${size==='small'?'':`<rect x="3" y="328" width="264" height="25" rx="4" fill="${color}"/><text x="135" y="344" text-anchor="middle" font-family="system-ui" font-size="9" font-weight="bold" fill="#fff" stroke="#17232c" stroke-width=".2">${esc(art.code)} · ${esc(team?.name||'VERTRAGSFREI')}</text>`}${border} fill="none" stroke="${color}" stroke-width="3"/></svg>`;
+ }
+ globalThis.CGPDriverPortraits=Object.freeze({svg,vectorSVG,uploaded,code,identity:id=>globalThis.CGPDriverIdentities?.[id],escape:esc});
 })();
