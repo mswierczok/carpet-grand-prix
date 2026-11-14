@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve, extname } from 'node:path';
 import { originalHTML } from './original-html.js';
 import { createOfflineHTML } from '../../scripts/build-offline.js';
+import { createArcadeOffline } from '../../scripts/build-arcade-offline.js';
 
 const root = resolve('.');
 const prefix = '/carpet-grand-prix/';
@@ -13,6 +14,10 @@ const server = createServer(async (req, res) => {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     if (!pathname.startsWith(prefix)) { res.writeHead(404).end(); return; }
     const relative = pathname.slice(prefix.length) || 'index.html';
+    if (relative === '__arcade_offline__/index.html') {
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
+      res.end(createArcadeOffline()); return;
+    }
     if (relative === '__reference__/index.html' || relative === '__offline__/index.html') {
       const html = relative.startsWith('__reference__') ? originalHTML() : createOfflineHTML();
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });

@@ -23,9 +23,18 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
       - run: npm run build:offline
+      - run: npm run build:arcade-offline
       - run: npm run build:race-preview
       - run: npm run build:pilot-preview
       - run: npm run build:world-review
+      - uses: actions/upload-artifact@v4
+        with:
+          name: carpet-grand-prix-arcade-preview
+          path: |
+            dist/carpet-grand-prix-arcade-offline.html
+            dist/carpet-grand-prix-offline.html
+          if-no-files-found: error
+          retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
           name: carpet-grand-prix-world-and-drivers

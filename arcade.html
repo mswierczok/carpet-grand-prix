@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#192b33" />
+    <title>Carpet Grand Prix · Fahrtest</title>
+    <link rel="stylesheet" href="./styles/arcade.css" />
+  </head>
+  <body>
+    <main id="arcadeApp">
+      <header>
+        <a href="./index.html" class="back-link">← Klassisches Spiel</a
+        ><span class="eyebrow">CARPET GRAND PRIX · FREIES FAHREN</span>
+        <h1>Deine Linie. Dein Tempo.</h1>
+        <p>
+          Bahrain · Ein Fahrzeug, eine Strecke. Teste Gas, Bremse und Lenkung.
+        </p>
+      </header>
+      <section class="dashboard" aria-label="Fahrzeug und Rundenzeiten">
+        <div class="metric">
+          <span>Tempo</span
+          ><strong><b id="speed">0</b> <small>km/h</small></strong>
+        </div>
+        <div class="metric">
+          <span>Aktuelle Runde</span><strong id="lapTime">0:00.000</strong>
+        </div>
+        <div class="metric">
+          <span>Beste gültige Runde</span><strong id="bestLap">—</strong>
+        </div>
+        <div class="metric">
+          <span>Gefahrene Runden</span><strong id="laps">0</strong>
+        </div>
+      </section>
+      <section class="race-panel">
+        <div class="race-heading">
+          <div>
+            <span class="eyebrow">BAHRAIN</span>
+            <p id="status" role="status" aria-live="polite">
+              Bereit zum Fahren
+            </p>
+          </div>
+          <div class="actions">
+            <button id="pause" type="button">▶ Fahren</button
+            ><button id="overview" type="button" aria-pressed="false">
+              Gesamtstrecke
+            </button>
+          </div>
+        </div>
+        <div class="drive-view">
+          <canvas
+            id="arcadeCanvas"
+            tabindex="0"
+            aria-label="Bahrain-Fahrtest. W oder Pfeil hoch gibt Gas, S oder Pfeil runter bremst. A und D lenken. P pausiert, R setzt das Auto zurück."
+          ></canvas>
+          <div class="touch-controls" aria-label="Fahrsteuerung">
+            <div>
+              <button
+                type="button"
+                data-drive="left"
+                aria-label="Nach links lenken"
+              >
+                ←</button
+              ><button
+                type="button"
+                data-drive="right"
+                aria-label="Nach rechts lenken"
+              >
+                →
+              </button>
+            </div>
+            <div>
+              <button type="button" data-drive="brake">Bremse</button
+              ><button type="button" data-drive="throttle" class="gas">
+                Gas
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="race-footer">
+          <span id="checkpoint">Zur Startlinie fahren</span
+          ><span id="lastLap">Noch keine vollständige Runde</span>
+        </div>
+      </section>
+      <section class="bottom-panel">
+        <div>
+          <label for="team">Lackierung</label
+          ><select id="team"></select>
+          <p class="hint">
+            Alle Lackierungen haben im Fahrtest dieselben Fahreigenschaften.
+          </p>
+        </div>
+        <div class="recovery">
+          <button id="recover" type="button">
+            Auto zurücksetzen <kbd>R</kbd></button
+          ><button id="restart" type="button">Fahrtest neu starten</button>
+        </div>
+      </section>
+      <p class="instructions">
+        <kbd>W</kbd> / <kbd>↑</kbd> Gas · <kbd>S</kbd> / <kbd>↓</kbd> Bremse ·
+        <kbd>A</kbd> <kbd>D</kbd> / <kbd>←</kbd> <kbd>→</kbd> Lenken ·
+        <kbd>P</kbd> Pause. Auf dem Teppichrand verlierst du Tempo. Nach
+        Verlassen der Fahrfläche zählt die Runde nicht als Bestzeit.
+      </p>
+      <footer>
+        Fahrgefühl-Prototyp · Noch ohne Gegner, Items oder Runs. Dein
+        klassischer Spielstand wird nicht verwendet oder verändert.
+      </footer>
+    </main>
+    <script src="./src/data/arcade-tracks.js"></script>
+    <script src="./src/data/arcade-roster.js"></script>
+    <script src="./src/rendering/race-sprites.js"></script>
+    <script src="./src/rendering/pilot-vehicles.js?v=2"></script>
+    <script src="./src/racing/track-surface.js"></script>
+    <script src="./src/racing/physics.js"></script>
+    <script src="./src/racing/timing.js"></script>
+    <script src="./src/racing/session.js"></script>
+    <script src="./src/racing/controls.js"></script>
+    <script src="./src/rendering/arcade2d.js"></script>
+    <script src="./src/arcade-main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "kind": "static-generated-concept-not-gameplay",
+  "tool": "image_gen",
+  "references": [
+    "assets/drivers/portraits/d001.png",
+    "assets/drivers/portraits/d004.png",
+    "assets/drivers/portraits/d021.png",
+    "assets/drivers/portraits/d026.png"
+  ],
+  "output": "previews/arcade-phase0/style-study.png",
+  "sha256": "3e78dcf72d470b4cdf1c6f1f516d2d6eea6d5443e06d1e8b8b06eb768ae134e5",
+  "width": 1536,
+  "height": 1024,
+  "subject": "Neuer illustrierter Rennwagen, Teppichumgebung und Crew-Ingenieurin; keine neuen Spiel-/Fahrerdaten."
+}

@@ -1,0 +1,268 @@
+:root {
+  color-scheme: dark;
+  --ink: #192b33;
+  --paper: #f0e5cc;
+  --muted: #b8c9c8;
+  --accent: #efb65c;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #17252d;
+  color: var(--paper);
+  font:
+    16px/1.5 system-ui,
+    sans-serif;
+}
+main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+}
+a {
+  color: #84d8d2;
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 18px;
+}
+.eyebrow {
+  display: block;
+  color: var(--accent);
+  letter-spacing: 0.14em;
+  font-size: 11px;
+  font-weight: 800;
+}
+h1 {
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1.1;
+  margin: 10px 0;
+}
+header p,
+.hint,
+.instructions,
+footer {
+  color: var(--muted);
+}
+header p {
+  margin: 10px 0 20px;
+}
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.metric {
+  padding: 12px 17px;
+  background: #263b44;
+  border: 1px solid #4d6569;
+  border-radius: 11px;
+}
+.metric > span {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+}
+.metric strong {
+  font-size: 24px;
+  font-variant-numeric: tabular-nums;
+}
+.metric small {
+  font-size: 12px;
+  font-weight: 500;
+}
+.metric b {
+  font-weight: inherit;
+}
+.race-panel {
+  border: 2px solid #536366;
+  border-radius: 15px;
+  overflow: hidden;
+  background: #263b44;
+}
+.race-heading,
+.race-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+}
+.race-heading p {
+  margin: 0;
+  font-size: 14px;
+}
+.race-footer {
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+canvas {
+  display: block;
+  width: 100%;
+  height: clamp(330px, 52vw, 610px);
+  background: #c4af8b;
+  outline-offset: -4px;
+  touch-action: none;
+}
+canvas:focus-visible {
+  outline: 3px solid #efb65c;
+}
+button,
+select {
+  font: inherit;
+  border: 1px solid #77908f;
+  border-radius: 8px;
+  padding: 9px 12px;
+  background: #314a53;
+  color: var(--paper);
+}
+button {
+  cursor: pointer;
+}
+button:hover {
+  background: #45616a;
+}
+button:focus-visible,
+select:focus-visible {
+  outline: 3px solid #efb65c;
+  outline-offset: 2px;
+}
+#pause,
+.gas {
+  background: #e7b55f;
+  color: #1b3038;
+  border-color: #f2d59c;
+}
+#pause:hover,
+.gas:hover {
+  background: #f3c879;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.bottom-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 14px;
+}
+.bottom-panel label {
+  margin-right: 8px;
+  font-size: 13px;
+}
+.hint {
+  font-size: 12px;
+  margin: 7px 0;
+}
+.recovery {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.touch-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 15px 0;
+}
+.touch-controls > div {
+  display: flex;
+  gap: 8px;
+}
+.touch-controls button {
+  min-width: 70px;
+  min-height: 54px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.touch-controls .is-held {
+  outline: 3px solid #fff0ba;
+  background: #9b6d34;
+}
+.instructions {
+  font-size: 13px;
+}
+kbd {
+  font: 12px system-ui;
+  border: 1px solid #6a7b7d;
+  border-radius: 4px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+footer {
+  font-size: 12px;
+  margin-top: 20px;
+}
+@media (max-width: 650px) {
+  main {
+    padding: 12px;
+  }
+  .dashboard {
+    grid-template-columns: 1fr 1fr;
+  }
+  .metric {
+    padding: 9px 12px;
+  }
+  .metric strong {
+    font-size: 22px;
+  }
+  .race-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .actions {
+    width: 100%;
+  }
+  .actions button {
+    flex: 1;
+  }
+  .race-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+    padding: 8px 12px;
+  }
+  .bottom-panel {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .bottom-panel select {
+    max-width: 100%;
+  }
+  .recovery button {
+    flex: 1;
+    font-size: 13px;
+  }
+  .touch-controls {
+    gap: 6px;
+  }
+  .touch-controls button {
+    min-width: 58px;
+    padding: 8px;
+  }
+  .instructions {
+    line-height: 1.8;
+  }
+  canvas {
+    height: 390px;
+  }
+}
+
+.drive-view {
+  position: relative;
+}
+.touch-controls {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  margin: 0;
+}
