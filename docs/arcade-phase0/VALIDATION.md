@@ -1,5 +1,8 @@
 # Validierung dieser Phase
 
+Historisches Prüfprotokoll der Phase-0-Lieferung. Die spätere Phase-1-Implementierung
+und ihre Prüfungen stehen separat in [ARCADE_PHASE1.md](../ARCADE_PHASE1.md).
+
 Grundlage: `main` 194f6e491dcd91d43f7d5d417008a3d53d0e962b.
 
 - `npm test`: 52 bestehende Modul-/Integrationstests bestanden. Dazu gehören

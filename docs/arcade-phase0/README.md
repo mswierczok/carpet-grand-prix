@@ -2,11 +2,14 @@
 
 Stand: 14. November 2026. Ausgangsbasis ist das veröffentlichte `main`
 `194f6e491dcd91d43f7d5d417008a3d53d0e962b`.
-Dieser Branch enthält ausschließlich Untersuchung, Entwurf und eine statische
+Die ursprüngliche Phase-0-Lieferung enthält ausschließlich Untersuchung, Entwurf und eine statische
 Stilprobe. Er enthält noch keine manuelle Fahrsteuerung, neue Rennkamera,
 Gegner oder Roguelite-Funktionen. Der klassische Spielcode und alle Originalbilder
 bleiben bytegenau erhalten. Der getrennte PR #13 für Brustporträts ist nicht
 Bestandteil dieser Untersuchung.
+
+Fortsetzung nach Nutzerfreigabe: [Phase 1 – der getrennte Fahrtest](../ARCADE_PHASE1.md).
+Die folgenden Untersuchungen beschreiben weiterhin den Stand vor dieser Implementierung.
 
 ## Ergebnis in verständlichem Deutsch
 

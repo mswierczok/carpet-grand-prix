@@ -12,9 +12,15 @@ Node.js 24 LTS verwenden. `npm ci`, anschließend einmalig
 | `npm run serve:test` | Anwendung nur unter `/carpet-grand-prix/` |
 | `npm run build:offline` | Eigenständige HTML-Datei mit allen Bildern und Styles unter `dist/` |
 | `npm run build:race-preview` | 13 reproduzierbare Rennsprite-SVGs und eigenständige Grafikvorschau unter `dist/` |
+| `npm run build:arcade-data` | Lesende Exporte von Bahrain, 13 Teams und 92 Fahrern für den getrennten Fahrtest erneuern |
+| `npm run build:arcade-offline` | Eigenständiger Fahrtest als `dist/carpet-grand-prix-arcade-offline.html` |
 
 Optional lokal `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` setzen.
 CI benutzt den zur Lockdatei gehörenden Playwright-Browser.
+
+Der neue Fahrtest ist unter `/carpet-grand-prix/arcade.html` erreichbar. Seine
+eigenen Modul- und Browserprüfungen laufen in den normalen Befehlen mit.
+Umfang, Testfahrten und Grenzen: [ARCADE_PHASE1.md](ARCADE_PHASE1.md).
 
 ## Referenzen und Adapter
 
