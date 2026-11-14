@@ -19,6 +19,7 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
+      - run: npm run check:arcade3d-engine
       - run: npm test
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
@@ -32,6 +33,7 @@ jobs:
           name: carpet-grand-prix-arcade-preview
           path: |
             dist/carpet-grand-prix-arcade-offline.html
+            dist/carpet-grand-prix-arcade3d-offline.html
             dist/carpet-grand-prix-offline.html
           if-no-files-found: error
           retention-days: 30

@@ -98,3 +98,15 @@ Team-Auswahl wieder mit den bisherigen WebPs. 92 feste Illustrationsprofile
 in `src/data/driver-identities.js`, SVG-Komposition in `driver-portraits.js`,
 lesender Profil-Dialog in `driver-profiles.js`. Kein neues Speicherfeld.
 Vollständige Integration und Vorschau: [WORLD_AND_DRIVERS.md](WORLD_AND_DRIVERS.md).
+
+## Getrennter Arcade-Modus
+
+`arcade.html` verbindet `src/racing/{physics,controls,session,track-surface,timing}.js`
+mit `arcade2d.js`. `arcade3d.html` verwendet dieselbe Sitzung mit der zusätzlichen
+räumlichen Darstellung. `camera3d`, `materials3d`, `vehicles3d`, `tracks3d` und
+`arcade3d` lesen die Renderpose; sie schreiben nicht in Physik oder Rundenmessung.
+Die vorhandenen `index.html`-Systeme und deren Speicher bleiben getrennt.
+Die lokale Three.js-Auswahl wird mit dem geprüften Rolldown-Build erzeugt und
+zusätzlich reproduzierbar geprüft. Pages benötigt weiterhin keinen Server.
+Details, Modulgrenzen und Abnahme: [ARCADE_PHASE1.md](ARCADE_PHASE1.md),
+[ARCADE_PHASE2.md](ARCADE_PHASE2.md).

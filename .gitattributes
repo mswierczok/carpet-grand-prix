@@ -1,0 +1,2 @@
+# Generated Three.js bundle preserves whitespace inside upstream GLSL strings.
+src/vendor/three.js linguist-vendored=true -whitespace

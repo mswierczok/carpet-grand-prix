@@ -1,5 +1,8 @@
 # Phase 1 – erster fahrbarer Prototyp
 
+Fortsetzung nach Freigabe und Merge von PR #15:
+[Phase 2 – räumliche Bahrain-Fahrprobe](ARCADE_PHASE2.md).
+
 Stand: 14. November 2026. Separater Branch `codex/arcade-first-drive`, nach
 Freigabe des [Phase-1-Plans](arcade-phase0/PHASE1_PLAN.md). Grundlage bleibt
 `main` 194f6e491dcd91d43f7d5d417008a3d53d0e962b. Kein Merge erfolgt automatisch.

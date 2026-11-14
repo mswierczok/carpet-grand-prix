@@ -21,12 +21,17 @@
     "build:world-review": "node scripts/build-world-review.js",
     "build:uploaded-portraits": "node scripts/build-uploaded-portraits.js",
     "build:arcade-data": "node scripts/export-arcade-data.js",
-    "build:arcade-offline": "node scripts/build-arcade-offline.js"
+    "build:arcade-offline": "node scripts/build-arcade-offline.js",
+    "build:arcade3d-engine": "node scripts/build-arcade3d-engine.js",
+    "check:arcade3d-engine": "node scripts/build-arcade3d-engine.js --check",
+    "measure:arcade3d": "node scripts/measure-arcade3d.js"
   },
   "devDependencies": {
     "@playwright/test": "1.64.1",
     "pixelmatch": "8.0.0",
     "pngjs": "7.0.0",
+    "rolldown": "1.2.16",
+    "three": "0.187.0",
     "vitest": "5.1.0"
   }
 }

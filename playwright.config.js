@@ -12,9 +12,11 @@ export default defineConfig({
     baseURL: 'http://127.0.0.1:4173/carpet-grand-prix/',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    launchOptions: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
-      ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH }
-      : {},
+    launchOptions: {
+      ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH } : {}),
+      // CI has no physical GPU; explicitly enable Chromium's software WebGL renderer.
+      args: ['--enable-unsafe-swiftshader'],
+    },
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
