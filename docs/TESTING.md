@@ -27,6 +27,9 @@ Die zusätzliche räumliche Fahransicht ist unter `arcade3d.html` erreichbar.
 Offline-Build und CI-Artefakt enthalten auch `carpet-grand-prix-arcade3d-offline.html`.
 Kamera-, WebGL-Ausfall- und Rundentests sowie die offenen Geräte-/FPS-Prüfungen:
 [ARCADE_PHASE2.md](ARCADE_PHASE2.md).
+Der Lenkvergleich gegen den veröffentlichten Git-Stand und die Rückwärts-Prüfungen
+sind in [ARCADE_DRIVING.md](ARCADE_DRIVING.md) beschrieben. Sie laufen in den
+normalen Testbefehlen mit; auch dafür wird die vollständige Git-Historie benötigt.
 
 ## Referenzen und Adapter
 

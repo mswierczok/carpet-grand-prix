@@ -1,5 +1,8 @@
 # Phase 2 – räumliche Bahrain-Fahrprobe
 
+Dieser Bericht beschreibt die ursprüngliche Phase-2-Lieferung. Die anschließende
+Nutzeranpassung der Steuerung steht in [ARCADE_DRIVING.md](ARCADE_DRIVING.md).
+
 Stand: 14. November 2026. Phase 1 wurde nach ausdrücklicher Nutzerfreigabe über
 PR #15 nach `main` übernommen: `1b878b518bc537a4732d752725df5877830ac526`.
 Die [Pages-Veröffentlichung](https://github.com/mswierczok/carpet-grand-prix/actions/runs/43643040775)

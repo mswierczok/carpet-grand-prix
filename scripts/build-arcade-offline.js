@@ -14,7 +14,7 @@ export function createArcadeOffline({ threeD = false } = {}) {
         `src="data:image/png;base64,${readFileSync(new URL("assets/world/arcade-materials.png", root)).toString("base64")}"`,
     );
   html = html.replace(
-    /<link rel="stylesheet" href="\.\/styles\/arcade\.css"\s*\/?>/,
+    /<link rel="stylesheet" href="\.\/styles\/arcade\.css(?:\?[^" ]*)?"\s*\/?>/,
     () =>
       `<style>${readFileSync(new URL("styles/arcade.css", root), "utf8")}</style>`,
   );

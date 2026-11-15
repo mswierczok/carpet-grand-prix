@@ -16,6 +16,28 @@ function setup() {
   return { api, surface: api.Surface.create(data.tracks.bahrain) };
 }
 
+it("bleibt beim Rückwärtsfahren hinter derselben Fahrzeugseite und vermeidet einen 180-Grad-Schwenk", () => {
+  const { api, surface } = setup(),
+    rig = api.Camera3D.create(),
+    pose = { x: 400, y: 300, heading: 0.8, speed: 15, longitudinalSpeed: 15 };
+  const before = rig.update(pose, surface, 1 / 60),
+    back = { ...pose, longitudinalSpeed: -15 };
+  const after = rig.update(back, surface, 1 / 60);
+  expect(
+    Math.hypot(
+      after.target.x - before.target.x,
+      after.target.z - before.target.z,
+    ),
+  ).toBeLessThan(1);
+  for (let i = 0; i < 120; i++) {
+    const camera = rig.update(back, surface, 1 / 60);
+    expect(
+      (camera.position.x - back.x) * Math.cos(back.heading) +
+        (camera.position.z - back.y) * Math.sin(back.heading),
+    ).toBeLessThan(0);
+  }
+});
+
 it("hält die Kamera hinter dem frei ausgerichteten Auto und blickt in seine Fahrtrichtung", () => {
   const { api, surface } = setup();
   for (const heading of [0, Math.PI / 2, Math.PI, -Math.PI / 2, Math.PI * 5]) {

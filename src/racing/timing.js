@@ -22,7 +22,12 @@
       ty = Math.sin(gate.ang);
     const before = (from.x - gate.x) * tx + (from.y - gate.y) * ty,
       after = (to.x - gate.x) * tx + (to.y - gate.y) * ty;
-    if (before <= 0 && after > 0 && after > before) {
+    if (
+      !(to.longitudinalSpeed < 0) &&
+      before <= 0 &&
+      after > 0 &&
+      after > before
+    ) {
       const fraction = -before / (after - before),
         x = from.x + (to.x - from.x) * fraction,
         y = from.y + (to.y - from.y) * fraction;

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="theme-color" content="#192b33" />
     <title>Carpet Grand Prix · 3D-Fahrtest</title>
-    <link rel="stylesheet" href="./styles/arcade.css" />
+    <link rel="stylesheet" href="./styles/arcade.css?v=steering-reverse-1" />
   </head>
   <body>
     <main id="arcadeApp" data-renderer="3d">
@@ -37,7 +37,10 @@
       <section class="dashboard" aria-label="Fahrzeug und Rundenzeiten">
         <div class="metric">
           <span>Tempo</span
-          ><strong><b id="speed">0</b> <small>km/h</small></strong>
+          ><strong
+            ><b id="speed">0</b> <small>km/h</small>
+            <small id="gear" aria-label="Fahrstufe">N</small></strong
+          >
         </div>
         <div class="metric">
           <span>Aktuelle Runde</span><strong id="lapTime">0:00.000</strong>
@@ -72,7 +75,7 @@
           <canvas
             id="arcadeCanvas"
             tabindex="0"
-            aria-label="Bahrain-Fahrtest. W oder Pfeil hoch gibt Gas, S oder Pfeil runter bremst. A und D lenken. P pausiert, R setzt das Auto zurück."
+            aria-label="Bahrain-Fahrtest. W oder Pfeil hoch gibt Gas, S oder Pfeil runter bremst und fährt nach kurzem Halten im Stand rückwärts. A und D lenken. P pausiert, R setzt das Auto zurück."
           ></canvas>
           <div class="touch-controls" aria-label="Fahrsteuerung">
             <div>
@@ -91,7 +94,12 @@
               </button>
             </div>
             <div>
-              <button type="button" data-drive="brake">Bremse</button
+              <button
+                type="button"
+                data-drive="brake"
+                aria-label="Bremsen und im Stand für Rückwärts halten"
+              >
+                Bremse<br /><small>Rückwärts</small></button
               ><button type="button" data-drive="throttle" class="gas">
                 Gas
               </button>
@@ -118,10 +126,11 @@
         </div>
       </section>
       <p class="instructions">
-        <kbd>W</kbd> / <kbd>↑</kbd> Gas · <kbd>S</kbd> / <kbd>↓</kbd> Bremse ·
-        <kbd>A</kbd> <kbd>D</kbd> / <kbd>←</kbd> <kbd>→</kbd> Lenken ·
-        <kbd>P</kbd> Pause. Auf dem Teppichrand verlierst du Tempo. Nach
-        Verlassen der Fahrfläche zählt die Runde nicht als Bestzeit.
+        <kbd>W</kbd> / <kbd>↑</kbd> Gas · <kbd>S</kbd> / <kbd>↓</kbd> Bremse; im
+        Stand kurz halten für Rückwärts · <kbd>A</kbd> <kbd>D</kbd> /
+        <kbd>←</kbd> <kbd>→</kbd> Lenken · <kbd>P</kbd> Pause. Auf dem
+        Teppichrand verlierst du Tempo. Nach Verlassen der Fahrfläche zählt die
+        Runde nicht als Bestzeit.
       </p>
       <footer>
         Fahrgefühl-Prototyp · Noch ohne Gegner, Items oder Runs. Dein
@@ -133,17 +142,17 @@
     <script src="./src/rendering/race-sprites.js"></script>
     <script src="./src/rendering/pilot-vehicles.js?v=2"></script>
     <script src="./src/racing/track-surface.js"></script>
-    <script src="./src/racing/physics.js"></script>
-    <script src="./src/racing/timing.js"></script>
-    <script src="./src/racing/session.js"></script>
+    <script src="./src/racing/physics.js?v=steering-reverse-1"></script>
+    <script src="./src/racing/timing.js?v=steering-reverse-1"></script>
+    <script src="./src/racing/session.js?v=steering-reverse-1"></script>
     <script src="./src/racing/controls.js"></script>
     <script src="./src/rendering/arcade2d.js"></script>
     <script src="./src/vendor/three.js"></script>
-    <script src="./src/rendering/camera3d.js"></script>
+    <script src="./src/rendering/camera3d.js?v=steering-reverse-1"></script>
     <script src="./src/rendering/materials3d.js"></script>
     <script src="./src/rendering/vehicles3d.js"></script>
     <script src="./src/rendering/tracks3d.js"></script>
     <script src="./src/rendering/arcade3d.js"></script>
-    <script src="./src/arcade-main.js"></script>
+    <script src="./src/arcade-main.js?v=steering-reverse-1"></script>
   </body>
 </html>

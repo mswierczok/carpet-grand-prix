@@ -32,6 +32,7 @@
     }
     function pause(value = true) {
       paused = !!value;
+      car = { ...car, reverseHold: 0 };
       previous = car;
       accumulator = 0;
     }
