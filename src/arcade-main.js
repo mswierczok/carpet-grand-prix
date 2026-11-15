@@ -141,12 +141,7 @@
             ? "Deine Runde läuft"
             : "Fahre über Start/Ziel";
     set("status", status);
-    set(
-      "checkpoint",
-      t.started
-        ? `Kontrollpunkte ${t.nextGate === 0 ? 32 : t.nextGate}/32`
-        : "Zur Startlinie fahren",
-    );
+    set("checkpoint", t.started ? "Runde läuft" : "Zur Startlinie fahren");
     set(
       "lastLap",
       t.lastLap

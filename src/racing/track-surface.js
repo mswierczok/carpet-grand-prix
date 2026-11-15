@@ -143,11 +143,51 @@
       A.BoundaryField
         ? A.BoundaryField.create(definition)
         : null;
+    function checkpoint(u, index) {
+      const point = at(u * len),
+        nx = -Math.sin(point.ang),
+        ny = Math.cos(point.ang);
+      let minLane = -g.width * 0.85,
+        maxLane = g.width * 0.85;
+      if (boundary) {
+        minLane = -Infinity;
+        maxLane = Infinity;
+        const lines = [
+          ...boundary.loops,
+          ...boundary.dividers.map((d) => d.points),
+        ];
+        for (const line of lines)
+          for (let i = 0; i < line.length - 1; i++) {
+            const a = line[i],
+              b = line[i + 1],
+              dx = b[0] - a[0],
+              dy = b[1] - a[1],
+              divisor = nx * dy - ny * dx;
+            if (Math.abs(divisor) < 1e-10) continue;
+            const ax = a[0] - point.x,
+              ay = a[1] - point.y,
+              lane = (ax * dy - ay * dx) / divisor,
+              fraction = (ax * ny - ay * nx) / divisor;
+            if (fraction < -1e-9 || fraction > 1 + 1e-9) continue;
+            if (lane < 0) minLane = Math.max(minLane, lane);
+            else if (lane > 0) maxLane = Math.min(maxLane, lane);
+          }
+        if (!Number.isFinite(minLane) || !Number.isFinite(maxLane))
+          throw Error(
+            "Sektorlinie erreicht keine geschlossene Seilbegrenzung.",
+          );
+      }
+      return Object.freeze({ ...point, index, minLane, maxLane });
+    }
+    // Lap validation uses only the actual finish and sector lines. The 32
+    // legacy geometry markers remain for scenery/sign placement, not timing.
+    const checkpoints = Object.freeze([0, ...g.sectors].map(checkpoint));
     return Object.freeze({
       g,
       at,
       project,
       gates,
+      checkpoints,
       gap: (a, b) => gap(a, b, len),
       boundary,
       roadRadius: g.width / 2,

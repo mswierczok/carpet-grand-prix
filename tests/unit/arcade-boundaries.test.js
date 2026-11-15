@@ -180,8 +180,8 @@ it("lässt die unveränderte Mittellinie frei und korrigiert veralteten Fortschr
 it("startet und beendet eine gezählte Runde auch über den dunklen Rand der Kontrollpunkte", () => {
   const { api, surface } = setup();
   let t = api.Timing.create();
-  for (let i = 0; i <= 32; i++) {
-    const gate = surface.gates[i % 32],
+  for (let i = 0; i <= surface.checkpoints.length; i++) {
+    const gate = surface.checkpoints[i % surface.checkpoints.length],
       lane = surface.roadRadius + 3,
       dx = Math.cos(gate.ang),
       dy = Math.sin(gate.ang),
@@ -203,7 +203,7 @@ it("startet und beendet eine gezählte Runde auch über den dunklen Rand der Kon
   expect(t.completed).toBe(1);
   expect(t.lastLap.valid).toBe(true);
   expect(t.invalid).toBe(false);
-  expect(t.bestLap).toBeCloseTo(32, 8);
+  expect(t.bestLap).toBeCloseTo(3, 8);
 });
 
 it("behandelt offene Trennseile als Kontakte, ohne sie als Polygon zu schließen", () => {

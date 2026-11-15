@@ -1,5 +1,9 @@
 # Bahrain-Rennen mit vollem Feld
 
+Dieser Bericht beschreibt die ursprüngliche Lieferung von PR #20. Die später
+gewünschte Sektor-Rundenzählung und das höhere KI-Tempo stehen in
+[ARCADE_SECTORS.md](ARCADE_SECTORS.md).
+
 15. November 2026. Nutzerauftrag: direkt ein Rennen mit vollem Feld statt des
 zuvor vorgeschlagenen kleinen Felds. Ausgangsbasis: veröffentlichtes `main`
 `80cd477a617e052ed09bf7ed1e973bc25529ab36`. Entwicklungsbranch:

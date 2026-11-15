@@ -7,22 +7,25 @@
       stride = 5,
       samples = Math.ceil(surface.g.len / stride),
       speedTable = Array.from({ length: samples }, (_, i) => {
-        let curvature = 0.001;
-        for (let ahead = 0; ahead < 80; ahead += 6) {
+        let allowed = p.maxSpeed;
+        for (let ahead = 0; ahead < 100; ahead += 5) {
           const a = surface.at(i * stride + ahead),
             b = surface.at(i * stride + ahead + 8),
             turn = Math.atan2(Math.sin(b.ang - a.ang), Math.cos(b.ang - a.ang));
-          curvature = Math.max(curvature, Math.abs(turn) / 8);
+          const curvature = Math.max(0.001, Math.abs(turn) / 8),
+            cornerSquared = (p.maxLateralAcceleration * 0.7) / curvature,
+            brakingDistance = Math.max(0, ahead - 12);
+          allowed = Math.min(
+            allowed,
+            Math.sqrt(cornerSquared + 2 * p.braking * 0.8 * brakingDistance),
+          );
         }
-        return Math.min(
-          86,
-          Math.sqrt((p.maxLateralAcceleration * 0.5) / curvature),
-        );
+        return allowed;
       });
     const memory = (index, lane = 0) => ({
       lane,
       hold: 0,
-      pace: 0.92 + (index % 5) * 0.02,
+      pace: 0.98 + (index % 3) * 0.01,
     });
     function prepare(cars) {
       return cars.map((car) => {
@@ -120,12 +123,16 @@
         .filter(
           (v) =>
             v.gap > 0 &&
-            v.gap < 38 &&
+            v.gap < 80 &&
             (Math.abs(v.lane - state.lane) < 6 || Math.abs(v.lane - lane) < 6),
         )
         .sort((a, b) => a.gap - b.gap)[0];
       if (blocker) {
-        const buffer = 14 + car.speed * 0.35;
+        const closing = Math.max(
+            0,
+            car.speed - Math.max(0, blocker.car.longitudinalSpeed),
+          ),
+          buffer = 12 + car.speed * 0.12 + closing * 0.35;
         if (blocker.gap < buffer)
           desired = Math.min(
             desired,

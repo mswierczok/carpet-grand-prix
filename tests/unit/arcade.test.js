@@ -158,7 +158,7 @@ it("zählt nur vorwärts überquerte Kontrollpunkte in Reihenfolge und misst ech
     surface = api.Surface.create(data.tracks.bahrain);
   let t = api.Timing.create();
   const cross = (index, back = false, offroad = false) => {
-    const p = surface.gates[index],
+    const p = surface.checkpoints[index],
       x = Math.cos(p.ang),
       y = Math.sin(p.ang),
       from = { x: p.x - x, y: p.y - y },
@@ -171,16 +171,16 @@ it("zählt nur vorwärts überquerte Kontrollpunkte in Reihenfolge und misst ech
   expect(t.completed).toBe(0);
   cross(1, true);
   expect(t.nextGate).toBe(1);
-  for (let i = 1; i < 32; i++) cross(i);
+  for (let i = 1; i < surface.checkpoints.length; i++) cross(i);
   cross(0);
   expect(t.completed).toBe(1);
   expect(t.lastLap.valid).toBe(true);
-  expect(t.bestLap).toBe(34);
-  for (let i = 1; i < 32; i++) cross(i, false, i === 3);
+  expect(t.bestLap).toBe(5);
+  for (let i = 1; i < surface.checkpoints.length; i++) cross(i, false, i === 1);
   cross(0);
   expect(t.lastLap.valid).toBe(true);
   expect(t.invalid).toBe(false);
-  expect(t.bestLap).toBe(32);
+  expect(t.bestLap).toBe(3);
 });
 it("beendet drei gültige Bahrain-Runden mit binären Tastaturkommandos ohne Kontakt oder Datenmanipulation", () => {
   const { api, data } = loadArcade(),

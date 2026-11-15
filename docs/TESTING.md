@@ -39,6 +39,8 @@ Gezielte Fahrversuche gegen die offenen Trennseile, vorwärts/rückwärts und im
 echten Browser, beschreibt [ARCADE_SHORTCUTS.md](ARCADE_SHORTCUTS.md).
 Das volle Feld unter `race.html`, Kontakt-/KI-/Rennprüfungen und die zusätzliche
 Offline-Renndatei beschreibt [ARCADE_FULL_GRID.md](ARCADE_FULL_GRID.md).
+Die Sektor-/Randrunden-Regressionsprüfungen und der Vergleich des schnelleren
+KI-Fahrers gegen den veröffentlichten Code stehen in [ARCADE_SECTORS.md](ARCADE_SECTORS.md).
 
 ## Referenzen und Adapter
 
