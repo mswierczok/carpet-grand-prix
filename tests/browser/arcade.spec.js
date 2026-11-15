@@ -32,6 +32,8 @@ test("fährt per Tastatur frei, bremst, pausiert und lässt den klassischen Spie
   page.on("pageerror", (e) => errors.push(e.message));
   await prepare(page);
   await page.goto("arcade.html");
+  // The test clock starts paused; render the initial pose before observing it.
+  await page.clock.runFor(32);
   const before = await page.evaluate(() => ({ ...localStorage })),
     start = await page.evaluate(() => __arcadeDrawPose);
   await page.locator("#pause").click();
