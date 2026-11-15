@@ -2,6 +2,7 @@
 import { chromium } from "@playwright/test";
 import { writeFileSync } from "node:fs";
 const software = process.argv.includes("--software-webgl");
+const raceMode = process.argv.includes("--race");
 const browser = await chromium.launch({
   ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
     ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH }
@@ -27,9 +28,13 @@ try {
             return {
               ...renderer,
               draw(snapshot, ...rest) {
+                globalThis.__benchSnapshot = snapshot;
                 const start = performance.now();
                 renderer.draw(snapshot, ...rest);
-                if (!snapshot.paused)
+                if (
+                  !snapshot.paused &&
+                  (!snapshot.race || snapshot.race.phase === "racing")
+                )
                   __frames.push({
                     frameSeconds: rest[2],
                     submitMs: performance.now() - start,
@@ -41,7 +46,10 @@ try {
       },
     });
   });
-  await page.goto("http://127.0.0.1:4173/carpet-grand-prix/arcade3d.html");
+  await page.goto(
+    "http://127.0.0.1:4173/carpet-grand-prix/" +
+      (raceMode ? "race.html" : "arcade3d.html"),
+  );
   if (
     (await page.locator("#arcadeApp").getAttribute("data-rendering")) !== "3d"
   )
@@ -50,7 +58,11 @@ try {
   await page.waitForTimeout(1500);
   await page.locator("#pause").click();
   await page.keyboard.down("w");
-  await page.waitForTimeout(4000);
+  if (raceMode)
+    await page.waitForFunction(
+      () => globalThis.__benchSnapshot?.race?.phase === "racing",
+    );
+  await page.waitForTimeout(raceMode ? 2500 : 4000);
   await page.keyboard.up("w");
   await page.keyboard.press("p");
   const report = await page.evaluate(() => {
@@ -80,6 +92,7 @@ try {
         ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL)
         : gl.getParameter(gl.RENDERER),
       graphics: __benchRenderer.diagnostics(),
+      vehicles: globalThis.__benchSnapshot?.entries?.length || 1,
     };
   });
   Object.assign(report, {
@@ -87,6 +100,7 @@ try {
     browser: browser.version(),
     viewport: { width: 1000, height: 800 },
     softwareRequested: software,
+    raceMode,
     limits:
       "Short headless straight-line sample, no physical-device or 60-FPS acceptance. CPU submit is not GPU frame time.",
   });

@@ -1,0 +1,132 @@
+{
+  "baseline": "80cd477a617e052ed09bf7ed1e973bc25529ab36",
+  "source": "Actual 3D grid/start and shared result UI; result reached through keyboard events in 2D fallback. Virtual clock, no pose/timing/state injection. Not a performance measurement.",
+  "finish": {
+    "phase": "finished",
+    "countdown": 0,
+    "elapsed": 154.60833333335705,
+    "laps": 3,
+    "playerTeam": "t01",
+    "position": 8,
+    "finished": 13,
+    "standings": [
+      {
+        "id": "t03",
+        "name": "Falkenheim GP",
+        "player": false,
+        "position": 1,
+        "completed": 3,
+        "progress": 8351.987256464146,
+        "finishTime": 136.6823659453904
+      },
+      {
+        "id": "t06",
+        "name": "Orange",
+        "player": false,
+        "position": 2,
+        "completed": 3,
+        "progress": 8351.987256464146,
+        "finishTime": 137.64724578292274
+      },
+      {
+        "id": "t02",
+        "name": "Alderwick Racing",
+        "player": false,
+        "position": 3,
+        "completed": 3,
+        "progress": 8351.987256464146,
+        "finishTime": 141.1752651717831
+      },
+      {
+        "id": "t05",
+        "name": "Eisenbach Motorsport",
+        "player": false,
+        "position": 4,
+        "completed": 3,
+        "progress": 8351.987256464146,
+        "finishTime": 141.74867923186525
+      },
+      {
+        "id": "t04",
+        "name": "Scuderia Bellarossa",
+        "player": false,
+        "position": 5,
+        "completed": 3,
+        "progress": 8351.987256464146,
+        "finishTime": 143.7943810491263
+      },
+      {
+        "id": "t10",
+        "name": "Panther Racing",
+        "player": false,
+        "position": 6,
+        "completed": 3,
+        "progress": 8351.987256464146,
+        "finishTime": 144.55461780303483
+      },
+      {
+        "id": "t07",
+        "name": "Ragos Racing",
+        "player": false,
+        "position": 7,
+        "completed": 3,
+        "progress": 8351.987256464146,
+        "finishTime": 147.85114280531755
+      },
+      {
+        "id": "t01",
+        "name": "Vauclair Motorsport",
+        "player": true,
+        "position": 8,
+        "completed": 3,
+        "progress": 8351.987256464146,
+        "finishTime": 148.5045392504351
+      },
+      {
+        "id": "t11",
+        "name": "Rivage Racing",
+        "player": false,
+        "position": 9,
+        "completed": 3,
+        "progress": 8351.987256464146,
+        "finishTime": 149.0997095907621
+      },
+      {
+        "id": "t12",
+        "name": "Scuderia Vespera",
+        "player": false,
+        "position": 10,
+        "completed": 3,
+        "progress": 8351.987256464146,
+        "finishTime": 150.6241553572004
+      },
+      {
+        "id": "t09",
+        "name": "Lincoln",
+        "player": false,
+        "position": 11,
+        "completed": 3,
+        "progress": 8351.987256464146,
+        "finishTime": 151.2665728848402
+      },
+      {
+        "id": "t13",
+        "name": "Redwood GP",
+        "player": false,
+        "position": 12,
+        "completed": 3,
+        "progress": 8337.051752216847,
+        "finishTime": 153.1653072508051
+      },
+      {
+        "id": "t08",
+        "name": "Mugan",
+        "player": false,
+        "position": 13,
+        "completed": 3,
+        "progress": 8265.996692356191,
+        "finishTime": 154.6069186185398
+      }
+    ]
+  }
+}

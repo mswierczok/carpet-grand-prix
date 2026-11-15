@@ -1,0 +1,131 @@
+.race-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 210px;
+  gap: 14px;
+  align-items: start;
+}
+.race-layout .race-panel {
+  min-width: 0;
+}
+.race-layout canvas {
+  height: clamp(390px, 58vh, 650px);
+}
+.field-panel {
+  background: #263b44;
+  border: 1px solid #536366;
+  border-radius: 12px;
+  padding: 12px;
+}
+.field-panel h2 {
+  margin: 0 0 10px;
+  font-size: 15px;
+}
+.field-panel ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 11px;
+}
+.field-panel li {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) 30px;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 3px;
+  border-bottom: 1px solid #43545a;
+}
+.field-panel small {
+  text-align: right;
+  color: #c3cdcc;
+  font-size: 10px;
+}
+.is-player {
+  color: #ffe2a3;
+  background: #70532144;
+  font-weight: 800;
+}
+.race-signal {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  font-size: clamp(60px, 10vw, 110px);
+  font-weight: 950;
+  color: #ffe4a0;
+  text-shadow: 3px 5px 0 #17252d;
+  pointer-events: none;
+}
+.race-signal.is-green {
+  color: #9ae8af;
+}
+.race-results {
+  background: #263b44;
+  border: 2px solid #e7b55f;
+  border-radius: 14px;
+  padding: 20px;
+  margin-top: 18px;
+}
+.race-results h2 {
+  margin: 4px 0;
+}
+.result-link {
+  align-self: center;
+  padding: 8px;
+}
+.race-results p {
+  color: #c7d4d0;
+}
+.result-scroll {
+  overflow-x: auto;
+}
+.race-results table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.race-results th,
+.race-results td {
+  padding: 9px;
+  border-bottom: 1px solid #536366;
+  text-align: left;
+}
+.race-results td:last-child {
+  white-space: nowrap;
+}
+.race-lap-details {
+  font-size: 12px;
+  color: #bccdca;
+  margin: 10px 0;
+  font-variant-numeric: tabular-nums;
+}
+button:disabled,
+select:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+@media (max-width: 850px) {
+  .race-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .field-panel ol {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 14px;
+  }
+  .field-panel li {
+    min-width: 0;
+  }
+  .race-layout canvas {
+    height: 440px;
+  }
+  .race-results {
+    padding: 12px;
+  }
+}
+@media (max-width: 420px) {
+  .field-panel ol {
+    grid-template-columns: 1fr;
+  }
+}

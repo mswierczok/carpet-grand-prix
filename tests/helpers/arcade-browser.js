@@ -47,65 +47,95 @@ export async function capture2D(page) {
   });
 }
 
-export async function capture3D(page) {
+export async function capture3D(page, { observeFleet = false } = {}) {
   await installPausedClock(page);
-  await page.addInitScript(() => {
-    let three;
-    Object.defineProperty(globalThis, "CGPThree", {
-      configurable: true,
-      get: () => three,
-      set: (library) => {
-        class ObservedRenderer extends library.WebGLRenderer {
-          constructor(...args) {
-            super(...args);
-            const original = this.render;
-            this.render = (scene, camera) => {
-              const rendered = original.call(this, scene, camera);
-              const pose = globalThis.__driveSnapshot?.visual;
-              if (pose) {
-                const point = new library.Vector3(pose.x, 1.5, pose.y).project(
-                  camera,
-                );
-                const stats = (globalThis.__cameraStats ||= {
-                  maxX: 0,
-                  minY: 1,
-                  maxY: -1,
-                  samples: 0,
-                });
-                stats.maxX = Math.max(stats.maxX, Math.abs(point.x));
-                stats.minY = Math.min(stats.minY, point.y);
-                stats.maxY = Math.max(stats.maxY, point.y);
-                stats.samples++;
-              }
-              return rendered;
-            };
+  await page.addInitScript(
+    ({ observeFleet }) => {
+      let three;
+      Object.defineProperty(globalThis, "CGPThree", {
+        configurable: true,
+        get: () => three,
+        set: (library) => {
+          class ObservedRenderer extends library.WebGLRenderer {
+            constructor(...args) {
+              super(...args);
+              const original = this.render;
+              this.render = (scene, camera) => {
+                const rendered = original.call(this, scene, camera);
+                const pose = globalThis.__driveSnapshot?.visual;
+                if (pose) {
+                  const point = new library.Vector3(
+                    pose.x,
+                    1.5,
+                    pose.y,
+                  ).project(camera);
+                  const stats = (globalThis.__cameraStats ||= {
+                    maxX: 0,
+                    minY: 1,
+                    maxY: -1,
+                    samples: 0,
+                  });
+                  stats.maxX = Math.max(stats.maxX, Math.abs(point.x));
+                  stats.minY = Math.min(stats.minY, point.y);
+                  stats.maxY = Math.max(stats.maxY, point.y);
+                  stats.samples++;
+                }
+                const player = globalThis.__driveSnapshot?.race?.playerTeam;
+                if (
+                  observeFleet &&
+                  player &&
+                  globalThis.__fleetStats?.player !== player
+                ) {
+                  const models = [];
+                  scene.traverse((node) => {
+                    if (node.name?.startsWith("opponent-")) models.push(node);
+                  });
+                  const visible = models.filter((node) => node.visible);
+                  globalThis.__fleetStats = {
+                    player,
+                    cached: models.length,
+                    ids: visible.map((node) => node.name.slice(9)).sort(),
+                    batches: visible.map((node) => node.children.length),
+                    liveries: new Set(
+                      visible
+                        .flatMap((node) => node.children)
+                        .map((mesh) => mesh.material.map)
+                        .filter((map) => map?.image?.width === 560)
+                        .map((map) => map.uuid),
+                    ).size,
+                  };
+                }
+                return rendered;
+              };
+            }
           }
-        }
-        three = { ...library, WebGLRenderer: ObservedRenderer };
-      },
-    });
-    globalThis.CGPArcade = {};
-    let module;
-    Object.defineProperty(CGPArcade, "Renderer3D", {
-      configurable: true,
-      get: () => module,
-      set: (value) => {
-        module = {
-          create(...args) {
-            const renderer = value.create(...args);
-            globalThis.__inspect3D = renderer;
-            return {
-              ...renderer,
-              draw(snapshot, ...rest) {
-                globalThis.__driveSnapshot = snapshot;
-                renderer.draw(snapshot, ...rest);
-              },
-            };
-          },
-        };
-      },
-    });
-  });
+          three = { ...library, WebGLRenderer: ObservedRenderer };
+        },
+      });
+      globalThis.CGPArcade = {};
+      let module;
+      Object.defineProperty(CGPArcade, "Renderer3D", {
+        configurable: true,
+        get: () => module,
+        set: (value) => {
+          module = {
+            create(...args) {
+              const renderer = value.create(...args);
+              globalThis.__inspect3D = renderer;
+              return {
+                ...renderer,
+                draw(snapshot, ...rest) {
+                  globalThis.__driveSnapshot = snapshot;
+                  renderer.draw(snapshot, ...rest);
+                },
+              };
+            },
+          };
+        },
+      });
+    },
+    { observeFleet },
+  );
 }
 
 export function keyboardPilot({ laps = 1, tryShortcut = false } = {}) {
