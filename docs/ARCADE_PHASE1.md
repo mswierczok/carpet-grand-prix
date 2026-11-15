@@ -1,5 +1,9 @@
 # Phase 1 – erster fahrbarer Prototyp
 
+Historischer Stand der ursprünglichen Fahrprobe. Die spätere, ausdrücklich
+gewünschte Anpassung von Lenkung und Rückwärtsgang beschreibt
+[ARCADE_DRIVING.md](ARCADE_DRIVING.md).
+
 Fortsetzung nach Freigabe und Merge von PR #15:
 [Phase 2 – räumliche Bahrain-Fahrprobe](ARCADE_PHASE2.md).
 

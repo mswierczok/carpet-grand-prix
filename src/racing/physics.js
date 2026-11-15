@@ -10,7 +10,13 @@
     aeroDrag: 0.0015,
     wheelbase: 7.8,
     maxSteer: 0.58,
-    steerResponse: 7,
+    steerResponse: 4,
+    steerReturnResponse: 9,
+    steerSpeedReference: 70,
+    steerSpeedReduction: 0.65,
+    maxReverseSpeed: 22,
+    reverseAcceleration: 20,
+    reverseDelay: 0.25,
     maxLateralAcceleration: 210,
     lateralDamping: 10,
     offroadDrag: 1.7,
@@ -32,6 +38,8 @@
       s,
       steering: 0,
       speed: 0,
+      longitudinalSpeed: 0,
+      reverseHold: 0,
       offroad: false,
       hitWall: false,
       understeer: 0,
@@ -47,28 +55,62 @@
       fy = Math.sin(previous.heading),
       nx = -fy,
       ny = fx;
-    const forward = Math.max(0, previous.vx * fx + previous.vy * fy),
+    const forward = previous.vx * fx + previous.vy * fy,
       lateral = previous.vx * nx + previous.vy * ny;
     const road = surface.project(previous, previous.s),
       offroad = road.distance > surface.roadRadius;
     const drag =
       p.rollingDrag +
       p.aeroDrag * forward * forward +
-      (offroad ? p.offroadDrag * forward : 0);
-    const speed = clamp(
-      forward +
-        (throttle * p.acceleration -
-          brake * p.braking -
-          (forward > 0 ? drag : 0)) *
-          dt,
-      0,
-      p.maxSpeed,
-    );
+      (offroad ? p.offroadDrag * Math.abs(forward) : 0);
+    let speed = Math.abs(forward),
+      direction = Math.sign(forward),
+      reverseHold = 0;
+    if (throttle > 0 && brake > 0) {
+      speed = Math.max(0, speed - (p.braking + drag) * dt);
+    } else if (throttle > 0) {
+      if (direction < 0)
+        speed = Math.max(0, speed - (throttle * p.braking + drag) * dt);
+      else {
+        direction = 1;
+        speed = clamp(
+          speed + (throttle * p.acceleration - (speed > 0 ? drag : 0)) * dt,
+          0,
+          p.maxSpeed,
+        );
+      }
+    } else if (brake > 0) {
+      if (direction > 0)
+        speed = Math.max(0, speed - (brake * p.braking + drag) * dt);
+      else {
+        reverseHold = Math.min(
+          p.reverseDelay,
+          (previous.reverseHold || 0) + dt,
+        );
+        if (direction < 0 || reverseHold + 1e-12 >= p.reverseDelay) {
+          direction = -1;
+          speed = clamp(
+            speed +
+              (brake * p.reverseAcceleration - (speed > 0 ? drag : 0)) * dt,
+            0,
+            p.maxReverseSpeed,
+          );
+        }
+      }
+    } else speed = Math.max(0, speed - drag * dt);
+    const longitudinalSpeed = speed * direction;
+    const steeringLimit =
+      p.maxSteer /
+      (1 +
+        p.steerSpeedReduction *
+          (Math.abs(forward) / p.steerSpeedReference) ** 2);
+    const targetSteering = steer * steeringLimit;
+    const centering = steer === 0 || previous.steering * targetSteering < 0;
+    const response = centering ? p.steerReturnResponse : p.steerResponse;
     const steering =
       previous.steering +
-      (steer * p.maxSteer - previous.steering) *
-        (1 - Math.exp(-p.steerResponse * dt));
-    const desiredYaw = (speed / p.wheelbase) * Math.tan(steering),
+      (targetSteering - previous.steering) * (1 - Math.exp(-response * dt));
+    const desiredYaw = (longitudinalSpeed / p.wheelbase) * Math.tan(steering),
       grip = p.maxLateralAcceleration * (offroad ? p.offroadGrip : 1),
       yaw = clamp(
         desiredYaw,
@@ -79,8 +121,8 @@
       retain = Math.exp(-p.lateralDamping * dt),
       residual = lateral * retain,
       side = Math.abs(residual) < 0.001 ? 0 : residual;
-    let vx = Math.cos(heading) * speed - Math.sin(heading) * side,
-      vy = Math.sin(heading) * speed + Math.cos(heading) * side;
+    let vx = Math.cos(heading) * longitudinalSpeed - Math.sin(heading) * side,
+      vy = Math.sin(heading) * longitudinalSpeed + Math.cos(heading) * side;
     const proposed = {
       x: previous.x + vx * dt,
       y: previous.y + vy * dt,
@@ -89,6 +131,8 @@
       vx,
       vy,
       speed: Math.hypot(vx, vy),
+      longitudinalSpeed,
+      reverseHold,
       offroad,
       hitWall: false,
       understeer: Math.abs(desiredYaw - yaw),
@@ -117,6 +161,7 @@
       proposed.vx = 0;
       proposed.vy = 0;
       proposed.speed = 0;
+      proposed.longitudinalSpeed = 0;
       proposed.hitWall = true;
     }
     const projection = surface.project(proposed, previous.s);

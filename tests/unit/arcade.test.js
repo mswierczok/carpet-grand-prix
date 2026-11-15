@@ -35,8 +35,10 @@ it("beschleunigt, bremst und lenkt frei statt die Fahrzeugrichtung an die Streck
   for (let i = 0; i < 20; i++)
     s.advance({ throttle: 1, brake: 0, steer: 1 }, 1 / 60);
   expect(s.snapshot().car.heading).toBeGreaterThan(moving.car.heading + 0.1);
-  for (let i = 0; i < 90; i++)
-    s.advance({ throttle: 0, brake: 1, steer: 0 }, 1 / 60);
+  // Holding the brake after stopping now deliberately selects reverse.
+  // Check the stop itself before the reverse hold delay can expire.
+  for (let i = 0; i < 120 && s.snapshot().car.speed > 0; i++)
+    s.advance({ throttle: 0, brake: 1, steer: 0 }, 1 / 120);
   expect(s.snapshot().car.speed).toBe(0);
 });
 it("bleibt ohne Eingabe im Stand und erzeugt deterministische, endliche Bewegung", () => {

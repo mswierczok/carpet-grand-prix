@@ -49,7 +49,8 @@ test("fährt per Tastatur frei, bremst, pausiert und lässt den klassischen Spie
   );
   await page.keyboard.up("w");
   await page.keyboard.down("s");
-  await page.clock.runFor(700);
+  // Release before the new hold-after-stop gesture selects reverse.
+  await page.clock.runFor(600);
   await page.keyboard.up("s");
   await expect(page.locator("#speed")).toHaveText("0");
   await page.keyboard.press("p");

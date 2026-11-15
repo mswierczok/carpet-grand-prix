@@ -1,4 +1,30 @@
 // Test instrumentation is installed before application scripts; no production hooks.
+export async function capture2D(page) {
+  await page.clock.install();
+  await page.addInitScript(() => {
+    globalThis.CGPArcade = {};
+    let module;
+    Object.defineProperty(CGPArcade, "Renderer", {
+      configurable: true,
+      get: () => module,
+      set: (value) => {
+        module = {
+          create(...args) {
+            const renderer = value.create(...args);
+            return {
+              ...renderer,
+              draw(snapshot, ...rest) {
+                globalThis.__driveSnapshot = snapshot;
+                return renderer.draw(snapshot, ...rest);
+              },
+            };
+          },
+        };
+      },
+    });
+  });
+}
+
 export async function capture3D(page) {
   await page.clock.install();
   await page.addInitScript(() => {

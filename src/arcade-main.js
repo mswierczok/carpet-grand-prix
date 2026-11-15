@@ -104,10 +104,17 @@
       String(Math.round(s.car.speed * session.parameters.metersPerUnit * 3.6)),
     );
     set("lapTime", format(s.lapSeconds));
+    const gear =
+      s.car.longitudinalSpeed < -0.01
+        ? "R"
+        : s.car.longitudinalSpeed > 0.01
+          ? "D"
+          : "N";
+    if (el("gear")) set("gear", gear);
     if (el("viewSpeed"))
       set(
         "viewSpeed",
-        `${Math.round(s.car.speed * session.parameters.metersPerUnit * 3.6)} km/h`,
+        `${gear === "R" ? "R · " : ""}${Math.round(s.car.speed * session.parameters.metersPerUnit * 3.6)} km/h`,
       );
     if (el("viewTime")) set("viewTime", format(s.lapSeconds));
     set("bestLap", t.bestLap === null ? "—" : format(t.bestLap));

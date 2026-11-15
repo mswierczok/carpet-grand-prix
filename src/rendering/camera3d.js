@@ -11,7 +11,7 @@
       dt,
       { overview = false, reset = false, aspect = 1 } = {},
     ) {
-      const speed = Math.max(0, pose.speed || 0);
+      const speed = pose.longitudinalSpeed ?? pose.speed ?? 0;
       const forward = { x: Math.cos(pose.heading), z: Math.sin(pose.heading) };
       let position, target;
       if (overview) {

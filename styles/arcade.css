@@ -309,3 +309,15 @@ footer {
   font-size: 14px;
   pointer-events: none;
 }
+
+.touch-controls [data-drive="brake"] small {
+  display: block;
+  font-size: 11px;
+  line-height: 1.15;
+}
+#gear {
+  display: inline-block;
+  min-width: 1.2em;
+  color: var(--accent);
+  font-weight: 800;
+}
