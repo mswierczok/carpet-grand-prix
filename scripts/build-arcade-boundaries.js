@@ -8,6 +8,102 @@ import { resolve } from "node:path";
 import { arcadeData } from "./export-arcade-data.js";
 const root = new URL("../", import.meta.url);
 
+// Bahrain-only separator guides in the same normalized coordinates as Surface.
+// They follow the dark space between nearby arms, never the light racing line.
+// Their visible ends are clipped to the existing closed rope contours below.
+const dividerGuides = [
+  {
+    id: "hairpin-straight",
+    points: [
+      [485, 230],
+      [495, 227],
+      [505, 225.5],
+      [515, 224.5],
+      [535, 224.5],
+      [545, 225],
+      [555, 227.5],
+      [565, 231],
+      [570, 235],
+    ],
+  },
+  {
+    id: "central-return",
+    points: [
+      [505, 395],
+      [503, 385],
+      [503, 365],
+      [505.5, 355],
+      [510, 345],
+      [516, 335],
+      [523.5, 325],
+      [533, 315],
+      [543, 305.5],
+      [553, 298],
+      [563, 291],
+      [573, 284],
+      [585, 280],
+    ],
+  },
+];
+
+function clipDivider(guide, field, surface) {
+  const points = [],
+    cross2 = (a, b) => a[0] * b[1] - a[1] * b[0],
+    minus = (a, b) => [a[0] - b[0], a[1] - b[1]],
+    edges = field.loops.flatMap((r) =>
+      r.slice(0, -1).map((a, i) => [a, r[i + 1]]),
+    );
+  let ended = false;
+  for (let i = 0; i < guide.length - 1; i++) {
+    const a = guide[i],
+      b = guide[i + 1],
+      direction = minus(b, a),
+      cuts = [0, 1];
+    const at = (t) => [a[0] + direction[0] * t, a[1] + direction[1] * t];
+    for (const [c, d] of edges) {
+      const edge = minus(d, c),
+        divisor = cross2(direction, edge);
+      if (Math.abs(divisor) < 1e-10) continue;
+      const delta = minus(c, a),
+        t = cross2(delta, edge) / divisor,
+        u = cross2(delta, direction) / divisor;
+      if (t > 0 && t < 1 && u >= 0 && u <= 1) cuts.push(t);
+    }
+    cuts.sort((a, b) => a - b);
+    for (let j = 0; j < cuts.length - 1; j++) {
+      if (cuts[j + 1] - cuts[j] < 1e-9) continue;
+      const middle = at((cuts[j] + cuts[j + 1]) / 2);
+      if (!field.contains({ x: middle[0], y: middle[1] })) {
+        if (points.length) ended = true;
+        continue;
+      }
+      if (ended)
+        throw Error("Seiltrenner hat mehrere getrennte Fahrflächenstücke.");
+      if (!points.length) points.push(at(cuts[j]));
+      points.push(at(cuts[j + 1]));
+    }
+  }
+  if (points.length < 2) throw Error("Seiltrenner erreicht keine Fahrfläche.");
+  // Fail loudly if future track edits move the guide onto the light road.
+  for (let i = 0; i < points.length - 1; i++) {
+    const a = points[i],
+      b = points[i + 1],
+      steps = Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1]) * 2);
+    for (let k = 0; k <= steps; k++) {
+      const p = {
+        x: a[0] + ((b[0] - a[0]) * k) / steps,
+        y: a[1] + ((b[1] - a[1]) * k) / steps,
+      };
+      if (
+        surface.project(p).distance <
+        surface.roadRadius + field.railRadius + 1
+      )
+        throw Error("Seiltrenner liegt zu nahe an der hellen Fahrbahn.");
+    }
+  }
+  return points.map((p) => p.map((v) => Math.round(v * 1e6) / 1e6));
+}
+
 function simplifyRing(ring, epsilon = 0.08) {
   const points = ring.slice(0, -1);
   let split = 1;
@@ -110,8 +206,15 @@ export function boundaryData() {
       ring.map((point) => point.map((n) => Math.round(n * 1e6) / 1e6)),
     ),
   );
+  runInNewContext(
+    readFileSync(new URL("src/racing/boundary-field.js", root), "utf8"),
+    scope,
+  );
+  const field = scope.CGPArcade.BoundaryField.create({
+    polygons: polygonsUnion,
+  });
   return {
-    version: 1,
+    version: 2,
     id: track.id,
     sourceSHA256: createHash("sha256")
       .update(
@@ -124,6 +227,10 @@ export function boundaryData() {
       .digest("hex"),
     radius: r,
     polygons: polygonsUnion,
+    dividers: dividerGuides.map(({ id, points }) => ({
+      id,
+      points: clipDivider(points, field, surface),
+    })),
   };
 }
 export function boundaryScript() {

@@ -42,25 +42,27 @@
   function create(definition) {
     const polygons = definition.polygons,
       loops = polygons.flat(),
-      edges = [],
+      dividers = definition.dividers || [],
       rows = new Map(),
       grid = new Map(),
       cell = 32,
       railRadius = 0.8;
-    for (const ring of loops)
-      for (let i = 0; i < ring.length - 1; i++) {
-        const a = { x: ring[i][0], y: ring[i][1] },
-          b = { x: ring[i + 1][0], y: ring[i + 1][1] };
+    function addEdges(points, perimeter) {
+      for (let i = 0; i < points.length - 1; i++) {
+        const a = { x: points[i][0], y: points[i][1] },
+          b = { x: points[i + 1][0], y: points[i + 1][1] };
         if (Math.hypot(b.x - a.x, b.y - a.y) < 1e-8) continue;
         const edge = { a, b };
-        edges.push(edge);
         const minX = Math.floor(Math.min(a.x, b.x) / cell),
           maxX = Math.floor(Math.max(a.x, b.x) / cell),
           minY = Math.floor(Math.min(a.y, b.y) / cell),
           maxY = Math.floor(Math.max(a.y, b.y) / cell);
         for (let y = minY; y <= maxY; y++) {
-          if (!rows.has(y)) rows.set(y, []);
-          rows.get(y).push(edge);
+          // Open dividers block cars but must not change polygon parity.
+          if (perimeter) {
+            if (!rows.has(y)) rows.set(y, []);
+            rows.get(y).push(edge);
+          }
           for (let x = minX; x <= maxX; x++) {
             const key = x + "," + y;
             if (!grid.has(key)) grid.set(key, []);
@@ -68,6 +70,9 @@
           }
         }
       }
+    }
+    for (const ring of loops) addEdges(ring, true);
+    for (const divider of dividers) addEdges(divider.points, false);
     function contains(p) {
       let inside = false;
       for (const { a, b } of rows.get(Math.floor(p.y / cell)) || []) {
@@ -119,6 +124,7 @@
     return Object.freeze({
       polygons,
       loops,
+      dividers,
       railRadius,
       contains,
       blocksFootprint,

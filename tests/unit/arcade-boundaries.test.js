@@ -205,3 +205,170 @@ it("startet und beendet eine gezählte Runde auch über den dunklen Rand der Kon
   expect(t.invalid).toBe(false);
   expect(t.bestLap).toBeCloseTo(32, 8);
 });
+
+it("behandelt offene Trennseile als Kontakte, ohne sie als Polygon zu schließen", () => {
+  const { api } = setup(),
+    field = api.BoundaryField.create({
+      polygons: [
+        [
+          [
+            [0, 0],
+            [100, 0],
+            [100, 100],
+            [0, 100],
+            [0, 0],
+          ],
+        ],
+      ],
+      dividers: [
+        {
+          id: "test",
+          points: [
+            [40, 40],
+            [40, 70],
+            [70, 70],
+          ],
+        },
+      ],
+    });
+  for (const p of [
+    { x: 10, y: 10 },
+    { x: 55, y: 55 },
+    { x: 50, y: 70 },
+  ])
+    expect(field.contains(p)).toBe(true);
+  expect(field.blocksFootprint(box(55, 55, 1, 1))).toBe(false);
+  expect(field.blocksFootprint(box(40, 50, 1, 1))).toBe(true);
+  expect(field.blocksFootprint(box(50, 70, 1, 1))).toBe(true);
+  // Clearance includes the visible rope radius, not just the segment itself.
+  expect(field.blocksFootprint(box(41.6, 50, 1, 1))).toBe(true);
+});
+
+it("verankert die Trennseile lückenlos im bestehenden Rand und hält die helle Fahrbahn frei", () => {
+  const { surface } = setup(),
+    field = surface.boundary;
+  expect(field.dividers).toHaveLength(2);
+  const lines = edges(field.loops),
+    distance = (p, [a, b]) => {
+      const dx = b[0] - a[0],
+        dy = b[1] - a[1],
+        f = Math.max(
+          0,
+          Math.min(
+            1,
+            ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / (dx * dx + dy * dy),
+          ),
+        );
+      return Math.hypot(p[0] - a[0] - f * dx, p[1] - a[1] - f * dy);
+    };
+  for (const { points } of field.dividers) {
+    for (const endpoint of [points[0], points.at(-1)])
+      expect(
+        Math.min(...lines.map((line) => distance(endpoint, line))),
+      ).toBeLessThan(1e-5);
+    for (let i = 0; i < points.length - 1; i++) {
+      const a = points[i],
+        b = points[i + 1];
+      for (let k = 0; k <= 40; k++) {
+        const p = {
+          x: a[0] + ((b[0] - a[0]) * k) / 40,
+          y: a[1] + ((b[1] - a[1]) * k) / 40,
+        };
+        expect(surface.project(p).distance).toBeGreaterThan(
+          surface.roadRadius + field.railRadius + 0.9,
+        );
+      }
+    }
+  }
+});
+
+it("zeichnet die echten Trennseile offen und ohne unsichtbare Rückverbindung", () => {
+  const { api, surface } = setup();
+  for (const { points } of surface.boundary.dividers) {
+    const curve = api.Tracks3D.boundaryCurve(points, 0.77, false),
+      tube = new THREE.TubeGeometry(
+        curve,
+        points.length - 1,
+        surface.boundary.railRadius,
+        6,
+        false,
+      );
+    expect(curve.getPointAt(0).toArray()).toEqual([
+      points[0][0],
+      0.77,
+      points[0][1],
+    ]);
+    expect(curve.getPointAt(1).toArray()).toEqual([
+      points.at(-1)[0],
+      0.77,
+      points.at(-1)[1],
+    ]);
+    expect(
+      curve.getPointAt(0.999).distanceTo(curve.getPointAt(1)),
+    ).toBeLessThan(1);
+    const positions = tube.attributes.position;
+    for (let i = 0; i < positions.count; i++) {
+      expect(
+        Number.isFinite(
+          positions.getX(i) + positions.getY(i) + positions.getZ(i),
+        ),
+      ).toBe(true);
+      expect(
+        surface.project({ x: positions.getX(i), y: positions.getZ(i) })
+          .distance,
+      ).toBeGreaterThan(surface.roadRadius + 0.5);
+    }
+    tube.dispose();
+  }
+});
+
+it("stoppt das bisher mögliche Abkürzen an beiden Durchgängen aus beiden Richtungen, auch rückwärts", () => {
+  const { api, data, surface } = setup(),
+    withoutDividers = {
+      ...surface,
+      boundary: api.BoundaryField.create({
+        ...data.boundaries.bahrain,
+        dividers: [],
+      }),
+    };
+  function drive(s, [x, y, nx, ny], side, gear) {
+    const heading = Math.atan2(side * ny, side * nx) + (gear < 0 ? Math.PI : 0);
+    let car = {
+      ...api.Physics.spawn(s),
+      x: x - side * 12 * nx,
+      y: y - side * 12 * ny,
+      heading,
+      vx: side * 110 * nx,
+      vy: side * 110 * ny,
+      speed: 110,
+      longitudinalSpeed: gear * 110,
+    };
+    car.s = s.project(car).s;
+    let max = -12,
+      contacts = 0;
+    for (let i = 0; i < 240; i++) {
+      car = api.Physics.step(
+        car,
+        { throttle: Number(gear > 0), brake: Number(gear < 0), steer: 0 },
+        s,
+      );
+      contacts += Number(car.hitWall);
+      max = Math.max(max, side * ((car.x - x) * nx + (car.y - y) * ny));
+    }
+    return { max, contacts };
+  }
+  for (const passage of [
+    [525, 224.5, 0, 1],
+    [519.75, 330, 0.8, 0.6],
+  ])
+    for (const side of [-1, 1])
+      for (const gear of [-1, 1]) {
+        // This is an actual traversable old passage, not a fake wall test.
+        expect(drive(withoutDividers, passage, side, gear).max).toBeGreaterThan(
+          8,
+        );
+        const blocked = drive(surface, passage, side, gear);
+        expect(blocked.max).toBeLessThan(-5.3);
+        expect(blocked.contacts).toBeGreaterThan(0);
+      }
+});

@@ -1,5 +1,9 @@
 import { test, expect } from "@playwright/test";
-import { capture3D } from "../helpers/arcade-browser.js";
+import {
+  capture2D,
+  capture3D,
+  keyboardPilot,
+} from "../helpers/arcade-browser.js";
 test("zeigt alle früheren Seil-Engstellen und die Übersicht mit demselben fehlerfreien Spielrenderer", async ({
   page,
 }) => {
@@ -33,3 +37,41 @@ test("zeigt alle früheren Seil-Engstellen und die Übersicht mit demselben fehl
   ).toBe(true);
   expect(errors).toEqual([]);
 });
+
+for (const entry of ["arcade.html", "arcade3d.html"])
+  test(`${entry}: verhindert die Abkürzung im echten Fahrtest mit ausschließlich Tastaturbefehlen`, async ({
+    page,
+  }, info) => {
+    test.setTimeout(120000);
+    const errors = [];
+    page.on("pageerror", (e) => errors.push(e.message));
+    if (entry === "arcade3d.html") {
+      if (info.project.name === "chromium")
+        await page.setViewportSize({ width: 600, height: 750 });
+      await capture3D(page);
+    } else await capture2D(page);
+    await page.goto(entry);
+    if (entry === "arcade3d.html") {
+      await expect(page.locator("#arcadeApp")).toHaveAttribute(
+        "data-rendering",
+        "3d",
+      );
+      await page.locator("#quality").selectOption("low");
+    }
+    await page.locator("#pause").click();
+    await page.evaluate(keyboardPilot, { tryShortcut: true });
+    await page.clock.runFor(22000);
+    const result = await page.evaluate(() => ({
+      attempting: globalThis.__attemptingShortcut,
+      snapshot: globalThis.__driveSnapshot,
+    }));
+    expect(result.attempting).toBe(true);
+    expect(result.snapshot.contacts).toBeGreaterThan(0);
+    expect(result.snapshot.paused).toBe(true);
+    // Stopped on the approach, before reaching the return arm of the shortcut.
+    expect(result.snapshot.car.s).toBeLessThan(1400);
+    expect(result.snapshot.car.x).toBeGreaterThan(520);
+    expect(result.snapshot.timing.invalid).toBe(false);
+    await expect(page.locator("#pause")).toHaveText("▶ Fahren");
+    expect(errors).toEqual([]);
+  });

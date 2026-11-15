@@ -1,0 +1,12 @@
+{
+  "baseline": "29db32f2124c23a8c6ea8c043f7fab3316989b4b",
+  "source": "Actual shared game renderer; baseline data/field/track renderer supplied only through test-side request interception.",
+  "spots": {
+    "central": 1080,
+    "straight": 1810
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  }
+}
