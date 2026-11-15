@@ -1,0 +1,20 @@
+{
+  "kind": "generated-game-material-atlas",
+  "tool": "image_gen",
+  "references": [
+    "assets/drivers/portraits/d001.png",
+    "previews/arcade-phase0/style-study.png"
+  ],
+  "output": "assets/world/arcade-materials.png",
+  "sha256": "852440546b7d22eecea1624ea7ba4f2c065b1af344d9964a8ef75c89d403a61f",
+  "bytes": 2625943,
+  "width": 1254,
+  "height": 1254,
+  "quadrants": [
+    "carpet",
+    "ivory-painted-metal",
+    "wood",
+    "paper"
+  ],
+  "usage": "Read-only source. Renderer samples quadrants and applies quiet material color overlays; original portraits unchanged."
+}

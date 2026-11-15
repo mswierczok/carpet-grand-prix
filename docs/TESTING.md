@@ -13,7 +13,9 @@ Node.js 24 LTS verwenden. `npm ci`, anschließend einmalig
 | `npm run build:offline` | Eigenständige HTML-Datei mit allen Bildern und Styles unter `dist/` |
 | `npm run build:race-preview` | 13 reproduzierbare Rennsprite-SVGs und eigenständige Grafikvorschau unter `dist/` |
 | `npm run build:arcade-data` | Lesende Exporte von Bahrain, 13 Teams und 92 Fahrern für den getrennten Fahrtest erneuern |
-| `npm run build:arcade-offline` | Eigenständiger Fahrtest als `dist/carpet-grand-prix-arcade-offline.html` |
+| `npm run build:arcade-offline` | Eigenständige 2D- und 3D-Fahrtests unter `dist/` |
+| `npm run check:arcade3d-engine` | Reproduzierbaren lokalen Three.js-Build gegen den eingecheckten Stand prüfen |
+| `npm run measure:arcade3d -- --software-webgl` | Kurze echte Zeitmessung des 3D-Fahrtests bei laufendem Testserver |
 
 Optional lokal `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` setzen.
 CI benutzt den zur Lockdatei gehörenden Playwright-Browser.
@@ -21,6 +23,10 @@ CI benutzt den zur Lockdatei gehörenden Playwright-Browser.
 Der neue Fahrtest ist unter `/carpet-grand-prix/arcade.html` erreichbar. Seine
 eigenen Modul- und Browserprüfungen laufen in den normalen Befehlen mit.
 Umfang, Testfahrten und Grenzen: [ARCADE_PHASE1.md](ARCADE_PHASE1.md).
+Die zusätzliche räumliche Fahransicht ist unter `arcade3d.html` erreichbar.
+Offline-Build und CI-Artefakt enthalten auch `carpet-grand-prix-arcade3d-offline.html`.
+Kamera-, WebGL-Ausfall- und Rundentests sowie die offenen Geräte-/FPS-Prüfungen:
+[ARCADE_PHASE2.md](ARCADE_PHASE2.md).
 
 ## Referenzen und Adapter
 
