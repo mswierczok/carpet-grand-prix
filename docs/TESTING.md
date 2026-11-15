@@ -18,6 +18,7 @@ Node.js 24 LTS verwenden. `npm ci`, anschließend einmalig
 | `npm run build:arcade-boundaries` | Geschlossene Seilränder aus der unveränderten Bahrain-Mittellinie erzeugen |
 | `npm run check:arcade-boundaries` | Seilkonturen reproduzierbar gegen die aktuellen Originaldaten prüfen |
 | `npm run measure:arcade3d -- --software-webgl` | Kurze echte Zeitmessung des 3D-Fahrtests bei laufendem Testserver |
+| `npm run measure:arcade3d -- --race --software-webgl` | Echtzeitmessung der 13-Fahrzeuge-Ansicht nach dem Countdown |
 
 Optional lokal `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` setzen.
 CI benutzt den zur Lockdatei gehörenden Playwright-Browser.
@@ -36,6 +37,8 @@ Die Prüfung geschlossener Seile, gemeinsamer Kollisionsflächen und gültiger
 Runden über den dunklen Teppichrand beschreibt [ARCADE_BOUNDARIES.md](ARCADE_BOUNDARIES.md).
 Gezielte Fahrversuche gegen die offenen Trennseile, vorwärts/rückwärts und im
 echten Browser, beschreibt [ARCADE_SHORTCUTS.md](ARCADE_SHORTCUTS.md).
+Das volle Feld unter `race.html`, Kontakt-/KI-/Rennprüfungen und die zusätzliche
+Offline-Renndatei beschreibt [ARCADE_FULL_GRID.md](ARCADE_FULL_GRID.md).
 
 ## Referenzen und Adapter
 

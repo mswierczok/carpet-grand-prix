@@ -3,7 +3,10 @@
   const A = globalThis.CGPArcade,
     root = document.getElementById("arcadeApp");
   let canvas = document.getElementById("arcadeCanvas");
-  const session = A.Session.create(CGPArcadeData.tracks.bahrain),
+  const racing = root.dataset.mode === "race",
+    session = (racing ? A.RaceSession : A.Session).create(
+      CGPArcadeData.tracks.bahrain,
+    ),
     teams = CGPArcadeData.roster.teams;
   const el = (id) => document.getElementById(id),
     format = (seconds) => {
@@ -19,11 +22,13 @@
     sinceDraw = 0,
     renderBudget = 0,
     lastFrame = performance.now(),
-    lastUI = 0;
+    lastUI = 0,
+    lastRacePhase = null;
   const set = (id, text) => {
     const node = el(id);
     if (node.textContent !== text) node.textContent = text;
   };
+  const raceUI = racing ? A.RaceUI.attach(root, format) : null;
   function renderNote(message) {
     if (el("renderNote")) set("renderNote", message);
   }
@@ -74,7 +79,9 @@
       root.dataset.rendering = "3d";
     } catch (error) {
       fallbackTo2D(
-        "3D ist hier nicht verfügbar. Der Fahrtest startet in der Draufsicht.",
+        racing
+          ? "3D ist hier nicht verfügbar. Das Rennen startet in der Draufsicht."
+          : "3D ist hier nicht verfügbar. Der Fahrtest startet in der Draufsicht.",
       );
     }
   } else {
@@ -119,6 +126,10 @@
     if (el("viewTime")) set("viewTime", format(s.lapSeconds));
     set("bestLap", t.bestLap === null ? "—" : format(t.bestLap));
     set("laps", String(t.completed));
+    if (raceUI) {
+      raceUI.update(s);
+      return;
+    }
     set("pause", s.paused ? "▶ Fahren" : "Pause");
     const status = s.paused
       ? "Bereit zum Fahren"
@@ -176,7 +187,13 @@
     dirty = true;
   };
   el("team").onchange = (event) => {
+    if (racing && !session.selectTeam(event.target.value)) return;
     teamId = event.target.value;
+    if (racing) {
+      renderer.resetCamera?.();
+      controls.clear();
+      updateUI();
+    }
     dirty = true;
   };
   if (el("fallback"))
@@ -202,6 +219,13 @@
     lastFrame = now;
     if (!document.hidden) session.advance(controls.read(), delta);
     const snapshot = session.snapshot();
+    if (racing && snapshot.race.phase !== lastRacePhase) {
+      lastRacePhase = snapshot.race.phase;
+      if (lastRacePhase === "finishing" || lastRacePhase === "finished")
+        controls.clear();
+      dirty = true;
+      updateUI();
+    }
     sinceDraw += delta;
     renderBudget += delta;
     const interval = renderer.frameInterval?.() || 0;

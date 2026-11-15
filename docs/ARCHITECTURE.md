@@ -115,3 +115,9 @@ Details, Modulgrenzen und Abnahme: [ARCADE_PHASE1.md](ARCADE_PHASE1.md),
 gemeinsam für Fahrzeugkontakte und beide Arcade-Darstellungen. Polygonvereinigung
 findet nur im Entwicklungsbuild statt; Laufzeit und Offline-Dateien benötigen
 lediglich die Konturdaten. Details: [ARCADE_BOUNDARIES.md](ARCADE_BOUNDARIES.md).
+
+`race.html` verwendet dieselbe Steuerung und Darstellung mit `RaceSession` für
+13 Fahrzeuge. `opponents.js` erzeugt normale Fahrbefehle, `vehicle-contacts.js`
+löst reale Rechteckkontakte auf. `fleet3d.js` bündelt die tatsächlichen Modelle
+und Lackierungen; `arcade-race-ui.js` zeigt Start, Reihenfolge und Ergebnisse.
+Die freie `Session` bleibt erhalten. Details: [ARCADE_FULL_GRID.md](ARCADE_FULL_GRID.md).

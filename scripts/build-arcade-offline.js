@@ -2,9 +2,13 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
 const root = new URL("../", import.meta.url);
-export function createArcadeOffline({ threeD = false } = {}) {
+export function createArcadeOffline({ threeD = false, race = false } = {}) {
+  threeD ||= race;
   let html = readFileSync(
-    new URL(threeD ? "arcade3d.html" : "arcade.html", root),
+    new URL(
+      race ? "race.html" : threeD ? "arcade3d.html" : "arcade.html",
+      root,
+    ),
     "utf8",
   );
   if (threeD)
@@ -14,9 +18,8 @@ export function createArcadeOffline({ threeD = false } = {}) {
         `src="data:image/png;base64,${readFileSync(new URL("assets/world/arcade-materials.png", root)).toString("base64")}"`,
     );
   html = html.replace(
-    /<link rel="stylesheet" href="\.\/styles\/arcade\.css(?:\?[^" ]*)?"\s*\/?>/,
-    () =>
-      `<style>${readFileSync(new URL("styles/arcade.css", root), "utf8")}</style>`,
+    /<link rel="stylesheet" href="\.\/(styles\/arcade(?:-race)?\.css)(?:\?[^" ]*)?"\s*\/?>/g,
+    (_, file) => `<style>${readFileSync(new URL(file, root), "utf8")}</style>`,
   );
   for (const match of [
     ...html.matchAll(
@@ -34,6 +37,10 @@ export function createArcadeOffline({ threeD = false } = {}) {
     );
   }
   html = html
+    .replaceAll(
+      'href="./race.html"',
+      'href="./carpet-grand-prix-race-offline.html"',
+    )
     .replace(
       'href="./arcade.html"',
       'href="./carpet-grand-prix-arcade-offline.html"',
@@ -59,6 +66,10 @@ if (
   writeFileSync(
     new URL("dist/carpet-grand-prix-arcade3d-offline.html", root),
     createArcadeOffline({ threeD: true }),
+  );
+  writeFileSync(
+    new URL("dist/carpet-grand-prix-race-offline.html", root),
+    createArcadeOffline({ race: true }),
   );
   console.log("Eigenständiger Arcade-Fahrtest exportiert.");
 }

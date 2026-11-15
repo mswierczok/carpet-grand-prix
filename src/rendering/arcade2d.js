@@ -146,6 +146,16 @@
         y: snapshot.visual.y,
         ang: snapshot.visual.heading,
       };
+      for (const entry of snapshot.entries || []) {
+        if (entry.player) continue;
+        globalThis.CGPRaceSprites.draw(
+          ctx,
+          { x: entry.visual.x, y: entry.visual.y, ang: entry.visual.heading },
+          entry.teamId,
+          g.width / 64,
+          false,
+        );
+      }
       globalThis.CGPRaceSprites.draw(ctx, pose, teamId, g.width / 64, false);
       if (snapshot.car.hitWall) {
         ctx.strokeStyle = "#ad513a";
@@ -161,9 +171,25 @@
         ctx.fillStyle = "#fff0ce";
         ctx.textAlign = "center";
         ctx.font = "700 23px system-ui";
-        ctx.fillText("FAHRTEST PAUSIERT", width / 2, height / 2 - 8);
+        ctx.fillText(
+          snapshot.race
+            ? snapshot.race.phase === "finished"
+              ? "RENNEN BEENDET"
+              : "RENNEN PAUSIERT"
+            : "FAHRTEST PAUSIERT",
+          width / 2,
+          height / 2 - 8,
+        );
         ctx.font = "15px system-ui";
-        ctx.fillText("Mit „Fahren“ loslegen", width / 2, height / 2 + 20);
+        ctx.fillText(
+          snapshot.race
+            ? snapshot.race.phase === "finished"
+              ? "Mit „Neues Rennen“ erneut starten"
+              : "Starten oder fortsetzen"
+            : "Mit „Fahren“ loslegen",
+          width / 2,
+          height / 2 + 20,
+        );
       }
     }
     return Object.freeze({ draw });

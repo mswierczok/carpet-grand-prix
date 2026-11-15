@@ -42,6 +42,28 @@
       bridges: model.bridgeU,
       scale,
     });
+    // Exact broad phase: any segment nearer than padding is present in the
+    // queried cell. Far-away positions fall back to the original full scan.
+    const cells = new Map(),
+      cellSize = 64,
+      padding = g.width * 0.85 + 12;
+    pts.forEach((a, i) => {
+      const b = pts[(i + 1) % pts.length];
+      for (
+        let y = Math.floor((Math.min(a.y, b.y) - padding) / cellSize);
+        y <= Math.floor((Math.max(a.y, b.y) + padding) / cellSize);
+        y++
+      )
+        for (
+          let x = Math.floor((Math.min(a.x, b.x) - padding) / cellSize);
+          x <= Math.floor((Math.max(a.x, b.x) + padding) / cellSize);
+          x++
+        ) {
+          const key = x + "," + y;
+          if (!cells.has(key)) cells.set(key, []);
+          cells.get(key).push(i);
+        }
+    });
     function at(s, lane = 0) {
       const dist = ((s % len) + len) % len;
       let lo = 0,
@@ -69,8 +91,18 @@
       };
     }
     function project(p, hint = null) {
+      const nearby = cells.get(
+        Math.floor(p.x / cellSize) + "," + Math.floor(p.y / cellSize),
+      );
+      const candidate = scan(p, hint, nearby);
+      return nearby && (!candidate || candidate.distance > padding)
+        ? scan(p, hint, null)
+        : candidate;
+    }
+    function scan(p, hint, candidates) {
       let best = null;
-      for (let i = 0; i < pts.length; i++) {
+      for (let k = 0; k < (candidates ? candidates.length : pts.length); k++) {
+        const i = candidates ? candidates[k] : k;
         if (
           hint !== null &&
           Math.abs(gap(hint, (cum[i] + cum[i + 1]) / 2, len)) >

@@ -37,7 +37,8 @@
       lastOverview = false,
       lost = false,
       quality = "auto",
-      slowFrames = 0;
+      slowFrames = 0,
+      fleet = null;
     function resize() {
       const rect = canvas.getBoundingClientRect(),
         dpr = Math.min(
@@ -59,6 +60,13 @@
     function draw(snapshot, teamId, overview = false, frameSeconds = 1 / 60) {
       if (lost) return;
       resize();
+      if (snapshot.entries) {
+        if (!fleet) {
+          fleet = A.Fleet3D.create(vehicle, materials);
+          scene.add(fleet.group);
+        }
+        fleet.update(snapshot.entries);
+      }
       vehicle.update(snapshot.visual, teamId);
       const pose = cameraRig.update(snapshot.visual, surface, frameSeconds, {
         overview,
@@ -127,6 +135,7 @@
         canvas.removeEventListener("webglcontextrestored", contextRestored);
         track.dispose();
         vehicle.dispose();
+        fleet?.dispose();
         materials.dispose();
         renderer.dispose();
       },

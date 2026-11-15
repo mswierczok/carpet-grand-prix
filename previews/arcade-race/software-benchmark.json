@@ -1,0 +1,27 @@
+{
+  "frames": 20,
+  "activeSeconds": 2.3998999999999997,
+  "frameIntervalP50ms": 116.69999999999891,
+  "frameIntervalP95ms": 183.3000000000011,
+  "cpuSubmitP95ms": 5.9000000059604645,
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "graphics": {
+    "drawCalls": 132,
+    "triangles": 52083,
+    "geometries": 114,
+    "textures": 22,
+    "pixelRatio": 0.75,
+    "quality": "low",
+    "lost": false
+  },
+  "vehicles": 13,
+  "recordedAt": "2026-11-15T14:51:56.710Z",
+  "browser": "155.0.8059.79",
+  "viewport": {
+    "width": 1000,
+    "height": 800
+  },
+  "softwareRequested": true,
+  "raceMode": true,
+  "limits": "Short headless straight-line sample, no physical-device or 60-FPS acceptance. CPU submit is not GPU frame time."
+}

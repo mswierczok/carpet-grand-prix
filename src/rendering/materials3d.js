@@ -64,11 +64,12 @@
     }
     image?.addEventListener("load", paintAtlas);
     paintAtlas();
-    function toon(color, map = null) {
+    function toon(color, map = null, options = {}) {
       const material = new T.MeshToonMaterial({
         color,
         map,
         gradientMap: gradient,
+        ...options,
       });
       materials.push(material);
       return material;

@@ -1,5 +1,9 @@
 # Nach dem Fahrtest: vom einzelnen Auto zum Arcade-Rennen
 
+Aktueller Nutzerauftrag: direkt das volle Feld. Umsetzung und Abnahme stehen
+in [ARCADE_FULL_GRID.md](ARCADE_FULL_GRID.md); das kleine Feld wird dadurch
+übersprungen. Die folgenden Run-/Inhaltspakete bleiben spätere Vorschläge.
+
 Vorschlag vom 15. November 2026. Die Abkürzungskorrektur wird separat geprüft und
 freigegeben. Die folgenden Pakete sind der weitere Entwicklungsplan, noch keine
 Implementierung oder Merge-Freigabe. Der klassische Managementmodus und seine

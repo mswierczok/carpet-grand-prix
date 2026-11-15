@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#192b33" />
+    <title>Carpet Grand Prix · Bahrain-Rennen</title>
+    <link rel="stylesheet" href="./styles/arcade.css?v=full-grid-race-1" />
+    <link rel="stylesheet" href="./styles/arcade-race.css?v=full-grid-race-1" />
+  </head>
+  <body>
+    <main id="arcadeApp" data-renderer="3d" data-mode="race">
+      <header>
+        <a href="./index.html" class="back-link">← Klassisches Spiel</a
+        ><span class="eyebrow">CARPET GRAND PRIX · RENNEN MIT VOLLEM FELD</span>
+        <a href="./arcade3d.html" class="new-view">Zum freien Fahrtest →</a>
+        <h1>Dein erster Grand Prix.</h1>
+        <p>
+          Bahrain · Du gegen zwölf Gegner · Drei Runden · Ein Fahrzeug pro Team.
+        </p>
+      </header>
+      <img
+        id="worldAtlas"
+        src="./assets/world/arcade-materials.png"
+        alt=""
+        hidden
+      />
+      <div class="graphics-options">
+        <p id="renderNote" role="status">3D-Verfolgungskamera · Bahrain</p>
+        <label for="quality">Grafik</label
+        ><select id="quality">
+          <option value="auto">Automatisch</option>
+          <option value="low">Sparsam</option></select
+        ><button id="fallback" type="button">Zur Draufsicht</button>
+      </div>
+      <section class="dashboard" aria-label="Fahrzeug und Rundenzeiten">
+        <div class="metric">
+          <span>Tempo</span
+          ><strong
+            ><b id="speed">0</b> <small>km/h</small>
+            <small id="gear" aria-label="Fahrstufe">N</small></strong
+          >
+        </div>
+        <div class="metric">
+          <span>Position</span><strong id="position">13 / 13</strong>
+        </div>
+        <div class="metric">
+          <span>Runde</span><strong id="raceLap">1 / 3</strong>
+        </div>
+        <div class="metric">
+          <span>Rennzeit</span><strong id="raceClock">0:00.000</strong>
+        </div>
+      </section>
+      <div class="race-layout">
+        <section class="race-panel">
+          <div class="race-heading">
+            <div>
+              <span class="eyebrow">BAHRAIN</span>
+              <p id="status" role="status" aria-live="polite">
+                Bereit zum Rennen
+              </p>
+            </div>
+            <div class="actions">
+              <button id="pause" type="button">Rennen starten</button
+              ><button id="overview" type="button" aria-pressed="false">
+                Gesamtstrecke
+              </button>
+              <a id="showResults" class="result-link" href="#raceResults" hidden
+                >Ergebnis</a
+              >
+            </div>
+          </div>
+          <div class="drive-view">
+            <div
+              id="raceSignal"
+              class="race-signal"
+              aria-hidden="true"
+              hidden
+            ></div>
+            <div class="track-hud" aria-hidden="true">
+              <strong id="viewSpeed">0 km/h</strong
+              ><span id="viewTime">0:00.000</span>
+            </div>
+            <canvas
+              id="arcadeCanvas"
+              tabindex="0"
+              aria-label="Bahrain-Rennen gegen zwölf KI-Fahrzeuge. W oder Pfeil hoch gibt Gas, S oder Pfeil runter bremst und fährt nach kurzem Halten im Stand rückwärts. A und D lenken. P pausiert, R setzt das Auto zurück."
+            ></canvas>
+            <div class="touch-controls" aria-label="Fahrsteuerung">
+              <div>
+                <button
+                  type="button"
+                  data-drive="left"
+                  aria-label="Nach links lenken"
+                >
+                  ←</button
+                ><button
+                  type="button"
+                  data-drive="right"
+                  aria-label="Nach rechts lenken"
+                >
+                  →
+                </button>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  data-drive="brake"
+                  aria-label="Bremsen und im Stand für Rückwärts halten"
+                >
+                  Bremse<br /><small>Rückwärts</small></button
+                ><button type="button" data-drive="throttle" class="gas">
+                  Gas
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="race-footer">
+            <span id="checkpoint">Zur Startlinie fahren</span
+            ><span id="lastLap">Noch keine vollständige Runde</span>
+          </div>
+        </section>
+        <aside class="field-panel" aria-label="Rennreihenfolge">
+          <h2>Das Feld · 13 Teams</h2>
+          <ol id="raceOrder"></ol>
+        </aside>
+      </div>
+      <p class="race-lap-details">
+        Deine Runde: <b id="lapTime">0:00.000</b> · Bestzeit:
+        <b id="bestLap">—</b> · Beendet: <b id="laps">0</b>
+      </p>
+      <section
+        id="raceResults"
+        class="race-results"
+        aria-label="Rennergebnis"
+        hidden
+      >
+        <span class="eyebrow">ZIELEINLAUF</span>
+        <h2 id="resultHeading"></h2>
+        <p id="resultState"></p>
+        <div class="result-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Platz</th>
+                <th>Team</th>
+                <th>Zeit / Rückstand</th>
+              </tr>
+            </thead>
+            <tbody id="resultRows"></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="bottom-panel">
+        <div>
+          <label for="team">Dein Team</label
+          ><select id="team"></select>
+          <p class="hint">
+            Team vor dem Start wählen. Alle Fahrzeuge nutzen dieselbe
+            Fahrphysik.
+          </p>
+        </div>
+        <div class="recovery">
+          <button id="recover" type="button">
+            Auto zurücksetzen <kbd>R</kbd></button
+          ><button id="restart" type="button">Neues Rennen</button>
+        </div>
+      </section>
+      <p class="instructions">
+        <kbd>W</kbd> / <kbd>↑</kbd> Gas · <kbd>S</kbd> / <kbd>↓</kbd> Bremse; im
+        Stand kurz halten für Rückwärts · <kbd>A</kbd> <kbd>D</kbd> /
+        <kbd>←</kbd> <kbd>→</kbd> Lenken · <kbd>P</kbd> Pause. Auf dem
+        Teppichrand verlierst du Tempo. Auch auf dem dunklen Rand bleibt die
+        Rundenzeit gültig.
+      </p>
+      <footer>
+        Du startest auf Platz 13. Nach deinem Ziel übernimmt die KI die
+        Auslaufrunde, bis alle im Ziel sind. Dein klassischer Spielstand wird
+        nicht verwendet oder verändert.
+      </footer>
+    </main>
+    <script src="./src/data/arcade-tracks.js"></script>
+    <script src="./src/data/arcade-roster.js"></script>
+    <script src="./src/data/arcade-boundaries.js?v=full-grid-race-1"></script>
+    <script src="./src/rendering/race-sprites.js"></script>
+    <script src="./src/rendering/pilot-vehicles.js?v=2"></script>
+    <script src="./src/racing/boundary-field.js?v=full-grid-race-1"></script>
+    <script src="./src/racing/track-surface.js?v=full-grid-race-1"></script>
+    <script src="./src/racing/physics.js?v=full-grid-race-1"></script>
+    <script src="./src/racing/timing.js?v=full-grid-race-1"></script>
+    <script src="./src/racing/session.js?v=full-grid-race-1"></script>
+    <script src="./src/racing/vehicle-contacts.js?v=full-grid-race-1"></script>
+    <script src="./src/racing/opponents.js?v=full-grid-race-1"></script>
+    <script src="./src/racing/race-session.js?v=full-grid-race-1"></script>
+    <script src="./src/ui/arcade-race-ui.js?v=full-grid-race-1"></script>
+    <script src="./src/racing/controls.js"></script>
+    <script src="./src/rendering/arcade2d.js?v=full-grid-race-1"></script>
+    <script src="./src/vendor/three.js?v=full-grid-race-1"></script>
+    <script src="./src/rendering/camera3d.js?v=full-grid-race-1"></script>
+    <script src="./src/rendering/materials3d.js?v=full-grid-race-1"></script>
+    <script src="./src/rendering/vehicles3d.js"></script>
+    <script src="./src/rendering/tracks3d.js?v=full-grid-race-1"></script>
+    <script src="./src/rendering/fleet3d.js?v=full-grid-race-1"></script>
+    <script src="./src/rendering/arcade3d.js?v=full-grid-race-1"></script>
+    <script src="./src/arcade-main.js?v=full-grid-race-1"></script>
+  </body>
+</html>
