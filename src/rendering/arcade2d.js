@@ -16,6 +16,11 @@
       );
       border.closePath();
     }
+    const dividers = new Path2D();
+    for (const { points } of surface.boundary?.dividers || [])
+      points.forEach((p, i) =>
+        i ? dividers.lineTo(p[0], p[1]) : dividers.moveTo(p[0], p[1]),
+      );
     let width = 0,
       height = 0;
     const xs = g.pts.map((p) => p.x),
@@ -66,6 +71,7 @@
         ctx.strokeStyle = "#544736";
         ctx.lineWidth = surface.boundary.railRadius * 2;
         ctx.stroke(border);
+        ctx.stroke(dividers);
       } else {
         ctx.strokeStyle = "#544736";
         ctx.lineWidth = surface.outerRadius * 2 + 2;

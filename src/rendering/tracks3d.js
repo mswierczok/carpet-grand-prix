@@ -88,14 +88,20 @@
     g.computeVertexNormals();
     return g;
   }
-  function boundaryCurve(ring, height = 0.77) {
-    const points = ring
-      .slice(0, -1)
-      .map((p) => new T.Vector3(p[0], height, p[1]));
+  function boundaryCurve(ring, height = 0.77, closed = true) {
+    const points = (closed ? ring.slice(0, -1) : ring).map(
+      (p) => new T.Vector3(p[0], height, p[1]),
+    );
+    const parameter = (t) =>
+      closed
+        ? (((t % 1) + 1) % 1) * points.length
+        : Math.max(0, Math.min(1, t)) * (points.length - 1);
     class PolygonCurve extends T.Curve {
       getPoint(t, target = new T.Vector3()) {
-        const u = (((t % 1) + 1) % 1) * points.length,
-          i = Math.floor(u),
+        const u = parameter(t),
+          i = closed
+            ? Math.floor(u)
+            : Math.min(points.length - 2, Math.floor(u)),
           f = u - i;
         return target
           .copy(points[i % points.length])
@@ -106,11 +112,13 @@
       }
       getTangentAt(t, target = new T.Vector3()) {
         const n = points.length,
-          u = (((t % 1) + 1) % 1) * n,
+          u = parameter(t),
           rounded = Math.round(u),
           i = Math.abs(u - rounded) < 1e-7 ? rounded % n : Math.floor(u);
         if (Math.abs(u - rounded) < 1e-7) {
-          target.copy(points[(i + 1) % n]).sub(points[(i + n - 1) % n]);
+          const before = closed ? (i + n - 1) % n : Math.max(0, rounded - 1),
+            after = closed ? (i + 1) % n : Math.min(n - 1, rounded + 1);
+          target.copy(points[after]).sub(points[before]);
         } else target.copy(points[(i + 1) % n]).sub(points[i]);
         if (target.lengthSq() < 1e-12)
           target.copy(points[(i + 1) % n]).sub(points[i]);
@@ -182,6 +190,19 @@
             surface.boundary.railRadius,
             6,
             true,
+          ),
+        ),
+        yarn,
+      );
+    for (const { points } of surface.boundary.dividers)
+      mesh(
+        geometry(
+          new T.TubeGeometry(
+            boundaryCurve(points, 0.77, false),
+            points.length - 1,
+            surface.boundary.railRadius,
+            6,
+            false,
           ),
         ),
         yarn,

@@ -108,7 +108,7 @@ export async function capture3D(page) {
   });
 }
 
-export function keyboardPilot({ laps = 1 } = {}) {
+export function keyboardPilot({ laps = 1, tryShortcut = false } = {}) {
   const p = CGPArcade.Physics.parameters,
     surface = CGPArcade.Surface.create(CGPArcadeData.tracks.bahrain),
     held = new Set();
@@ -123,7 +123,9 @@ export function keyboardPilot({ laps = 1 } = {}) {
     const car = globalThis.__driveSnapshot?.car;
     if (car) {
       const look = Math.max(12, Math.min(30, 12 + car.speed * 0.18)),
-        target = surface.at(car.s + look);
+        cutting = tryShortcut && car.s > 1000,
+        target = cutting ? { x: 490, y: 310 } : surface.at(car.s + look);
+      if (cutting) globalThis.__attemptingShortcut = true;
       const angle = Math.atan2(
         Math.sin(Math.atan2(target.y - car.y, target.x - car.x) - car.heading),
         Math.cos(Math.atan2(target.y - car.y, target.x - car.x) - car.heading),
@@ -140,7 +142,7 @@ export function keyboardPilot({ laps = 1 } = {}) {
         );
       }
       const desired = Math.min(
-        92,
+        cutting ? 35 : 92,
         Math.sqrt((p.maxLateralAcceleration * 0.62) / curvature),
       );
       key("KeyW", car.speed < desired);
@@ -148,8 +150,10 @@ export function keyboardPilot({ laps = 1 } = {}) {
       key("KeyA", angle < -0.065);
       key("KeyD", angle > 0.065);
     }
-    if (Number(document.getElementById("laps").textContent) < laps)
-      requestAnimationFrame(tick);
+    const done = tryShortcut
+      ? globalThis.__driveSnapshot?.contacts > 0
+      : Number(document.getElementById("laps").textContent) >= laps;
+    if (!done) requestAnimationFrame(tick);
     else {
       for (const code of [...held]) key(code, false);
       window.dispatchEvent(

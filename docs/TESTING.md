@@ -34,6 +34,8 @@ sind in [ARCADE_DRIVING.md](ARCADE_DRIVING.md) beschrieben. Sie laufen in den
 normalen Testbefehlen mit; auch dafür wird die vollständige Git-Historie benötigt.
 Die Prüfung geschlossener Seile, gemeinsamer Kollisionsflächen und gültiger
 Runden über den dunklen Teppichrand beschreibt [ARCADE_BOUNDARIES.md](ARCADE_BOUNDARIES.md).
+Gezielte Fahrversuche gegen die offenen Trennseile, vorwärts/rückwärts und im
+echten Browser, beschreibt [ARCADE_SHORTCUTS.md](ARCADE_SHORTCUTS.md).
 
 ## Referenzen und Adapter
 

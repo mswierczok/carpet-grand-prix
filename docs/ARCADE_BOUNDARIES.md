@@ -1,5 +1,8 @@
 # Geschlossene Seilränder und gültige Randrunden
 
+Nachfolgende Korrektur: [Trennseile gegen Abkürzungen](ARCADE_SHORTCUTS.md).
+Die hier dokumentierten Konturen und die Randrundenwertung bleiben erhalten.
+
 15. November 2026. Nutzerauftrag: Keine ungültigen Rundenzeiten auf dem dunklen
 Teppichrand; dessen Verlangsamung erhalten und die gezeigten Seilkreuzungen und
 Knoten korrigieren. Ausgangspunkt: veröffentlichtes `main`
