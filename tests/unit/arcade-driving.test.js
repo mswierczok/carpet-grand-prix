@@ -166,7 +166,7 @@ it("zählt rückwärts weder Start/Ziel noch Kontrollpunkte, auch bei Bewegung e
   const { api, surface } = setup();
   let state = api.Timing.create();
   function cross(index, reverse) {
-    const p = surface.gates[index],
+    const p = surface.checkpoints[index],
       dx = Math.cos(p.ang),
       dy = Math.sin(p.ang);
     state = api.Timing.step(
@@ -183,7 +183,7 @@ it("zählt rückwärts weder Start/Ziel noch Kontrollpunkte, auch bei Bewegung e
   expect(state.started).toBe(true);
   cross(1, true);
   expect(state.nextGate).toBe(1);
-  for (let i = 1; i < 32; i++) cross(i, false);
+  for (let i = 1; i < surface.checkpoints.length; i++) cross(i, false);
   cross(0, true);
   expect(state.completed).toBe(0);
   expect(state.bestLap).toBe(null);

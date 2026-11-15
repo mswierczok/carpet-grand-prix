@@ -17,7 +17,7 @@
         elapsed: old.elapsed + dt,
         invalid: false,
       },
-      gate = surface.gates[old.nextGate],
+      gate = surface.checkpoints[old.nextGate],
       tx = Math.cos(gate.ang),
       ty = Math.sin(gate.ang);
     const before = (from.x - gate.x) * tx + (from.y - gate.y) * ty,
@@ -31,8 +31,8 @@
       const fraction = -before / (after - before),
         x = from.x + (to.x - from.x) * fraction,
         y = from.y + (to.y - from.y) * fraction;
-      const lateral = Math.abs(-(x - gate.x) * ty + (y - gate.y) * tx);
-      if (lateral <= surface.outerRadius) {
+      const lateral = -(x - gate.x) * ty + (y - gate.y) * tx;
+      if (lateral >= gate.minLane - 1e-6 && lateral <= gate.maxLane + 1e-6) {
         const at = old.elapsed + dt * fraction;
         if (old.nextGate === 0) {
           if (old.started) {
@@ -49,7 +49,7 @@
           state.lapStart = at;
           state.invalid = false;
         }
-        state.nextGate = (old.nextGate + 1) % surface.gates.length;
+        state.nextGate = (old.nextGate + 1) % surface.checkpoints.length;
       }
     }
     return state;

@@ -1,0 +1,15 @@
+{
+  "baseline": "d6cd3a05bacfe2e0c401f0101a4bfc6fa2ce643a",
+  "method": "One isolated AI, identical published Physics.parameters, 1/120 s physics, 30 Hz input; start s=-22, finish s>=track length, no state/pose writes after spawn. Not an FPS benchmark.",
+  "before": {
+    "seconds": 47.166666666666664,
+    "maximumWorldUnitsPerSecond": 80.08869037662083,
+    "wallContacts": 0
+  },
+  "after": {
+    "seconds": 32.93333333333333,
+    "maximumWorldUnitsPerSecond": 108.50195638906834,
+    "wallContacts": 0
+  },
+  "playerPhysicsSHA256": "082782a78df28b280f7d38b23d41a5df03ba7e06153e737f22a055a3badd9764"
+}

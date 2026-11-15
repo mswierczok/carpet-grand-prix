@@ -129,18 +129,6 @@
         ctx.stroke();
         ctx.restore();
       }
-      const gate = surface.gates[snapshot.timing.nextGate];
-      ctx.save();
-      ctx.translate(gate.x, gate.y);
-      ctx.rotate(gate.ang);
-      ctx.strokeStyle = "#c18531";
-      ctx.lineWidth = 1;
-      ctx.setLineDash([3, 3]);
-      ctx.beginPath();
-      ctx.moveTo(0, -g.width * 0.4);
-      ctx.lineTo(0, g.width * 0.4);
-      ctx.stroke();
-      ctx.restore();
       const pose = {
         x: snapshot.visual.x,
         y: snapshot.visual.y,

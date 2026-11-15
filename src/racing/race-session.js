@@ -186,7 +186,9 @@
       const ceiling = !e.timing.started
         ? 0
         : e.timing.completed * surface.g.len +
-          ((e.timing.nextGate || 32) * surface.g.len) / 32;
+          (e.timing.nextGate === 0
+            ? surface.g.len
+            : surface.checkpoints[e.timing.nextGate].s);
       return Math.min(e.car.s, ceiling);
     }
     function snapshot() {

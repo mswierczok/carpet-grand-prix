@@ -2,6 +2,8 @@
 
 Nachfolgende Korrektur: [Trennseile gegen Abkürzungen](ARCADE_SHORTCUTS.md).
 Die hier dokumentierten Konturen und die Randrundenwertung bleiben erhalten.
+Die spätere Umstellung von 32 Zwischenprüfungen auf die echten Sektorlinien
+beschreibt [ARCADE_SECTORS.md](ARCADE_SECTORS.md).
 
 15. November 2026. Nutzerauftrag: Keine ungültigen Rundenzeiten auf dem dunklen
 Teppichrand; dessen Verlangsamung erhalten und die gezeigten Seilkreuzungen und
