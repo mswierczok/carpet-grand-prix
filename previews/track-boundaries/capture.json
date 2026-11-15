@@ -1,0 +1,12 @@
+{
+  "baseline": "d1beac627f741304f07e1029057da4cc3062912e",
+  "source": "actual game renderer, static poses; before uses baseline tracks3d.js and vendor bundle via test-only request interception",
+  "spots": {
+    "hairpin": 1080,
+    "straights": 1810
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  }
+}

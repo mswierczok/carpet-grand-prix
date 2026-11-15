@@ -178,8 +178,9 @@ it("zählt nur vorwärts überquerte Kontrollpunkte in Reihenfolge und misst ech
   expect(t.bestLap).toBe(34);
   for (let i = 1; i < 32; i++) cross(i, false, i === 3);
   cross(0);
-  expect(t.lastLap.valid).toBe(false);
-  expect(t.bestLap).toBe(34);
+  expect(t.lastLap.valid).toBe(true);
+  expect(t.invalid).toBe(false);
+  expect(t.bestLap).toBe(32);
 });
 it("beendet drei gültige Bahrain-Runden mit binären Tastaturkommandos ohne Kontakt oder Datenmanipulation", () => {
   const { api, data } = loadArcade(),

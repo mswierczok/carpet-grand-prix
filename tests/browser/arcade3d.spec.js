@@ -1,6 +1,10 @@
 import { test, expect } from "@playwright/test";
 import { createHash } from "node:crypto";
-import { capture3D, keyboardPilot } from "../helpers/arcade-browser.js";
+import {
+  capture3D,
+  keyboardPilot,
+  driveDarkShoulder,
+} from "../helpers/arcade-browser.js";
 
 test("zeichnet echte 3D-Geometrie, folgt dem Auto und erhält alle 13 Lackierungen und die Spielstandgrenze", async ({
   page,
@@ -137,6 +141,11 @@ test("fährt offline eine vollständige gültige Bahrain-Runde durch die 3D-Welt
   await context.setOffline(true);
   await page.locator("#quality").selectOption("low");
   await page.locator("#pause").click();
+  await driveDarkShoulder(page);
+  await expect(page.locator("#status")).toContainText("Dunkler Teppich");
+  expect(await page.evaluate(() => __driveSnapshot.car.offroad)).toBe(true);
+  expect(await page.evaluate(() => __driveSnapshot.timing.invalid)).toBe(false);
+  await expect(page.locator("#arcadeApp")).not.toContainText("ungültig");
   await page.evaluate(keyboardPilot, { laps: 1 });
   await page.clock.runFor(40000);
   expect(

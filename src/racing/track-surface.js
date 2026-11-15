@@ -104,12 +104,20 @@
         Object.freeze({ ...at((i * len) / 32), index: i }),
       ),
     );
+    const definition = globalThis.CGPArcadeData?.boundaries?.[model.id];
+    const boundary =
+      definition &&
+      Math.abs(definition.radius - g.width * 0.85) < 1e-6 &&
+      A.BoundaryField
+        ? A.BoundaryField.create(definition)
+        : null;
     return Object.freeze({
       g,
       at,
       project,
       gates,
       gap: (a, b) => gap(a, b, len),
+      boundary,
       roadRadius: g.width / 2,
       outerRadius: g.width * 0.85,
     });

@@ -15,7 +15,7 @@
     const state = {
         ...old,
         elapsed: old.elapsed + dt,
-        invalid: old.invalid || !!to.offroad,
+        invalid: false,
       },
       gate = surface.gates[old.nextGate],
       tx = Math.cos(gate.ang),
@@ -32,11 +32,11 @@
         x = from.x + (to.x - from.x) * fraction,
         y = from.y + (to.y - from.y) * fraction;
       const lateral = Math.abs(-(x - gate.x) * ty + (y - gate.y) * tx);
-      if (lateral <= surface.roadRadius) {
+      if (lateral <= surface.outerRadius) {
         const at = old.elapsed + dt * fraction;
         if (old.nextGate === 0) {
           if (old.started) {
-            const lap = { seconds: at - old.lapStart, valid: !state.invalid };
+            const lap = { seconds: at - old.lapStart, valid: true };
             state.lastLap = lap;
             state.completed++;
             if (

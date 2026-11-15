@@ -60,6 +60,65 @@
     g.computeVertexNormals();
     return g;
   }
+  function boundaryGeometry(surface, height = 0.035) {
+    if (!surface.boundary) throw Error("Geschlossene Streckengrenzen fehlen.");
+    const positions = [],
+      uv = [];
+    for (const polygon of surface.boundary.polygons) {
+      const rings = polygon.map((r) =>
+          r.slice(0, -1).map((p) => new T.Vector2(p[0], p[1])),
+        ),
+        vertices = rings.flat();
+      for (const face of T.ShapeUtils.triangulateShape(
+        rings[0],
+        rings.slice(1),
+      )) {
+        let [a, b, c] = face.map((i) => vertices[i]);
+        if ((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x) > 0)
+          [b, c] = [c, b];
+        for (const p of [a, b, c]) {
+          positions.push(p.x, height, p.y);
+          uv.push(p.x / 9, p.y / 9);
+        }
+      }
+    }
+    const g = new T.BufferGeometry();
+    g.setAttribute("position", new T.Float32BufferAttribute(positions, 3));
+    g.setAttribute("uv", new T.Float32BufferAttribute(uv, 2));
+    g.computeVertexNormals();
+    return g;
+  }
+  function boundaryCurve(ring, height = 0.77) {
+    const points = ring
+      .slice(0, -1)
+      .map((p) => new T.Vector3(p[0], height, p[1]));
+    class PolygonCurve extends T.Curve {
+      getPoint(t, target = new T.Vector3()) {
+        const u = (((t % 1) + 1) % 1) * points.length,
+          i = Math.floor(u),
+          f = u - i;
+        return target
+          .copy(points[i % points.length])
+          .lerp(points[(i + 1) % points.length], f);
+      }
+      getPointAt(t, target) {
+        return this.getPoint(t, target);
+      }
+      getTangentAt(t, target = new T.Vector3()) {
+        const n = points.length,
+          u = (((t % 1) + 1) % 1) * n,
+          rounded = Math.round(u),
+          i = Math.abs(u - rounded) < 1e-7 ? rounded % n : Math.floor(u);
+        if (Math.abs(u - rounded) < 1e-7) {
+          target.copy(points[(i + 1) % n]).sub(points[(i + n - 1) % n]);
+        } else target.copy(points[(i + 1) % n]).sub(points[i]);
+        if (target.lengthSq() < 1e-12)
+          target.copy(points[(i + 1) % n]).sub(points[i]);
+        return target.normalize();
+      }
+    }
+    return new PolygonCurve();
+  }
   function create(surface, materials) {
     const group = new T.Group(),
       geometries = [],
@@ -85,7 +144,7 @@
     ground.rotation.x = -Math.PI / 2;
     ground.geometry.attributes.uv.array.forEach((v, i, a) => (a[i] = v * 300));
     mesh(
-      geometry(roadGeometry(surface, surface.outerRadius, 0.035)),
+      geometry(boundaryGeometry(surface)),
       materials.basic("#9e9378", { map: materials.maps.carpet }),
     );
     mesh(
@@ -113,23 +172,20 @@
     const ropeMap = materials.canvasTexture(ropeCanvas);
     ropeMap.wrapS = T.RepeatWrapping;
     ropeMap.repeat.set(280, 1);
-    const yarn = materials.toon("#f5e4bd", ropeMap),
-      yarnShadow = materials.toon("#514b3e");
-    for (const side of [-1, 1]) {
-      const points = Array.from({ length: Math.ceil(g.len / 4) }, (_, i) => {
-        const p = surface.at(
-          (i * g.len) / Math.ceil(g.len / 4),
-          side * surface.outerRadius,
-        );
-        return new T.Vector3(p.x, 0.55, p.y);
-      });
-      const curve = new T.CatmullRomCurve3(points, true, "centripetal");
-      const top = mesh(
-        geometry(new T.TubeGeometry(curve, 450, 0.8, 6, true)),
+    const yarn = materials.toon("#f5e4bd", ropeMap);
+    for (const ring of surface.boundary.loops)
+      mesh(
+        geometry(
+          new T.TubeGeometry(
+            boundaryCurve(ring),
+            ring.length - 1,
+            surface.boundary.railRadius,
+            6,
+            true,
+          ),
+        ),
         yarn,
       );
-      top.position.y = 0.22;
-    }
     const checker = document.createElement("canvas");
     checker.width = 32;
     checker.height = 256;
@@ -141,7 +197,12 @@
       }
     const stripe = surface.at(0),
       finish = mesh(
-        geometry(new T.PlaneGeometry(2, g.width)),
+        geometry(
+          new T.PlaneGeometry(
+            2,
+            (surface.outerRadius - surface.boundary.railRadius) * 2,
+          ),
+        ),
         materials.basic("#ffffff", { map: materials.canvasTexture(checker) }),
         stripe.x,
         0.095,
@@ -299,5 +360,10 @@
       },
     });
   }
-  A.Tracks3D = Object.freeze({ create, roadGeometry });
+  A.Tracks3D = Object.freeze({
+    create,
+    roadGeometry,
+    boundaryGeometry,
+    boundaryCurve,
+  });
 })();

@@ -1,10 +1,11 @@
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
+import { driveDarkShoulder, installPausedClock } from "../helpers/arcade-browser.js";
 const save = JSON.parse(
   readFileSync(new URL("../fixtures/activeRace.json", import.meta.url)),
 );
 async function prepare(page) {
-  await page.clock.install();
+  await installPausedClock(page);
   await page.addInitScript((save) => {
     localStorage.setItem("carpet_gp_v072", JSON.stringify(save));
     localStorage.setItem("carpet_gp_arcade_test_sentinel", "keep");
@@ -31,6 +32,8 @@ test("fährt per Tastatur frei, bremst, pausiert und lässt den klassischen Spie
   page.on("pageerror", (e) => errors.push(e.message));
   await prepare(page);
   await page.goto("arcade.html");
+  // The test clock starts paused; render the initial pose before observing it.
+  await page.clock.runFor(32);
   const before = await page.evaluate(() => ({ ...localStorage })),
     start = await page.evaluate(() => __arcadeDrawPose);
   await page.locator("#pause").click();
@@ -129,6 +132,9 @@ test("absolviert im echten Canvas drei Runden mit ausschließlich Tastaturereign
   await prepare(page);
   await page.goto("arcade.html");
   await page.locator("#pause").click();
+  await driveDarkShoulder(page);
+  await expect(page.locator("#status")).toContainText("Dunkler Teppich");
+  await expect(page.locator("#arcadeApp")).not.toContainText("ungültig");
   await page.evaluate(() => {
     const surface = CGPArcade.Surface.create(CGPArcadeData.tracks.bahrain),
       p = CGPArcade.Physics.parameters;

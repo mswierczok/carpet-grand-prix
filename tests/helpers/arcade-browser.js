@@ -1,6 +1,28 @@
 // Test instrumentation is installed before application scripts; no production hooks.
+export async function installPausedClock(page) {
+  // Freeze before loading WebGL. Reading Date in a busy renderer and issuing
+  // pauseAt later can otherwise race wall time and try to travel backwards.
+  await page.clock.install({ time: new Date("2026-11-15T00:00:00Z") });
+  await page.clock.pauseAt(new Date("2026-11-15T00:00:01Z"));
+}
+
+export async function driveDarkShoulder(page) {
+  await page.clock.pauseAt(
+    await page.evaluate(() => new Date(Date.now() + 100).toISOString()),
+  );
+  await page.keyboard.down("w");
+  await page.clock.runFor(600);
+  await page.keyboard.down("d");
+  await page.clock.runFor(450);
+  await page.keyboard.up("d");
+  await page.keyboard.up("w");
+  await page.keyboard.down("a");
+  await page.clock.runFor(600);
+  await page.keyboard.up("a");
+  await page.clock.runFor(80);
+}
 export async function capture2D(page) {
-  await page.clock.install();
+  await installPausedClock(page);
   await page.addInitScript(() => {
     globalThis.CGPArcade = {};
     let module;
@@ -26,7 +48,7 @@ export async function capture2D(page) {
 }
 
 export async function capture3D(page) {
-  await page.clock.install();
+  await installPausedClock(page);
   await page.addInitScript(() => {
     let three;
     Object.defineProperty(globalThis, "CGPThree", {

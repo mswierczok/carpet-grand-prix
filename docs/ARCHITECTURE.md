@@ -110,3 +110,8 @@ Die lokale Three.js-Auswahl wird mit dem geprüften Rolldown-Build erzeugt und
 zusätzlich reproduzierbar geprüft. Pages benötigt weiterhin keinen Server.
 Details, Modulgrenzen und Abnahme: [ARCADE_PHASE1.md](ARCADE_PHASE1.md),
 [ARCADE_PHASE2.md](ARCADE_PHASE2.md).
+
+`boundary-field.js` verwendet die generierten Konturen aus `arcade-boundaries.js`
+gemeinsam für Fahrzeugkontakte und beide Arcade-Darstellungen. Polygonvereinigung
+findet nur im Entwicklungsbuild statt; Laufzeit und Offline-Dateien benötigen
+lediglich die Konturdaten. Details: [ARCADE_BOUNDARIES.md](ARCADE_BOUNDARIES.md).

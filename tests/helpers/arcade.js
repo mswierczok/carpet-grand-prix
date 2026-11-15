@@ -10,6 +10,8 @@ export function loadArcade() {
   for (const file of [
     "data/arcade-tracks",
     "data/arcade-roster",
+    "data/arcade-boundaries",
+    "racing/boundary-field",
     "racing/track-surface",
     "racing/physics",
     "racing/timing",
