@@ -15,6 +15,8 @@ Node.js 24 LTS verwenden. `npm ci`, anschließend einmalig
 | `npm run build:arcade-data` | Lesende Exporte von Bahrain, 13 Teams und 92 Fahrern für den getrennten Fahrtest erneuern |
 | `npm run build:arcade-offline` | Eigenständige 2D- und 3D-Fahrtests unter `dist/` |
 | `npm run check:arcade3d-engine` | Reproduzierbaren lokalen Three.js-Build gegen den eingecheckten Stand prüfen |
+| `npm run build:arcade-boundaries` | Geschlossene Seilränder aus der unveränderten Bahrain-Mittellinie erzeugen |
+| `npm run check:arcade-boundaries` | Seilkonturen reproduzierbar gegen die aktuellen Originaldaten prüfen |
 | `npm run measure:arcade3d -- --software-webgl` | Kurze echte Zeitmessung des 3D-Fahrtests bei laufendem Testserver |
 
 Optional lokal `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium` setzen.
@@ -30,6 +32,8 @@ Kamera-, WebGL-Ausfall- und Rundentests sowie die offenen Geräte-/FPS-Prüfunge
 Der Lenkvergleich gegen den veröffentlichten Git-Stand und die Rückwärts-Prüfungen
 sind in [ARCADE_DRIVING.md](ARCADE_DRIVING.md) beschrieben. Sie laufen in den
 normalen Testbefehlen mit; auch dafür wird die vollständige Git-Historie benötigt.
+Die Prüfung geschlossener Seile, gemeinsamer Kollisionsflächen und gültiger
+Runden über den dunklen Teppichrand beschreibt [ARCADE_BOUNDARIES.md](ARCADE_BOUNDARIES.md).
 
 ## Referenzen und Adapter
 

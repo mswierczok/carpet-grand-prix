@@ -9,6 +9,13 @@
       i ? path.lineTo(p.x, p.y) : path.moveTo(p.x, p.y),
     );
     path.closePath();
+    const border = new Path2D();
+    for (const ring of surface.boundary?.loops || []) {
+      ring.forEach((p, i) =>
+        i ? border.lineTo(p[0], p[1]) : border.moveTo(p[0], p[1]),
+      );
+      border.closePath();
+    }
     let width = 0,
       height = 0;
     const xs = g.pts.map((p) => p.x),
@@ -53,12 +60,20 @@
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       // Outer solid yarn rail, softer carpet shoulder, then the unchanged-width road.
-      ctx.strokeStyle = "#544736";
-      ctx.lineWidth = surface.outerRadius * 2 + 2;
-      ctx.stroke(path);
-      ctx.strokeStyle = "#b9a17d";
-      ctx.lineWidth = surface.outerRadius * 2 - 1;
-      ctx.stroke(path);
+      if (surface.boundary) {
+        ctx.fillStyle = "#b9a17d";
+        ctx.fill(border, "evenodd");
+        ctx.strokeStyle = "#544736";
+        ctx.lineWidth = surface.boundary.railRadius * 2;
+        ctx.stroke(border);
+      } else {
+        ctx.strokeStyle = "#544736";
+        ctx.lineWidth = surface.outerRadius * 2 + 2;
+        ctx.stroke(path);
+        ctx.strokeStyle = "#b9a17d";
+        ctx.lineWidth = surface.outerRadius * 2 - 1;
+        ctx.stroke(path);
+      }
       ctx.strokeStyle = "#f5e5bb";
       ctx.lineWidth = g.width + 2;
       ctx.stroke(path);
@@ -74,14 +89,16 @@
       ctx.save();
       ctx.translate(stripe.x, stripe.y);
       ctx.rotate(stripe.ang);
+      const finishWidth =
+        (surface.outerRadius - (surface.boundary?.railRadius || 0)) * 2;
       for (let i = 0; i < 8; i++)
         for (let j = 0; j < 2; j++) {
           ctx.fillStyle = (i + j) % 2 ? "#25343a" : "#faf0d7";
           ctx.fillRect(
             (j - 1) * 2,
-            -g.width / 2 + (i * g.width) / 8,
+            -finishWidth / 2 + (i * finishWidth) / 8,
             2,
-            g.width / 8,
+            finishWidth / 8,
           );
         }
       ctx.restore();

@@ -3,6 +3,8 @@
 Historischer Stand der ursprünglichen Fahrprobe. Die spätere, ausdrücklich
 gewünschte Anpassung von Lenkung und Rückwärtsgang beschreibt
 [ARCADE_DRIVING.md](ARCADE_DRIVING.md).
+Die später gewünschte Aufhebung ungültiger Randrunden und die Korrektur der
+Seilgrenzen beschreibt [ARCADE_BOUNDARIES.md](ARCADE_BOUNDARIES.md).
 
 Fortsetzung nach Freigabe und Merge von PR #15:
 [Phase 2 – räumliche Bahrain-Fahrprobe](ARCADE_PHASE2.md).

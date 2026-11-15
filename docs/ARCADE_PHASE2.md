@@ -2,6 +2,8 @@
 
 Dieser Bericht beschreibt die ursprüngliche Phase-2-Lieferung. Die anschließende
 Nutzeranpassung der Steuerung steht in [ARCADE_DRIVING.md](ARCADE_DRIVING.md).
+Die anschließend gewünschte Randrundenwertung und korrigierte Seilbegrenzung
+stehen in [ARCADE_BOUNDARIES.md](ARCADE_BOUNDARIES.md).
 
 Stand: 14. November 2026. Phase 1 wurde nach ausdrücklicher Nutzerfreigabe über
 PR #15 nach `main` übernommen: `1b878b518bc537a4732d752725df5877830ac526`.

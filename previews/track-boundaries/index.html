@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="data:," />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Carpet Grand Prix · Seilränder prüfen</title>
+    <style>
+      body {
+        margin: 0;
+        background: #192b33;
+        color: #efe4ce;
+        font: 16px/1.5 system-ui;
+      }
+      main {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+      }
+      h1 {
+        font-size: 28px;
+        margin: 8px 0;
+      }
+      a {
+        color: #84d8d2;
+      }
+      select,
+      button {
+        font: inherit;
+        background: #314a53;
+        color: #fff0d5;
+        border: 1px solid #78918f;
+        border-radius: 7px;
+        padding: 8px;
+        margin: 8px;
+      }
+      canvas {
+        width: 100%;
+        height: 600px;
+        display: block;
+        border-radius: 12px;
+        background: #c4af8b;
+      }
+      p {
+        color: #c1ceca;
+      }
+      @media (max-width: 650px) {
+        canvas {
+          height: 390px;
+        }
+        main {
+          padding: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a href="../../arcade3d.html">Zum spielbaren Fahrtest →</a>
+      <h1>Bereinigte Seilränder</h1>
+      <p>
+        Statische Ansichten der früheren Kreuzungen. Die Strecke, Seile und
+        Materialien stammen aus dem aktuellen Spielrenderer.
+      </p>
+      <label for="spot">Stelle</label
+      ><select id="spot">
+        <option value="1080">Enge Kurve 1</option>
+        <option value="1140">Enge Kurve 2</option>
+        <option value="1518">Inselspitze</option>
+        <option value="1734">Spitze Kehre</option>
+        <option value="1810">Nah beieinanderliegende Geraden</option></select
+      ><button id="overview" type="button">Gesamtstrecke</button
+      ><canvas
+        id="previewCanvas"
+        aria-label="Statische Seilrand-Vorschau"
+      ></canvas
+      ><img
+        id="worldAtlas"
+        src="../../assets/world/arcade-materials.png"
+        alt=""
+        hidden
+      />
+      <p>
+        Die dunkle Randfläche bleibt langsamer befahrbar. Sie entwertet keine
+        Rundenzeit.
+      </p>
+    </main>
+    <script src="../../src/data/arcade-tracks.js"></script>
+    <script src="../../src/data/arcade-boundaries.js?v=track-boundaries-1"></script>
+    <script src="../../src/racing/boundary-field.js?v=track-boundaries-1"></script>
+    <script src="../../src/racing/track-surface.js?v=track-boundaries-1"></script>
+    <script src="../../src/rendering/race-sprites.js"></script>
+    <script src="../../src/rendering/pilot-vehicles.js"></script>
+    <script src="../../src/vendor/three.js?v=track-boundaries-1"></script>
+    <script src="../../src/rendering/camera3d.js"></script>
+    <script src="../../src/rendering/materials3d.js"></script>
+    <script src="../../src/rendering/vehicles3d.js"></script>
+    <script src="../../src/rendering/tracks3d.js?v=track-boundaries-1"></script>
+    <script src="../../src/rendering/arcade3d.js"></script>
+    <script>
+      (() => {
+        const A = CGPArcade,
+          canvas = document.getElementById("previewCanvas"),
+          surface = A.Surface.create(CGPArcadeData.tracks.bahrain),
+          spot = document.getElementById("spot");
+        let renderer,
+          overview = false;
+        function draw() {
+          if (!renderer) return;
+          const p = surface.at(Number(spot.value) - 18),
+            car = {
+              x: p.x,
+              y: p.y,
+              heading: p.ang,
+              speed: 0,
+              longitudinalSpeed: 0,
+              steering: 0,
+              s: p.s,
+            };
+          renderer.resetCamera();
+          renderer.draw(
+            { car, visual: car, timing: { nextGate: 0 }, paused: true },
+            "t01",
+            overview,
+            1 / 60,
+          );
+        }
+        renderer = A.Renderer3D.create(canvas, surface, {
+          invalidate: () => requestAnimationFrame(draw),
+        });
+        spot.onchange = draw;
+        document.getElementById("overview").onclick = () => {
+          overview = !overview;
+          draw();
+        };
+        window.addEventListener("resize", draw);
+        requestAnimationFrame(draw);
+      })();
+    </script>
+  </body>
+</html>

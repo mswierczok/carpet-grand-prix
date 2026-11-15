@@ -124,13 +124,11 @@
       ? "Bereit zum Fahren"
       : s.car.hitWall
         ? "Randkontakt · bei Bedarf R zum Zurücksetzen"
-        : t.invalid
-          ? "Runde ungültig · Strecke verlassen"
-          : s.car.offroad
-            ? "Teppichrand · weniger Grip"
-            : t.started
-              ? "Deine Runde läuft"
-              : "Fahre über Start/Ziel";
+        : s.car.offroad
+          ? "Dunkler Teppich · weniger Grip"
+          : t.started
+            ? "Deine Runde läuft"
+            : "Fahre über Start/Ziel";
     set("status", status);
     set(
       "checkpoint",
@@ -141,7 +139,7 @@
     set(
       "lastLap",
       t.lastLap
-        ? `Letzte Runde ${format(t.lastLap.seconds)}${t.lastLap.valid ? "" : " · ungültig"}`
+        ? `Letzte Runde ${format(t.lastLap.seconds)}`
         : "Noch keine vollständige Runde",
     );
   }

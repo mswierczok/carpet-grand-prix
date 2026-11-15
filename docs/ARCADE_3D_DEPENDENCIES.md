@@ -1,5 +1,9 @@
 # Prüfung der 3D-Abhängigkeiten
 
+Ergänzung vom 15. November: [Seilkonturen](ARCADE_BOUNDARIES.md) dokumentiert die
+zusätzliche Bibliothek ausschließlich für den Entwicklungsbuild. Three bleibt
+0.187.0; die geänderte Exportauswahl umfasst nun 604.285 Bytes.
+
 14. November 2026, vor Einführung geprüft. Phase 2 verwendet **Three.js 0.187.0**
 als Renderer, nicht als Fahrphysik oder Spielengine. Das Paket meldet MIT-Lizenz,
 keine weiteren Laufzeitabhängigkeiten und 21.030.536 entpackte Paketbytes.

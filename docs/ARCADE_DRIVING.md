@@ -1,5 +1,9 @@
 # Fahrgefühl: sanftere Lenkung und Rückwärtsgang
 
+Nachfolgende Änderung an Seilgrenzen und Rundenwertung:
+[ARCADE_BOUNDARIES.md](ARCADE_BOUNDARIES.md). Die hier beschriebenen Lenk- und
+Rückwärtsparameter bleiben dabei erhalten.
+
 15. November 2026. Nutzerauftrag: Die Lenkung ist zu sensibel; ein Rückwärtsgang
 soll ergänzt werden. Grundlage ist das veröffentlichte `main`
 `1e98252ca84a964e7a1fe42698c7c29a235b0cf8`, Entwicklungsbranch

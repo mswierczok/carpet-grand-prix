@@ -57,7 +57,10 @@
       ny = fx;
     const forward = previous.vx * fx + previous.vy * fy,
       lateral = previous.vx * nx + previous.vy * ny;
-    const road = surface.project(previous, previous.s),
+    const road = surface.project(
+        previous,
+        surface.boundary ? null : previous.s,
+      ),
       offroad = road.distance > surface.roadRadius;
     const drag =
       p.rollingDrag +
@@ -144,16 +147,19 @@
       return [
         [1, 1],
         [1, -1],
-        [-1, 1],
         [-1, -1],
+        [-1, 1],
       ].map(([a, b]) => ({
         x: state.x + a * p.halfLength * cs - b * p.halfWidth * sn,
         y: state.y + a * p.halfLength * sn + b * p.halfWidth * cs,
       }));
     };
-    let hit = footprint(proposed).some(
-      (c) => surface.project(c, previous.s).distance > surface.outerRadius,
-    );
+    const corners = footprint(proposed);
+    let hit = surface.boundary
+      ? surface.boundary.blocksFootprint(corners)
+      : corners.some(
+          (c) => surface.project(c, previous.s).distance > surface.outerRadius,
+        );
     if (hit) {
       proposed.x = previous.x;
       proposed.y = previous.y;
@@ -165,8 +171,13 @@
       proposed.hitWall = true;
     }
     const projection = surface.project(proposed, previous.s);
-    proposed.s = projection.s;
-    proposed.offroad = projection.distance > surface.roadRadius;
+    const nearest = surface.boundary ? surface.project(proposed) : projection;
+    proposed.s =
+      surface.boundary &&
+      projection.distance > nearest.distance + surface.g.width * 0.25
+        ? previous.s + surface.gap(previous.s, nearest.s)
+        : projection.s;
+    proposed.offroad = nearest.distance > surface.roadRadius;
     return proposed;
   }
   A.Physics = Object.freeze({ parameters, spawn, step });
