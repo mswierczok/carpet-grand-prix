@@ -1,0 +1,292 @@
+{
+  "baseline": "3cba63b997218d2d2e55988bcd76048d5c40cf75",
+  "method": "Three real laps with 12 AI opponents. The same published feedback controller drives the player from P13 in both runs. Normal Physics/RaceSession, 120 Hz physics, 30 Hz input; no pose, timing or contact writes. Not a human-skill or FPS benchmark.",
+  "userReportedSeconds": {
+    "firstFinish": 28.5,
+    "secondFinish": 53,
+    "raceFinish": 77
+  },
+  "physicsSHA256": "082782a78df28b280f7d38b23d41a5df03ba7e06153e737f22a055a3badd9764",
+  "opponentsSHA256": "23b51b84bbd4b6cfc750d423d2edb1d0af1deeeb29bf02afb63b6e8d61f74c05",
+  "lineSHA256": "49314be8f769f49c4569d3b3e327baa5f43d9bf0f75ac484c5ada1ec2f8a1dd9",
+  "before": {
+    "winnerSeconds": 95.57339726607984,
+    "medianSeconds": 106.52567211418096,
+    "lastSeconds": 113.92022465018371,
+    "spreadSeconds": 18.346827384103875,
+    "entries": [
+      {
+        "id": "t02",
+        "finishSeconds": 98.56580139716591,
+        "peakKmh": 117.17875082265557,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          34.247449919496226,
+          31.767732843323095,
+          31.643944919825785
+        ]
+      },
+      {
+        "id": "t03",
+        "finishSeconds": 95.57339726607984,
+        "peakKmh": 118.3564012472442,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          31.577898307882656,
+          31.558821189047563,
+          31.46771754272308
+        ]
+      },
+      {
+        "id": "t04",
+        "finishSeconds": 100.86711873900299,
+        "peakKmh": 118.80000000000003,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          34.77632264006162,
+          32.88395904232726,
+          31.983501690560743
+        ]
+      },
+      {
+        "id": "t05",
+        "finishSeconds": 104.01936676591039,
+        "peakKmh": 117.18227837669467,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          37.67298638003156,
+          32.84295452677708,
+          32.229755305653654
+        ]
+      },
+      {
+        "id": "t06",
+        "finishSeconds": 106.81402476481813,
+        "peakKmh": 118.35797782387797,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          37.80601005125773,
+          34.28201433033832,
+          33.2022986633866
+        ]
+      },
+      {
+        "id": "t07",
+        "finishSeconds": 101.90492802169081,
+        "peakKmh": 118.80000000000003,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          35.80699966377138,
+          33.25683494452087,
+          31.272825595603038
+        ]
+      },
+      {
+        "id": "t08",
+        "finishSeconds": 106.23731946354378,
+        "peakKmh": 117.17687553966965,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          37.758821484896906,
+          34.1757660780861,
+          32.518735194142536
+        ]
+      },
+      {
+        "id": "t09",
+        "finishSeconds": 111.27497352832214,
+        "peakKmh": 118.3554011117011,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          40.74504709327255,
+          34.88297646699299,
+          33.821586182998814
+        ]
+      },
+      {
+        "id": "t10",
+        "finishSeconds": 111.99020344293098,
+        "peakKmh": 118.80000025095535,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          41.75546632106887,
+          34.50508915995874,
+          33.693427000072575
+        ]
+      },
+      {
+        "id": "t11",
+        "finishSeconds": 113.22200759455625,
+        "peakKmh": 117.18191831043708,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          40.52758939266198,
+          36.85349555975592,
+          33.74806725692183
+        ]
+      },
+      {
+        "id": "t12",
+        "finishSeconds": 107.6480031027927,
+        "peakKmh": 118.35656053626258,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          39.43989525388876,
+          33.84359244108166,
+          32.002304492520864
+        ]
+      },
+      {
+        "id": "t13",
+        "finishSeconds": 113.92022465018371,
+        "peakKmh": 118.80000000000003,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          41.63105882810021,
+          35.003251040155284,
+          34.879509046847204
+        ]
+      }
+    ]
+  },
+  "after": {
+    "winnerSeconds": 80.55158209034495,
+    "medianSeconds": 88.96244060072722,
+    "lastSeconds": 97.25315399367378,
+    "spreadSeconds": 16.701571903328826,
+    "entries": [
+      {
+        "id": "t02",
+        "finishSeconds": 81.62679640610122,
+        "peakKmh": 118.80000000000003,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          28.79004949326988,
+          25.658045516441337,
+          26.272027368460712
+        ]
+      },
+      {
+        "id": "t03",
+        "finishSeconds": 80.55158209034495,
+        "peakKmh": 118.80000000000003,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          27.04741687867155,
+          26.2678553727331,
+          26.26734935007893
+        ]
+      },
+      {
+        "id": "t04",
+        "finishSeconds": 83.45170584880357,
+        "peakKmh": 119.15048837886961,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          29.734652486371512,
+          26.264848602312618,
+          26.254079662704797
+        ]
+      },
+      {
+        "id": "t05",
+        "finishSeconds": 86.1849667552679,
+        "peakKmh": 119.91216755597551,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          32.32229955375311,
+          26.57518098957366,
+          26.040766919122795
+        ]
+      },
+      {
+        "id": "t06",
+        "finishSeconds": 84.70298520083026,
+        "peakKmh": 120.0964475777353,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          31.035953988009325,
+          26.203023099825906,
+          26.02902693211712
+        ]
+      },
+      {
+        "id": "t07",
+        "finishSeconds": 97.25315399367378,
+        "peakKmh": 118.80000000000003,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          37.955843365066016,
+          28.89810517696045,
+          28.922749267600537
+        ]
+      },
+      {
+        "id": "t08",
+        "finishSeconds": 87.88052005342888,
+        "peakKmh": 118.80000000000003,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          32.902000963991846,
+          27.079004361784946,
+          26.258493285835286
+        ]
+      },
+      {
+        "id": "t09",
+        "finishSeconds": 92.69335533066148,
+        "peakKmh": 118.80000000000003,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          35.21757664443256,
+          28.72352465098082,
+          27.074270117787506
+        ]
+      },
+      {
+        "id": "t10",
+        "finishSeconds": 96.24295269613786,
+        "peakKmh": 118.80833237900819,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          36.77666605389081,
+          28.780750609308065,
+          28.85883597868674
+        ]
+      },
+      {
+        "id": "t11",
+        "finishSeconds": 90.04436114802556,
+        "peakKmh": 120.03066785129097,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          33.25215512709458,
+          27.846194600826983,
+          27.085510746066902
+        ]
+      },
+      {
+        "id": "t12",
+        "finishSeconds": 94.63085341451267,
+        "peakKmh": 118.80000000000003,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          35.12105927502333,
+          29.435936959265796,
+          28.05985337251137
+        ]
+      },
+      {
+        "id": "t13",
+        "finishSeconds": 91.06969407180455,
+        "peakKmh": 118.80000000000003,
+        "observedWallFrames": 0,
+        "lapSeconds": [
+          34.284338771523316,
+          28.50559294486223,
+          26.24208072078592
+        ]
+      }
+    ]
+  }
+}

@@ -41,6 +41,8 @@ Das volle Feld unter `race.html`, Kontakt-/KI-/Rennprüfungen und die zusätzlic
 Offline-Renndatei beschreibt [ARCADE_FULL_GRID.md](ARCADE_FULL_GRID.md).
 Die Sektor-/Randrunden-Regressionsprüfungen und der Vergleich des schnelleren
 KI-Fahrers gegen den veröffentlichten Code stehen in [ARCADE_SECTORS.md](ARCADE_SECTORS.md).
+Die weitere Tempoabstimmung, Ideallinie, gemeinsamen 119 km/h und der Vergleich
+vollständiger Felder stehen in [OPPONENT_PACE.md](OPPONENT_PACE.md).
 
 ## Referenzen und Adapter
 

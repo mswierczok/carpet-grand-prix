@@ -175,6 +175,12 @@ test("fährt ausschließlich über Tastatur ein vollständiges Rennen bis zu 13 
     s.entries.every((e) => e.timing.completed === 3 && e.finishTime > 60),
   ).toBe(true);
   expect(await page.evaluate(() => __racePilotDone)).toBe(true);
+  const peaks = await page.evaluate(() => __racePilotPeakSpeeds);
+  expect(
+    s.entries
+      .filter((e) => !e.player)
+      .every((e) => Math.round(peaks[e.id]) >= 119),
+  ).toBe(true);
   await expect(page.locator("#raceResults")).toBeVisible();
   await expect(page.locator("#resultRows tr")).toHaveCount(13);
   await expect(page.locator("#resultRows .is-player")).toHaveCount(1);

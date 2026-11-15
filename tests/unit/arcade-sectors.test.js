@@ -144,6 +144,7 @@ it("fährt mit der KI spürbar schneller als der veröffentlichte Gegner, ohne S
     after = drive(api.Opponents);
   expect(after.seconds).toBeLessThan(before.seconds * 0.9);
   expect(after.top).toBeGreaterThan(before.top * 1.2);
-  expect(after.top).toBeLessThanOrEqual(p.maxSpeed);
+  // Math.hypot at the now-reached limiter can differ by a few floating bits.
+  expect(after.top).toBeLessThanOrEqual(p.maxSpeed + 1e-9);
   expect(after.wall).toBe(0);
 });

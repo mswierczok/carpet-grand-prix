@@ -17,7 +17,12 @@ export function loadArcade({ race = false } = {}) {
     "racing/timing",
     "racing/session",
     ...(race
-      ? ["racing/vehicle-contacts", "racing/opponents", "racing/race-session"]
+      ? [
+          "racing/vehicle-contacts",
+          "racing/opponent-line",
+          "racing/opponents",
+          "racing/race-session",
+        ]
       : []),
   ])
     new Script(

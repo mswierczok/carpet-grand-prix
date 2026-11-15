@@ -1,5 +1,8 @@
 # Sektor-Rundenzählung und konkurrenzfähigere KI
 
+Historische Abnahme der Sektoränderung. Die anschließende, anhand gemeldeter
+Spielerrunden weiterentwickelte KI beschreibt [OPPONENT_PACE.md](OPPONENT_PACE.md).
+
 15. November 2026. Nutzerauftrag: Randberührung darf keine gefahrene Runde
 verschlucken; unsichtbare Prüfungen an den Sektorlinien und anschließend
 Start/Ziel sollen die Runde zählen. Gegner schneller machen, das Spielerauto

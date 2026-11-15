@@ -1,6 +1,7 @@
 // Test-only feedback driver. It reads render snapshots and sends real keyboard
 // events; it never changes session state, physics parameters, poses or timing.
 export function pilotRace() {
+  globalThis.__racePilotPeakSpeeds = {};
   const A = CGPArcade,
     surface = A.Surface.create(CGPArcadeData.tracks.bahrain),
     p = A.Physics.parameters,
@@ -17,6 +18,11 @@ export function pilotRace() {
   const timer = setInterval(() => {
     const s = globalThis.__driveSnapshot;
     if (!s?.race) return;
+    for (const entry of s.entries)
+      __racePilotPeakSpeeds[entry.id] = Math.max(
+        __racePilotPeakSpeeds[entry.id] || 0,
+        entry.car.speed * p.metersPerUnit * 3.6,
+      );
     if (s.race.phase === "finished") {
       for (const code of [...held]) key(code, false);
       globalThis.__racePilotDone = true;
