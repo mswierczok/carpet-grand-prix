@@ -11,7 +11,20 @@ const povTracks = [
   { id: "canada", index: 2 },
   { id: "france", index: 3, pov: { layoutScale: 1.4, roadScale: 1.2 } },
   { id: "switzerland", index: 4, pov: { layoutScale: 1.2, roadScale: 1 } },
-  { id: "portugal", index: 5, pov: { layoutScale: 1.35, roadScale: 1.1 } },
+  {
+    id: "portugal",
+    index: 5,
+    pov: {
+      layoutScale: 1.35,
+      roadScale: 1.1,
+      southExtension: {
+        start: 0.8,
+        end: 0.91,
+        distance: 140,
+        section: [0.54, 0.73],
+      },
+    },
+  },
   { id: "india", index: 6, pov: { layoutScale: 1.2, roadScale: 1 } },
   { id: "brazil", index: 7, pov: { layoutScale: 1.35, roadScale: 1.23 } },
   { id: "south-africa", index: 8, pov: { layoutScale: 1.2, roadScale: 1 } },
@@ -24,7 +37,20 @@ const povTracks = [
   { id: "china", index: 15, pov: { layoutScale: 1.35, roadScale: 1.14 } },
   { id: "russia", index: 16, pov: { layoutScale: 1.4, roadScale: 1 } },
   { id: "australia", index: 17, pov: { layoutScale: 1.35, roadScale: 1.2 } },
-  { id: "england", index: 18, pov: { layoutScale: 1.2, roadScale: 1.05 } },
+  {
+    id: "england",
+    index: 18,
+    pov: {
+      layoutScale: 1.2,
+      roadScale: 1.05,
+      southExtension: {
+        start: 0.75,
+        end: 0.88,
+        distance: 140,
+        section: [0.6, 0.75],
+      },
+    },
+  },
   { id: "italy", index: 19, pov: { layoutScale: 1.2, roadScale: 1 } },
   { id: "hungary", index: 20, pov: { layoutScale: 1.2, roadScale: 1 } },
   { id: "abu-dhabi", index: 21, pov: { layoutScale: 1.2, roadScale: 1 } },

@@ -1,5 +1,8 @@
 # POV-Kalender mit allen 22 Strecken
 
+Die nachfolgende Anpassung der südlichen Kehren in England und Portugal ist
+mit Vorher-nachher-Vorschau in [POV_SOUTH_EXTENSIONS.md](POV_SOUTH_EXTENSIONS.md) beschrieben.
+
 Folgepaket auf `codex/pov-remaining-tracks`, Ausgangsbasis: veröffentlichtes
 `main` `57fb54422c0f70eb032bd82b85ab828a4e1e3dc8`. Kein automatischer Merge.
 

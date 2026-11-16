@@ -28,7 +28,16 @@
         x: 590 + (p[0] - (minX + maxX) / 2) * scale,
         y: 374 + (p[1] - (minY + maxY) / 2) * scale,
       });
-    const pts = model.points.map(convert),
+    const originalPoints = model.points.map(convert),
+      shape = model.pov?.southExtension
+        ? A.TrackShape.south(
+            originalPoints,
+            model.pit.map(convert),
+            model.sectorU,
+            model.pov.southExtension,
+          )
+        : null,
+      pts = shape?.points || originalPoints,
       cum = [0];
     let len = 0;
     pts.forEach((p, i) => {
@@ -41,8 +50,15 @@
       cum: Object.freeze(cum),
       len,
       width: model.width * sourceScale * (model.pov?.roadScale ?? 1),
-      sectors: model.sectorU,
-      pit: Object.freeze(model.pit.map(convert)),
+      sectors: shape
+        ? Object.freeze(
+            shape.sectorLocations.map(
+              ({ index, fraction }) =>
+                (cum[index] + fraction * (cum[index + 1] - cum[index])) / len,
+            ),
+          )
+        : model.sectorU,
+      pit: shape?.pit || Object.freeze(model.pit.map(convert)),
       bridges: model.bridgeU,
       scale,
     });
