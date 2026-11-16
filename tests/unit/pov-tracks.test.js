@@ -15,6 +15,23 @@ function published(path) {
   });
 }
 
+it("lädt veränderte Laufzeitmodule unter neuen URLs statt alte Bahrain-Module aus dem Browsercache zu mischen", () => {
+  const references =
+    /(?:src|href)="\.\/(src\/[^"?]+|styles\/[^"?]+)(\?[^" ]*)?"/g;
+  for (const page of ["arcade.html", "arcade3d.html", "race.html"]) {
+    const before = new Map(
+        [...published(page).matchAll(references)].map((m) => [m[1], m[0]]),
+      ),
+      after = readFileSync(new URL(page, ROOT), "utf8");
+    for (const match of after.matchAll(references)) {
+      if (!before.has(match[1])) continue;
+      const source = readFileSync(new URL(match[1], ROOT), "utf8");
+      if (source !== published(match[1]))
+        expect(match[0], `${page}: ${match[1]}`).not.toBe(before.get(match[1]));
+    }
+  }
+});
+
 it("übernimmt vier Originalstrecken samt Kalenderindex, Sektoren und Boxengasse exakt", () => {
   const { api, data } = loadArcade(),
     { game } = createGame();

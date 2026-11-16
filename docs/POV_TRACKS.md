@@ -17,6 +17,8 @@ wirklich geladenen Strecke.
 Direkte Einstiege verwenden beispielsweise `race.html?track=canada` oder
 `arcade3d.html?track=france`. Links zwischen Fahrtest und Rennen übernehmen die
 Auswahl. Unbekannte Kennungen starten mit dem sichtbar ausgewählten Bahrain.
+Geänderte Laufzeitmodule erhalten neue URLs. Eine Prüfung gegen den letzten
+veröffentlichten Stand verhindert gemischte alte/neue Module im Browsercache.
 Alle drei Offline-HTML-Dateien enthalten ebenfalls alle vier Strecken ohne
 weitere Downloads. CI-Vorschau entpacken und
 `carpet-grand-prix-race-offline.html` öffnen.
