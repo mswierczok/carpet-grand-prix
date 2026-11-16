@@ -37,6 +37,12 @@ Spitzengeschwindigkeit, Gas-/Bremsanteile und Kontaktzähler im Rohprotokoll bez
 
 ## Volle Rennen
 
-Bahrain wurde zunächst ausdrücklich mit acht Runden getestet: Sieger **3:31,882**, Tastatur-Testfahrzeug **3:47,620**, letzter Fahrer **3:49,069**. Alle 13 im Ziel, zwölf Kontaktanfänge mit Spielerbeteiligung, keine bei 30 Hz beobachteten Seilkontakt-Frames. Dies sind Rennen mit Verkehr, keine sauberen Referenzrunden. Die zusätzlichen Standardrennen und Browserprüfungen werden im PR mit ihrem tatsächlichen Ergebnis dokumentiert.
+Alle drei Läufe benutzen die tatsächlichen Standardformate und enden mit 13 Zieleinläufen. Das Testfahrzeug wird per normalen binären Lenk-/Pedalbefehlen gesteuert. Zeiten ab Grün, ohne den dreisekündigen Countdown.
 
-Messdaten der Feldvalidierung: [full-grid.json](full-grid.json). Der Spieler ist automatisiert; Zeiten ab Grün ohne den dreisekündigen Countdown. Feldmessung und Browserprüfung nutzen den bisherigen feedbackgesteuerten Tastaturpiloten und nicht den vorsichtigeren Referenzpiloten.
+| Strecke | Runden | Sieger | Testfahrzeug | Letzter | Kontaktanfänge mit Spielerbeteiligung | Bei 30 Hz beobachtete Seilkontakt-Frames |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| bahrain | 8 | 3:31,882 | 3:47,620 | 3:49,069 | 12 | 0 |
+| france | 5 | 3:10,911 | 3:28,606 | 3:30,500 | 25 | 0 |
+| russia | 5 | 3:11,168 | 3:22,340 | 3:26,441 | 32 | 0 |
+
+Messdaten: [full-grid.json](full-grid.json). Dies sind Rennen mit Verkehr und Fahrzeugkontakten, keine sauberen Referenzrunden. Die Feldmessung und die Browserprüfung nutzen den bisherigen feedbackgesteuerten Tastaturpiloten und nicht den vorsichtigeren Referenzpiloten. Alle drei Testfahrzeug-Zeiten liegen im Zielbereich. Das beweist weder menschliches Können noch identische Dauer auf allen 22 Strecken oder spätere Schwierigkeitsgrade. Die Prognosen aller 22 und diese drei real simulierten Feldläufe sind bewusst getrennt.
