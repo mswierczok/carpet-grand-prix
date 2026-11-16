@@ -168,6 +168,7 @@
           if (
             surface.boundary.blocksFootprint(
               A.VehicleContacts.footprint(car, parameters),
+              car.s,
             ) ||
             entries.some(
               (other) =>
@@ -209,6 +210,16 @@
               x: e.previous.x + (e.car.x - e.previous.x) * alpha,
               y: e.previous.y + (e.car.y - e.previous.y) * alpha,
               heading: e.previous.heading + turn * alpha,
+              ...(surface.bridge
+                ? {
+                    elevation:
+                      e.previous.elevation +
+                      (e.car.elevation - e.previous.elevation) * alpha,
+                    pitch:
+                      e.previous.pitch +
+                      (e.car.pitch - e.previous.pitch) * alpha,
+                  }
+                : {}),
             },
             timing: {
               ...e.timing,

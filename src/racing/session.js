@@ -70,6 +70,14 @@
           x: previous.x + (car.x - previous.x) * alpha,
           y: previous.y + (car.y - previous.y) * alpha,
           heading: previous.heading + turn * alpha,
+          ...(surface.bridge
+            ? {
+                elevation:
+                  previous.elevation +
+                  (car.elevation - previous.elevation) * alpha,
+                pitch: previous.pitch + (car.pitch - previous.pitch) * alpha,
+              }
+            : {}),
         },
         timing: {
           ...timing,

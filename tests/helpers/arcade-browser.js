@@ -47,10 +47,13 @@ export async function capture2D(page) {
   });
 }
 
-export async function capture3D(page, { observeFleet = false } = {}) {
+export async function capture3D(
+  page,
+  { observeFleet = false, renderEvery = 1, observeElevation = false } = {},
+) {
   await installPausedClock(page);
   await page.addInitScript(
-    ({ observeFleet }) => {
+    ({ observeFleet, renderEvery, observeElevation }) => {
       let three;
       Object.defineProperty(globalThis, "CGPThree", {
         configurable: true,
@@ -63,6 +66,37 @@ export async function capture3D(page, { observeFleet = false } = {}) {
               this.render = (scene, camera) => {
                 const rendered = original.call(this, scene, camera);
                 const pose = globalThis.__driveSnapshot?.visual;
+                if (pose && observeElevation) {
+                  const model = scene.children.find(
+                      (n) =>
+                        n.isGroup &&
+                        Math.hypot(
+                          n.position.x - pose.x,
+                          n.position.z - pose.y,
+                        ) < 1e-6,
+                    ),
+                    stats = (globalThis.__bridgeRenderStats ||= {
+                      samples: 0,
+                      maxElevation: 0,
+                      maxCamera: 0,
+                      maxError: 0,
+                    });
+                  if (model) {
+                    stats.samples++;
+                    stats.maxElevation = Math.max(
+                      stats.maxElevation,
+                      model.position.y,
+                    );
+                    stats.maxCamera = Math.max(
+                      stats.maxCamera,
+                      camera.position.y,
+                    );
+                    stats.maxError = Math.max(
+                      stats.maxError,
+                      Math.abs(model.position.y - (pose.elevation || 0)),
+                    );
+                  }
+                }
                 if (pose) {
                   const point = new library.Vector3(
                     pose.x,
@@ -121,12 +155,18 @@ export async function capture3D(page, { observeFleet = false } = {}) {
           module = {
             create(...args) {
               const renderer = value.create(...args);
+              let frame = 0,
+                elapsed = 0;
               globalThis.__inspect3D = renderer;
               return {
                 ...renderer,
                 draw(snapshot, ...rest) {
                   globalThis.__driveSnapshot = snapshot;
-                  renderer.draw(snapshot, ...rest);
+                  elapsed += rest[2] ?? 1 / 60;
+                  if (snapshot.paused || frame++ % renderEvery === 0) {
+                    renderer.draw(snapshot, rest[0], rest[1], elapsed);
+                    elapsed = 0;
+                  }
                 },
               };
             },
@@ -134,7 +174,7 @@ export async function capture3D(page, { observeFleet = false } = {}) {
         },
       });
     },
-    { observeFleet },
+    { observeFleet, renderEvery, observeElevation },
   );
 }
 

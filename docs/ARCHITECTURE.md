@@ -126,7 +126,9 @@ Die freie `Session` bleibt erhalten. Details: [ARCADE_FULL_GRID.md](ARCADE_FULL_
 eigener Bogenlänge. Echte Posen, Fortschritt und Sektorzeiten bleiben bei
 Physics/RaceSession. Abstimmung und Vergleich: [OPPONENT_PACE.md](OPPONENT_PACE.md).
 
-`track-catalog.js` stellt vier validierte POV-Strecken mit Original-Kalenderindizes
+`track-catalog.js` stellt 22 validierte POV-Strecken mit Original-Kalenderindizes
 bereit. `arcade-main.js` erneuert Sitzung, Renderer und Kamera beim Wechsel.
 Die gemeinsame Build-Aufbereitung erzeugt Ränder und sichere Trennseile;
-Laufzeitdaten bleiben statisch. Umfang und nächste Integration: [POV_TRACKS.md](POV_TRACKS.md).
+Laufzeitdaten bleiben statisch. `bridge-surface` und `bridge-physics` ergänzen
+getrennte Fahrbahnkorridore und Höhen um den unveränderten Physikkern.
+Umfang und nächste Integration: [POV_CALENDAR.md](POV_CALENDAR.md).

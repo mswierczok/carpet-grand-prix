@@ -17,6 +17,11 @@
       border.closePath();
     }
     const dividers = new Path2D();
+    const bridgeRails = new Path2D();
+    for (const { points } of surface.bridge ? surface.boundary.rails : [])
+      points.forEach((p, i) =>
+        i ? bridgeRails.lineTo(p[0], p[1]) : bridgeRails.moveTo(p[0], p[1]),
+      );
     for (const { points } of surface.boundary?.dividers || [])
       points.forEach((p, i) =>
         i ? dividers.lineTo(p[0], p[1]) : dividers.moveTo(p[0], p[1]),
@@ -67,11 +72,16 @@
       // Outer solid yarn rail, softer carpet shoulder, then the unchanged-width road.
       if (surface.boundary) {
         ctx.fillStyle = "#b9a17d";
-        ctx.fill(border, "evenodd");
+        if (surface.bridge) {
+          ctx.strokeStyle = "#b9a17d";
+          ctx.lineWidth = surface.outerRadius * 2;
+          ctx.stroke(path);
+        } else ctx.fill(border, "evenodd");
         ctx.strokeStyle = "#544736";
         ctx.lineWidth = surface.boundary.railRadius * 2;
-        ctx.stroke(border);
+        if (!surface.bridge) ctx.stroke(border);
         ctx.stroke(dividers);
+        if (surface.bridge) ctx.stroke(bridgeRails);
       } else {
         ctx.strokeStyle = "#544736";
         ctx.lineWidth = surface.outerRadius * 2 + 2;
@@ -129,6 +139,35 @@
         ctx.stroke();
         ctx.restore();
       }
+      if (surface.bridge) {
+        for (const b of surface.bridge.specs) {
+          const deck = new Path2D(),
+            half = b.plateau + b.ramp;
+          for (let d = -half; d <= half; d += 2) {
+            const p = surface.at(b.center + d);
+            d === -half ? deck.moveTo(p.x, p.y) : deck.lineTo(p.x, p.y);
+          }
+          ctx.strokeStyle = "#b9a17d";
+          ctx.lineWidth = surface.outerRadius * 2;
+          ctx.stroke(deck);
+          ctx.strokeStyle = "#f5e5bb";
+          ctx.lineWidth = g.width + 2;
+          ctx.stroke(deck);
+          ctx.strokeStyle = "#d8c6a4";
+          ctx.lineWidth = g.width;
+          ctx.stroke(deck);
+        }
+        ctx.strokeStyle = "#544736";
+        ctx.lineWidth = surface.boundary.railRadius * 2;
+        for (const { points } of surface.boundary.rails) {
+          if (!points.some((p) => p[2] > 0)) continue;
+          ctx.beginPath();
+          points.forEach((p, i) =>
+            i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]),
+          );
+          ctx.stroke();
+        }
+      }
       const pose = {
         x: snapshot.visual.x,
         y: snapshot.visual.y,
@@ -136,6 +175,7 @@
       };
       for (const entry of snapshot.entries || []) {
         if (entry.player) continue;
+        if (surface.bridge?.covered(entry.visual)) continue;
         globalThis.CGPRaceSprites.draw(
           ctx,
           { x: entry.visual.x, y: entry.visual.y, ang: entry.visual.heading },
@@ -144,7 +184,8 @@
           false,
         );
       }
-      globalThis.CGPRaceSprites.draw(ctx, pose, teamId, 0.5, false);
+      if (!surface.bridge?.covered(snapshot.visual))
+        globalThis.CGPRaceSprites.draw(ctx, pose, teamId, 0.5, false);
       if (snapshot.car.hitWall) {
         ctx.strokeStyle = "#ad513a";
         ctx.lineWidth = 1.2;

@@ -141,10 +141,21 @@
       ),
     );
     const definition = globalThis.CGPArcadeData?.boundaries?.[model.id];
-    const boundary =
-      definition &&
-      Math.abs(definition.radius - g.width * 0.85) < 1e-6 &&
-      A.BoundaryField
+    const bridge =
+      definition?.kind === "bridges" && A.BridgeSurface
+        ? A.BridgeSurface.create({
+            g,
+            at,
+            project,
+            gap: (a, b) => gap(a, b, len),
+            definition,
+          })
+        : null;
+    const boundary = bridge
+      ? bridge.boundary
+      : definition &&
+          Math.abs(definition.radius - g.width * 0.85) < 1e-6 &&
+          A.BoundaryField
         ? A.BoundaryField.create(definition)
         : null;
     function checkpoint(u, index) {
@@ -198,6 +209,7 @@
       boundary,
       roadRadius: g.width / 2,
       outerRadius: g.width * 0.85,
+      ...(bridge ? { bridge } : {}),
     });
   }
   A.Surface = Object.freeze({ create });

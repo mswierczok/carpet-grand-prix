@@ -35,7 +35,7 @@ it("lädt veränderte Laufzeitmodule unter neuen URLs statt alte Bahrain-Module 
 it("erhält Originalzeichnungen, Kalender und Sektoren; entzerrt nur die freigegebenen POV-Geometrien", () => {
   const { api, data } = loadArcade(),
     { game } = createGame();
-  expect(api.TrackCatalog.tracks.map((t) => t.id)).toEqual(ids);
+  expect(api.TrackCatalog.tracks.slice(0, 4).map((t) => t.id)).toEqual(ids);
   for (const [index, id] of ids.entries()) {
     const track = api.TrackCatalog.get(id),
       surface = api.Surface.create(track),
@@ -56,8 +56,9 @@ it("erhält Originalzeichnungen, Kalender und Sektoren; entzerrt nur die freigeg
     expect(Object.isFrozen(data.tracks[id].points[0])).toBe(true);
     expect(Object.isFrozen(data.boundaries[id].polygons[0][0][0])).toBe(true);
   }
-  expect(() => api.TrackCatalog.get("korea")).toThrow();
-  expect(() => api.TrackCatalog.get("russia")).toThrow();
+  expect(() => api.TrackCatalog.get("atlantis")).toThrow();
+  expect(api.TrackCatalog.get("korea").index).toBe(9);
+  expect(api.TrackCatalog.get("russia").index).toBe(16);
   expect(() => api.TrackCatalog.get("__proto__")).toThrow();
 });
 
@@ -139,8 +140,6 @@ it("erhält Bahrain und Kanada samt Seilen sowie gemeinsame Physik, Steuerung un
     "src/racing/physics.js",
     "src/racing/controls.js",
     "src/racing/timing.js",
-    "src/racing/race-session.js",
-    "src/rendering/vehicles3d.js",
   ])
     expect(readFileSync(new URL(path, ROOT), "utf8")).toBe(published(path));
 });

@@ -12,9 +12,11 @@ export function loadArcade({ race = false } = {}) {
     "data/arcade-roster",
     "data/arcade-boundaries",
     "racing/boundary-field",
+    "racing/bridge-surface",
     "racing/track-surface",
     "racing/track-catalog",
     "racing/physics",
+    "racing/bridge-physics",
     "racing/timing",
     "racing/session",
     ...(race

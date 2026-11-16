@@ -15,6 +15,7 @@
     }));
   }
   function overlap(a, b, p) {
+    if (Math.abs((a.elevation || 0) - (b.elevation || 0)) > 6) return null;
     if (
       Math.hypot(a.x - b.x, a.y - b.y) >
       2 * Math.hypot(p.halfLength, p.halfWidth)
@@ -49,7 +50,8 @@
     const cars = proposed.map((car) => ({ ...car, hitCar: false })),
       contacts = new Map(),
       count = cars.length;
-    const clear = (car) => !surface.boundary.blocksFootprint(footprint(car, p));
+    const clear = (car) =>
+      !surface.boundary.blocksFootprint(footprint(car, p), car.s);
     for (let pass = 0; pass < 4; pass++) {
       let changed = false;
       for (let row = 0; row < count; row++) {
@@ -118,7 +120,13 @@
         car.vx * Math.cos(car.heading) + car.vy * Math.sin(car.heading);
       const projection = surface.project(car, car.s);
       car.s = projection.s;
-      car.offroad = surface.project(car).distance > surface.roadRadius;
+      car.offroad =
+        surface.project(car, surface.bridge ? car.s : null).distance >
+        surface.roadRadius;
+      if (surface.bridge) {
+        car.elevation = surface.bridge.heightAt(car.s);
+        car.pitch = surface.bridge.pitchAt(car.s);
+      }
     }
     return {
       cars,

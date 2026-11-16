@@ -223,8 +223,9 @@
     }
     function update(pose, id) {
       if (selected !== id) livery(id);
-      group.position.set(pose.x, 0, pose.y);
+      group.position.set(pose.x, pose.elevation || 0, pose.y);
       group.rotation.y = -pose.heading;
+      group.rotation.z = pose.pitch || 0;
       frontWheels.forEach((w) => (w.rotation.y = -(pose.steering || 0)));
       wheels.forEach((w) => (w.rotation.z = -(pose.s || 0) / 1.18));
     }

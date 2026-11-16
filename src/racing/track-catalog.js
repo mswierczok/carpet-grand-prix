@@ -7,7 +7,12 @@
     );
   function get(id) {
     const track = Object.hasOwn(data.tracks, id) && data.tracks[id];
-    if (!track || track.bridgeU.length || !data.boundaries[id])
+    if (
+      !track ||
+      !data.boundaries[id] ||
+      (track.bridgeU.length &&
+        (data.boundaries[id].kind !== "bridges" || !A.BridgeSurface))
+    )
       throw Error(
         "Diese Strecke ist noch nicht für den POV-Fahrmodus freigegeben.",
       );
