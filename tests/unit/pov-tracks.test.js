@@ -6,7 +6,7 @@ import * as THREE from "three";
 import { loadArcade } from "../helpers/arcade.js";
 import { createGame, ROOT, plain } from "../helpers/game.js";
 
-const baseline = "e50dee17a07a315321485328f8625d4d660f18ce";
+const baseline = "6348eb32e6c8acc403829f3c083c23adcfc45166";
 const ids = ["bahrain", "luxembourg", "canada", "france"];
 function published(path) {
   return execFileSync("git", ["show", `${baseline}:${path}`], {
@@ -32,7 +32,7 @@ it("lädt veränderte Laufzeitmodule unter neuen URLs statt alte Bahrain-Module 
   }
 });
 
-it("übernimmt vier Originalstrecken samt Kalenderindex, Sektoren und Boxengasse exakt", () => {
+it("erhält Originalzeichnungen, Kalender und Sektoren; entzerrt nur die freigegebenen POV-Geometrien", () => {
   const { api, data } = loadArcade(),
     { game } = createGame();
   expect(api.TrackCatalog.tracks.map((t) => t.id)).toEqual(ids);
@@ -42,11 +42,17 @@ it("übernimmt vier Originalstrecken samt Kalenderindex, Sektoren und Boxengasse
       classic = game.makeGeometry(game.trackDefs[index]);
     expect(track.index).toBe(index);
     expect(surface.id).toBe(id);
-    expect(plain(surface.g.pts)).toEqual(plain(classic.pts));
-    expect(plain(surface.g.cum)).toEqual(plain(classic.cum));
-    expect(surface.g.width).toBe(classic.width);
     expect(plain(surface.g.sectors)).toEqual(plain(classic.sectors));
-    expect(plain(surface.g.pit)).toEqual(plain(classic.pit));
+    const original = game.digitizedTracks[index];
+    // Raw drawings stay untouched, including pit and sector fractions.
+    for (const key of ["points", "pit", "width", "sectorU", "bridgeU"])
+      expect(plain(track[key])).toEqual(plain(original[key]));
+    if (id === "bahrain" || id === "canada") {
+      expect(plain(surface.g.pts)).toEqual(plain(classic.pts));
+      expect(plain(surface.g.cum)).toEqual(plain(classic.cum));
+      expect(surface.g.width).toBe(classic.width);
+      expect(plain(surface.g.pit)).toEqual(plain(classic.pit));
+    }
     expect(Object.isFrozen(data.tracks[id].points[0])).toBe(true);
     expect(Object.isFrozen(data.boundaries[id].polygons[0][0][0])).toBe(true);
   }
@@ -55,17 +61,79 @@ it("übernimmt vier Originalstrecken samt Kalenderindex, Sektoren und Boxengasse
   expect(() => api.TrackCatalog.get("__proto__")).toThrow();
 });
 
-it("erhält Bahrain-Daten und Seile sowie gemeinsame Physik, Steuerung und Sektorregel bytegenau", () => {
+it("öffnet alle französischen Kurven deutlicher als die luxemburgischen und verbreitert nur Frankreich", () => {
+  const { api, data } = loadArcade(),
+    scope = {};
+  runInNewContext(published("src/data/arcade-tracks.js"), scope);
+  for (const [id, layout, width] of [
+    ["france", 1.4, 1.2],
+    ["luxembourg", 1.15, 1],
+  ]) {
+    const before = api.Surface.create(scope.CGPArcadeData.tracks[id]),
+      after = api.Surface.create(data.tracks[id]);
+    expect(after.g.len / before.g.len).toBeCloseTo(layout, 10);
+    expect(after.g.width / before.g.width).toBeCloseTo(width, 10);
+    // Every segment and bend keeps its direction. Fixed-size cars have more
+    // space at ALL bends; this is physical geometry, not just camera zoom.
+    for (let i = 0; i < before.g.pts.length; i++) {
+      const a = before.g.pts[i],
+        b = before.g.pts[(i + 1) % before.g.pts.length],
+        c = after.g.pts[i],
+        d = after.g.pts[(i + 1) % after.g.pts.length];
+      expect(
+        Math.hypot(d.x - c.x, d.y - c.y) / Math.hypot(b.x - a.x, b.y - a.y),
+      ).toBeCloseTo(layout, 8);
+      expect(Math.atan2(d.y - c.y, d.x - c.x)).toBeCloseTo(
+        Math.atan2(b.y - a.y, b.x - a.x),
+        8,
+      );
+      const prev = (i - 1 + before.g.pts.length) % before.g.pts.length;
+      function radius(points) {
+        const p = points[prev],
+          q = points[i],
+          r = points[(i + 1) % points.length],
+          cross = (q.x - p.x) * (r.y - p.y) - (q.y - p.y) * (r.x - p.x);
+        return (
+          (Math.hypot(q.x - p.x, q.y - p.y) *
+            Math.hypot(r.x - q.x, r.y - q.y) *
+            Math.hypot(r.x - p.x, r.y - p.y)) /
+          (2 * Math.abs(cross))
+        );
+      }
+      const oldRadius = radius(before.g.pts);
+      if (Number.isFinite(oldRadius) && oldRadius < 10000)
+        expect(radius(after.g.pts) / oldRadius).toBeCloseTo(layout, 7);
+    }
+    // Sector and pit locations scale with the circuit, never across an arm.
+    for (const u of [0, ...before.g.sectors]) {
+      const a = before.at(u * before.g.len),
+        b = after.at(u * after.g.len);
+      expect(b.x).toBeCloseTo(590 + (a.x - 590) * layout, 8);
+      expect(b.y).toBeCloseTo(374 + (a.y - 374) * layout, 8);
+    }
+    for (const [i, a] of before.g.pit.entries()) {
+      expect(after.g.pit[i].x).toBeCloseTo(590 + (a.x - 590) * layout, 8);
+      expect(after.g.pit[i].y).toBeCloseTo(374 + (a.y - 374) * layout, 8);
+    }
+    expect(after.outerRadius - after.roadRadius).toBeGreaterThan(
+      api.Physics.parameters.halfWidth,
+    );
+  }
+});
+
+it("erhält Bahrain und Kanada samt Seilen sowie gemeinsame Physik, Steuerung und Sektorregel bytegenau", () => {
   const { data } = loadArcade(),
     scope = {};
   for (const file of ["arcade-tracks", "arcade-boundaries", "arcade-roster"])
     runInNewContext(published(`src/data/${file}.js`), scope);
-  expect(plain(data.tracks.bahrain)).toEqual(
-    plain(scope.CGPArcadeData.tracks.bahrain),
-  );
-  expect(plain(data.boundaries.bahrain)).toEqual(
-    plain(scope.CGPArcadeData.boundaries.bahrain),
-  );
+  for (const id of ["bahrain", "canada"]) {
+    expect(plain(data.tracks[id])).toEqual(
+      plain(scope.CGPArcadeData.tracks[id]),
+    );
+    expect(plain(data.boundaries[id])).toEqual(
+      plain(scope.CGPArcadeData.boundaries[id]),
+    );
+  }
   expect(plain(data.roster)).toEqual(plain(scope.CGPArcadeData.roster));
   for (const path of [
     "src/racing/physics.js",
@@ -195,8 +263,16 @@ it.each(ids)(
       mesh = new THREE.Mesh(geometry, material),
       ray = new THREE.Raycaster();
     mesh.updateMatrixWorld();
-    for (let x = 180; x < 1010; x += 61)
-      for (let y = 100; y < 680; y += 57) {
+    const xs = surface.g.pts.map((p) => p.x),
+      ys = surface.g.pts.map((p) => p.y),
+      left = Math.min(...xs) - surface.outerRadius,
+      right = Math.max(...xs) + surface.outerRadius,
+      top = Math.min(...ys) - surface.outerRadius,
+      bottom = Math.max(...ys) + surface.outerRadius;
+    for (let i = 0; i <= 14; i++)
+      for (let j = 0; j <= 11; j++) {
+        const x = left + ((right - left) * i) / 14,
+          y = top + ((bottom - top) * j) / 11;
         ray.set(new THREE.Vector3(x, 10, y), new THREE.Vector3(0, -1, 0));
         expect(ray.intersectObject(mesh).length > 0).toBe(
           surface.boundary.contains({ x, y }),
@@ -207,6 +283,37 @@ it.each(ids)(
     );
     geometry.dispose();
     material.dispose();
+  },
+);
+
+it.each(["france", "luxembourg"])(
+  "passt die vergrößerte %s-Fahrfläche auch mobil vollständig in die Übersicht",
+  (id) => {
+    const { api, data } = loadArcade(),
+      surface = api.Surface.create(data.tracks[id]);
+    runInNewContext(
+      readFileSync(new URL("src/rendering/camera3d.js", ROOT), "utf8"),
+      { CGPArcade: api },
+    );
+    for (const aspect of [0.4, 1, 2.2]) {
+      const rig = api.Camera3D.create().update(
+          { x: 0, y: 0, heading: 0 },
+          surface,
+          0,
+          { overview: true, aspect },
+        ),
+        camera = new THREE.PerspectiveCamera(55, aspect, 0.1, 6000);
+      camera.position.set(rig.position.x, rig.position.y, rig.position.z);
+      camera.lookAt(rig.target.x, rig.target.y, rig.target.z);
+      camera.updateMatrixWorld();
+      for (const ring of surface.boundary.loops)
+        for (const [x, y] of ring) {
+          const projected = new THREE.Vector3(x, 0, y).project(camera);
+          expect(Math.abs(projected.x)).toBeLessThan(1);
+          expect(Math.abs(projected.y)).toBeLessThan(1);
+          expect(projected.z).toBeLessThan(1);
+        }
+    }
   },
 );
 

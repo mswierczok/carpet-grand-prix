@@ -240,6 +240,7 @@ export function boundaryData(track = arcadeData().track) {
           points: track.points,
           pit: track.pit,
           width: track.width,
+          ...(track.pov ? { pov: track.pov } : {}),
         }),
       )
       .digest("hex"),

@@ -15,10 +15,14 @@
       maxX = Math.max(...xs),
       minY = Math.min(...ys),
       maxY = Math.max(...ys),
-      scale = Math.min(
+      sourceScale = Math.min(
         1010 / (maxX - minX + model.width * 4),
         584 / (maxY - minY + model.width * 4),
-      );
+      ),
+      // Layout and road width are independent of vehicle dimensions. Apply
+      // these explicit POV profiles AFTER fitting the original drawing, so
+      // the extra curve radius is not cancelled by normalization.
+      scale = sourceScale * (model.pov?.layoutScale ?? 1);
     const convert = (p) =>
       Object.freeze({
         x: 590 + (p[0] - (minX + maxX) / 2) * scale,
@@ -36,7 +40,7 @@
       pts: Object.freeze(pts),
       cum: Object.freeze(cum),
       len,
-      width: model.width * scale,
+      width: model.width * sourceScale * (model.pov?.roadScale ?? 1),
       sectors: model.sectorU,
       pit: Object.freeze(model.pit.map(convert)),
       bridges: model.bridgeU,
