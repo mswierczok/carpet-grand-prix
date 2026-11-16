@@ -12,10 +12,10 @@ Node.js 24 LTS verwenden. `npm ci`, anschließend einmalig
 | `npm run serve:test` | Anwendung nur unter `/carpet-grand-prix/` |
 | `npm run build:offline` | Eigenständige HTML-Datei mit allen Bildern und Styles unter `dist/` |
 | `npm run build:race-preview` | 13 reproduzierbare Rennsprite-SVGs und eigenständige Grafikvorschau unter `dist/` |
-| `npm run build:arcade-data` | Lesende Exporte von Bahrain, 13 Teams und 92 Fahrern für den getrennten Fahrtest erneuern |
+| `npm run build:arcade-data` | Lesende Exporte der vier POV-Strecken, 13 Teams und 92 Fahrer erneuern |
 | `npm run build:arcade-offline` | Eigenständige 2D- und 3D-Fahrtests unter `dist/` |
 | `npm run check:arcade3d-engine` | Reproduzierbaren lokalen Three.js-Build gegen den eingecheckten Stand prüfen |
-| `npm run build:arcade-boundaries` | Geschlossene Seilränder aus der unveränderten Bahrain-Mittellinie erzeugen |
+| `npm run build:arcade-boundaries` | Gemeinsame Seilränder und sichere Trennseile für die vier POV-Strecken erzeugen |
 | `npm run check:arcade-boundaries` | Seilkonturen reproduzierbar gegen die aktuellen Originaldaten prüfen |
 | `npm run measure:arcade3d -- --software-webgl` | Kurze echte Zeitmessung des 3D-Fahrtests bei laufendem Testserver |
 | `npm run measure:arcade3d -- --race --software-webgl` | Echtzeitmessung der 13-Fahrzeuge-Ansicht nach dem Countdown |
@@ -43,6 +43,8 @@ Die Sektor-/Randrunden-Regressionsprüfungen und der Vergleich des schnelleren
 KI-Fahrers gegen den veröffentlichten Code stehen in [ARCADE_SECTORS.md](ARCADE_SECTORS.md).
 Die weitere Tempoabstimmung, Ideallinie, gemeinsamen 119 km/h und der Vergleich
 vollständiger Felder stehen in [OPPONENT_PACE.md](OPPONENT_PACE.md).
+Auswahl, automatische Seilanschlüsse und vollständige POV-Fahrten auf Luxemburg,
+Kanada und Frankreich beschreibt [POV_TRACKS.md](POV_TRACKS.md).
 
 ## Referenzen und Adapter
 

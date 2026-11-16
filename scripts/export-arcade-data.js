@@ -3,6 +3,14 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
 const root = new URL("../", import.meta.url);
+// Original calendar indices stay intact for the later championship adapter.
+// Only flat, validated POV tracks are published in this first rollout.
+const povTracks = [
+  { id: "bahrain", index: 0 },
+  { id: "luxembourg", index: 1 },
+  { id: "canada", index: 2 },
+  { id: "france", index: 3 },
+];
 export function arcadeData() {
   const html = readFileSync(new URL("index.html", root), "utf8");
   const read = (name) => {
@@ -13,9 +21,18 @@ export function arcadeData() {
     return JSON.parse(line.slice(prefix.length, -1));
   };
   const master = read("MASTER"),
-    track = read("digitizedTracks")[0];
+    originals = read("digitizedTracks"),
+    tracks = Object.fromEntries(
+      povTracks.map(({ id, index }) => {
+        const track = originals[index];
+        if (!track || track.bridgeU.length)
+          throw Error("POV-Strecke fehlt oder benötigt zuerst Brückenebenen.");
+        return [id, { id, index, ...track }];
+      }),
+    );
   return {
-    track: { id: "bahrain", index: 0, ...track },
+    track: tracks.bahrain,
+    tracks,
     roster: {
       sourceSHA256: master.sourceSHA256,
       teams: master.teams,
@@ -27,7 +44,7 @@ export function arcadeScripts() {
   const data = arcadeData();
   return Object.fromEntries(
     [
-      ["arcade-tracks", { bahrain: data.track }],
+      ["arcade-tracks", data.tracks],
       ["arcade-roster", data.roster],
     ].map(([name, value]) => [
       name,
@@ -41,5 +58,7 @@ if (
 ) {
   for (const [name, source] of Object.entries(arcadeScripts()))
     writeFileSync(new URL(`src/data/${name}.js`, root), source);
-  console.log("Bahrain, 13 Teams und 92 Fahrer schreibgeschützt exportiert.");
+  console.log(
+    "Vier POV-Strecken, 13 Teams und 92 Fahrer schreibgeschützt exportiert.",
+  );
 }

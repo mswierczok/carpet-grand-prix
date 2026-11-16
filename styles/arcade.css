@@ -148,6 +148,7 @@ select:focus-visible {
 }
 .bottom-panel {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
@@ -320,4 +321,11 @@ footer {
   min-width: 1.2em;
   color: var(--accent);
   font-weight: 800;
+}
+
+.track-choice {
+  flex: 1 1 230px;
+}
+.track-choice select {
+  max-width: 100%;
 }

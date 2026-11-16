@@ -183,6 +183,8 @@
     // legacy geometry markers remain for scenery/sign placement, not timing.
     const checkpoints = Object.freeze([0, ...g.sectors].map(checkpoint));
     return Object.freeze({
+      id: model.id,
+      name: model.name,
       g,
       at,
       project,
