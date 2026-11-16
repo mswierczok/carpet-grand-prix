@@ -30,13 +30,41 @@ weitere Downloads. CI-Vorschau entpacken und
 | bahrain | 0 | Bahrain | 32,842 |
 | luxembourg | 1 | Luxemburg | 35,596 |
 | canada | 2 | Kanada | 38,394 |
-| france | 3 | Frankreich | 24,829 |
+| france | 3 | Frankreich | 29,795 |
 
-`export-arcade-data.js` liest die statischen Originaldaten. Punkte, Sektoren,
-Boxengassenverlauf, Reihenfolge und Breiten bleiben erhalten. Der Bahrain-
-Datensatz ist inhaltlich exakt derselbe. `TrackCatalog` stellt die validierten
-Strecken bereit; `Surface` ergänzt nur Kennung/Name außerhalb der bisherigen
-Geometrie. Alle vier Geometrien werden gegen das Original-`makeGeometry` geprüft.
+`export-arcade-data.js` liest die statischen Originaldaten. Die Originalzeichnungen,
+Sektoren, Boxengassen und Reihenfolge bleiben erhalten. Bahrain und Kanada sind
+auch im POV-Modus geometrisch exakt unverändert. `TrackCatalog` stellt die
+validierten Strecken bereit. Die nachfolgend beschriebenen, ausdrücklich
+beauftragten POV-Anpassungen betreffen ausschließlich Frankreich und Luxemburg.
+
+### Mehr Kurvenraum für Frankreich und Luxemburg
+
+Folgepaket auf Basis von `main` `6348eb32e6c8acc403829f3c083c23adcfc45166`,
+Branch `codex/pov-france-luxembourg-flow`. Frankreich wird deutlich, Luxemburg
+behutsamer entzerrt; Frankreich bekommt zusätzlich mehr Fahrbahnbreite.
+
+| POV-Strecke | Kurvenradien und Abstände der Mittellinie | Fahrbahnbreite | Rundenlänge vorher → nachher |
+| --- | ---: | ---: | ---: |
+| Frankreich | +40 % | +20 % | 2.731,661 → 3.824,325 |
+| Luxemburg | +15 % | unverändert | 4.089,846 → 4.703,323 |
+
+Werte sind interne Weltkoordinaten, keine Meterangaben. Die beiden statischen
+POV-Profile trennen `layoutScale` von `roadScale`. `Surface` wendet sie **nach**
+der ursprünglichen Einpassung an. Andernfalls würde die Normierung die zusätzliche
+Kurvenweite wieder aufheben. Die komplette Mittellinie wird gleichmäßig um den
+bisherigen Mittelpunkt vergrößert; alle Kurvenradien und Abstände wachsen im
+gleichen Verhältnis. Kurvenfolge und Form bleiben erhalten. Sektorpositionen und
+Boxengasse wachsen mit, die Fahrzeugabmessungen und Fahrphysik bleiben gleich.
+Dies verlängert die tatsächlichen Fahrwege und damit voraussichtlich die Rundenzeiten.
+Die Übersicht passt weiterhin die vollständige Strecke ins Fenster ein; die
+Verfolgerkamera behält ihren bisherigen Abstand zum Fahrzeug.
+
+Die Profile werden ausschließlich an die POV-Exporte angehängt. `index.html`,
+klassische Geometrien, Kalender, Stammdaten und Spielstände bleiben unverändert.
+Tests sichern Bahrain/Kanada samt Seilen gegen den vorher veröffentlichten Stand,
+die tatsächliche Vergrößerung aller Kurven sowie Sektor-/Boxenausrichtung und
+die vollständige Übersicht auch bei schmalen Fenstern ab.
 
 Korea und Russland stehen noch nicht im POV-Katalog. Datenexport und Katalog
 lehnen Brückenstrecken bis zur Umsetzung von Höhenebenen, Übergängen,
@@ -58,8 +86,10 @@ verbindet nur Bereiche derselben Streckenseite. Die helle Fahrbahn bleibt samt
 Seilradius und Reserve frei. Nicht sicher schließbare Öffnungen lassen den
 Build scheitern.
 
-So entstehen drei zusätzliche Trennseile für Luxemburg, eines für Kanada und
-zwei für Frankreich. Spieler erhalten nur die Koordinaten. Raster, Pfadsuche
+Nach der Entzerrung benötigt Luxemburg zwei zusätzliche Trennseile und Kanada
+weiterhin eines. In Frankreich trennen die geschlossenen Randkonturen die
+Streckenarme bereits vollständig; dort sind keine zusätzlichen Trennseile nötig.
+Spieler erhalten nur die Koordinaten. Raster, Pfadsuche
 und Polygonbibliothek laufen nicht im Spiel. Sichtbares Seil und Fahrzeugkontakt
 verwenden dieselben Daten.
 

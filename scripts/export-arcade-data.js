@@ -7,9 +7,9 @@ const root = new URL("../", import.meta.url);
 // Only flat, validated POV tracks are published in this first rollout.
 const povTracks = [
   { id: "bahrain", index: 0 },
-  { id: "luxembourg", index: 1 },
+  { id: "luxembourg", index: 1, pov: { layoutScale: 1.15, roadScale: 1 } },
   { id: "canada", index: 2 },
-  { id: "france", index: 3 },
+  { id: "france", index: 3, pov: { layoutScale: 1.4, roadScale: 1.2 } },
 ];
 export function arcadeData() {
   const html = readFileSync(new URL("index.html", root), "utf8");
@@ -23,11 +23,13 @@ export function arcadeData() {
   const master = read("MASTER"),
     originals = read("digitizedTracks"),
     tracks = Object.fromEntries(
-      povTracks.map(({ id, index }) => {
+      povTracks.map(({ id, index, pov }) => {
         const track = originals[index];
         if (!track || track.bridgeU.length)
           throw Error("POV-Strecke fehlt oder benötigt zuerst Brückenebenen.");
-        return [id, { id, index, ...track }];
+        // POV-only room around the fixed-size cars. Keep the source drawing,
+        // calendar and sector fractions intact; never edit the classic data.
+        return [id, { id, index, ...track, ...(pov ? { pov } : {}) }];
       }),
     );
   return {
