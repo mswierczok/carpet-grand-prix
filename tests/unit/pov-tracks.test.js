@@ -8,8 +8,8 @@ import { createGame, ROOT, plain } from "../helpers/game.js";
 
 const baseline = "6348eb32e6c8acc403829f3c083c23adcfc45166";
 const ids = ["bahrain", "luxembourg", "canada", "france"];
-function published(path) {
-  return execFileSync("git", ["show", `${baseline}:${path}`], {
+function published(path, ref = baseline) {
+  return execFileSync("git", ["show", `${ref}:${path}`], {
     cwd: ROOT,
     encoding: "utf8",
   });
@@ -18,15 +18,19 @@ function published(path) {
 it("lädt veränderte Laufzeitmodule unter neuen URLs statt alte Bahrain-Module aus dem Browsercache zu mischen", () => {
   const references =
     /(?:src|href)="\.\/(src\/[^"?]+|styles\/[^"?]+)(\?[^" ]*)?"/g;
+  const cacheBaseline = "31003409aa5af06939e352a72bad1b823c1a3106";
   for (const page of ["arcade.html", "arcade3d.html", "race.html"]) {
     const before = new Map(
-        [...published(page).matchAll(references)].map((m) => [m[1], m[0]]),
+        [...published(page, cacheBaseline).matchAll(references)].map((m) => [
+          m[1],
+          m[0],
+        ]),
       ),
       after = readFileSync(new URL(page, ROOT), "utf8");
     for (const match of after.matchAll(references)) {
       if (!before.has(match[1])) continue;
       const source = readFileSync(new URL(match[1], ROOT), "utf8");
-      if (source !== published(match[1]))
+      if (source !== published(match[1], cacheBaseline))
         expect(match[0], `${page}: ${match[1]}`).not.toBe(before.get(match[1]));
     }
   }

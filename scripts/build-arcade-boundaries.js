@@ -267,10 +267,11 @@ function corridorPolygons(pts, r, track, closed = true) {
 
 export function boundaryData(track = arcadeData().track) {
   const scope = {};
-  runInNewContext(
-    readFileSync(new URL("src/racing/track-surface.js", root), "utf8"),
-    scope,
-  );
+  for (const module of ["track-shape", "track-surface"])
+    runInNewContext(
+      readFileSync(new URL(`src/racing/${module}.js`, root), "utf8"),
+      scope,
+    );
   const surface = scope.CGPArcade.Surface.create(track),
     pts = surface.g.pts,
     r = surface.outerRadius;
