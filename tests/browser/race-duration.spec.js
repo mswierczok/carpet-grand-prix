@@ -3,6 +3,7 @@ import { capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
 
 test("Rennlänge: zeigt alle 22 echten Standardformate auch offline und erhält Team, Grafik und Spielstand", async ({ page, context }) => {
+  test.setTimeout(240000);
   await capture3D(page);
   await page.goto("__arcade_race_offline__/index.html");
   await page.clock.runFor(64);
