@@ -30,7 +30,8 @@ it("verwendet auf allen 22 Strecken feste dokumentierte Rennlängen nahe 210 Sek
   expect(() => api.RaceFormats.get("missing")).toThrow();
   expect(() => api.RaceFormats.get("toString")).toThrow();
   for (const [file, hash] of Object.entries(reference.hashes))
-    expect(createHash("sha256").update(read(file)).digest("hex"), file).toBe(hash);
+    expect(createHash("sha256").update(execFileSync("git", ["show", `${reference.sourceCommit}:${file}`],
+      { cwd: ROOT, maxBuffer: 16 * 1024 * 1024 })).digest("hex"), file).toBe(hash);
 });
 
 it("erhält Neustart, Teamwechsel und explizite Test-Rundenzahlen ohne Speicherzugriff", () => {
@@ -49,14 +50,12 @@ it("erhält Neustart, Teamwechsel und explizite Test-Rundenzahlen ohne Speicherz
     expect(() => api.RaceSession.create(track, { laps })).toThrow("Rundenzahl");
 });
 
-it("ändert am Rennkern ausschließlich die Standard-Rundenzahl und schützt Physik, KI, Grafik, Daten und Originalspiel bytegenau", () => {
-  const files = ["index.html", "src/racing/race-session.js", "src/racing/physics.js", "src/racing/bridge-physics.js", "src/racing/opponents.js", "src/racing/opponent-line.js", "src/racing/timing.js", "src/racing/controls.js", "src/data/arcade-roster.js", "src/data/arcade-tracks.js", "src/data/arcade-boundaries.js", "src/rendering/camera3d.js", "src/rendering/vehicles3d.js"];
+it("schützt Physik, Grafik, Daten und Originalspiel trotz freigegebener KI-Änderungen bytegenau", () => {
+  const files = ["index.html", "src/racing/physics.js", "src/racing/bridge-physics.js", "src/racing/vehicle-contacts.js", "src/racing/track-surface.js", "src/racing/bridge-surface.js", "src/racing/track-shape.js", "src/racing/timing.js", "src/racing/controls.js", "src/data/arcade-roster.js", "src/data/arcade-tracks.js", "src/data/arcade-boundaries.js", "src/rendering/camera3d.js", "src/rendering/vehicles3d.js"];
   for (const file of files) {
     const current = read(file),
       original = execFileSync("git", ["show", `${baseline}:${file}`], { cwd: ROOT, encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
-    expect(file === "src/racing/race-session.js"
-      ? current.replace("laps = options.laps ?? A.RaceFormats.get(track.id).laps", "laps = options.laps ?? 3")
-      : current).toBe(original);
+    expect(current).toBe(original);
   }
 });
 

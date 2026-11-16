@@ -18,7 +18,7 @@ function published(path, ref = baseline) {
 it("lädt veränderte Laufzeitmodule unter neuen URLs statt alte Bahrain-Module aus dem Browsercache zu mischen", () => {
   const references =
     /(?:src|href)="\.\/(src\/[^"?]+|styles\/[^"?]+)(\?[^" ]*)?"/g;
-  const cacheBaseline = "c2e90fa61c18506d6832f1c22b6aadacc4d16b0f";
+  const cacheBaseline = "49cf167ac25b7d7c75eed38fe45db00adcb8da76";
   for (const page of ["arcade.html", "arcade3d.html", "race.html"]) {
     const before = new Map(
         [...published(page, cacheBaseline).matchAll(references)].map((m) => [
@@ -148,19 +148,24 @@ it("erhält Bahrain und Kanada samt Seilen sowie gemeinsame Physik, Steuerung un
     expect(readFileSync(new URL(path, ROOT), "utf8")).toBe(published(path));
 });
 
-it("behält auf Bahrain exakt die abgenommenen KI-Befehle bei", () => {
+it("behält die abgenommene Bahrain-Geometrie für denselben eingefrorenen KI-Regler exakt bei", () => {
   const { api, data } = loadArcade({ race: true }),
     scope = {
       CGPArcade: {
-        OpponentLine: api.OpponentLine,
+        BoundaryField: api.BoundaryField,
+        Physics: api.Physics,
         VehicleContacts: api.VehicleContacts,
       },
+      CGPArcadeData: data,
     },
     surface = api.Surface.create(data.tracks.bahrain),
     p = api.Physics.parameters;
-  runInNewContext(published("src/racing/opponents.js"), scope);
-  const before = scope.CGPArcade.Opponents.create(surface, p),
-    after = api.Opponents.create(surface, p),
+  // Isolate track preservation from the separately authorized AI upgrade.
+  for (const file of ["track-surface", "opponent-line", "opponents"])
+    runInNewContext(published(`src/racing/${file}.js`), scope);
+  const oldSurface = scope.CGPArcade.Surface.create(data.tracks.bahrain),
+    before = scope.CGPArcade.Opponents.create(oldSurface, p),
+    after = scope.CGPArcade.Opponents.create(surface, p),
     a = before.memory(0),
     b = after.memory(0);
   let car = { ...api.Physics.spawn(surface, -22), id: "reference" };

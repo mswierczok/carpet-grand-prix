@@ -54,6 +54,8 @@ try {
     (await page.locator("#arcadeApp").getAttribute("data-rendering")) !== "3d"
   )
     throw Error("3D nicht verfügbar; kein gültiger 3D-Messwert.");
+  const difficulty = process.argv.find((a) => a.startsWith("--difficulty="))?.slice(13);
+  if (raceMode && difficulty) await page.locator("#difficulty").selectOption(difficulty);
   await page.locator("#quality").selectOption("low");
   await page.waitForTimeout(1500);
   await page.locator("#pause").click();
@@ -93,6 +95,7 @@ try {
         : gl.getParameter(gl.RENDERER),
       graphics: __benchRenderer.diagnostics(),
       vehicles: globalThis.__benchSnapshot?.entries?.length || 1,
+      difficulty: globalThis.__benchSnapshot?.race?.difficulty || null,
     };
   });
   Object.assign(report, {

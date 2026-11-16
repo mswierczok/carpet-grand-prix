@@ -1,5 +1,8 @@
 # Phase 2: Rennlänge und anschließende Rennbalance
 
+Fortschreibung: Schritt 2.1 ist mit PR #27 übernommen. Die freigegebene Fortsetzung
+2.2 wird in [AI_DIFFICULTY.md](AI_DIFFICULTY.md) dokumentiert.
+
 ## Bestandsaufnahme am 16. November 2026
 
 Ausgangsbasis ist `main` auf
@@ -52,8 +55,9 @@ Spielskalierung. In 2.1 wird weder diese Skalierung noch das Limit verändert.
 | **2.3, nach Freigabe** | Physischer Windschatten für beide Seiten und sparsame gezeichnete Heckwirbel aus demselben Zustand | Etwa ab 80 km/h, 2–8 Fahrzeuglängen, etwa +3 km/h maximal, sanfte Übergänge; keine falsche Kopplung auf Nachbararmen/Brücken |
 | **2.4, nach Freigabe** | Sehr dezente Unterstützung anhand von Position **und** Zeitabstand, abschaltbar | P1–3 null, danach höchstens 0,2/0,5/0,9 %; Fehlererholung höchstens acht Sekunden, insgesamt höchstens 1,2 %, weniger im Zweikampf; A/B-Vergleich |
 
-Die Schritte 2.2–2.4 sind in diesem Branch **nicht implementiert**. Der aktuelle
-Nutzerauftrag verlangt ausdrücklich die Prüfung von 2.1 vor dem nächsten Schritt.
+Die folgende Messdokumentation gehört zum abgeschlossenen Schritt 2.1. Schritt 2.2
+folgt nach erteilter Nutzerfreigabe separat; siehe [AI_DIFFICULTY.md](AI_DIFFICULTY.md).
+Windschatten und Aufholbonus bleiben gesonderte freigabepflichtige Schritte.
 
 ## Wie die Rennlängen entstehen
 

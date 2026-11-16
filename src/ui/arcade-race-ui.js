@@ -2,6 +2,7 @@
   "use strict";
   const A = globalThis.CGPArcade;
   function attach(root, format) {
+    const kilometers = A.Physics.parameters.metersPerUnit * 3.6;
     const write = (node, value) => {
       const text = String(value);
       if (node.textContent !== text) node.textContent = text;
@@ -32,6 +33,31 @@
       set("raceLength", r.laps + " Runden");
       set("raceLap", Math.min(r.laps, t.completed + 1) + " / " + r.laps);
       set("raceClock", format(r.elapsed));
+      const panel = el("balancePanel");
+      if (snapshot.entries.some((e) => Object.hasOwn(e, "telemetry"))) {
+        panel.hidden = false;
+        const chooser = el("balanceTeam");
+        if (!chooser.options.length) {
+          for (const entry of snapshot.entries) {
+            const option = document.createElement("option");
+            option.value = entry.id;
+            option.textContent = entry.name;
+            chooser.append(option);
+          }
+          chooser.value = snapshot.entries.find((e) => !e.player).id;
+        }
+        if (panel.open) {
+          const entry = snapshot.entries.find((e) => e.id === chooser.value), info = entry?.telemetry;
+          set("balanceReadout", info ? JSON.stringify({
+            reason: info.reason, speedKmh: +(info.speed * kilometers).toFixed(1),
+            targetKmh: +(info.desiredSpeed * kilometers).toFixed(1),
+            freeTargetKmh: +(info.freeTarget * kilometers).toFixed(1),
+            lineError: +info.pathError.toFixed(2), headingError: +info.headingError.toFixed(3),
+            lane: info.lane, blockerGap: info.blockerGap === null ? null : +info.blockerGap.toFixed(2),
+            throttle: info.throttle, brake: info.brake, steer: +info.steer.toFixed(3),
+          }, null, 2) : "Noch keine KI-Fahrdaten für dieses Fahrzeug.");
+        }
+      }
       set(
         "viewTime",
         "P" +
@@ -52,6 +78,8 @@
             : "Pause",
       );
       el("team").disabled = r.phase !== "grid";
+      el("difficulty").disabled = r.phase !== "grid";
+      el("difficulty").value = r.difficulty;
       if (el("track")) el("track").disabled = r.phase !== "grid";
       el("recover").disabled = r.phase !== "racing";
       for (const button of root.querySelectorAll("[data-drive]"))

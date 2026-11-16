@@ -7,8 +7,9 @@
     const surface = A.Surface.create(track),
       parameters = A.Physics.parameters,
       teams = options.teams || CGPArcadeData.roster.teams,
-      laps = options.laps ?? A.RaceFormats.get(track.id).laps,
-      controller = A.Opponents.create(surface, parameters);
+      laps = options.laps ?? A.RaceFormats.get(track.id).laps;
+    let difficulty = A.AIDifficulty.get(options.difficulty),
+      controller = A.Opponents.create(surface, parameters, { difficulty: difficulty.id, diagnostics: !!options.diagnostics });
     if (!Number.isInteger(laps) || laps < 1)
       throw Error("Ungültige Rundenzahl.");
     if (teams.length !== 13 || new Set(teams.map((t) => t.id)).size !== 13)
@@ -75,6 +76,13 @@
       restart();
       return true;
     }
+    function selectDifficulty(id) {
+      if (phase !== "grid" || !A.AIDifficulty.profiles.some((p) => p.id === id)) return false;
+      difficulty = A.AIDifficulty.get(id);
+      controller = A.Opponents.create(surface, parameters, { difficulty: id, diagnostics: !!options.diagnostics });
+      restart();
+      return true;
+    }
     function step(input) {
       if (phase === "countdown") {
         countdown = Math.max(0, countdown - fixedStep);
@@ -89,6 +97,7 @@
           entries.map((e) => ({
             ...e.car,
             id: e.id,
+            inRace: e.finishTime === null,
           })),
         );
         entries.forEach((e, i) => {
@@ -227,6 +236,7 @@
             },
             finishTime: e.finishTime,
             progress: progress(e),
+            ...(options.diagnostics ? { telemetry: controller.diagnostics(e.driver) } : {}),
           };
         }),
         order = [...visible].sort((a, b) => {
@@ -252,6 +262,7 @@
           : 0,
         entries: visible,
         race: {
+          difficulty: difficulty.id,
           phase,
           countdown: Math.max(0, Math.ceil(countdown - 1e-9)),
           elapsed,
@@ -281,6 +292,7 @@
       restart,
       snapshot,
       selectTeam,
+      selectDifficulty,
     });
   }
   A.RaceSession = Object.freeze({ create, fixedStep });

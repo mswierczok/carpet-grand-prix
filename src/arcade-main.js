@@ -12,6 +12,7 @@
       return `${Math.floor(ms / 60000)}:${String(Math.floor(ms / 1000) % 60).padStart(2, "0")}.${String(ms % 1000).padStart(3, "0")}`;
     };
   let canvas = document.getElementById("arcadeCanvas"),
+    difficultyId = racing ? A.POVPreferences.load().difficulty : null,
     teamId = teams[0].id,
     trackId = catalog.tracks.some((t) => t.id === requestedTrack)
       ? requestedTrack
@@ -35,7 +36,8 @@
   function createSession() {
     return (racing ? A.RaceSession : A.Session).create(
       catalog.get(trackId),
-      racing ? { playerTeam: teamId } : {},
+      racing ? { playerTeam: teamId, difficulty: difficultyId,
+        diagnostics: new URLSearchParams(location.search).has("balance") } : {},
     );
   }
   function freshCanvas() {
@@ -240,6 +242,23 @@
     }
     dirty = true;
   };
+  if (racing) {
+    el("difficulty").value = difficultyId;
+    el("difficulty").onchange = (event) => {
+      if (!session.selectDifficulty(event.target.value)) {
+        el("difficulty").value = difficultyId;
+        return;
+      }
+      difficultyId = event.target.value;
+      el("difficultyNote").textContent = A.POVPreferences.save(difficultyId)
+        ? "Für deine nächsten POV-Rennen gespeichert."
+        : "Für dieses Rennen aktiv. Auf diesem Gerät konnte die Auswahl nicht gespeichert werden.";
+      renderer.resetCamera?.();
+      controls.clear();
+      dirty = true;
+      updateUI();
+    };
+  }
   el("track").onchange = (event) => {
     const next = event.target.value;
     if (
