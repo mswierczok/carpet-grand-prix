@@ -25,6 +25,10 @@
     "build:arcade3d-engine": "node scripts/build-arcade3d-engine.js",
     "check:arcade3d-engine": "node scripts/build-arcade3d-engine.js --check",
     "measure:arcade3d": "node scripts/measure-arcade3d.js",
+    "measure:race-duration": "node scripts/measure-race-duration.js",
+    "measure:race-field": "node scripts/measure-race-field.js",
+    "build:race-formats": "node scripts/build-race-formats.js",
+    "check:race-formats": "node scripts/build-race-formats.js --check",
     "build:arcade-boundaries": "node scripts/build-arcade-boundaries.js",
     "check:arcade-boundaries": "node scripts/build-arcade-boundaries.js --check"
   },

@@ -9,6 +9,9 @@ Node.js 24 LTS verwenden. `npm ci`, anschließend einmalig
 | `npm run test:browser` | Chromium auf Desktop und Mobilformat, einschließlich visueller Originalvergleiche und Offline-Ausgabe |
 | `npm run test:extended` | Referenzrennen, komplette 22-Rennen-Saison und Saisonwechsel |
 | `npm run test:all` | Standardtests plus Browserprüfungen |
+| `npm run measure:race-duration` | Saubere Referenzrunden aller 22 POV-Strecken und separater KI-Vergleich |
+| `npm run measure:race-field` | Volle Standardrennen Bahrain/Frankreich/Russland mit automatisierten Tastaturbefehlen |
+| `npm run check:race-formats` | Feste Rundentabelle gegen die dokumentierten Messungen prüfen |
 | `npm run serve:test` | Anwendung nur unter `/carpet-grand-prix/` |
 | `npm run build:offline` | Eigenständige HTML-Datei mit allen Bildern und Styles unter `dist/` |
 | `npm run build:race-preview` | 13 reproduzierbare Rennsprite-SVGs und eigenständige Grafikvorschau unter `dist/` |

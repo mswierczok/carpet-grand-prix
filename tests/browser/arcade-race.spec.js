@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { capture2D, capture3D } from "../helpers/arcade-browser.js";
-import { pilotRace } from "../helpers/arcade-race-browser.js";
+import { pilotRace, threeLapRegression } from "../helpers/arcade-race-browser.js";
 
 test("zeigt alle 13 echten Teamfahrzeuge mit gebündelter 3D-Geometrie und stabiler Teamwahl", async ({
   page,
@@ -147,6 +147,7 @@ test("fährt ausschließlich über Tastatur ein vollständiges Rennen bis zu 13 
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await capture2D(page);
+  await threeLapRegression(page);
   await page.addInitScript(() => {
     const original = HTMLCanvasElement.prototype.getContext;
     HTMLCanvasElement.prototype.getContext = function (type, ...args) {

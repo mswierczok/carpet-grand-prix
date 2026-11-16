@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { createContext, Script } from "node:vm";
 import { ROOT } from "./game.js";
-export function loadArcade({ race = false } = {}) {
+export function loadArcade({ race = false, formats = true } = {}) {
   const math = Object.create(Math);
   math.random = () => {
     throw Error("Der Fahrtest darf keine Zufallssteuerung verwenden.");
@@ -22,6 +22,7 @@ export function loadArcade({ race = false } = {}) {
     "racing/session",
     ...(race
       ? [
+          ...(formats ? ["data/race-formats"] : []),
           "racing/vehicle-contacts",
           "racing/opponent-line",
           "racing/opponents",

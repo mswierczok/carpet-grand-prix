@@ -29,6 +29,7 @@
         player = r.standings.find((e) => e.player),
         active = r.phase !== "grid" && r.phase !== "finished";
       set("position", r.position + " / 13");
+      set("raceLength", r.laps + " Runden");
       set("raceLap", Math.min(r.laps, t.completed + 1) + " / " + r.laps);
       set("raceClock", format(r.elapsed));
       set(
@@ -57,7 +58,7 @@
         button.disabled = r.phase === "finishing" || r.phase === "finished";
       const message =
         r.phase === "grid"
-          ? "13 Teams bereit · Startplatz 13 · 3 Runden"
+          ? "13 Teams bereit · Startplatz 13 · " + r.laps + " Runden"
           : r.phase === "countdown"
             ? snapshot.paused
               ? "Start pausiert"

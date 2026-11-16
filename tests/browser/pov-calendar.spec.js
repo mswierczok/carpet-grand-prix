@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { capture2D, capture3D } from "../helpers/arcade-browser.js";
-import { pilotRace } from "../helpers/arcade-race-browser.js";
+import { pilotRace, threeLapRegression } from "../helpers/arcade-race-browser.js";
 import { povIds, newPovIds } from "../helpers/pov-catalog.js";
 
 async function fallback(page) {
@@ -88,6 +88,7 @@ for (const id of newPovIds)
     const errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
     await capture2D(page);
+    await threeLapRegression(page);
     await fallback(page);
     await page.goto(`race.html?track=${id}`);
     await page.clock.runFor(32);

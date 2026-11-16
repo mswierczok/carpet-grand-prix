@@ -1,0 +1,654 @@
+{
+  "version": 1,
+  "baseCommit": "027286f2c735f4a4a4531e8b57963dfc991962ab",
+  "runs": [
+    {
+      "id": "bahrain",
+      "laps": 8,
+      "protocol": "Actual RaceSession, 13 cars; player surrogate sends binary steering and pedals at 30Hz using the browser pilot policy. No human performance claim. Finish times exclude the three-second countdown. Traffic/contacts belong to this validation, not the clean reference.",
+      "playerContacts": 12,
+      "entries": [
+        {
+          "id": "t03",
+          "player": false,
+          "position": 1,
+          "finishSeconds": 211.88167485604316,
+          "lapSeconds": [
+            27.04741687867155,
+            26.2678553727331,
+            26.26734935007893,
+            26.263608588576318,
+            26.26761278380097,
+            26.265591834255275,
+            26.267662246622308,
+            26.26561731244334
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t02",
+          "player": false,
+          "position": 2,
+          "finishSeconds": 213.4910571909482,
+          "lapSeconds": [
+            28.79004949326988,
+            25.658045516441337,
+            26.272027368460712,
+            27.244060852254435,
+            25.930419429857054,
+            25.729306658586466,
+            26.648475704450163,
+            26.311998139698858
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "position": 3,
+          "finishSeconds": 214.6680429915247,
+          "lapSeconds": [
+            29.734652486371512,
+            26.264848602312618,
+            26.254079662704797,
+            26.283398075464234,
+            26.23268420764896,
+            26.233708656368208,
+            26.232788339104076,
+            26.23375786413564
+          ],
+          "peakKmh": 119.15048837886961,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "position": 4,
+          "finishSeconds": 216.5486426994811,
+          "lapSeconds": [
+            31.035953988009325,
+            26.203023099825906,
+            26.02902693211712,
+            26.20589994724216,
+            26.915409287617564,
+            26.253202640228892,
+            26.207669818653585,
+            26.263475804908637
+          ],
+          "peakKmh": 120.0964475777353,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "position": 5,
+          "finishSeconds": 218.06033655015844,
+          "lapSeconds": [
+            32.32229955375311,
+            26.57518098957366,
+            26.040766919122795,
+            26.27811487188231,
+            26.83218874293503,
+            26.13041404601495,
+            26.97417857952533,
+            25.660473554532928
+          ],
+          "peakKmh": 119.91216755597551,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "position": 6,
+          "finishSeconds": 219.79556792287644,
+          "lapSeconds": [
+            32.902000963991846,
+            27.079004361784946,
+            26.258493285835286,
+            26.282661804189758,
+            26.38545563663456,
+            26.281962636012764,
+            26.68587568453924,
+            26.27909210807124
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "position": 7,
+          "finishSeconds": 221.0689397375518,
+          "lapSeconds": [
+            34.68254277536705,
+            26.268235861041944,
+            26.258433852866176,
+            26.232411282256095,
+            26.232702550643353,
+            27.090322199313675,
+            26.245742714954247,
+            26.231848446857015
+          ],
+          "peakKmh": 118.80833237900819,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "position": 8,
+          "finishSeconds": 222.41402124926245,
+          "lapSeconds": [
+            34.90436451514169,
+            27.62724798413531,
+            25.963412368004583,
+            26.27219534866667,
+            25.908059398619827,
+            27.59267628452804,
+            26.026535267878643,
+            26.259029408250598
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "position": 9,
+          "finishSeconds": 223.63730788691205,
+          "lapSeconds": [
+            36.38801880305009,
+            27.702639670079613,
+            26.30255347819407,
+            26.202948440574104,
+            26.029026358528967,
+            27.001403746324797,
+            26.029888748021136,
+            26.302844724678693
+          ],
+          "peakKmh": 118.8000001316479,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "position": 10,
+          "finishSeconds": 224.93489431097123,
+          "lapSeconds": [
+            36.964440468854434,
+            28.954269604046566,
+            26.26842716481157,
+            26.267653436095756,
+            26.25397486095612,
+            26.283334577833642,
+            26.232649250251228,
+            26.23368876407514
+          ],
+          "peakKmh": 119.83308583753758,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "position": 11,
+          "finishSeconds": 226.53436638073273,
+          "lapSeconds": [
+            37.39319885343293,
+            28.8734807448854,
+            27.056570126957908,
+            26.242090223701908,
+            26.23231535106376,
+            26.232620426948415,
+            26.233668719850044,
+            26.23274029925929
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "position": 12,
+          "finishSeconds": 227.61986298399253,
+          "lapSeconds": [
+            37.29038311314197,
+            29.28381092456705,
+            28.17309733723205,
+            25.606375531209522,
+            26.17203455369514,
+            26.873410472884245,
+            26.381034056612805,
+            25.608026481478106
+          ],
+          "peakKmh": 119.7984604481126,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "position": 13,
+          "finishSeconds": 229.0688637504081,
+          "lapSeconds": [
+            38.57799607980755,
+            28.87636686905857,
+            29.00542090759204,
+            26.029110275932624,
+            26.205892066143804,
+            26.023030992803,
+            26.307982619210264,
+            26.02906013214806
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        }
+      ]
+    },
+    {
+      "id": "france",
+      "laps": 5,
+      "protocol": "Actual RaceSession, 13 cars; player surrogate sends binary steering and pedals at 30Hz using the browser pilot policy. No human performance claim. Finish times exclude the three-second countdown. Traffic/contacts belong to this validation, not the clean reference.",
+      "playerContacts": 25,
+      "entries": [
+        {
+          "id": "t02",
+          "player": false,
+          "position": 1,
+          "finishSeconds": 190.91111502027655,
+          "lapSeconds": [
+            38.36101681011278,
+            37.867795474914246,
+            37.95752003927696,
+            37.904345708710935,
+            37.9332865829401
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t03",
+          "player": false,
+          "position": 2,
+          "finishSeconds": 192.70678975392858,
+          "lapSeconds": [
+            40.060178608183,
+            37.84199428525155,
+            37.9500063242058,
+            37.93378583613662,
+            37.93332590277478
+          ],
+          "peakKmh": 118.80003968734556,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "position": 3,
+          "finishSeconds": 194.4231930098466,
+          "lapSeconds": [
+            41.27516924320219,
+            37.820077061222264,
+            37.996588214864914,
+            37.95251321218409,
+            38.19887734761545
+          ],
+          "peakKmh": 118.80039210912186,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "position": 4,
+          "finishSeconds": 195.87628836572486,
+          "lapSeconds": [
+            42.429025905757726,
+            38.07600179600162,
+            37.95840809624798,
+            37.75164996616071,
+            38.24431311318614
+          ],
+          "peakKmh": 118.80044027682167,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "position": 5,
+          "finishSeconds": 197.43840062623602,
+          "lapSeconds": [
+            43.84989157060461,
+            38.10269558030616,
+            38.1288086641094,
+            37.84566941244644,
+            37.99723712258526
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "position": 6,
+          "finishSeconds": 199.47343180208256,
+          "lapSeconds": [
+            44.82110533775123,
+            38.85927773903601,
+            37.726240391351865,
+            38.83275808632388,
+            37.966471236258855
+          ],
+          "peakKmh": 118.80000048654557,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "position": 7,
+          "finishSeconds": 200.7847302739106,
+          "lapSeconds": [
+            45.85142144821163,
+            38.994426136705584,
+            37.953725567729535,
+            38.372976693962684,
+            37.993727024455495
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "position": 8,
+          "finishSeconds": 202.39036814631677,
+          "lapSeconds": [
+            47.06591392743833,
+            39.16045264083682,
+            38.19865664638108,
+            38.010422582359865,
+            38.15648536291559
+          ],
+          "peakKmh": 118.80115797339907,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "position": 9,
+          "finishSeconds": 203.7898596676853,
+          "lapSeconds": [
+            46.885662935367726,
+            40.62174164382872,
+            37.997334890953084,
+            37.95250081477208,
+            38.19887707349392
+          ],
+          "peakKmh": 118.80000038315382,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "position": 10,
+          "finishSeconds": 205.44644425729308,
+          "lapSeconds": [
+            48.13679511358666,
+            40.69631196639682,
+            38.84975055186729,
+            37.8527972272081,
+            37.96474432067603
+          ],
+          "peakKmh": 119.94907897014373,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "position": 11,
+          "finishSeconds": 207.19653221069976,
+          "lapSeconds": [
+            48.01563533964814,
+            42.321075439294695,
+            38.499480066952756,
+            38.828042041605755,
+            37.79603287691404
+          ],
+          "peakKmh": 118.800002808333,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "position": 12,
+          "finishSeconds": 208.6064116723352,
+          "lapSeconds": [
+            49.47805319215271,
+            41.415223124632924,
+            38.96444749008275,
+            38.83867270328773,
+            37.77405921692767
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "position": 13,
+          "finishSeconds": 210.50023916008334,
+          "lapSeconds": [
+            48.95972624790374,
+            43.797352891917775,
+            38.48037686443271,
+            38.496867221265745,
+            38.79622581755879
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        }
+      ]
+    },
+    {
+      "id": "russia",
+      "laps": 5,
+      "protocol": "Actual RaceSession, 13 cars; player surrogate sends binary steering and pedals at 30Hz using the browser pilot policy. No human performance claim. Finish times exclude the three-second countdown. Traffic/contacts belong to this validation, not the clean reference.",
+      "playerContacts": 32,
+      "entries": [
+        {
+          "id": "t02",
+          "player": false,
+          "position": 1,
+          "finishSeconds": 191.1676243248656,
+          "lapSeconds": [
+            38.347162511035826,
+            37.97181221118882,
+            37.97185176032481,
+            37.972454978060625,
+            37.973987814632494
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "position": 2,
+          "finishSeconds": 192.66262665095365,
+          "lapSeconds": [
+            39.11869340415638,
+            38.02704934800685,
+            38.02623070089612,
+            38.02579621464467,
+            38.02575816441768
+          ],
+          "peakKmh": 118.80493885910701,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "position": 3,
+          "finishSeconds": 194.4428800505711,
+          "lapSeconds": [
+            39.91651719447778,
+            39.23877453436219,
+            38.028311364105534,
+            38.02868797388493,
+            38.02812862680065
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "position": 4,
+          "finishSeconds": 195.90048247517691,
+          "lapSeconds": [
+            40.25025088674483,
+            39.242599687325665,
+            38.85848363067235,
+            37.92166106227411,
+            37.97390591414418
+          ],
+          "peakKmh": 118.80000138440762,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t03",
+          "player": false,
+          "position": 5,
+          "finishSeconds": 197.77558355530198,
+          "lapSeconds": [
+            41.25397792276989,
+            39.969931724429856,
+            38.658642120915246,
+            38.87538734829239,
+            38.02601403088491
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "position": 6,
+          "finishSeconds": 198.88663207709615,
+          "lapSeconds": [
+            42.16910906460387,
+            39.02902119419855,
+            39.225594283368,
+            38.1616985241285,
+            38.693306173749335
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "position": 7,
+          "finishSeconds": 199.78342881324212,
+          "lapSeconds": [
+            41.242782365657305,
+            40.279927421060016,
+            39.89258076945403,
+            38.027698605492986,
+            38.29459007701672
+          ],
+          "peakKmh": 119.1086694960486,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "position": 8,
+          "finishSeconds": 201.17365617530828,
+          "lapSeconds": [
+            41.31512694617057,
+            41.18005584002939,
+            40.262450680309115,
+            39.09883287616856,
+            37.97462788551874
+          ],
+          "peakKmh": 118.88191109144795,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "position": 9,
+          "finishSeconds": 202.34001016273365,
+          "lapSeconds": [
+            42.02748597551636,
+            40.89415759659189,
+            39.83606512782298,
+            38.675980403607966,
+            38.668264904609
+          ],
+          "peakKmh": 119.47580569010259,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "position": 10,
+          "finishSeconds": 203.4963243488719,
+          "lapSeconds": [
+            42.15785891462485,
+            40.770994143750976,
+            40.97654615494774,
+            38.997299795255174,
+            38.74057046610295
+          ],
+          "peakKmh": 121.14978280998575,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "position": 11,
+          "finishSeconds": 204.5507279042227,
+          "lapSeconds": [
+            43.41138615620921,
+            40.90695488107881,
+            40.53365573514155,
+            38.9900072721413,
+            38.87441407883014
+          ],
+          "peakKmh": 118.83962081209947,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "position": 12,
+          "finishSeconds": 205.76600222436508,
+          "lapSeconds": [
+            42.15950088948897,
+            42.86776955728549,
+            39.86479093413108,
+            39.233876501302035,
+            39.397329567893394
+          ],
+          "peakKmh": 118.93733564735737,
+          "observedWallFrames": 0
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "position": 13,
+          "finishSeconds": 206.44113851929416,
+          "lapSeconds": [
+            43.38405678190924,
+            41.716922048764815,
+            41.16619307470779,
+            38.95869793916148,
+            39.16912380620869
+          ],
+          "peakKmh": 118.80000000000003,
+          "observedWallFrames": 0
+        }
+      ]
+    }
+  ]
+}
