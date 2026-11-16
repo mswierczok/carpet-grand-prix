@@ -1,0 +1,1327 @@
+{
+  "version": 1,
+  "sourceCommit": "c2e90fa61c18506d6832f1c22b6aadacc4d16b0f",
+  "protocol": "Isolated car, center lane, start -118 units at rest; 120Hz physics, 30Hz commands. Calibration: independent conservative center-line keyboard pilot, 100-unit braking preview, lateral planning margin 0.85, normal binary commands and unchanged vehicle. Discard first full lap; mean of first three subsequent laps with zero wall/shoulder steps. Contaminated laps excluded/listed. Baseline AI: unchanged pace 1, first three flying laps even if shoulders touched, flagged referenceIsClean=false and never used for lap counts. No human performance claim.",
+  "hashes": {
+    "src/racing/physics.js": "082782a78df28b280f7d38b23d41a5df03ba7e06153e737f22a055a3badd9764",
+    "src/racing/bridge-physics.js": "d85cc9dccf4677412371c964aa6e0f80287a07a3eaf5ba4f444fe7ae04bfe41d",
+    "src/racing/opponents.js": "dfd1f30f729fa32ea199c2185e7620b66ae5cb8ebb3d97c273161cfad36bfc38",
+    "src/racing/opponent-line.js": "33b5337d5cf2db8b086eefaf98fa6808b4993ef1dd63c3231c3ad282e12b657e",
+    "src/racing/timing.js": "481fe30b728721d983e47c7ab08ad2cc933881d8fec9c2ab9a2a63b692ca826c",
+    "src/racing/track-shape.js": "6daa38097b708423268d41829df429b05238965ee7f9065dfdfde8511ac95d88",
+    "src/data/arcade-tracks.js": "22a1ddf491f9a030ef1ecee9f3fac88deec0269ff17625c4096c3a53dc51f165",
+    "src/data/arcade-boundaries.js": "ddd8b5b4d97b122f9e993e2d06b4c0ae9d26c23cbf3d8d1e6aa323621eb5cb00"
+  },
+  "tracks": [
+    {
+      "id": "bahrain",
+      "name": "Bahrain",
+      "length": 2755.294765,
+      "keyboard": {
+        "launchSeconds": 2.157908,
+        "lapSeconds": [
+          29.158602,
+          29.010048,
+          29.106215,
+          29.060976
+        ],
+        "sampleLapSeconds": [
+          29.010048,
+          29.106215,
+          29.060976
+        ],
+        "cleanLapSeconds": [
+          29.010048,
+          29.106215,
+          29.060976
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 29.05908,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.107736,
+        "throttleFraction": 0.675668,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.158696,
+        "lapSeconds": [
+          25.667031,
+          25.960981,
+          26.276937,
+          26.02737
+        ],
+        "sampleLapSeconds": [
+          25.960981,
+          26.276937,
+          26.02737
+        ],
+        "cleanLapSeconds": [
+          25.960981,
+          26.276937,
+          26.02737
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 26.088429,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.040217,
+        "throttleFraction": 0.949729,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "luxembourg",
+      "name": "Luxemburg",
+      "length": 4703.322889,
+      "keyboard": {
+        "launchSeconds": 2.157906,
+        "lapSeconds": [
+          44.583713,
+          44.643939,
+          44.557767,
+          44.545822
+        ],
+        "sampleLapSeconds": [
+          44.643939,
+          44.557767,
+          44.545822
+        ],
+        "cleanLapSeconds": [
+          44.643939,
+          44.557767,
+          44.545822
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 44.58251,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.038044,
+        "throttleFraction": 0.610139,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.157804,
+        "lapSeconds": [
+          43.442419,
+          43.434344,
+          43.433727,
+          43.433276
+        ],
+        "sampleLapSeconds": [
+          43.434344,
+          43.433727,
+          43.433276
+        ],
+        "cleanLapSeconds": [
+          43.434344,
+          43.433727,
+          43.433276
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 43.433782,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.014401,
+        "throttleFraction": 0.978019,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "canada",
+      "name": "Kanada",
+      "length": 3269.519889,
+      "keyboard": {
+        "launchSeconds": 2.157904,
+        "lapSeconds": [
+          32.92841,
+          32.863343,
+          32.852832,
+          32.93783
+        ],
+        "sampleLapSeconds": [
+          32.863343,
+          32.852832,
+          32.93783
+        ],
+        "cleanLapSeconds": [
+          32.863343,
+          32.852832,
+          32.93783
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 32.884668,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.07851,
+        "throttleFraction": 0.64409,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.158846,
+        "lapSeconds": [
+          30.791872,
+          30.772887,
+          30.795327,
+          30.765319
+        ],
+        "sampleLapSeconds": [
+          30.772887,
+          30.795327,
+          30.765319
+        ],
+        "cleanLapSeconds": [
+          30.772887,
+          30.795327,
+          30.765319
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 30.777844,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.035118,
+        "throttleFraction": 0.956635,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "france",
+      "name": "Frankreich",
+      "length": 3824.325173,
+      "keyboard": {
+        "launchSeconds": 2.156678,
+        "lapSeconds": [
+          43.012134,
+          42.8132,
+          42.936993,
+          42.978981
+        ],
+        "sampleLapSeconds": [
+          42.8132,
+          42.936993,
+          42.978981
+        ],
+        "cleanLapSeconds": [
+          42.8132,
+          42.936993,
+          42.978981
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 42.909725,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.137819,
+        "throttleFraction": 0.692735,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.15729,
+        "lapSeconds": [
+          37.791978,
+          37.957491,
+          37.904404,
+          37.933286
+        ],
+        "sampleLapSeconds": [
+          37.957491,
+          37.904404,
+          37.933286
+        ],
+        "cleanLapSeconds": [
+          37.957491,
+          37.904404,
+          37.933286
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 37.931727,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.078482,
+        "throttleFraction": 0.901138,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "switzerland",
+      "name": "Schweiz",
+      "length": 3974.459214,
+      "keyboard": {
+        "launchSeconds": 2.157922,
+        "lapSeconds": [
+          38.655078,
+          38.59477,
+          38.589189,
+          38.584282
+        ],
+        "sampleLapSeconds": [
+          38.59477,
+          38.589189,
+          38.584282
+        ],
+        "cleanLapSeconds": [
+          38.59477,
+          38.589189,
+          38.584282
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 38.589414,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.062374,
+        "throttleFraction": 0.630867,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.158604,
+        "lapSeconds": [
+          36.604579,
+          36.592644,
+          36.592821,
+          36.594403
+        ],
+        "sampleLapSeconds": [
+          36.592644,
+          36.592821,
+          36.594403
+        ],
+        "cleanLapSeconds": [
+          36.592644,
+          36.592821,
+          36.594403
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 36.593289,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.018849,
+        "throttleFraction": 0.978907,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "portugal",
+      "name": "Portugal",
+      "length": 2709.653877,
+      "keyboard": {
+        "launchSeconds": 2.157817,
+        "lapSeconds": [
+          29.236764,
+          29.234219,
+          29.181201,
+          29.220877
+        ],
+        "sampleLapSeconds": [
+          29.234219,
+          29.181201,
+          29.220877
+        ],
+        "cleanLapSeconds": [
+          29.234219,
+          29.181201,
+          29.220877
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 29.212099,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.114534,
+        "throttleFraction": 0.675721,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.162549,
+        "lapSeconds": [
+          25.582197,
+          25.949728,
+          25.800495,
+          25.80012
+        ],
+        "sampleLapSeconds": [
+          25.949728,
+          25.800495,
+          25.80012
+        ],
+        "cleanLapSeconds": [
+          25.949728,
+          25.800495,
+          25.80012
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 25.850114,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.047167,
+        "throttleFraction": 0.937005,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "india",
+      "name": "Indien",
+      "length": 4617.888232,
+      "keyboard": {
+        "launchSeconds": 2.157749,
+        "lapSeconds": [
+          48.67281,
+          48.524732,
+          48.503642,
+          48.545417
+        ],
+        "sampleLapSeconds": [
+          48.524732,
+          48.503642,
+          48.545417
+        ],
+        "cleanLapSeconds": [
+          48.524732,
+          48.503642,
+          48.545417
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 48.524597,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.109636,
+        "throttleFraction": 0.672748,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.158652,
+        "lapSeconds": [
+          43.934889,
+          43.93733,
+          43.932852,
+          43.90082
+        ],
+        "sampleLapSeconds": [
+          43.93733,
+          43.932852,
+          43.90082
+        ],
+        "cleanLapSeconds": [
+          43.93733,
+          43.932852,
+          43.90082
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 43.923667,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.041792,
+        "throttleFraction": 0.944528,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "brazil",
+      "name": "Brasilien",
+      "length": 3163.62531,
+      "keyboard": {
+        "launchSeconds": 2.157884,
+        "lapSeconds": [
+          35.40247,
+          35.362921,
+          35.380641,
+          35.369789
+        ],
+        "sampleLapSeconds": [
+          35.362921,
+          35.380641,
+          35.369789
+        ],
+        "cleanLapSeconds": [
+          35.362921,
+          35.380641,
+          35.369789
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 35.371117,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.142915,
+        "throttleFraction": 0.701873,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.157909,
+        "lapSeconds": [
+          30.635303,
+          30.598141,
+          30.841136,
+          30.568831
+        ],
+        "sampleLapSeconds": [
+          30.598141,
+          30.841136,
+          30.568831
+        ],
+        "cleanLapSeconds": [
+          30.598141,
+          30.841136,
+          30.568831
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 30.669369,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.069707,
+        "throttleFraction": 0.9132,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "south-africa",
+      "name": "Südafrika",
+      "length": 3628.728213,
+      "keyboard": {
+        "launchSeconds": 2.156272,
+        "lapSeconds": [
+          38.990405,
+          38.895349,
+          38.926398,
+          38.983553
+        ],
+        "sampleLapSeconds": [
+          38.895349,
+          38.926398,
+          38.983553
+        ],
+        "cleanLapSeconds": [
+          38.895349,
+          38.926398,
+          38.983553
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 38.9351,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.109101,
+        "throttleFraction": 0.664521,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.150664,
+        "lapSeconds": [
+          35.627408,
+          35.727279,
+          35.794716,
+          35.765892
+        ],
+        "sampleLapSeconds": [
+          35.727279,
+          35.794716,
+          35.765892
+        ],
+        "cleanLapSeconds": [
+          35.727279,
+          35.794716,
+          35.765892
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 35.762629,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.069164,
+        "throttleFraction": 0.912914,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "korea",
+      "name": "Korea",
+      "length": 3689.510196,
+      "keyboard": {
+        "launchSeconds": 2.318175,
+        "lapSeconds": [
+          41.097323,
+          41.231185,
+          41.175817,
+          41.275647
+        ],
+        "sampleLapSeconds": [
+          41.231185,
+          41.175817,
+          41.275647
+        ],
+        "cleanLapSeconds": [
+          41.231185,
+          41.175817,
+          41.275647
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 41.22755,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.13844,
+        "throttleFraction": 0.692799,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.104193,
+        "lapSeconds": [
+          35.971135,
+          36.076604,
+          36.0236,
+          36.076389
+        ],
+        "sampleLapSeconds": [
+          36.076604,
+          36.0236,
+          36.076389
+        ],
+        "cleanLapSeconds": [
+          36.076604,
+          36.0236,
+          36.076389
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 36.058865,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.066777,
+        "throttleFraction": 0.912484,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "usa",
+      "name": "USA",
+      "length": 3639.638601,
+      "keyboard": {
+        "launchSeconds": 2.15794,
+        "lapSeconds": [
+          35.818476,
+          35.869009,
+          35.830188,
+          35.847767
+        ],
+        "sampleLapSeconds": [
+          35.869009,
+          35.830188,
+          35.847767
+        ],
+        "cleanLapSeconds": [
+          35.869009,
+          35.830188,
+          35.847767
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 35.848988,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.073298,
+        "throttleFraction": 0.643131,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.157908,
+        "lapSeconds": [
+          33.773924,
+          33.778591,
+          33.762238,
+          33.772569
+        ],
+        "sampleLapSeconds": [
+          33.778591,
+          33.762238,
+          33.772569
+        ],
+        "cleanLapSeconds": [
+          33.778591,
+          33.762238,
+          33.772569
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 33.771133,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.020644,
+        "throttleFraction": 0.971099,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "belgium",
+      "name": "Belgien",
+      "length": 2670.093045,
+      "keyboard": {
+        "launchSeconds": 2.157531,
+        "lapSeconds": [
+          28.500881,
+          28.398265,
+          28.39065,
+          28.417109
+        ],
+        "sampleLapSeconds": [
+          28.398265,
+          28.39065,
+          28.417109
+        ],
+        "cleanLapSeconds": [
+          28.398265,
+          28.39065,
+          28.417109
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 28.402008,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.104718,
+        "throttleFraction": 0.66542,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.156574,
+        "lapSeconds": [
+          25.738829,
+          25.780126,
+          25.856417,
+          25.798487
+        ],
+        "sampleLapSeconds": [
+          25.780126,
+          25.856417,
+          25.798487
+        ],
+        "cleanLapSeconds": [
+          25.780126,
+          25.856417,
+          25.798487
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 25.811677,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.060443,
+        "throttleFraction": 0.928481,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "sweden",
+      "name": "Schweden",
+      "length": 2566.636046,
+      "keyboard": {
+        "launchSeconds": 2.157915,
+        "lapSeconds": [
+          27.876771,
+          27.787388,
+          27.848221,
+          27.887666
+        ],
+        "sampleLapSeconds": [
+          27.787388,
+          27.848221,
+          27.887666
+        ],
+        "cleanLapSeconds": [
+          27.787388,
+          27.848221,
+          27.887666
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 27.841092,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.122404,
+        "throttleFraction": 0.685624,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.158169,
+        "lapSeconds": [
+          24.871778,
+          24.770674,
+          24.841714,
+          24.900425
+        ],
+        "sampleLapSeconds": [
+          24.770674,
+          24.841714,
+          24.900425
+        ],
+        "cleanLapSeconds": [
+          24.770674,
+          24.841714,
+          24.900425
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 24.837604,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.062038,
+        "throttleFraction": 0.920893,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "germany",
+      "name": "Deutschland",
+      "length": 3230.704576,
+      "keyboard": {
+        "launchSeconds": 2.157444,
+        "lapSeconds": [
+          36.190132,
+          36.178291,
+          36.242411,
+          36.23426
+        ],
+        "sampleLapSeconds": [
+          36.178291,
+          36.242411,
+          36.23426
+        ],
+        "cleanLapSeconds": [
+          36.178291,
+          36.242411,
+          36.23426
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 36.218321,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.141262,
+        "throttleFraction": 0.69996,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.167622,
+        "lapSeconds": [
+          31.761446,
+          31.700208,
+          31.902641,
+          31.623691
+        ],
+        "sampleLapSeconds": [
+          31.700208,
+          31.902641,
+          31.623691
+        ],
+        "cleanLapSeconds": [
+          31.700208,
+          31.902641,
+          31.623691
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 31.74218,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.073811,
+        "throttleFraction": 0.903478,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "japan",
+      "name": "Japan",
+      "length": 4251.196084,
+      "keyboard": {
+        "launchSeconds": 2.157937,
+        "lapSeconds": [
+          46.446343,
+          46.39146,
+          46.347451,
+          46.365298
+        ],
+        "sampleLapSeconds": [
+          46.39146,
+          46.347451,
+          46.365298
+        ],
+        "cleanLapSeconds": [
+          46.39146,
+          46.347451,
+          46.365298
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 46.36807,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.120217,
+        "throttleFraction": 0.679481,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.158494,
+        "lapSeconds": [
+          41.449675,
+          41.56337,
+          41.518132,
+          41.075328
+        ],
+        "sampleLapSeconds": [
+          41.56337,
+          41.518132,
+          41.075328
+        ],
+        "cleanLapSeconds": [
+          41.56337,
+          41.518132,
+          41.075328
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 41.38561,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.062587,
+        "throttleFraction": 0.919332,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "china",
+      "name": "China",
+      "length": 3158.419478,
+      "keyboard": {
+        "launchSeconds": 2.157898,
+        "lapSeconds": [
+          33.753579,
+          33.792582,
+          33.802205,
+          33.833275
+        ],
+        "sampleLapSeconds": [
+          33.792582,
+          33.802205,
+          33.833275
+        ],
+        "cleanLapSeconds": [
+          33.792582,
+          33.802205,
+          33.833275
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 33.809354,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.116012,
+        "throttleFraction": 0.677143,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.158001,
+        "lapSeconds": [
+          29.459919,
+          29.442029,
+          29.455532,
+          29.470817
+        ],
+        "sampleLapSeconds": [
+          29.442029,
+          29.455532,
+          29.470817
+        ],
+        "cleanLapSeconds": [
+          29.442029,
+          29.455532,
+          29.470817
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 29.456126,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.035836,
+        "throttleFraction": 0.957775,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "russia",
+      "name": "Russland",
+      "length": 4175.991568,
+      "keyboard": {
+        "launchSeconds": 2.157897,
+        "lapSeconds": [
+          39.876991,
+          39.855381,
+          39.857446,
+          39.876256
+        ],
+        "sampleLapSeconds": [
+          39.855381,
+          39.857446,
+          39.876256
+        ],
+        "cleanLapSeconds": [
+          39.855381,
+          39.857446,
+          39.876256
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 39.863028,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.054653,
+        "throttleFraction": 0.629853,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.157904,
+        "lapSeconds": [
+          37.980257,
+          37.921638,
+          37.973889,
+          38.03022
+        ],
+        "sampleLapSeconds": [
+          37.921638,
+          37.973889,
+          38.03022
+        ],
+        "cleanLapSeconds": [
+          37.921638,
+          37.973889,
+          38.03022
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 37.975249,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.008654,
+        "throttleFraction": 0.99048,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "australia",
+      "name": "Australien",
+      "length": 3852.977324,
+      "keyboard": {
+        "launchSeconds": 2.157888,
+        "lapSeconds": [
+          39.087538,
+          39.070512,
+          39.132754,
+          39.132248
+        ],
+        "sampleLapSeconds": [
+          39.070512,
+          39.132754,
+          39.132248
+        ],
+        "cleanLapSeconds": [
+          39.070512,
+          39.132754,
+          39.132248
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 39.111838,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.095218,
+        "throttleFraction": 0.666632,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.158202,
+        "lapSeconds": [
+          35.792288,
+          35.759836,
+          35.665724,
+          35.666491
+        ],
+        "sampleLapSeconds": [
+          35.759836,
+          35.665724,
+          35.666491
+        ],
+        "cleanLapSeconds": [
+          35.759836,
+          35.665724,
+          35.666491
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 35.69735,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.024589,
+        "throttleFraction": 0.969436,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "england",
+      "name": "England",
+      "length": 2929.622797,
+      "keyboard": {
+        "launchSeconds": 2.157628,
+        "lapSeconds": [
+          33.997596,
+          33.897392,
+          33.862156,
+          33.875625
+        ],
+        "sampleLapSeconds": [
+          33.897392,
+          33.862156,
+          33.875625
+        ],
+        "cleanLapSeconds": [
+          33.897392,
+          33.862156,
+          33.875625
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 33.878391,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.154339,
+        "throttleFraction": 0.712186,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.16688,
+        "lapSeconds": [
+          29.433722,
+          29.507931,
+          29.543769,
+          29.455089
+        ],
+        "sampleLapSeconds": [
+          29.507931,
+          29.543769,
+          29.455089
+        ],
+        "cleanLapSeconds": [],
+        "excludedLaps": [
+          {
+            "lap": 2,
+            "wallSteps": 0,
+            "shoulderSteps": 25
+          },
+          {
+            "lap": 3,
+            "wallSteps": 0,
+            "shoulderSteps": 18
+          },
+          {
+            "lap": 4,
+            "wallSteps": 0,
+            "shoulderSteps": 25
+          }
+        ],
+        "referenceIsClean": false,
+        "referenceSeconds": 29.502263,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.083536,
+        "throttleFraction": 0.89343,
+        "wallSteps": 0,
+        "shoulderSteps": 92
+      }
+    },
+    {
+      "id": "italy",
+      "name": "Italien",
+      "length": 3348.143705,
+      "keyboard": {
+        "launchSeconds": 2.156555,
+        "lapSeconds": [
+          34.477501,
+          34.471964,
+          34.483031,
+          34.478602
+        ],
+        "sampleLapSeconds": [
+          34.471964,
+          34.483031,
+          34.478602
+        ],
+        "cleanLapSeconds": [
+          34.471964,
+          34.483031,
+          34.478602
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 34.477866,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.094235,
+        "throttleFraction": 0.658754,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.152238,
+        "lapSeconds": [
+          31.556191,
+          31.605183,
+          31.568503,
+          31.587946
+        ],
+        "sampleLapSeconds": [
+          31.605183,
+          31.568503,
+          31.587946
+        ],
+        "cleanLapSeconds": [
+          31.605183,
+          31.568503,
+          31.587946
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 31.587211,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.040475,
+        "throttleFraction": 0.949406,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "hungary",
+      "name": "Ungarn",
+      "length": 3379.210265,
+      "keyboard": {
+        "launchSeconds": 2.157866,
+        "lapSeconds": [
+          35.20182,
+          35.245757,
+          35.220042,
+          35.279976
+        ],
+        "sampleLapSeconds": [
+          35.245757,
+          35.220042,
+          35.279976
+        ],
+        "cleanLapSeconds": [
+          35.245757,
+          35.220042,
+          35.279976
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 35.248592,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.097828,
+        "throttleFraction": 0.663192,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.157982,
+        "lapSeconds": [
+          32.441844,
+          32.466657,
+          32.466236,
+          32.466721
+        ],
+        "sampleLapSeconds": [
+          32.466657,
+          32.466236,
+          32.466721
+        ],
+        "cleanLapSeconds": [
+          32.466657,
+          32.466236,
+          32.466721
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 32.466538,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.052273,
+        "throttleFraction": 0.936616,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    },
+    {
+      "id": "abu-dhabi",
+      "name": "Abu Dhabi",
+      "length": 3590.020114,
+      "keyboard": {
+        "launchSeconds": 2.157903,
+        "lapSeconds": [
+          34.836175,
+          34.857126,
+          34.861994,
+          34.760381
+        ],
+        "sampleLapSeconds": [
+          34.857126,
+          34.861994,
+          34.760381
+        ],
+        "cleanLapSeconds": [
+          34.857126,
+          34.861994,
+          34.760381
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 34.8265,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.064087,
+        "throttleFraction": 0.641574,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      },
+      "ai": {
+        "launchSeconds": 2.157906,
+        "lapSeconds": [
+          32.948216,
+          32.938146,
+          32.934814,
+          32.932901
+        ],
+        "sampleLapSeconds": [
+          32.938146,
+          32.934814,
+          32.932901
+        ],
+        "cleanLapSeconds": [
+          32.938146,
+          32.934814,
+          32.932901
+        ],
+        "excludedLaps": [],
+        "referenceIsClean": true,
+        "referenceSeconds": 32.935287,
+        "peakKmh": 118.8,
+        "brakeFraction": 0.010952,
+        "throttleFraction": 0.983572,
+        "wallSteps": 0,
+        "shoulderSteps": 0
+      }
+    }
+  ]
+}

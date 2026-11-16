@@ -18,7 +18,7 @@ function published(path, ref = baseline) {
 it("lädt veränderte Laufzeitmodule unter neuen URLs statt alte Bahrain-Module aus dem Browsercache zu mischen", () => {
   const references =
     /(?:src|href)="\.\/(src\/[^"?]+|styles\/[^"?]+)(\?[^" ]*)?"/g;
-  const cacheBaseline = "31003409aa5af06939e352a72bad1b823c1a3106";
+  const cacheBaseline = "c2e90fa61c18506d6832f1c22b6aadacc4d16b0f";
   for (const page of ["arcade.html", "arcade3d.html", "race.html"]) {
     const before = new Map(
         [...published(page, cacheBaseline).matchAll(references)].map((m) => [
@@ -417,7 +417,7 @@ it.each(ids.slice(1))(
   "beendet auf %s drei echte Runden mit allen 13 Autos und unveränderten Fahrzeuggrenzen",
   (id) => {
     const { api, data } = loadArcade({ race: true }),
-      race = api.RaceSession.create(data.tracks[id]),
+      race = api.RaceSession.create(data.tracks[id], { laps: 3 }),
       p = race.parameters,
       driver = api.Opponents.create(race.surface, p),
       memory = driver.memory(0, -6);

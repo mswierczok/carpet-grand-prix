@@ -1,5 +1,23 @@
 // Test-only feedback driver. It reads render snapshots and sends real keyboard
 // events; it never changes session state, physics parameters, poses or timing.
+// Preserve the historical three-lap regression scenarios through the public
+// options argument. Only this temporary response is instrumented, never assets
+// on disk or the production UI. Separate tests exercise the real track defaults.
+export async function threeLapRegression(page) {
+  await page.route("**/src/racing/race-session.js*", async (route) => {
+    const response = await route.fetch();
+    await route.fulfill({ response, body: await response.text() + `
+;(() => {
+  const original = CGPArcade.RaceSession;
+  CGPArcade.RaceSession = Object.freeze({ ...original,
+    create(track, options = {}) {
+      return original.create(track, { ...options, laps: options.laps ?? 3 });
+    }
+  });
+})();
+` });
+  });
+}
 export function pilotRace() {
   globalThis.__racePilotPeakSpeeds = {};
   const A = CGPArcade,

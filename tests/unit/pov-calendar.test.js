@@ -100,7 +100,7 @@ it("liefert auf den vier abgenommenen Strecken dieselben Rennen trotz optionaler
     const a = scope.CGPArcade.RaceSession.create(
         scope.CGPArcadeData.tracks[id],
       ),
-      b = after.api.RaceSession.create(after.data.tracks[id]);
+      b = after.api.RaceSession.create(after.data.tracks[id], { laps: 3 });
     a.pause(false);
     b.pause(false);
     for (let frame = 0; frame < 20 * 30; frame++) {
@@ -173,7 +173,7 @@ it.each(newPovIds)(
   "beendet auf %s drei gültige Runden mit dem ganzen Feld ohne Seildurchdringung",
   (id) => {
     const { api, data } = loadArcade({ race: true }),
-      race = api.RaceSession.create(data.tracks[id]),
+      race = api.RaceSession.create(data.tracks[id], { laps: 3 }),
       driver = api.Opponents.create(race.surface, race.parameters),
       memory = driver.memory(0, -6);
     race.pause(false);

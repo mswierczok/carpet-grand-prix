@@ -46,7 +46,6 @@ it("südliche Verlängerungen erhalten die anderen 20 Strecken samt Seilen sowie
     "src/racing/opponents.js",
     "src/racing/opponent-line.js",
     "src/racing/timing.js",
-    "src/racing/race-session.js",
     "src/rendering/camera3d.js",
     "src/rendering/vehicles3d.js",
   ])

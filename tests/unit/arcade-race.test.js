@@ -263,7 +263,7 @@ it("setzt nur das Spielerfahrzeug auf einen freien vorangegangenen Platz zurück
 });
 
 it("beendet ein volles Drei-Runden-Rennen mit 13 echten Zieleinläufen, endlicher Bewegung und stabilen Ergebnissen", () => {
-  const { api, race } = setup(),
+  const { api, race } = setup({ laps: 3 }),
     driver = api.Opponents.create(race.surface, race.parameters),
     memory = driver.memory(0, -6);
   race.pause(false);

@@ -7,7 +7,7 @@
     const surface = A.Surface.create(track),
       parameters = A.Physics.parameters,
       teams = options.teams || CGPArcadeData.roster.teams,
-      laps = options.laps ?? 3,
+      laps = options.laps ?? A.RaceFormats.get(track.id).laps,
       controller = A.Opponents.create(surface, parameters);
     if (!Number.isInteger(laps) || laps < 1)
       throw Error("Ungültige Rundenzahl.");

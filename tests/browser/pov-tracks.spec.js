@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { capture2D, capture3D } from "../helpers/arcade-browser.js";
-import { pilotRace } from "../helpers/arcade-race-browser.js";
+import { pilotRace, threeLapRegression } from "../helpers/arcade-race-browser.js";
 
 async function noWebGL(page) {
   await page.addInitScript(() => {
@@ -215,6 +215,7 @@ for (const id of ["luxembourg", "canada", "france"])
     const errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
     await capture2D(page);
+    await threeLapRegression(page);
     await noWebGL(page);
     await page.goto(`race.html?track=${id}`);
     await page.clock.runFor(32);
