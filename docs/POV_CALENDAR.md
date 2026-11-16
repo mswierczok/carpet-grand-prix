@@ -98,7 +98,10 @@ eine neue Hangbeschleunigung werden nicht eingeführt.
 
 Die bestehende Testserie läuft weiter. Die umfangreichen zusätzlichen Kalender-
 prüfungen werden in CI auf vier Gruppen verteilt; jede neue Strecke ist genau
-einer Gruppe zugeordnet. Lokal prüfen `npm test` und `npm run test:browser`
+einer Gruppe zugeordnet. Die bisherigen Browserprüfungen laufen in zwei parallelen
+Jobs für Desktop und Mobilformat; keine Prüfung wird dabei ausgelassen.
+Modul-/Build-Prüfungen und ihre Vorschauartefakte haben einen eigenen Job.
+Lokal prüfen `npm test` und `npm run test:browser`
 weiterhin alles. Gruppen sind ausschließlich Testauswahl, kein Spielcode.
 
 ## Grenzen

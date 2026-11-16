@@ -22,8 +22,6 @@ jobs:
       - run: npm run check:arcade3d-engine
       - run: npm run check:arcade-boundaries
       - run: npm test -- --exclude tests/unit/pov-calendar.test.js
-      - run: npx playwright install --with-deps chromium
-      - run: npm run test:browser -- --grep-invert 'POV-Kalender:'
       - run: npm run build:offline
       - run: npm run build:arcade-offline
       - run: npm run build:race-preview
@@ -72,6 +70,32 @@ jobs:
         if: failure()
         with:
           name: browser-test-diagnostics
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+  browser-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [chromium, mobile-chromium]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser -- --project=${{ matrix.project }} --grep-invert 'POV-Kalender:'
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-test-diagnostics-${{ matrix.project }}
           path: |
             playwright-report/
             test-results/

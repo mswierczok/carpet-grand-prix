@@ -166,9 +166,15 @@ test("fällt bei einer unbekannten Streckenkennung auf Bahrain zurück", async (
   );
   expect(
     await page.evaluate(() =>
-      CGPArcade.TrackCatalog.tracks.some((t) => t.bridgeU.length),
+      CGPArcade.TrackCatalog.tracks.filter((t) => t.bridgeU.length).map((t) => ({
+        id: t.id,
+        kind: CGPArcadeData.boundaries[t.id].kind,
+      })),
     ),
-  ).toBe(false);
+  ).toEqual([
+    { id: "korea", kind: "bridges" },
+    { id: "russia", kind: "bridges" },
+  ]);
 });
 
 test("enthält alle vier POV-Strecken samt Auswahl und Seilen in der netzwerkfreien Rennversion", async ({
