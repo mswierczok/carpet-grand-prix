@@ -138,6 +138,7 @@
         fleet?.dispose();
         materials.dispose();
         renderer.dispose();
+        renderer.forceContextLoss();
       },
     });
   }

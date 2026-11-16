@@ -140,11 +140,11 @@
           ctx,
           { x: entry.visual.x, y: entry.visual.y, ang: entry.visual.heading },
           entry.teamId,
-          g.width / 64,
+          0.5,
           false,
         );
       }
-      globalThis.CGPRaceSprites.draw(ctx, pose, teamId, g.width / 64, false);
+      globalThis.CGPRaceSprites.draw(ctx, pose, teamId, 0.5, false);
       if (snapshot.car.hitWall) {
         ctx.strokeStyle = "#ad513a";
         ctx.lineWidth = 1.2;

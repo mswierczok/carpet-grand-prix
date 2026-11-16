@@ -53,9 +53,39 @@
         );
         points[i] = pos(i, offsets[i]);
       }
+    const vehicle = A.Physics.parameters,
+      narrow = surface.roadRadius < 8 + vehicle.halfWidth + 2,
+      minimumRadius = vehicle.wheelbase / Math.tan(vehicle.maxSteer),
+      bends = base.map((b, i) =>
+        Math.abs(curvature(base[(i + n - 1) % n], b, base[(i + 1) % n])),
+      );
     function route(lane = 0) {
       if (routes.has(lane)) return routes.get(lane);
-      const pts = lane === 0 ? points : base.map((_, i) => pos(i, lane)),
+      const pts =
+          lane === 0
+            ? points
+            : base.map((_, i) => {
+                const side = pos(i, lane);
+                if (!narrow) return side;
+                // A fixed inner lane cannot turn inside the vehicle's steering
+                // radius. On narrow hairpins the passing lanes converge onto the
+                // racing line; the ordinary traffic controller queues the cars.
+                let bend = 0;
+                for (let d = -3; d <= 3; d++)
+                  bend = Math.max(bend, bends[(i + d + n) % n]);
+                const merge = clamp(
+                  bend *
+                    2 *
+                    (minimumRadius + Math.abs(lane) + vehicle.halfLength) -
+                    1,
+                  0,
+                  1,
+                );
+                return {
+                  x: side.x + (points[i].x - side.x) * merge,
+                  y: side.y + (points[i].y - side.y) * merge,
+                };
+              }),
         cum = [0];
       for (let i = 0; i < n; i++)
         cum.push(

@@ -5,6 +5,7 @@
   function create(surface, parameters) {
     const p = parameters,
       stride = 5,
+      passingOffset = Math.min(8, surface.roadRadius - p.halfWidth - 3),
       lines = A.OpponentLine.create(surface),
       plans = new Map();
     function plan(lane) {
@@ -105,7 +106,7 @@
         state.hold === 0 &&
         (ahead.car.speed < path.pace - 2 || ahead.gap < 20)
       ) {
-        const choices = [-8, 8].filter(
+        const choices = [-passingOffset, passingOffset].filter(
           (target) =>
             Math.abs(target - lane) > 3 &&
             !traffic.some(
@@ -243,7 +244,7 @@
     }
     // Build every racing/passing profile before the countdown. Input updates
     // must never pay the path-planning cost during a race.
-    for (const lane of [-8, -6, 0, 6, 8]) plan(lane);
+    for (const lane of [-passingOffset, -6, 0, 6, passingOffset]) plan(lane);
     return Object.freeze({ memory, input, prepare });
   }
   A.Opponents = Object.freeze({ create });

@@ -1,5 +1,8 @@
 # Bahrain-Rennen mit vollem Feld
 
+Historische erste Rennfassung. Die anschließende Streckengrundlage mit Bahrain,
+Luxemburg, Kanada und Frankreich steht in [POV_TRACKS.md](POV_TRACKS.md).
+
 Dieser Bericht beschreibt die ursprüngliche Lieferung von PR #20. Die später
 gewünschte Sektor-Rundenzählung und das höhere KI-Tempo stehen in
 [ARCADE_SECTORS.md](ARCADE_SECTORS.md).

@@ -3,7 +3,9 @@
 export function pilotRace() {
   globalThis.__racePilotPeakSpeeds = {};
   const A = CGPArcade,
-    surface = A.Surface.create(CGPArcadeData.tracks.bahrain),
+    surface = A.Surface.create(
+      A.TrackCatalog.get(document.getElementById("track").value),
+    ),
     p = A.Physics.parameters,
     driver = A.Opponents.create(surface, p),
     memory = driver.memory(0, -6),

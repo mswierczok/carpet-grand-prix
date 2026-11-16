@@ -5,9 +5,10 @@ Browser-Rennspiel mit Teammanagement, 13 Rennställen, 92 Fahrern und 22 Origina
 [Spiel auf GitHub Pages](https://mswierczok.github.io/carpet-grand-prix/)
 
 Der getrennte Arcade-Modus bietet einen [freien 3D-Fahrtest](arcade3d.html) und
-ein [Bahrain-Rennen mit 13 Fahrzeugen](race.html). Das Rennen nutzt einen eigenen
-Zustand; bestehende Meisterschaftsspielstände bleiben erhalten.
-Umfang und Prüfung: [Volles Startfeld](docs/ARCADE_FULL_GRID.md).
+ein [Rennen mit 13 Fahrzeugen](race.html) auf Bahrain, Luxemburg, Kanada oder
+Frankreich. Das Rennen nutzt einen eigenen Zustand; bestehende
+Meisterschaftsspielstände bleiben erhalten.
+Umfang und Prüfung: [POV-Streckengrundlage](docs/POV_TRACKS.md).
 
 Das Spiel startet aus `index.html` mit den Ordnern `styles/`, `assets/` und `src/`, ohne
 Installation oder Build. Node-Werkzeuge dienen ausschließlich Entwicklung und Tests.

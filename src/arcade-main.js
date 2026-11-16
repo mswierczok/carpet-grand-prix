@@ -2,18 +2,21 @@
   "use strict";
   const A = globalThis.CGPArcade,
     root = document.getElementById("arcadeApp");
-  let canvas = document.getElementById("arcadeCanvas");
   const racing = root.dataset.mode === "race",
-    session = (racing ? A.RaceSession : A.Session).create(
-      CGPArcadeData.tracks.bahrain,
-    ),
-    teams = CGPArcadeData.roster.teams;
+    teams = CGPArcadeData.roster.teams,
+    catalog = A.TrackCatalog,
+    requestedTrack = new URLSearchParams(location.search).get("track");
   const el = (id) => document.getElementById(id),
     format = (seconds) => {
       const ms = Math.max(0, Math.round(seconds * 1000));
       return `${Math.floor(ms / 60000)}:${String(Math.floor(ms / 1000) % 60).padStart(2, "0")}.${String(ms % 1000).padStart(3, "0")}`;
     };
-  let teamId = teams[0].id,
+  let canvas = document.getElementById("arcadeCanvas"),
+    teamId = teams[0].id,
+    trackId = catalog.tracks.some((t) => t.id === requestedTrack)
+      ? requestedTrack
+      : catalog.defaultId,
+    session = createSession(),
     overview = false,
     dirty = true,
     renderer,
@@ -29,13 +32,13 @@
     if (node.textContent !== text) node.textContent = text;
   };
   const raceUI = racing ? A.RaceUI.attach(root, format) : null;
-  function renderNote(message) {
-    if (el("renderNote")) set("renderNote", message);
+  function createSession() {
+    return (racing ? A.RaceSession : A.Session).create(
+      catalog.get(trackId),
+      racing ? { playerTeam: teamId } : {},
+    );
   }
-  function fallbackTo2D(
-    message = "Draufsicht aktiv. Du kannst mit derselben Sitzung weiterfahren.",
-  ) {
-    renderer?.dispose?.();
+  function freshCanvas() {
     const old = canvas;
     canvas = old.cloneNode(false);
     old.replaceWith(canvas);
@@ -43,6 +46,15 @@
       observer.unobserve(old);
       observer.observe(canvas);
     }
+  }
+  function renderNote(message) {
+    if (el("renderNote")) set("renderNote", message);
+  }
+  function fallbackTo2D(
+    message = "Draufsicht aktiv. Du kannst mit derselben Sitzung weiterfahren.",
+  ) {
+    renderer?.dispose?.();
+    freshCanvas();
     renderer = A.Renderer.create(canvas, session.surface);
     active3D = false;
     root.dataset.rendering = "2d";
@@ -51,43 +63,56 @@
     renderNote(message);
     dirty = true;
   }
-  if (root.dataset.renderer === "3d") {
-    try {
-      renderer = A.Renderer3D.create(canvas, session.surface, {
-        invalidate: () => {
-          dirty = true;
-        },
-        onContextLost: () => {
-          session.pause(true);
-          controls.clear();
-          renderNote(
-            "3D-Grafik unterbrochen. Warte auf Wiederherstellung oder fahre in der Draufsicht weiter.",
-          );
-          dirty = true;
-          updateUI();
-        },
-        onContextRestored: () => {
-          renderNote("3D-Grafik wieder bereit. Mit Fahren fortsetzen.");
-          dirty = true;
-        },
-        onQuality: (value) => {
-          if (el("quality")) el("quality").value = value;
-          renderNote("Sparsame Grafik aktiv, um die Darstellung zu entlasten.");
-        },
-      });
-      active3D = true;
-      root.dataset.rendering = "3d";
-    } catch (error) {
-      fallbackTo2D(
-        racing
-          ? "3D ist hier nicht verfügbar. Das Rennen startet in der Draufsicht."
-          : "3D ist hier nicht verfügbar. Der Fahrtest startet in der Draufsicht.",
-      );
+  function createRenderer(threeD = root.dataset.renderer === "3d") {
+    if (threeD) {
+      try {
+        renderer = A.Renderer3D.create(canvas, session.surface, {
+          invalidate: () => {
+            dirty = true;
+          },
+          onContextLost: () => {
+            session.pause(true);
+            controls.clear();
+            renderNote(
+              "3D-Grafik unterbrochen. Warte auf Wiederherstellung oder fahre in der Draufsicht weiter.",
+            );
+            dirty = true;
+            updateUI();
+          },
+          onContextRestored: () => {
+            renderNote("3D-Grafik wieder bereit. Mit Fahren fortsetzen.");
+            dirty = true;
+          },
+          onQuality: (value) => {
+            if (el("quality")) el("quality").value = value;
+            renderNote(
+              "Sparsame Grafik aktiv, um die Darstellung zu entlasten.",
+            );
+          },
+        });
+        active3D = true;
+        root.dataset.rendering = "3d";
+        if (el("fallback")) el("fallback").hidden = false;
+        if (el("quality")) {
+          el("quality").disabled = false;
+          renderer.setQuality(el("quality").value);
+        }
+        renderNote("3D-Verfolgungskamera · " + catalog.get(trackId).name);
+      } catch (error) {
+        fallbackTo2D(
+          racing
+            ? "3D ist hier nicht verfügbar. Das Rennen startet in der Draufsicht."
+            : "3D ist hier nicht verfügbar. Der Fahrtest startet in der Draufsicht.",
+        );
+      }
+    } else {
+      renderer = A.Renderer.create(canvas, session.surface);
+      root.dataset.rendering = "2d";
+      active3D = false;
+      renderNote("Draufsicht · " + catalog.get(trackId).name);
     }
-  } else {
-    renderer = A.Renderer.create(canvas, session.surface);
-    root.dataset.rendering = "2d";
   }
+  createRenderer();
   const controls = A.Controls.attach(root, {
     pause: () => togglePause(),
     recover: () => recover(),
@@ -103,6 +128,30 @@
     option.textContent = team.name;
     el("team").append(option);
   });
+  for (const track of catalog.tracks) {
+    const option = document.createElement("option");
+    option.value = track.id;
+    option.textContent = track.name;
+    el("track").append(option);
+  }
+  function updateTrack() {
+    const track = catalog.get(trackId);
+    root.dataset.track = trackId;
+    el("track").value = trackId;
+    for (const node of root.querySelectorAll("[data-track-name]"))
+      node.textContent = track.name;
+    document.title = `Carpet Grand Prix · ${track.name} · ${racing ? "Rennen" : "Fahrtest"}`;
+    canvas.setAttribute(
+      "aria-label",
+      `${track.name}. W oder Pfeil hoch gibt Gas, S oder Pfeil runter bremst und fährt im Stand rückwärts. A und D lenken. P pausiert, R setzt das Auto zurück.`,
+    );
+    for (const link of root.querySelectorAll("[data-track-link]")) {
+      link.dataset.trackHref ||= link.getAttribute("href");
+      const url = new URL(link.dataset.trackHref, location.href);
+      url.searchParams.set("track", trackId);
+      link.href = url.href;
+    }
+  }
   function updateUI() {
     const s = session.snapshot(),
       t = s.timing;
@@ -191,6 +240,38 @@
     }
     dirty = true;
   };
+  el("track").onchange = (event) => {
+    const next = event.target.value;
+    if (
+      (racing && session.snapshot().race.phase !== "grid") ||
+      !catalog.tracks.some((t) => t.id === next)
+    ) {
+      el("track").value = trackId;
+      return;
+    }
+    if (next === trackId) return;
+    const threeD = active3D;
+    session.pause(true);
+    controls.clear();
+    renderer.dispose?.();
+    trackId = next;
+    session = createSession();
+    freshCanvas();
+    createRenderer(threeD);
+    lastRacePhase = null;
+    sinceDraw = renderBudget = 0;
+    lastFrame = performance.now();
+    updateTrack();
+    const url = new URL(location.href);
+    url.searchParams.set("track", trackId);
+    try {
+      history.replaceState(null, "", url.href);
+    } catch {
+      /* Standalone file policies may disallow history. */
+    }
+    dirty = true;
+    updateUI();
+  };
   if (el("fallback"))
     el("fallback").onclick = () => {
       session.pause(true);
@@ -236,6 +317,7 @@
     }
     requestAnimationFrame(frame);
   }
+  updateTrack();
   updateUI();
   requestAnimationFrame(frame);
   Object.freeze(A);

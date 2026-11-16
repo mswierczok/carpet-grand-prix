@@ -51,6 +51,7 @@
             : "Pause",
       );
       el("team").disabled = r.phase !== "grid";
+      if (el("track")) el("track").disabled = r.phase !== "grid";
       el("recover").disabled = r.phase !== "racing";
       for (const button of root.querySelectorAll("[data-drive]"))
         button.disabled = r.phase === "finishing" || r.phase === "finished";

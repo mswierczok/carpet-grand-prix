@@ -6,6 +6,7 @@ import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
 import { arcadeData } from "./export-arcade-data.js";
+import { automaticDividers } from "./lib/pov-dividers.js";
 const root = new URL("../", import.meta.url);
 
 // Bahrain-only separator guides in the same normalized coordinates as Surface.
@@ -46,8 +47,9 @@ const dividerGuides = [
   },
 ];
 
-function clipDivider(guide, field, surface) {
-  const points = [],
+function clipDivider(guide, field, surface, split = false) {
+  let points = [];
+  const pieces = [],
     cross2 = (a, b) => a[0] * b[1] - a[1] * b[0],
     minus = (a, b) => [a[0] - b[0], a[1] - b[1]],
     edges = field.loops.flatMap((r) =>
@@ -77,31 +79,42 @@ function clipDivider(guide, field, surface) {
         if (points.length) ended = true;
         continue;
       }
-      if (ended)
-        throw Error("Seiltrenner hat mehrere getrennte Fahrflächenstücke.");
+      if (ended) {
+        if (!split)
+          throw Error("Seiltrenner hat mehrere getrennte Fahrflächenstücke.");
+        pieces.push(points);
+        points = [];
+        ended = false;
+      }
       if (!points.length) points.push(at(cuts[j]));
       points.push(at(cuts[j + 1]));
     }
   }
-  if (points.length < 2) throw Error("Seiltrenner erreicht keine Fahrfläche.");
+  if (points.length) pieces.push(points);
+  if (!pieces.length || pieces.some((part) => part.length < 2))
+    throw Error("Seiltrenner erreicht keine Fahrfläche.");
   // Fail loudly if future track edits move the guide onto the light road.
-  for (let i = 0; i < points.length - 1; i++) {
-    const a = points[i],
-      b = points[i + 1],
-      steps = Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1]) * 2);
-    for (let k = 0; k <= steps; k++) {
-      const p = {
-        x: a[0] + ((b[0] - a[0]) * k) / steps,
-        y: a[1] + ((b[1] - a[1]) * k) / steps,
-      };
-      if (
-        surface.project(p).distance <
-        surface.roadRadius + field.railRadius + 1
-      )
-        throw Error("Seiltrenner liegt zu nahe an der hellen Fahrbahn.");
+  for (const points of pieces)
+    for (let i = 0; i < points.length - 1; i++) {
+      const a = points[i],
+        b = points[i + 1],
+        steps = Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1]) * 2);
+      for (let k = 0; k <= steps; k++) {
+        const p = {
+          x: a[0] + ((b[0] - a[0]) * k) / steps,
+          y: a[1] + ((b[1] - a[1]) * k) / steps,
+        };
+        if (
+          surface.project(p).distance <
+          surface.roadRadius + field.railRadius + 1
+        )
+          throw Error("Seiltrenner liegt zu nahe an der hellen Fahrbahn.");
+      }
     }
-  }
-  return points.map((p) => p.map((v) => Math.round(v * 1e6) / 1e6));
+  const rounded = pieces.map((points) =>
+    points.map((p) => p.map((v) => Math.round(v * 1e6) / 1e6)),
+  );
+  return split ? rounded : rounded[0];
 }
 
 function simplifyRing(ring, epsilon = 0.08) {
@@ -171,9 +184,8 @@ function simple(polygons) {
   return true;
 }
 
-export function boundaryData() {
-  const track = arcadeData().track,
-    scope = {};
+export function boundaryData(track = arcadeData().track) {
+  const scope = {};
   runInNewContext(
     readFileSync(new URL("src/racing/track-surface.js", root), "utf8"),
     scope,
@@ -196,7 +208,13 @@ export function boundaryData() {
       ring.push([a.x + Math.cos(t) * r, a.y + Math.sin(t) * r]);
     }
     ring.push(ring[0]);
-    polygons.push([ring]);
+    // Shared cap vertices on dense new drawings need a stable build-time grid
+    // for polygon union. Keep the accepted Bahrain boundary byte-identical.
+    polygons.push([
+      track.id === "bahrain"
+        ? ring
+        : ring.map((point) => point.map((v) => Math.round(v * 1e6) / 1e6)),
+    ]);
   }
   const exact = clipping.union(...polygons),
     simplified = exact.map((p) => p.map((r) => simplifyRing(r)));
@@ -227,14 +245,25 @@ export function boundaryData() {
       .digest("hex"),
     radius: r,
     polygons: polygonsUnion,
-    dividers: dividerGuides.map(({ id, points }) => ({
-      id,
-      points: clipDivider(points, field, surface),
-    })),
+    dividers:
+      track.id === "bahrain"
+        ? dividerGuides.map(({ id, points }) => ({
+            id,
+            points: clipDivider(points, field, surface),
+          }))
+        : automaticDividers(surface, field, (guide) =>
+            clipDivider(guide, field, surface, true),
+          ),
   };
 }
 export function boundaryScript() {
-  return `/* Closed driving-area boundary. Regenerate: npm run build:arcade-boundaries */\n(()=>{const freeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(freeze);Object.freeze(v);}return v;};globalThis.CGPArcadeData=globalThis.CGPArcadeData||{};CGPArcadeData.boundaries=freeze(${JSON.stringify({ bahrain: boundaryData() })});})();\n`;
+  const data = Object.fromEntries(
+    Object.values(arcadeData().tracks).map((track) => [
+      track.id,
+      boundaryData(track),
+    ]),
+  );
+  return `/* Closed driving-area boundary. Regenerate: npm run build:arcade-boundaries */\n(()=>{const freeze=v=>{if(v&&typeof v==='object'){Object.values(v).forEach(freeze);Object.freeze(v);}return v;};globalThis.CGPArcadeData=globalThis.CGPArcadeData||{};CGPArcadeData.boundaries=freeze(${JSON.stringify(data)});})();\n`;
 }
 if (
   process.argv[1] &&
