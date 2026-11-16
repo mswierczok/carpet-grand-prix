@@ -201,6 +201,7 @@
           if (
             !surface.boundary.blocksFootprint(
               A.VehicleContacts.footprint(predicted, p),
+              predicted.s,
             ) &&
             !others.some(
               (other) =>

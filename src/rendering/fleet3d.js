@@ -97,8 +97,13 @@
         if (entry.player) continue;
         const model = cache.get(entry.teamId) || bake(entry.teamId);
         model.visible = true;
-        model.position.set(entry.visual.x, 0, entry.visual.y);
+        model.position.set(
+          entry.visual.x,
+          entry.visual.elevation || 0,
+          entry.visual.y,
+        );
         model.rotation.y = -entry.visual.heading;
+        model.rotation.z = entry.visual.pitch || 0;
       }
     }
     return Object.freeze({

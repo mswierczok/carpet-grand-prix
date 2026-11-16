@@ -32,12 +32,12 @@
           look = 14 + speed * 0.09;
         position = {
           x: pose.x - forward.x * distance,
-          y: height,
+          y: height + (pose.elevation || 0),
           z: pose.y - forward.z * distance,
         };
         target = {
           x: pose.x + forward.x * look,
-          y: 1.2,
+          y: 1.2 + (pose.elevation || 0),
           z: pose.y + forward.z * look,
         };
       }

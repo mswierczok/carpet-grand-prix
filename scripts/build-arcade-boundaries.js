@@ -1,5 +1,6 @@
 // Build-time polygon union only. Players receive coordinates, not this library.
 import clipping from "polygon-clipping";
+import ClipperLib from "clipper-lib";
 import { readFileSync, writeFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
 import { createHash } from "node:crypto";
@@ -7,6 +8,7 @@ import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
 import { arcadeData } from "./export-arcade-data.js";
 import { automaticDividers } from "./lib/pov-dividers.js";
+import { bridgeBoundaries } from "./lib/pov-bridges.js";
 const root = new URL("../", import.meta.url);
 
 // Bahrain-only separator guides in the same normalized coordinates as Surface.
@@ -184,17 +186,9 @@ function simple(polygons) {
   return true;
 }
 
-export function boundaryData(track = arcadeData().track) {
-  const scope = {};
-  runInNewContext(
-    readFileSync(new URL("src/racing/track-surface.js", root), "utf8"),
-    scope,
-  );
-  const surface = scope.CGPArcade.Surface.create(track),
-    pts = surface.g.pts,
-    r = surface.outerRadius;
+function corridorPolygons(pts, r, track, closed = true) {
   const polygons = [];
-  for (let i = 0; i < pts.length; i++) {
+  for (let i = 0; i < (closed ? pts.length : pts.length - 1); i++) {
     const a = pts[i],
       b = pts[(i + 1) % pts.length],
       angle = Math.atan2(b.y - a.y, b.x - a.x),
@@ -216,14 +210,93 @@ export function boundaryData(track = arcadeData().track) {
         : ring.map((point) => point.map((v) => Math.round(v * 1e6) / 1e6)),
     ]);
   }
-  const exact = clipping.union(...polygons),
-    simplified = exact.map((p) => p.map((r) => simplifyRing(r)));
+  let exact;
+  if (track.index < 4) exact = clipping.union(...polygons);
+  else {
+    // A fixed integer grid avoids unstable floating sweep intersections on
+    // dense new drawings. Build dependency only; preserve accepted tracks.
+    const clipper = new ClipperLib.Clipper(),
+      tree = new ClipperLib.PolyTree(),
+      unit = 1e5;
+    clipper.AddPaths(
+      polygons.map((p) =>
+        p[0].slice(0, -1).map(([x, y]) => ({
+          X: Math.round(x * unit),
+          Y: Math.round(y * unit),
+        })),
+      ),
+      ClipperLib.PolyType.ptSubject,
+      true,
+    );
+    if (
+      !clipper.Execute(
+        ClipperLib.ClipType.ctUnion,
+        tree,
+        ClipperLib.PolyFillType.pftNonZero,
+        ClipperLib.PolyFillType.pftNonZero,
+      )
+    )
+      throw Error(`${track.id}: Seilkontur konnte nicht geschlossen werden.`);
+    exact = [];
+    const ring = (node) => {
+      const points = node.Contour().map((p) => [p.X / unit, p.Y / unit]);
+      return [...points, points[0]];
+    };
+    function collect(node) {
+      if (node.Contour().length && !node.IsHole())
+        exact.push([
+          ring(node),
+          ...node
+            .Childs()
+            .filter((n) => n.IsHole())
+            .map(ring),
+        ]);
+      node.Childs().forEach(collect);
+    }
+    collect(tree);
+    if (!exact.length) throw Error(`${track.id}: Leere Fahrfläche.`);
+  }
+  const simplified = exact.map((p) => p.map((r) => simplifyRing(r)));
   const chosen = simple(simplified) ? simplified : exact;
-  const polygonsUnion = chosen.map((polygon) =>
+  return chosen.map((polygon) =>
     polygon.map((ring) =>
       ring.map((point) => point.map((n) => Math.round(n * 1e6) / 1e6)),
     ),
   );
+}
+
+export function boundaryData(track = arcadeData().track) {
+  const scope = {};
+  runInNewContext(
+    readFileSync(new URL("src/racing/track-surface.js", root), "utf8"),
+    scope,
+  );
+  const surface = scope.CGPArcade.Surface.create(track),
+    pts = surface.g.pts,
+    r = surface.outerRadius;
+  if (track.bridgeU.length) {
+    const content = bridgeBoundaries(track, surface, (points) =>
+      corridorPolygons(points, r, track, false),
+    );
+    return {
+      version: 3,
+      id: track.id,
+      sourceSHA256: createHash("sha256")
+        .update(
+          JSON.stringify({
+            points: track.points,
+            pit: track.pit,
+            width: track.width,
+            pov: track.pov,
+            bridgeU: track.bridgeU,
+          }),
+        )
+        .digest("hex"),
+      radius: r,
+      ...content,
+    };
+  }
+  const polygonsUnion = corridorPolygons(pts, r, track);
   runInNewContext(
     readFileSync(new URL("src/racing/boundary-field.js", root), "utf8"),
     scope,

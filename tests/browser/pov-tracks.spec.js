@@ -21,7 +21,7 @@ test("wechselt alle vier echten 3D-Strecken, erhält das Team und gibt alte WebG
   await capture3D(page);
   await page.goto("race.html?track=luxembourg");
   await page.clock.runFor(64);
-  await expect(page.locator("#track option")).toHaveCount(4);
+  await expect(page.locator("#track option")).toHaveCount(22);
   await page.locator("#quality").selectOption("low");
   await page.locator("#team").selectOption("t05");
   for (const id of ["canada", "france", "bahrain", "luxembourg"]) {
@@ -152,12 +152,12 @@ test("wechselt im freien POV-Fahren sicher die Strecke und löst gehaltene Einga
   );
 });
 
-test("lädt eine noch nicht freigegebene Brückenstrecke nicht als flache POV-Strecke", async ({
+test("fällt bei einer unbekannten Streckenkennung auf Bahrain zurück", async ({
   page,
 }) => {
   await capture2D(page);
   await noWebGL(page);
-  await page.goto("race.html?track=korea");
+  await page.goto("race.html?track=atlantis");
   await page.clock.runFor(32);
   await expect(page.locator("#track")).toHaveValue("bahrain");
   await expect(page.locator("#arcadeApp")).toHaveAttribute(

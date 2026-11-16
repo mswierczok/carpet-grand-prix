@@ -11,7 +11,7 @@
       if ((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x) > 0)
         [b, c] = [c, b];
       for (const p of [a, b, c]) {
-        positions.push(p.x, height, p.y);
+        positions.push(p.x, height + (p.elevation || 0), p.y);
         uv.push(p.x / 9, p.y / 9);
       }
     }
@@ -21,10 +21,12 @@
         len = Math.hypot(b.x - a.x, b.y - a.y),
         nx = (-(b.y - a.y) / len) * radius,
         ny = ((b.x - a.x) / len) * radius;
-      const al = { x: a.x - nx, y: a.y - ny },
-        ar = { x: a.x + nx, y: a.y + ny },
-        bl = { x: b.x - nx, y: b.y - ny },
-        br = { x: b.x + nx, y: b.y + ny };
+      const elevationA = surface.bridge?.heightAt(surface.g.cum[i]) || 0,
+        elevationB = surface.bridge?.heightAt(surface.g.cum[i + 1]) || 0,
+        al = { x: a.x - nx, y: a.y - ny, elevation: elevationA },
+        ar = { x: a.x + nx, y: a.y + ny, elevation: elevationA },
+        bl = { x: b.x - nx, y: b.y - ny, elevation: elevationB },
+        br = { x: b.x + nx, y: b.y + ny, elevation: elevationB };
       triangle(al, ar, br);
       triangle(al, br, bl);
       const prev = pts[(i - 1 + pts.length) % pts.length],
@@ -41,14 +43,16 @@
           const angle = start + (turn * j) / steps,
             next = start + (turn * (j + 1)) / steps;
           triangle(
-            a,
+            { ...a, elevation: elevationA },
             {
               x: a.x + Math.cos(next) * radius,
               y: a.y + Math.sin(next) * radius,
+              elevation: elevationA,
             },
             {
               x: a.x + Math.cos(angle) * radius,
               y: a.y + Math.sin(angle) * radius,
+              elevation: elevationA,
             },
           );
         }
@@ -62,6 +66,8 @@
   }
   function boundaryGeometry(surface, height = 0.035) {
     if (!surface.boundary) throw Error("Geschlossene Streckengrenzen fehlen.");
+    if (surface.bridge)
+      return roadGeometry(surface, surface.outerRadius, height);
     const positions = [],
       uv = [];
     for (const polygon of surface.boundary.polygons) {
@@ -90,7 +96,7 @@
   }
   function boundaryCurve(ring, height = 0.77, closed = true) {
     const points = (closed ? ring.slice(0, -1) : ring).map(
-      (p) => new T.Vector3(p[0], height, p[1]),
+      (p) => new T.Vector3(p[0], height + (p[2] || 0), p[1]),
     );
     const parameter = (t) =>
       closed
@@ -159,6 +165,11 @@
       geometry(roadGeometry(surface, surface.roadRadius, 0.07)),
       materials.basic("#f9efd6", { map: materials.maps.carpet }),
     );
+    if (surface.bridge)
+      mesh(
+        geometry(roadGeometry(surface, surface.outerRadius, -0.8)),
+        materials.basic("#796447", { side: T.DoubleSide }),
+      );
     const ropeCanvas = document.createElement("canvas");
     ropeCanvas.width = 128;
     ropeCanvas.height = 32;
@@ -181,15 +192,18 @@
     ropeMap.wrapS = T.RepeatWrapping;
     ropeMap.repeat.set(280, 1);
     const yarn = materials.toon("#f5e4bd", ropeMap);
-    for (const ring of surface.boundary.loops)
+    const rails = surface.bridge
+      ? surface.boundary.rails
+      : surface.boundary.loops.map((points) => ({ points, closed: true }));
+    for (const { points, closed } of rails)
       mesh(
         geometry(
           new T.TubeGeometry(
-            boundaryCurve(ring),
-            ring.length - 1,
+            boundaryCurve(points, 0.77, closed),
+            points.length - 1,
             surface.boundary.railRadius,
             6,
-            true,
+            closed,
           ),
         ),
         yarn,
@@ -259,6 +273,16 @@
         surface.outerRadius + r + 3
       );
     }
+    for (const b of surface.bridge?.specs || [])
+      for (const end of [-1, 1])
+        for (const side of [-1, 1]) {
+          const p = surface.at(
+            b.center + end * (b.plateau - 4),
+            side * (surface.outerRadius + 8),
+          );
+          if (free(p, 2))
+            box(p.x, (b.height - 1) / 2, p.y, 3, b.height - 1, 3, wood, -p.ang);
+        }
     const blockColors = ["#3d8181", "#b95e48", "#d1a247", "#516a82"];
     for (let i = 0; i < 24; i++) {
       const s = ((i + 0.45) * g.len) / 24,

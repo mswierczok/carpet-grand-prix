@@ -1,5 +1,8 @@
 # POV-Streckengrundlage – vier fahrbare Strecken
 
+Historie der ersten vier Strecken. Der weitere Ausbau auf alle 22 Strecken und
+die Brücken sind in [POV_CALENDAR.md](POV_CALENDAR.md) beschrieben.
+
 16. November 2026. Freigegebenes erstes Paket vor der Hauptspiel-Anbindung:
 gemeinsame Aufbereitung und Auswahl sowie Luxemburg, Kanada und Frankreich.
 Basis: veröffentlichtes `main` `e50dee17a07a315321485328f8625d4d660f18ce`.
