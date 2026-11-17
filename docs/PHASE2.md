@@ -4,6 +4,8 @@ Fortschreibung: Schritt 2.1 ist mit PR #27 übernommen. Die freigegebene Fortset
 2.2 wird in [AI_DIFFICULTY.md](AI_DIFFICULTY.md) dokumentiert.
 Schritt 2.2 ist mit PR #28 übernommen. Die freigegebene Fortsetzung 2.3 steht
 in [SLIPSTREAM.md](SLIPSTREAM.md); Schritt 2.4 bleibt separat.
+Schritt 2.3 ist mit PR #29 übernommen. Die freigegebene Fortsetzung 2.4 wird
+in [CATCHUP.md](CATCHUP.md) dokumentiert.
 
 ## Bestandsaufnahme am 16. November 2026
 

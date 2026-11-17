@@ -103,7 +103,7 @@ it("liefert auf den vier abgenommenen Strecken dieselben Rennen trotz optionaler
     const a = scope.CGPArcade.RaceSession.create(
         scope.CGPArcadeData.tracks[id],
       ),
-      b = after.api.RaceSession.create(after.data.tracks[id], { laps: 3, slipstream: false });
+      b = after.api.RaceSession.create(after.data.tracks[id], { laps: 3, slipstream: false, catchup: false });
     a.pause(false);
     b.pause(false);
     for (let frame = 0; frame < 20 * 30; frame++) {

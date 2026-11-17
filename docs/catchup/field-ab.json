@@ -1,0 +1,3744 @@
+{
+  "version": 1,
+  "measuredAt": "2026-11-17T14:21:43.759Z",
+  "baseCommit": "2bc124a11c274c0f52eb516bd9a0f1ea9e0d377f",
+  "hashes": {
+    "src/racing/catchup.js": "de512d62d18328762223637b5895a16ae6625495d578b8f87aefa05a3f3c88b9",
+    "src/racing/race-gaps.js": "79b41f1ecc444cb064f7b2256c031eaf3c4da6366e114b9e0b2d80f74ef3ffac",
+    "src/racing/race-session.js": "5f223174fe26d72445a58c2570d40ed33a0ccf3cb21235b705bbba7553612fee",
+    "src/racing/slipstream.js": "32925f0f4203d3e93108cb45ede646805d4561f27f762dc12e8a83b5b0fda2c1",
+    "src/racing/opponents.js": "65f3941f360babe90286ffcf9d3c8e0d7be37002f8d6eeef7b45a0e227ee5354",
+    "src/racing/opponent-line.js": "5946ff84efc6ad562639de488d04f882028bd9ea7cb7c0d3844755236d8c6dd3",
+    "src/racing/ai-difficulty.js": "0e744f574eb96a73fd36e0cc03d405c6d1c768774c28698df4224295f7f1ca88",
+    "src/racing/physics.js": "082782a78df28b280f7d38b23d41a5df03ba7e06153e737f22a055a3badd9764",
+    "src/racing/bridge-physics.js": "d85cc9dccf4677412371c964aa6e0f80287a07a3eaf5ba4f444fe7ae04bfe41d",
+    "src/racing/vehicle-contacts.js": "96c012415ddf9d169a952d8226b78d0f242bb76e5466accb89ccfb6423fe9248",
+    "src/racing/track-surface.js": "88a759d87d9927a6275dee629029bb7279eeadacb330397b895acc9688a62c28",
+    "src/racing/track-shape.js": "6daa38097b708423268d41829df429b05238965ee7f9065dfdfde8511ac95d88",
+    "src/racing/bridge-surface.js": "b06a944a11c3b072df0a21c8f9caf826095d94c6f2b475cad33b7ca94565d89f",
+    "src/racing/timing.js": "481fe30b728721d983e47c7ab08ad2cc933881d8fec9c2ab9a2a63b692ca826c",
+    "src/data/arcade-tracks.js": "22a1ddf491f9a030ef1ecee9f3fac88deec0269ff17625c4096c3a53dc51f165",
+    "src/data/arcade-boundaries.js": "ddd8b5b4d97b122f9e993e2d06b4c0ae9d26c23cbf3d8d1e6aa323621eb5cb00",
+    "src/data/race-formats.js": "14a1df80a6442190b2cddd3e510aee3ab3a655ff71b13ac92819697d745e55b5",
+    "tests/helpers/arcade.js": "b826bd238d07be9d5dc7baa0b971a078486e323cc68f1f209d484b676813d7fa",
+    "scripts/measure-catchup.js": "2b7daabad245c53fd88d1848d84d48336075e0aac1956b9064d1f18e864afdd7"
+  },
+  "protocol": "Actual 120Hz RaceSession, 13 cars, slipstream enabled on both sides, normal difficulty, two laps. Binary keyboard-equivalent player surrogate at 30Hz; no human performance or FPS claim. Observations at 30Hz, contacts/shoulders/walls are vehicle frames, not unique incidents. Assistance rank is the pre-step rank that determined the actual force, not a retroactively changed rank. Finished drivers receive no assistance; outlap contact/peak observations remain included.",
+  "runs": [
+    {
+      "id": "bahrain",
+      "enabled": false,
+      "laps": 2,
+      "difficulty": "normal",
+      "playerContacts": 36,
+      "settings": {
+        "maxPace": 0.012,
+        "recoveryPace": 0.003,
+        "startSeconds": 8,
+        "gapStartSeconds": 2,
+        "fullGapSeconds": 10,
+        "duelMinSeconds": 0.7,
+        "duelFullSeconds": 1.8,
+        "duelFloor": 0.25,
+        "riseSeconds": 0.8,
+        "fallSeconds": 1.2,
+        "errorHoldSeconds": 0.35,
+        "recoverySeconds": 8,
+        "cooldownSeconds": 4
+      },
+      "entries": [
+        {
+          "id": "t03",
+          "player": false,
+          "lapSeconds": [
+            26.55311854491931,
+            26.03454875322323
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.80000005525994,
+          "wallFrames": 0,
+          "contactFrames": 8,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 1,
+          "finishSeconds": 53.55662778700267,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t02",
+          "player": false,
+          "lapSeconds": [
+            27.584561513936173,
+            26.555402903937726
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.02359558517882,
+          "wallFrames": 0,
+          "contactFrames": 8,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 2,
+          "finishSeconds": 55.04663844580189,
+          "gapToWinnerSeconds": 1.4900106587992212
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "lapSeconds": [
+            28.6708834615828,
+            26.779616606423296
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.6321894447951,
+          "wallFrames": 0,
+          "contactFrames": 5,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 3,
+          "finishSeconds": 56.69721936082338,
+          "gapToWinnerSeconds": 3.140591573820714
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "lapSeconds": [
+            31.540329655118924,
+            26.01451022531584
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.00057531261292,
+          "wallFrames": 0,
+          "contactFrames": 9,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 4,
+          "finishSeconds": 59.03129606428708,
+          "gapToWinnerSeconds": 5.474668277284415
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "lapSeconds": [
+            32.147769159785454,
+            27.373990886099634
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.60071460181447,
+          "wallFrames": 0,
+          "contactFrames": 15,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 5,
+          "finishSeconds": 60.719885143298654,
+          "gapToWinnerSeconds": 7.163257356295986
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "lapSeconds": [
+            33.4548445568672,
+            28.055827868438698
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.21569289430886,
+          "wallFrames": 0,
+          "contactFrames": 11,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 6,
+          "finishSeconds": 62.94565360618287,
+          "gapToWinnerSeconds": 9.389025819180205
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "lapSeconds": [
+            34.042074128462964,
+            28.270956134527033
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.65435631958162,
+          "wallFrames": 0,
+          "contactFrames": 35,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 7,
+          "finishSeconds": 63.9565534522767,
+          "gapToWinnerSeconds": 10.399925665274033
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "lapSeconds": [
+            35.32662793948124,
+            27.59528488479409
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.25236544158061,
+          "wallFrames": 0,
+          "contactFrames": 43,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 8,
+          "finishSeconds": 64.77411755566533,
+          "gapToWinnerSeconds": 11.21748976866266
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "lapSeconds": [
+            34.79816304125632,
+            29.347446549583644
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.55755186864431,
+          "wallFrames": 0,
+          "contactFrames": 38,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 9,
+          "finishSeconds": 65.82357109612484,
+          "gapToWinnerSeconds": 12.26694330912217
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "lapSeconds": [
+            35.46255171405501,
+            28.846383232125064
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.36879356677099,
+          "wallFrames": 0,
+          "contactFrames": 41,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 10,
+          "finishSeconds": 66.6321277783458,
+          "gapToWinnerSeconds": 13.075499991343136
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "lapSeconds": [
+            35.57331812418166,
+            30.157123731263276
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.51218420781713,
+          "wallFrames": 0,
+          "contactFrames": 56,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 11,
+          "finishSeconds": 67.59448829511446,
+          "gapToWinnerSeconds": 14.037860508111791
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "lapSeconds": [
+            35.956956230943476,
+            30.540494790660915
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.62844730777648,
+          "wallFrames": 0,
+          "contactFrames": 16,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 12,
+          "finishSeconds": 68.56350972700503,
+          "gapToWinnerSeconds": 15.006881940002359
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "lapSeconds": [
+            36.793944685741074,
+            31.151842048209048
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.88379467199167,
+          "wallFrames": 0,
+          "contactFrames": 35,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 13,
+          "finishSeconds": 70.01744201796626,
+          "gapToWinnerSeconds": 16.460814230963592
+        }
+      ]
+    },
+    {
+      "id": "bahrain",
+      "enabled": true,
+      "laps": 2,
+      "difficulty": "normal",
+      "playerContacts": 41,
+      "settings": {
+        "maxPace": 0.012,
+        "recoveryPace": 0.003,
+        "startSeconds": 8,
+        "gapStartSeconds": 2,
+        "fullGapSeconds": 10,
+        "duelMinSeconds": 0.7,
+        "duelFullSeconds": 1.8,
+        "duelFloor": 0.25,
+        "riseSeconds": 0.8,
+        "fallSeconds": 1.2,
+        "errorHoldSeconds": 0.35,
+        "recoverySeconds": 8,
+        "cooldownSeconds": 4
+      },
+      "entries": [
+        {
+          "id": "t03",
+          "player": false,
+          "lapSeconds": [
+            26.55311854491931,
+            26.03454875322323
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.80000005525994,
+          "wallFrames": 0,
+          "contactFrames": 8,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0.22621911125247057,
+          "position": 1,
+          "finishSeconds": 53.55662778700267,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t02",
+          "player": false,
+          "lapSeconds": [
+            27.584561513936173,
+            26.555402903937726
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.02359558517882,
+          "wallFrames": 0,
+          "contactFrames": 8,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 1.5000382149185825,
+          "position": 2,
+          "finishSeconds": 55.04663844580189,
+          "gapToWinnerSeconds": 1.4900106587992212
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "lapSeconds": [
+            28.67092848764135,
+            26.7796502627955
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.6321894447951,
+          "wallFrames": 0,
+          "contactFrames": 5,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 3.14896065419056,
+          "position": 3,
+          "finishSeconds": 56.697298043254136,
+          "gapToWinnerSeconds": 3.140670256251468
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "lapSeconds": [
+            31.2697897607044,
+            26.180857238120545
+          ],
+          "peakPace": 0.0006744799979937875,
+          "assistedSeconds": 50.299999999999706,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 50.299999999999706,
+          "peakKmh": 118.93511655674078,
+          "wallFrames": 0,
+          "contactFrames": 10,
+          "shoulderFrames": 0,
+          "positions": [
+            5,
+            4
+          ],
+          "maxLeaderGapSeconds": 5.399509646411602,
+          "position": 4,
+          "finishSeconds": 58.927103182677264,
+          "gapToWinnerSeconds": 5.370475395674596
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "lapSeconds": [
+            32.022883283003495,
+            27.06180933380717
+          ],
+          "peakPace": 0.0006161861670554521,
+          "assistedSeconds": 51.09999999999966,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 51.09999999999966,
+          "peakKmh": 120.04048898896754,
+          "wallFrames": 0,
+          "contactFrames": 16,
+          "shoulderFrames": 0,
+          "positions": [
+            4,
+            5
+          ],
+          "maxLeaderGapSeconds": 6.767617289568506,
+          "position": 5,
+          "finishSeconds": 60.28281771422423,
+          "gapToWinnerSeconds": 6.7261899272215615
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "lapSeconds": [
+            33.017420600108935,
+            26.887477668768625
+          ],
+          "peakPace": 0.0007084692870944277,
+          "assistedSeconds": 53.266666666666204,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 53.266666666666204,
+          "peakKmh": 119.21569289430886,
+          "wallFrames": 0,
+          "contactFrames": 11,
+          "shoulderFrames": 0,
+          "positions": [
+            6
+          ],
+          "maxLeaderGapSeconds": 7.8869753235965945,
+          "position": 6,
+          "finishSeconds": 61.339879449754534,
+          "gapToWinnerSeconds": 7.783251662751866
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "lapSeconds": [
+            33.162676741827056,
+            28.199286377976996
+          ],
+          "peakPace": 0.0022132180884069505,
+          "assistedSeconds": 54.29999999999948,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 54.29999999999948,
+          "peakKmh": 120.68440013406563,
+          "wallFrames": 0,
+          "contactFrames": 34,
+          "shoulderFrames": 0,
+          "positions": [
+            7
+          ],
+          "maxLeaderGapSeconds": 9.498612653153899,
+          "position": 7,
+          "finishSeconds": 63.03992462508892,
+          "gapToWinnerSeconds": 9.483296838086254
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "lapSeconds": [
+            34.26666163137174,
+            28.11185677764324
+          ],
+          "peakPace": 0.0017805250008681084,
+          "assistedSeconds": 54.76666666666612,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 54.76666666666612,
+          "peakKmh": 119.01152637010311,
+          "wallFrames": 0,
+          "contactFrames": 54,
+          "shoulderFrames": 0,
+          "positions": [
+            8,
+            9
+          ],
+          "maxLeaderGapSeconds": 10.468563299788684,
+          "position": 8,
+          "finishSeconds": 64.02204159830168,
+          "gapToWinnerSeconds": 10.465413811299015
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "lapSeconds": [
+            35.04944276576465,
+            28.066830146423598
+          ],
+          "peakPace": 0.002457766403910874,
+          "assistedSeconds": 55.89999999999939,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 55.89999999999939,
+          "peakKmh": 119.35418352365254,
+          "wallFrames": 0,
+          "contactFrames": 50,
+          "shoulderFrames": 0,
+          "positions": [
+            9,
+            8
+          ],
+          "maxLeaderGapSeconds": 11.438501397180111,
+          "position": 9,
+          "finishSeconds": 64.98031935185777,
+          "gapToWinnerSeconds": 11.423691564855105
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "lapSeconds": [
+            35.583688723705386,
+            28.950214559026165
+          ],
+          "peakPace": 0.0031570321946719267,
+          "assistedSeconds": 57.79999999999928,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 57.79999999999928,
+          "peakKmh": 120.20824773727198,
+          "wallFrames": 0,
+          "contactFrames": 36,
+          "shoulderFrames": 0,
+          "positions": [
+            10
+          ],
+          "maxLeaderGapSeconds": 12.847097658653155,
+          "position": 10,
+          "finishSeconds": 66.38610801412155,
+          "gapToWinnerSeconds": 12.829480227118879
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "lapSeconds": [
+            35.79706622333972,
+            29.12436601944153
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.30259206083217,
+          "wallFrames": 0,
+          "contactFrames": 58,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 13.68853998077578,
+          "position": 11,
+          "finishSeconds": 67.24462507494698,
+          "gapToWinnerSeconds": 13.687997287944313
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "lapSeconds": [
+            36.95248329792314,
+            29.61497107489466
+          ],
+          "peakPace": 0.003191381333553562,
+          "assistedSeconds": 59.299999999999194,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 59.299999999999194,
+          "peakKmh": 119.37284900854067,
+          "wallFrames": 0,
+          "contactFrames": 49,
+          "shoulderFrames": 0,
+          "positions": [
+            12,
+            13
+          ],
+          "maxLeaderGapSeconds": 15.10561910567727,
+          "position": 12,
+          "finishSeconds": 68.63910965683394,
+          "gapToWinnerSeconds": 15.08248186983127
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "lapSeconds": [
+            35.91210148725443,
+            31.546347096327906
+          ],
+          "peakPace": 0.0030250479747285434,
+          "assistedSeconds": 60.53333333333246,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 60.53333333333246,
+          "peakKmh": 119.15866207115455,
+          "wallFrames": 0,
+          "contactFrames": 41,
+          "shoulderFrames": 0,
+          "positions": [
+            11,
+            12,
+            13
+          ],
+          "maxLeaderGapSeconds": 15.97795112303723,
+          "position": 13,
+          "finishSeconds": 69.52450728898297,
+          "gapToWinnerSeconds": 15.967879501980306
+        }
+      ]
+    },
+    {
+      "id": "france",
+      "enabled": false,
+      "laps": 2,
+      "difficulty": "normal",
+      "playerContacts": 16,
+      "settings": {
+        "maxPace": 0.012,
+        "recoveryPace": 0.003,
+        "startSeconds": 8,
+        "gapStartSeconds": 2,
+        "fullGapSeconds": 10,
+        "duelMinSeconds": 0.7,
+        "duelFullSeconds": 1.8,
+        "duelFloor": 0.25,
+        "riseSeconds": 0.8,
+        "fallSeconds": 1.2,
+        "errorHoldSeconds": 0.35,
+        "recoverySeconds": 8,
+        "cooldownSeconds": 4
+      },
+      "entries": [
+        {
+          "id": "t02",
+          "player": false,
+          "lapSeconds": [
+            37.50710824890842,
+            37.10283399499668
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.80000000000031,
+          "wallFrames": 0,
+          "contactFrames": 0,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 1,
+          "finishSeconds": 75.49709241486593,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t03",
+          "player": false,
+          "lapSeconds": [
+            39.27583145172836,
+            37.10220195620175
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.8248347507348,
+          "wallFrames": 0,
+          "contactFrames": 9,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 2,
+          "finishSeconds": 77.36553200179455,
+          "gapToWinnerSeconds": 1.8684395869286163
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "lapSeconds": [
+            40.202846802460414,
+            37.183657309436526
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.29311157459999,
+          "wallFrames": 0,
+          "contactFrames": 9,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 3,
+          "finishSeconds": 78.56647172207393,
+          "gapToWinnerSeconds": 3.0693793072079956
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "lapSeconds": [
+            41.29558072304811,
+            37.07022724678916
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.89138502201988,
+          "wallFrames": 0,
+          "contactFrames": 7,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 4,
+          "finishSeconds": 79.63338670182212,
+          "gapToWinnerSeconds": 4.136294286956186
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "lapSeconds": [
+            42.008804810357105,
+            37.15688687149584
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.99180791780024,
+          "wallFrames": 0,
+          "contactFrames": 24,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 5,
+          "finishSeconds": 80.78414438480993,
+          "gapToWinnerSeconds": 5.287051969944002
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "lapSeconds": [
+            43.02999556577647,
+            37.02725471894794
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.50123042791358,
+          "wallFrames": 0,
+          "contactFrames": 14,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 6,
+          "finishSeconds": 81.79351613294288,
+          "gapToWinnerSeconds": 6.296423718076952
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "lapSeconds": [
+            44.52984878892048,
+            37.11738949019803
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.40955100653343,
+          "wallFrames": 0,
+          "contactFrames": 28,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 7,
+          "finishSeconds": 83.06412736455432,
+          "gapToWinnerSeconds": 7.5670349496883915
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "lapSeconds": [
+            45.19822385168938,
+            37.166499526977496
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.6037977624448,
+          "wallFrames": 0,
+          "contactFrames": 29,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 8,
+          "finishSeconds": 84.16315950338979,
+          "gapToWinnerSeconds": 8.66606708852386
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "lapSeconds": [
+            46.79061488346824,
+            37.05390198879432
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.51068811614657,
+          "wallFrames": 0,
+          "contactFrames": 38,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 9,
+          "finishSeconds": 85.35861477929778,
+          "gapToWinnerSeconds": 9.861522364431849
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "lapSeconds": [
+            47.386993366970906,
+            37.199810871627534
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.26097970755448,
+          "wallFrames": 0,
+          "contactFrames": 58,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 10,
+          "finishSeconds": 86.53284835117202,
+          "gapToWinnerSeconds": 11.035755936306089
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "lapSeconds": [
+            47.62211814951956,
+            38.08234530463002
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.06577661288071,
+          "wallFrames": 0,
+          "contactFrames": 31,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 11,
+          "finishSeconds": 87.83895771298836,
+          "gapToWinnerSeconds": 12.341865298122428
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "lapSeconds": [
+            48.46647816284486,
+            38.198944625833164
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.36292987193654,
+          "wallFrames": 0,
+          "contactFrames": 15,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 12,
+          "finishSeconds": 88.63493759238463,
+          "gapToWinnerSeconds": 13.137845177518699
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "lapSeconds": [
+            48.830071818027754,
+            38.69496897896117
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.29907033909862,
+          "wallFrames": 0,
+          "contactFrames": 42,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 13,
+          "finishSeconds": 89.65877200223818,
+          "gapToWinnerSeconds": 14.161679587372248
+        }
+      ]
+    },
+    {
+      "id": "france",
+      "enabled": true,
+      "laps": 2,
+      "difficulty": "normal",
+      "playerContacts": 16,
+      "settings": {
+        "maxPace": 0.012,
+        "recoveryPace": 0.003,
+        "startSeconds": 8,
+        "gapStartSeconds": 2,
+        "fullGapSeconds": 10,
+        "duelMinSeconds": 0.7,
+        "duelFullSeconds": 1.8,
+        "duelFloor": 0.25,
+        "riseSeconds": 0.8,
+        "fallSeconds": 1.2,
+        "errorHoldSeconds": 0.35,
+        "recoverySeconds": 8,
+        "cooldownSeconds": 4
+      },
+      "entries": [
+        {
+          "id": "t02",
+          "player": false,
+          "lapSeconds": [
+            37.50710824890842,
+            37.10283399499668
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.80000000000031,
+          "wallFrames": 0,
+          "contactFrames": 0,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 1,
+          "finishSeconds": 75.49709241486593,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t03",
+          "player": false,
+          "lapSeconds": [
+            39.27583145172836,
+            37.10220195620175
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.8248347507348,
+          "wallFrames": 0,
+          "contactFrames": 9,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 1.9250189839472682,
+          "position": 2,
+          "finishSeconds": 77.36553200179455,
+          "gapToWinnerSeconds": 1.8684395869286163
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "lapSeconds": [
+            40.202846802460414,
+            37.183657309436526
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.29311157459999,
+          "wallFrames": 0,
+          "contactFrames": 9,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 3.105154206446869,
+          "position": 3,
+          "finishSeconds": 78.56647172207393,
+          "gapToWinnerSeconds": 3.0693793072079956
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "lapSeconds": [
+            41.267210393404284,
+            37.08710174422877
+          ],
+          "peakPace": 0.00017476089137241657,
+          "assistedSeconds": 69.3666666666653,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 69.3666666666653,
+          "peakKmh": 118.89138502201988,
+          "wallFrames": 0,
+          "contactFrames": 7,
+          "shoulderFrames": 0,
+          "positions": [
+            4
+          ],
+          "maxLeaderGapSeconds": 4.229532276274284,
+          "position": 4,
+          "finishSeconds": 79.6218908696179,
+          "gapToWinnerSeconds": 4.124798454751968
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "lapSeconds": [
+            42.00399196038931,
+            37.368922712873264
+          ],
+          "peakPace": 0.00044883575699354935,
+          "assistedSeconds": 72.69999999999844,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 72.69999999999844,
+          "peakKmh": 118.99180791780024,
+          "wallFrames": 0,
+          "contactFrames": 24,
+          "shoulderFrames": 0,
+          "positions": [
+            7,
+            6,
+            5
+          ],
+          "maxLeaderGapSeconds": 5.569390542621193,
+          "position": 5,
+          "finishSeconds": 80.99136737621956,
+          "gapToWinnerSeconds": 5.494274961353625
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "lapSeconds": [
+            43.067195955903685,
+            37.31035443299959
+          ],
+          "peakPace": 0.0007307363855978673,
+          "assistedSeconds": 74.09999999999836,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 74.09999999999836,
+          "peakKmh": 119.50754775857847,
+          "wallFrames": 0,
+          "contactFrames": 14,
+          "shoulderFrames": 0,
+          "positions": [
+            8,
+            7,
+            6
+          ],
+          "maxLeaderGapSeconds": 6.616185069889056,
+          "position": 6,
+          "finishSeconds": 82.11381623712175,
+          "gapToWinnerSeconds": 6.616723822255821
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "lapSeconds": [
+            44.47380563963303,
+            37.35875582272605
+          ],
+          "peakPace": 0.0015821564523862013,
+          "assistedSeconds": 73.69999999999838,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 73.69999999999838,
+          "peakKmh": 119.85465722299222,
+          "wallFrames": 0,
+          "contactFrames": 35,
+          "shoulderFrames": 0,
+          "positions": [
+            5,
+            6,
+            7
+          ],
+          "maxLeaderGapSeconds": 7.846719085145509,
+          "position": 7,
+          "finishSeconds": 83.2494505477949,
+          "gapToWinnerSeconds": 7.752358132928961
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "lapSeconds": [
+            45.37769937662446,
+            37.51191427223009
+          ],
+          "peakPace": 0.0023346614741746887,
+          "assistedSeconds": 75.8333333333316,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 75.8333333333316,
+          "peakKmh": 120.51068811614657,
+          "wallFrames": 0,
+          "contactFrames": 30,
+          "shoulderFrames": 0,
+          "positions": [
+            6,
+            7,
+            8
+          ],
+          "maxLeaderGapSeconds": 8.912062782863401,
+          "position": 8,
+          "finishSeconds": 84.40371155588977,
+          "gapToWinnerSeconds": 8.906619141023839
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "lapSeconds": [
+            46.07726374835865,
+            37.94695382011144
+          ],
+          "peakPace": 0.00228808747614264,
+          "assistedSeconds": 77.76666666666482,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 77.76666666666482,
+          "peakKmh": 119.96436664976397,
+          "wallFrames": 0,
+          "contactFrames": 18,
+          "shoulderFrames": 0,
+          "positions": [
+            9,
+            10
+          ],
+          "maxLeaderGapSeconds": 10.482214877866262,
+          "position": 9,
+          "finishSeconds": 85.822653693193,
+          "gapToWinnerSeconds": 10.325561278327072
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "lapSeconds": [
+            46.59680292413433,
+            38.22061686842224
+          ],
+          "peakPace": 0.004177719476104486,
+          "assistedSeconds": 78.6999999999981,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 78.6999999999981,
+          "peakKmh": 119.24394838353435,
+          "wallFrames": 0,
+          "contactFrames": 18,
+          "shoulderFrames": 0,
+          "positions": [
+            11,
+            10,
+            9
+          ],
+          "maxLeaderGapSeconds": 11.493565658486943,
+          "position": 10,
+          "finishSeconds": 86.78693459626318,
+          "gapToWinnerSeconds": 11.289842181397248
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "lapSeconds": [
+            47.243421006058604,
+            39.06940857102437
+          ],
+          "peakPace": 0.0060146024327904675,
+          "assistedSeconds": 79.3333333333314,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 79.3333333333314,
+          "peakKmh": 119.51722692566801,
+          "wallFrames": 0,
+          "contactFrames": 47,
+          "shoulderFrames": 0,
+          "positions": [
+            10,
+            11
+          ],
+          "maxLeaderGapSeconds": 12.855134875611256,
+          "position": 11,
+          "finishSeconds": 88.25887368965655,
+          "gapToWinnerSeconds": 12.761781274790621
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "lapSeconds": [
+            48.17433788880842,
+            39.31280070738639
+          ],
+          "peakPace": 0.004205725000958923,
+          "assistedSeconds": 81.16666666666463,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 81.16666666666463,
+          "peakKmh": 119.23492255119258,
+          "wallFrames": 0,
+          "contactFrames": 33,
+          "shoulderFrames": 0,
+          "positions": [
+            12,
+            13
+          ],
+          "maxLeaderGapSeconds": 14.128967497903318,
+          "position": 12,
+          "finishSeconds": 89.62086980144406,
+          "gapToWinnerSeconds": 14.123777386578126
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "lapSeconds": [
+            47.564707599563995,
+            40.89528545703916
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.56092625401526,
+          "wallFrames": 0,
+          "contactFrames": 32,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 15.107990295695004,
+          "position": 13,
+          "finishSeconds": 90.59448731544194,
+          "gapToWinnerSeconds": 15.097394900576006
+        }
+      ]
+    },
+    {
+      "id": "portugal",
+      "enabled": false,
+      "laps": 2,
+      "difficulty": "normal",
+      "playerContacts": 24,
+      "settings": {
+        "maxPace": 0.012,
+        "recoveryPace": 0.003,
+        "startSeconds": 8,
+        "gapStartSeconds": 2,
+        "fullGapSeconds": 10,
+        "duelMinSeconds": 0.7,
+        "duelFullSeconds": 1.8,
+        "duelFloor": 0.25,
+        "riseSeconds": 0.8,
+        "fallSeconds": 1.2,
+        "errorHoldSeconds": 0.35,
+        "recoverySeconds": 8,
+        "cooldownSeconds": 4
+      },
+      "entries": [
+        {
+          "id": "t03",
+          "player": false,
+          "lapSeconds": [
+            25.869325858440085,
+            25.67110719459479
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8000000000003,
+          "wallFrames": 0,
+          "contactFrames": 2,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 1,
+          "finishSeconds": 52.50795463085427,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t02",
+          "player": false,
+          "lapSeconds": [
+            27.05231155881813,
+            25.58330782100373
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8018783002374,
+          "wallFrames": 0,
+          "contactFrames": 8,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 2,
+          "finishSeconds": 53.54380704372088,
+          "gapToWinnerSeconds": 1.0358524128666105
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "lapSeconds": [
+            27.5873699764152,
+            25.667211854418262
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.95765879909469,
+          "wallFrames": 0,
+          "contactFrames": 6,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 3,
+          "finishSeconds": 54.500068097437264,
+          "gapToWinnerSeconds": 1.9921134665829925
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "lapSeconds": [
+            28.948004911357188,
+            25.51742325795633
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.20573329963658,
+          "wallFrames": 0,
+          "contactFrames": 9,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 4,
+          "finishSeconds": 55.94084044414043,
+          "gapToWinnerSeconds": 3.4328858132861555
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "lapSeconds": [
+            29.943466518928272,
+            25.862568306495714
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.46486350101031,
+          "wallFrames": 0,
+          "contactFrames": 8,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 5,
+          "finishSeconds": 57.00546130727484,
+          "gapToWinnerSeconds": 4.497506676420571
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "lapSeconds": [
+            30.31134975984662,
+            26.524310212437733
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.3205256031145,
+          "wallFrames": 0,
+          "contactFrames": 1,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 6,
+          "finishSeconds": 58.27173867833009,
+          "gapToWinnerSeconds": 5.763784047475816
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "lapSeconds": [
+            31.224576772312822,
+            26.27920698358806
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.31245908672308,
+          "wallFrames": 0,
+          "contactFrames": 23,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 7,
+          "finishSeconds": 59.181550875079445,
+          "gapToWinnerSeconds": 6.673596244225173
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "lapSeconds": [
+            32.11260870613748,
+            26.533118864138082
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.09019181382178,
+          "wallFrames": 0,
+          "contactFrames": 48,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 8,
+          "finishSeconds": 60.3262986762653,
+          "gapToWinnerSeconds": 7.818344045411031
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "lapSeconds": [
+            31.971197061435678,
+            27.17517465101112
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.88751161666184,
+          "wallFrames": 0,
+          "contactFrames": 26,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 9,
+          "finishSeconds": 61.1039058112132,
+          "gapToWinnerSeconds": 8.59595118035893
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "lapSeconds": [
+            33.68939041507109,
+            26.293655071269768
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.04474601137042,
+          "wallFrames": 0,
+          "contactFrames": 29,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 10,
+          "finishSeconds": 62.22072490768973,
+          "gapToWinnerSeconds": 9.712770276835457
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "lapSeconds": [
+            31.831251368821068,
+            29.355203462216203
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.60109994060035,
+          "wallFrames": 0,
+          "contactFrames": 38,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 11,
+          "finishSeconds": 63.067391514878366,
+          "gapToWinnerSeconds": 10.559436884024095
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "lapSeconds": [
+            33.72081461967741,
+            28.060483459528463
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.11576587643212,
+          "wallFrames": 0,
+          "contactFrames": 26,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 12,
+          "finishSeconds": 64.30312001634995,
+          "gapToWinnerSeconds": 11.795165385495679
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "lapSeconds": [
+            32.500280334465884,
+            30.55145862434651
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.54488563392984,
+          "wallFrames": 0,
+          "contactFrames": 31,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 13,
+          "finishSeconds": 65.14552487560252,
+          "gapToWinnerSeconds": 12.637570244748247
+        }
+      ]
+    },
+    {
+      "id": "portugal",
+      "enabled": true,
+      "laps": 2,
+      "difficulty": "normal",
+      "playerContacts": 2,
+      "settings": {
+        "maxPace": 0.012,
+        "recoveryPace": 0.003,
+        "startSeconds": 8,
+        "gapStartSeconds": 2,
+        "fullGapSeconds": 10,
+        "duelMinSeconds": 0.7,
+        "duelFullSeconds": 1.8,
+        "duelFloor": 0.25,
+        "riseSeconds": 0.8,
+        "fallSeconds": 1.2,
+        "errorHoldSeconds": 0.35,
+        "recoverySeconds": 8,
+        "cooldownSeconds": 4
+      },
+      "entries": [
+        {
+          "id": "t03",
+          "player": false,
+          "lapSeconds": [
+            25.869325858440085,
+            25.67110719459479
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8000000000003,
+          "wallFrames": 0,
+          "contactFrames": 2,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0.22591874978799362,
+          "position": 1,
+          "finishSeconds": 52.50795463085427,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t02",
+          "player": false,
+          "lapSeconds": [
+            27.05231155881813,
+            25.58330782100373
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8018783002374,
+          "wallFrames": 0,
+          "contactFrames": 8,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 1.1404314131988293,
+          "position": 2,
+          "finishSeconds": 53.54380704372088,
+          "gapToWinnerSeconds": 1.0358524128666105
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "lapSeconds": [
+            27.5873699764152,
+            25.667211854418262
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.95765879909469,
+          "wallFrames": 0,
+          "contactFrames": 6,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 2.0377833135379753,
+          "position": 3,
+          "finishSeconds": 54.500068097437264,
+          "gapToWinnerSeconds": 1.9921134665829925
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "lapSeconds": [
+            28.583385279901325,
+            25.487829940110796
+          ],
+          "peakPace": 0.000042204932340148524,
+          "assistedSeconds": 46.53333333333325,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 46.53333333333325,
+          "peakKmh": 121.18016028808746,
+          "wallFrames": 0,
+          "contactFrames": 9,
+          "shoulderFrames": 0,
+          "positions": [
+            5,
+            4
+          ],
+          "maxLeaderGapSeconds": 3.2383327954777634,
+          "position": 4,
+          "finishSeconds": 55.54662749483903,
+          "gapToWinnerSeconds": 3.0386728639847576
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "lapSeconds": [
+            29.476239672260995,
+            26.001404198825966
+          ],
+          "peakPace": 0.00017191987861049358,
+          "assistedSeconds": 36.90000000000047,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 36.90000000000047,
+          "peakKmh": 121.46486350101031,
+          "wallFrames": 0,
+          "contactFrames": 8,
+          "shoulderFrames": 0,
+          "positions": [
+            4,
+            5
+          ],
+          "maxLeaderGapSeconds": 4.301679010583452,
+          "position": 5,
+          "finishSeconds": 56.67707035293782,
+          "gapToWinnerSeconds": 4.169115722083546
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "lapSeconds": [
+            30.143597600575166,
+            26.1901381310555
+          ],
+          "peakPace": 0.0003403101780285225,
+          "assistedSeconds": 49.7666666666664,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 49.7666666666664,
+          "peakKmh": 121.29081668948182,
+          "wallFrames": 0,
+          "contactFrames": 1,
+          "shoulderFrames": 0,
+          "positions": [
+            6
+          ],
+          "maxLeaderGapSeconds": 5.29214985204937,
+          "position": 6,
+          "finishSeconds": 57.7698144376764,
+          "gapToWinnerSeconds": 5.26185980682213
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "lapSeconds": [
+            31.245923208773583,
+            26.160465432490803
+          ],
+          "peakPace": 0.0010105809766656816,
+          "assistedSeconds": 51.06666666666633,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 51.06666666666633,
+          "peakKmh": 121.31343267073,
+          "wallFrames": 0,
+          "contactFrames": 16,
+          "shoulderFrames": 0,
+          "positions": [
+            7
+          ],
+          "maxLeaderGapSeconds": 6.6085890302015,
+          "position": 7,
+          "finishSeconds": 59.08415576044295,
+          "gapToWinnerSeconds": 6.576201129588675
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "lapSeconds": [
+            31.722388546245323,
+            26.610320215765654
+          ],
+          "peakPace": 0.001281302470464809,
+          "assistedSeconds": 51.99999999999961,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 51.99999999999961,
+          "peakKmh": 118.95221873349121,
+          "wallFrames": 0,
+          "contactFrames": 18,
+          "shoulderFrames": 0,
+          "positions": [
+            8
+          ],
+          "maxLeaderGapSeconds": 7.523280233521383,
+          "position": 8,
+          "finishSeconds": 60.01327986800072,
+          "gapToWinnerSeconds": 7.505325237146451
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "lapSeconds": [
+            32.11773015230698,
+            27.531270215184662
+          ],
+          "peakPace": 0.0016600961401990156,
+          "assistedSeconds": 53.499999999999524,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 53.499999999999524,
+          "peakKmh": 120.26462834246755,
+          "wallFrames": 0,
+          "contactFrames": 17,
+          "shoulderFrames": 0,
+          "positions": [
+            9
+          ],
+          "maxLeaderGapSeconds": 9.068710233790462,
+          "position": 9,
+          "finishSeconds": 61.52993705133274,
+          "gapToWinnerSeconds": 9.021982420478466
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "lapSeconds": [
+            32.67052655333259,
+            27.865028853975915
+          ],
+          "peakPace": 0.003135657485150158,
+          "assistedSeconds": 54.466666666666136,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 54.466666666666136,
+          "peakKmh": 119.40187600793163,
+          "wallFrames": 0,
+          "contactFrames": 16,
+          "shoulderFrames": 0,
+          "positions": [
+            10
+          ],
+          "maxLeaderGapSeconds": 9.989813878777937,
+          "position": 10,
+          "finishSeconds": 62.49308950607492,
+          "gapToWinnerSeconds": 9.985134875220645
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "lapSeconds": [
+            33.09870204180051,
+            28.32052923478996
+          ],
+          "peakPace": 0.0028052559296990816,
+          "assistedSeconds": 55.49999999999941,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 55.49999999999941,
+          "peakKmh": 119.13326440444825,
+          "wallFrames": 0,
+          "contactFrames": 19,
+          "shoulderFrames": 0,
+          "positions": [
+            11
+          ],
+          "maxLeaderGapSeconds": 11.009365312338723,
+          "position": 11,
+          "finishSeconds": 63.513017193380584,
+          "gapToWinnerSeconds": 11.005062562526312
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "lapSeconds": [
+            34.036574763591176,
+            28.14471777186985
+          ],
+          "peakPace": 0.0032033062121581287,
+          "assistedSeconds": 56.36666666666603,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 56.36666666666603,
+          "peakKmh": 119.30165292720918,
+          "wallFrames": 0,
+          "contactFrames": 17,
+          "shoulderFrames": 0,
+          "positions": [
+            12
+          ],
+          "maxLeaderGapSeconds": 11.915238101303366,
+          "position": 12,
+          "finishSeconds": 64.4189719568099,
+          "gapToWinnerSeconds": 11.911017325955626
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "lapSeconds": [
+            34.77770772665868,
+            27.846386580511407
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.294649277459,
+          "wallFrames": 0,
+          "contactFrames": 0,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 12.640590856938672,
+          "position": 13,
+          "finishSeconds": 65.14591624431417,
+          "gapToWinnerSeconds": 12.637961613459893
+        }
+      ]
+    },
+    {
+      "id": "japan",
+      "enabled": false,
+      "laps": 2,
+      "difficulty": "normal",
+      "playerContacts": 49,
+      "settings": {
+        "maxPace": 0.012,
+        "recoveryPace": 0.003,
+        "startSeconds": 8,
+        "gapStartSeconds": 2,
+        "fullGapSeconds": 10,
+        "duelMinSeconds": 0.7,
+        "duelFullSeconds": 1.8,
+        "duelFloor": 0.25,
+        "riseSeconds": 0.8,
+        "fallSeconds": 1.2,
+        "errorHoldSeconds": 0.35,
+        "recoverySeconds": 8,
+        "cooldownSeconds": 4
+      },
+      "entries": [
+        {
+          "id": "t02",
+          "player": false,
+          "lapSeconds": [
+            41.14822475097212,
+            40.7336208843098
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.80000172522551,
+          "wallFrames": 0,
+          "contactFrames": 5,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 1,
+          "finishSeconds": 82.78873854471442,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t03",
+          "player": false,
+          "lapSeconds": [
+            42.20500304454932,
+            40.74067390778913
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8000000000003,
+          "wallFrames": 0,
+          "contactFrames": 14,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 2,
+          "finishSeconds": 83.91446749752784,
+          "gapToWinnerSeconds": 1.125728952813418
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "lapSeconds": [
+            43.011084247907036,
+            40.77226893997525
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8000000000003,
+          "wallFrames": 0,
+          "contactFrames": 16,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 3,
+          "finishSeconds": 84.98154728858152,
+          "gapToWinnerSeconds": 2.1928087438671042
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "lapSeconds": [
+            43.77364943773541,
+            40.764270454577066
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.82025314034522,
+          "wallFrames": 0,
+          "contactFrames": 20,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 4,
+          "finishSeconds": 86.01442491065556,
+          "gapToWinnerSeconds": 3.2256863659411437
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "lapSeconds": [
+            45.12672208173853,
+            40.67855921737409
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8000000000003,
+          "wallFrames": 0,
+          "contactFrames": 26,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 5,
+          "finishSeconds": 87.05196168961457,
+          "gapToWinnerSeconds": 4.263223144900152
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "lapSeconds": [
+            45.64203709470862,
+            40.903180704097544
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.80000000000031,
+          "wallFrames": 0,
+          "contactFrames": 30,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 6,
+          "finishSeconds": 88.1861123036385,
+          "gapToWinnerSeconds": 5.397373758924076
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "lapSeconds": [
+            47.11687101898284,
+            40.69845485126108
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8000000000003,
+          "wallFrames": 0,
+          "contactFrames": 24,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 7,
+          "finishSeconds": 89.25027326114086,
+          "gapToWinnerSeconds": 6.461534716426442
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "lapSeconds": [
+            47.92508355059952,
+            40.69068740698474
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.06557815002199,
+          "wallFrames": 0,
+          "contactFrames": 31,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 8,
+          "finishSeconds": 90.44310527453115,
+          "gapToWinnerSeconds": 7.654366729816729
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "lapSeconds": [
+            49.131042586574694,
+            40.74195803871039
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.80000000000031,
+          "wallFrames": 0,
+          "contactFrames": 35,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 9,
+          "finishSeconds": 91.55108555637891,
+          "gapToWinnerSeconds": 8.762347011664488
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "lapSeconds": [
+            50.182695058399446,
+            40.73340404697895
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.89266091511703,
+          "wallFrames": 0,
+          "contactFrames": 57,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 10,
+          "finishSeconds": 92.937465239524,
+          "gapToWinnerSeconds": 10.148726694809582
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "lapSeconds": [
+            51.23977015287942,
+            40.89235266096321
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.86638928302324,
+          "wallFrames": 0,
+          "contactFrames": 51,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 11,
+          "finishSeconds": 94.00637291107422,
+          "gapToWinnerSeconds": 11.217634366359803
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "lapSeconds": [
+            51.85326951253282,
+            41.21609124315519
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.80106361746812,
+          "wallFrames": 0,
+          "contactFrames": 29,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 12,
+          "finishSeconds": 95.29855951251805,
+          "gapToWinnerSeconds": 12.509820967803634
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "lapSeconds": [
+            52.92066888442372,
+            41.957922452180036
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.42712163295774,
+          "wallFrames": 0,
+          "contactFrames": 30,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 13,
+          "finishSeconds": 96.97327665401438,
+          "gapToWinnerSeconds": 14.184538109299965
+        }
+      ]
+    },
+    {
+      "id": "japan",
+      "enabled": true,
+      "laps": 2,
+      "difficulty": "normal",
+      "playerContacts": 11,
+      "settings": {
+        "maxPace": 0.012,
+        "recoveryPace": 0.003,
+        "startSeconds": 8,
+        "gapStartSeconds": 2,
+        "fullGapSeconds": 10,
+        "duelMinSeconds": 0.7,
+        "duelFullSeconds": 1.8,
+        "duelFloor": 0.25,
+        "riseSeconds": 0.8,
+        "fallSeconds": 1.2,
+        "errorHoldSeconds": 0.35,
+        "recoverySeconds": 8,
+        "cooldownSeconds": 4
+      },
+      "entries": [
+        {
+          "id": "t02",
+          "player": false,
+          "lapSeconds": [
+            41.14822475097212,
+            40.7336208843098
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.80000172522551,
+          "wallFrames": 0,
+          "contactFrames": 5,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 1,
+          "finishSeconds": 82.78873854471442,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t03",
+          "player": false,
+          "lapSeconds": [
+            42.20500304454932,
+            40.74067390778913
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8000000000003,
+          "wallFrames": 0,
+          "contactFrames": 14,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 1.2834844333314628,
+          "position": 2,
+          "finishSeconds": 83.91446749752784,
+          "gapToWinnerSeconds": 1.125728952813418
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "lapSeconds": [
+            43.011084247907036,
+            40.77226893997525
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8000000000003,
+          "wallFrames": 0,
+          "contactFrames": 16,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 2.2221757959705375,
+          "position": 3,
+          "finishSeconds": 84.98154728858152,
+          "gapToWinnerSeconds": 2.1928087438671042
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "lapSeconds": [
+            43.77475150693465,
+            40.75702222239295
+          ],
+          "peakPace": 0.00005346403124083259,
+          "assistedSeconds": 77.99999999999814,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 77.99999999999814,
+          "peakKmh": 118.81203931135703,
+          "wallFrames": 0,
+          "contactFrames": 20,
+          "shoulderFrames": 0,
+          "positions": [
+            4
+          ],
+          "maxLeaderGapSeconds": 3.2349619610689757,
+          "position": 4,
+          "finishSeconds": 86.00827874767069,
+          "gapToWinnerSeconds": 3.219540202956267
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "lapSeconds": [
+            45.14111150296612,
+            40.69851086472622
+          ],
+          "peakPace": 0.00021073351960556753,
+          "assistedSeconds": 78.7999999999981,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 78.7999999999981,
+          "peakKmh": 118.82496648401339,
+          "wallFrames": 0,
+          "contactFrames": 26,
+          "shoulderFrames": 0,
+          "positions": [
+            5
+          ],
+          "maxLeaderGapSeconds": 4.347995601774322,
+          "position": 5,
+          "finishSeconds": 87.0863027581943,
+          "gapToWinnerSeconds": 4.297564213479873
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "lapSeconds": [
+            45.89903390602255,
+            40.7447186704551
+          ],
+          "peakPace": 0.000400540937926295,
+          "assistedSeconds": 79.89999999999803,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 79.89999999999803,
+          "peakKmh": 119.73999119970748,
+          "wallFrames": 0,
+          "contactFrames": 29,
+          "shoulderFrames": 0,
+          "positions": [
+            6
+          ],
+          "maxLeaderGapSeconds": 5.5311041962311975,
+          "position": 6,
+          "finishSeconds": 88.28464708130998,
+          "gapToWinnerSeconds": 5.495908536595564
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "lapSeconds": [
+            47.06816034177837,
+            40.89702566244518
+          ],
+          "peakPace": 0.001523893031083816,
+          "assistedSeconds": 80.99999999999797,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 80.99999999999797,
+          "peakKmh": 118.98103856634688,
+          "wallFrames": 0,
+          "contactFrames": 23,
+          "shoulderFrames": 0,
+          "positions": [
+            7
+          ],
+          "maxLeaderGapSeconds": 6.633106779390616,
+          "position": 7,
+          "finishSeconds": 89.40013339512049,
+          "gapToWinnerSeconds": 6.6113948504060716
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "lapSeconds": [
+            47.76409841098549,
+            40.729167700244474
+          ],
+          "peakPace": 0.002061212510778457,
+          "assistedSeconds": 81.83333333333125,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 81.83333333333125,
+          "peakKmh": 119.04486664593988,
+          "wallFrames": 0,
+          "contactFrames": 41,
+          "shoulderFrames": 0,
+          "positions": [
+            9,
+            8
+          ],
+          "maxLeaderGapSeconds": 7.615720956987197,
+          "position": 8,
+          "finishSeconds": 90.36751620846155,
+          "gapToWinnerSeconds": 7.5787776637471325
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "lapSeconds": [
+            49.57898268084329,
+            40.7234711545431
+          ],
+          "peakPace": 0.0034299152332794686,
+          "assistedSeconds": 83.2666666666645,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 83.2666666666645,
+          "peakKmh": 119.20747392971363,
+          "wallFrames": 0,
+          "contactFrames": 38,
+          "shoulderFrames": 0,
+          "positions": [
+            8,
+            9
+          ],
+          "maxLeaderGapSeconds": 9.282979651804414,
+          "position": 9,
+          "finishSeconds": 91.98053876648021,
+          "gapToWinnerSeconds": 9.191800221765789
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "lapSeconds": [
+            50.722614656551286,
+            40.59416038159874
+          ],
+          "peakPace": 0.005729464518615316,
+          "assistedSeconds": 84.83333333333108,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 84.83333333333108,
+          "peakKmh": 121.17276930932655,
+          "wallFrames": 0,
+          "contactFrames": 27,
+          "shoulderFrames": 0,
+          "positions": [
+            10
+          ],
+          "maxLeaderGapSeconds": 10.621128707885791,
+          "position": 10,
+          "finishSeconds": 93.14410935509692,
+          "gapToWinnerSeconds": 10.355370810382496
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "lapSeconds": [
+            51.34600684434954,
+            41.47966134677919
+          ],
+          "peakPace": 0.004129707318291579,
+          "assistedSeconds": 86.69999999999764,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 86.69999999999764,
+          "peakKmh": 119.29060922941305,
+          "wallFrames": 0,
+          "contactFrames": 23,
+          "shoulderFrames": 0,
+          "positions": [
+            11
+          ],
+          "maxLeaderGapSeconds": 12.10381359224386,
+          "position": 11,
+          "finishSeconds": 94.84703432527434,
+          "gapToWinnerSeconds": 12.058295780559916
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "lapSeconds": [
+            52.479350153513344,
+            41.33953673804844
+          ],
+          "peakPace": 0.004068324852801821,
+          "assistedSeconds": 87.3999999999976,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 87.3999999999976,
+          "peakKmh": 121.6012729101409,
+          "wallFrames": 0,
+          "contactFrames": 30,
+          "shoulderFrames": 0,
+          "positions": [
+            12
+          ],
+          "maxLeaderGapSeconds": 13.172974916082666,
+          "position": 12,
+          "finishSeconds": 95.91357220897241,
+          "gapToWinnerSeconds": 13.124833664257991
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "lapSeconds": [
+            53.361307529562964,
+            41.41595610363102
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.14594761600098,
+          "wallFrames": 0,
+          "contactFrames": 16,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 14.259167500473865,
+          "position": 13,
+          "finishSeconds": 97.00646239002403,
+          "gapToWinnerSeconds": 14.217723845309607
+        }
+      ]
+    },
+    {
+      "id": "korea",
+      "enabled": false,
+      "laps": 2,
+      "difficulty": "normal",
+      "playerContacts": 17,
+      "settings": {
+        "maxPace": 0.012,
+        "recoveryPace": 0.003,
+        "startSeconds": 8,
+        "gapStartSeconds": 2,
+        "fullGapSeconds": 10,
+        "duelMinSeconds": 0.7,
+        "duelFullSeconds": 1.8,
+        "duelFloor": 0.25,
+        "riseSeconds": 0.8,
+        "fallSeconds": 1.2,
+        "errorHoldSeconds": 0.35,
+        "recoverySeconds": 8,
+        "cooldownSeconds": 4
+      },
+      "entries": [
+        {
+          "id": "t02",
+          "player": false,
+          "lapSeconds": [
+            35.539923770849114,
+            35.08379171013923
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.80000000000031,
+          "wallFrames": 0,
+          "contactFrames": 9,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 1,
+          "finishSeconds": 71.50843587721073,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t03",
+          "player": false,
+          "lapSeconds": [
+            36.77809255598585,
+            35.125248899111774
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8000000000003,
+          "wallFrames": 0,
+          "contactFrames": 9,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 2,
+          "finishSeconds": 72.89738376302486,
+          "gapToWinnerSeconds": 1.388947885814133
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "lapSeconds": [
+            37.406305140449305,
+            35.2501797575406
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8000000000003,
+          "wallFrames": 0,
+          "contactFrames": 6,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 3,
+          "finishSeconds": 73.84617893913091,
+          "gapToWinnerSeconds": 2.337743061920179
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "lapSeconds": [
+            38.62455838387875,
+            35.139377038099276
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.80000000000031,
+          "wallFrames": 0,
+          "contactFrames": 15,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 4,
+          "finishSeconds": 75.03816593519176,
+          "gapToWinnerSeconds": 3.529730057981027
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "lapSeconds": [
+            39.67162545487649,
+            35.099169654086566
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.61685458218324,
+          "wallFrames": 0,
+          "contactFrames": 25,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 5,
+          "finishSeconds": 76.66471642283004,
+          "gapToWinnerSeconds": 5.15628054561931
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "lapSeconds": [
+            40.953165766572525,
+            35.263034296124964
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.91257824684496,
+          "wallFrames": 0,
+          "contactFrames": 26,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 6,
+          "finishSeconds": 77.64207609465622,
+          "gapToWinnerSeconds": 6.133640217445489
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "lapSeconds": [
+            41.20550976635251,
+            35.094340532551904
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.11078966619662,
+          "wallFrames": 0,
+          "contactFrames": 25,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 7,
+          "finishSeconds": 78.5769382883663,
+          "gapToWinnerSeconds": 7.068502411155578
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "lapSeconds": [
+            42.7014678008626,
+            35.38940845047882
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.04177436276872,
+          "wallFrames": 0,
+          "contactFrames": 6,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 8,
+          "finishSeconds": 79.72513929132603,
+          "gapToWinnerSeconds": 8.216703414115301
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "lapSeconds": [
+            44.18940650409908,
+            35.213001921824976
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.31320446726461,
+          "wallFrames": 0,
+          "contactFrames": 12,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 9,
+          "finishSeconds": 81.4559633186412,
+          "gapToWinnerSeconds": 9.947527441430466
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "lapSeconds": [
+            44.882192476674206,
+            35.12846016883705
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.0070125935719,
+          "wallFrames": 0,
+          "contactFrames": 31,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 10,
+          "finishSeconds": 82.6673695918509,
+          "gapToWinnerSeconds": 11.15893371464017
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "lapSeconds": [
+            45.47348765369625,
+            35.330148178306516
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.14039795520556,
+          "wallFrames": 0,
+          "contactFrames": 28,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 11,
+          "finishSeconds": 83.78017172820998,
+          "gapToWinnerSeconds": 12.27173585099925
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "lapSeconds": [
+            46.72799268145306,
+            35.14362783334995
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.98339217775029,
+          "wallFrames": 0,
+          "contactFrames": 26,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 12,
+          "finishSeconds": 85.03445838925671,
+          "gapToWinnerSeconds": 13.526022512045984
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "lapSeconds": [
+            47.447634763482824,
+            35.73556902865617
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.22158370014479,
+          "wallFrames": 0,
+          "contactFrames": 16,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 13,
+          "finishSeconds": 86.6171547625441,
+          "gapToWinnerSeconds": 15.108718885333374
+        }
+      ]
+    },
+    {
+      "id": "korea",
+      "enabled": true,
+      "laps": 2,
+      "difficulty": "normal",
+      "playerContacts": 15,
+      "settings": {
+        "maxPace": 0.012,
+        "recoveryPace": 0.003,
+        "startSeconds": 8,
+        "gapStartSeconds": 2,
+        "fullGapSeconds": 10,
+        "duelMinSeconds": 0.7,
+        "duelFullSeconds": 1.8,
+        "duelFloor": 0.25,
+        "riseSeconds": 0.8,
+        "fallSeconds": 1.2,
+        "errorHoldSeconds": 0.35,
+        "recoverySeconds": 8,
+        "cooldownSeconds": 4
+      },
+      "entries": [
+        {
+          "id": "t02",
+          "player": false,
+          "lapSeconds": [
+            35.539923770849114,
+            35.08379171013923
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.80000000000031,
+          "wallFrames": 0,
+          "contactFrames": 9,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 1,
+          "finishSeconds": 71.50843587721073,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t03",
+          "player": false,
+          "lapSeconds": [
+            36.77809255598585,
+            35.125248899111774
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8000000000003,
+          "wallFrames": 0,
+          "contactFrames": 9,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 1.460634204525043,
+          "position": 2,
+          "finishSeconds": 72.89738376302486,
+          "gapToWinnerSeconds": 1.388947885814133
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "lapSeconds": [
+            37.406305140449305,
+            35.2501797575406
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8000000000003,
+          "wallFrames": 0,
+          "contactFrames": 6,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 2.3630189200623093,
+          "position": 3,
+          "finishSeconds": 73.84617893913091,
+          "gapToWinnerSeconds": 2.337743061920179
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "lapSeconds": [
+            38.62221835969296,
+            35.11413267381192
+          ],
+          "peakPace": 0.0001526697892271609,
+          "assistedSeconds": 65.8666666666655,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 65.8666666666655,
+          "peakKmh": 118.81813720786816,
+          "wallFrames": 0,
+          "contactFrames": 15,
+          "shoulderFrames": 0,
+          "positions": [
+            4
+          ],
+          "maxLeaderGapSeconds": 3.5758602501316084,
+          "position": 4,
+          "finishSeconds": 75.01058154671861,
+          "gapToWinnerSeconds": 3.5021456695078825
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "lapSeconds": [
+            39.55777726851301,
+            35.15570394296171
+          ],
+          "peakPace": 0.0005804170776381503,
+          "assistedSeconds": 68.39999999999868,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 68.39999999999868,
+          "peakKmh": 120.31899462153436,
+          "wallFrames": 0,
+          "contactFrames": 25,
+          "shoulderFrames": 0,
+          "positions": [
+            5
+          ],
+          "maxLeaderGapSeconds": 5.107253875050162,
+          "position": 5,
+          "finishSeconds": 76.6074025253417,
+          "gapToWinnerSeconds": 5.098966648130968
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "lapSeconds": [
+            41.34884393405423,
+            35.39403908964409
+          ],
+          "peakPace": 0.001122408491901824,
+          "assistedSeconds": 69.8999999999986,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 69.8999999999986,
+          "peakKmh": 118.93334212883794,
+          "wallFrames": 0,
+          "contactFrames": 26,
+          "shoulderFrames": 0,
+          "positions": [
+            6,
+            7
+          ],
+          "maxLeaderGapSeconds": 6.6721644428147755,
+          "position": 6,
+          "finishSeconds": 78.16875905565705,
+          "gapToWinnerSeconds": 6.660323178446319
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "lapSeconds": [
+            42.145273703864916,
+            35.414907471118326
+          ],
+          "peakPace": 0.0031457047492689425,
+          "assistedSeconds": 71.56666666666517,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 71.56666666666517,
+          "peakKmh": 119.17698594701712,
+          "wallFrames": 0,
+          "contactFrames": 25,
+          "shoulderFrames": 0,
+          "positions": [
+            7,
+            6
+          ],
+          "maxLeaderGapSeconds": 8.341757973132943,
+          "position": 7,
+          "finishSeconds": 79.83726916444513,
+          "gapToWinnerSeconds": 8.328833287234403
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "lapSeconds": [
+            43.08971278036505,
+            35.34527609610094
+          ],
+          "peakPace": 0.002707347744916922,
+          "assistedSeconds": 72.19999999999847,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 72.19999999999847,
+          "peakKmh": 119.12163291209615,
+          "wallFrames": 0,
+          "contactFrames": 47,
+          "shoulderFrames": 0,
+          "positions": [
+            10,
+            9,
+            8
+          ],
+          "maxLeaderGapSeconds": 9.595496471574108,
+          "position": 8,
+          "finishSeconds": 81.09170582280562,
+          "gapToWinnerSeconds": 9.583269945594893
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "lapSeconds": [
+            44.56690096575848,
+            35.27394589991248
+          ],
+          "peakPace": 0.003706231884414127,
+          "assistedSeconds": 73.33333333333174,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 73.33333333333174,
+          "peakKmh": 119.24034206159675,
+          "wallFrames": 0,
+          "contactFrames": 27,
+          "shoulderFrames": 0,
+          "positions": [
+            9,
+            10
+          ],
+          "maxLeaderGapSeconds": 10.3995484201278,
+          "position": 9,
+          "finishSeconds": 81.8944017583881,
+          "gapToWinnerSeconds": 10.38596588117737
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "lapSeconds": [
+            46.60473973941921,
+            35.3398036494211
+          ],
+          "peakPace": 0.008548197386041097,
+          "assistedSeconds": 75.36666666666495,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 75.36666666666495,
+          "peakKmh": 119.81552584946166,
+          "wallFrames": 0,
+          "contactFrames": 9,
+          "shoulderFrames": 0,
+          "positions": [
+            8,
+            9,
+            10
+          ],
+          "maxLeaderGapSeconds": 12.094037200893908,
+          "position": 10,
+          "finishSeconds": 83.57880642882492,
+          "gapToWinnerSeconds": 12.07037055161419
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "lapSeconds": [
+            45.76468706037911,
+            36.489279443150316
+          ],
+          "peakPace": 0.004011210143572166,
+          "assistedSeconds": 76.46666666666489,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 76.46666666666489,
+          "peakKmh": 121.86630397015826,
+          "wallFrames": 0,
+          "contactFrames": 40,
+          "shoulderFrames": 0,
+          "positions": [
+            11
+          ],
+          "maxLeaderGapSeconds": 13.737915695999149,
+          "position": 11,
+          "finishSeconds": 85.23050239973664,
+          "gapToWinnerSeconds": 13.722066522525907
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "lapSeconds": [
+            46.12644122878939,
+            36.72214270677371
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.1254748661253,
+          "wallFrames": 0,
+          "contactFrames": 20,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 14.807163538258763,
+          "position": 12,
+          "finishSeconds": 86.2825349059682,
+          "gapToWinnerSeconds": 14.774099028757476
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "lapSeconds": [
+            47.4563053209058,
+            37.22448090128886
+          ],
+          "peakPace": 0.008653476914730186,
+          "assistedSeconds": 79.73333333333137,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 79.03333333333141,
+          "peakKmh": 119.82684623068754,
+          "wallFrames": 0,
+          "contactFrames": 22,
+          "shoulderFrames": 0,
+          "positions": [
+            12,
+            13
+          ],
+          "maxLeaderGapSeconds": 16.35374159749935,
+          "position": 13,
+          "finishSeconds": 87.84362409664836,
+          "gapToWinnerSeconds": 16.335188219437626
+        }
+      ]
+    },
+    {
+      "id": "russia",
+      "enabled": false,
+      "laps": 2,
+      "difficulty": "normal",
+      "playerContacts": 16,
+      "settings": {
+        "maxPace": 0.012,
+        "recoveryPace": 0.003,
+        "startSeconds": 8,
+        "gapStartSeconds": 2,
+        "fullGapSeconds": 10,
+        "duelMinSeconds": 0.7,
+        "duelFullSeconds": 1.8,
+        "duelFloor": 0.25,
+        "riseSeconds": 0.8,
+        "fallSeconds": 1.2,
+        "errorHoldSeconds": 0.35,
+        "recoverySeconds": 8,
+        "cooldownSeconds": 4
+      },
+      "entries": [
+        {
+          "id": "t02",
+          "player": false,
+          "lapSeconds": [
+            38.139807508202644,
+            37.76454106882365
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8000000000003,
+          "wallFrames": 0,
+          "contactFrames": 5,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 1,
+          "finishSeconds": 76.83448608951102,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "lapSeconds": [
+            38.10920136728266,
+            38.65445363424259
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.36757572422063,
+          "wallFrames": 0,
+          "contactFrames": 0,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 2,
+          "finishSeconds": 77.96611535817085,
+          "gapToWinnerSeconds": 1.131629268659836
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "lapSeconds": [
+            38.66936460716991,
+            38.41763059684264
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.63159804302308,
+          "wallFrames": 0,
+          "contactFrames": 2,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 3,
+          "finishSeconds": 78.52609402244163,
+          "gapToWinnerSeconds": 1.6916079329306086
+        },
+        {
+          "id": "t03",
+          "player": false,
+          "lapSeconds": [
+            39.53789168956789,
+            38.96797806986516
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.55818049792215,
+          "wallFrames": 0,
+          "contactFrames": 19,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 4,
+          "finishSeconds": 79.49749358262018,
+          "gapToWinnerSeconds": 2.6630074931091627
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "lapSeconds": [
+            39.95023662689205,
+            38.630366022210495
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.94893927631108,
+          "wallFrames": 0,
+          "contactFrames": 12,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 5,
+          "finishSeconds": 80.23132311883339,
+          "gapToWinnerSeconds": 3.39683702932237
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "lapSeconds": [
+            40.026199286490844,
+            39.22181588092843
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.38447138617788,
+          "wallFrames": 0,
+          "contactFrames": 15,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 6,
+          "finishSeconds": 81.0983405248655,
+          "gapToWinnerSeconds": 4.263854435354489
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "lapSeconds": [
+            40.341337282785275,
+            39.59685362123974
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.29116333744325,
+          "wallFrames": 0,
+          "contactFrames": 12,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 7,
+          "finishSeconds": 81.9812415187576,
+          "gapToWinnerSeconds": 5.146755429246582
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "lapSeconds": [
+            42.82993514006833,
+            38.24567807908211
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.90716928827817,
+          "wallFrames": 0,
+          "contactFrames": 21,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 8,
+          "finishSeconds": 82.90992299951735,
+          "gapToWinnerSeconds": 6.0754369100063315
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "lapSeconds": [
+            42.346365382128965,
+            39.78097360988778
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.62863405838868,
+          "wallFrames": 0,
+          "contactFrames": 19,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 9,
+          "finishSeconds": 83.46990093875483,
+          "gapToWinnerSeconds": 6.635414849243816
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "lapSeconds": [
+            43.85124413587131,
+            39.04058398461886
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.93118137693824,
+          "wallFrames": 0,
+          "contactFrames": 24,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 10,
+          "finishSeconds": 84.49973095717415,
+          "gapToWinnerSeconds": 7.665244867663134
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "lapSeconds": [
+            44.14913292978808,
+            38.33434457314534
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.36212173825777,
+          "wallFrames": 0,
+          "contactFrames": 31,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 11,
+          "finishSeconds": 84.70867132250008,
+          "gapToWinnerSeconds": 7.874185232989063
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "lapSeconds": [
+            45.23198061299447,
+            38.424441775191966
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 119.93672237868267,
+          "wallFrames": 0,
+          "contactFrames": 0,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 12,
+          "finishSeconds": 85.70256724599456,
+          "gapToWinnerSeconds": 8.868081156483541
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "lapSeconds": [
+            45.724468443320575,
+            39.91077172475343
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.61692432879508,
+          "wallFrames": 0,
+          "contactFrames": 0,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 13,
+          "finishSeconds": 87.87796326011099,
+          "gapToWinnerSeconds": 11.04347717059997
+        }
+      ]
+    },
+    {
+      "id": "russia",
+      "enabled": true,
+      "laps": 2,
+      "difficulty": "normal",
+      "playerContacts": 7,
+      "settings": {
+        "maxPace": 0.012,
+        "recoveryPace": 0.003,
+        "startSeconds": 8,
+        "gapStartSeconds": 2,
+        "fullGapSeconds": 10,
+        "duelMinSeconds": 0.7,
+        "duelFullSeconds": 1.8,
+        "duelFloor": 0.25,
+        "riseSeconds": 0.8,
+        "fallSeconds": 1.2,
+        "errorHoldSeconds": 0.35,
+        "recoverySeconds": 8,
+        "cooldownSeconds": 4
+      },
+      "entries": [
+        {
+          "id": "t02",
+          "player": false,
+          "lapSeconds": [
+            38.139807508202644,
+            37.76454106882365
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 118.8000000000003,
+          "wallFrames": 0,
+          "contactFrames": 5,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 0,
+          "position": 1,
+          "finishSeconds": 76.83448608951102,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "lapSeconds": [
+            38.10920136728266,
+            38.65445363424259
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.36757572422063,
+          "wallFrames": 0,
+          "contactFrames": 0,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 1.1345113872516492,
+          "position": 2,
+          "finishSeconds": 77.96611535817085,
+          "gapToWinnerSeconds": 1.131629268659836
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "lapSeconds": [
+            38.66936460716991,
+            38.41763059684264
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 120.63159804302308,
+          "wallFrames": 0,
+          "contactFrames": 2,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 1.7943821086097103,
+          "position": 3,
+          "finishSeconds": 78.52609402244163,
+          "gapToWinnerSeconds": 1.6916079329306086
+        },
+        {
+          "id": "t03",
+          "player": false,
+          "lapSeconds": [
+            39.53789168956789,
+            38.96770349501832
+          ],
+          "peakPace": 0.000009875066235705249,
+          "assistedSeconds": 30.700000000000685,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 30.700000000000685,
+          "peakKmh": 121.55818049792215,
+          "wallFrames": 0,
+          "contactFrames": 19,
+          "shoulderFrames": 0,
+          "positions": [
+            4
+          ],
+          "maxLeaderGapSeconds": 2.6657515401664824,
+          "position": 4,
+          "finishSeconds": 79.49721900777334,
+          "gapToWinnerSeconds": 2.6627329182623214
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "lapSeconds": [
+            39.9501579592866,
+            38.63263256426268
+          ],
+          "peakPace": 0.00004158169120666829,
+          "assistedSeconds": 68.49999999999868,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 68.49999999999868,
+          "peakKmh": 119.94893927631108,
+          "wallFrames": 0,
+          "contactFrames": 12,
+          "shoulderFrames": 0,
+          "positions": [
+            5
+          ],
+          "maxLeaderGapSeconds": 3.410260059950893,
+          "position": 5,
+          "finishSeconds": 80.23351099328012,
+          "gapToWinnerSeconds": 3.399024903769103
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "lapSeconds": [
+            40.02812968902728,
+            39.21696531746361
+          ],
+          "peakPace": 0.00011426169902410188,
+          "assistedSeconds": 70.29999999999858,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 70.29999999999858,
+          "peakKmh": 121.41095742949594,
+          "wallFrames": 0,
+          "contactFrames": 15,
+          "shoulderFrames": 0,
+          "positions": [
+            7,
+            6
+          ],
+          "maxLeaderGapSeconds": 4.2655367528501245,
+          "position": 6,
+          "finishSeconds": 81.09542036393712,
+          "gapToWinnerSeconds": 4.260934274426106
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "lapSeconds": [
+            40.34081846724587,
+            39.75260634798749
+          ],
+          "peakPace": 0.0005516298299872755,
+          "assistedSeconds": 72.3333333333318,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 72.3333333333318,
+          "peakKmh": 121.30939290167522,
+          "wallFrames": 0,
+          "contactFrames": 12,
+          "shoulderFrames": 0,
+          "positions": [
+            9,
+            8,
+            7
+          ],
+          "maxLeaderGapSeconds": 5.316027066163393,
+          "position": 7,
+          "finishSeconds": 82.13647542996594,
+          "gapToWinnerSeconds": 5.301989340454924
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "lapSeconds": [
+            41.99073139377398,
+            39.66684091160845
+          ],
+          "peakPace": 0.0006670401001397331,
+          "assistedSeconds": 71.1666666666652,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 71.1666666666652,
+          "peakKmh": 119.7688168229762,
+          "wallFrames": 0,
+          "contactFrames": 24,
+          "shoulderFrames": 0,
+          "positions": [
+            6,
+            7,
+            8,
+            9
+          ],
+          "maxLeaderGapSeconds": 6.182196638591641,
+          "position": 8,
+          "finishSeconds": 83.00013425212052,
+          "gapToWinnerSeconds": 6.1656481626095
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "lapSeconds": [
+            42.29759586804773,
+            39.49005956298614
+          ],
+          "peakPace": 0.0008228674907021304,
+          "assistedSeconds": 73.13333333333175,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 73.13333333333175,
+          "peakKmh": 120.94782079227208,
+          "wallFrames": 0,
+          "contactFrames": 28,
+          "shoulderFrames": 0,
+          "positions": [
+            10,
+            9,
+            8
+          ],
+          "maxLeaderGapSeconds": 6.860077593735205,
+          "position": 9,
+          "finishSeconds": 83.62196521140078,
+          "gapToWinnerSeconds": 6.78747912188976
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "lapSeconds": [
+            42.90329184474622,
+            38.90972056008025
+          ],
+          "peakPace": 0,
+          "assistedSeconds": 0,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 0,
+          "peakKmh": 121.04023083557479,
+          "wallFrames": 0,
+          "contactFrames": 18,
+          "shoulderFrames": 0,
+          "positions": [],
+          "maxLeaderGapSeconds": 7.361251721495549,
+          "position": 10,
+          "finishSeconds": 84.03820622439314,
+          "gapToWinnerSeconds": 7.2037201348821185
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "lapSeconds": [
+            44.21256564003258,
+            39.230205436340555
+          ],
+          "peakPace": 0.0024309259986758447,
+          "assistedSeconds": 74.666666666665,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 74.666666666665,
+          "peakKmh": 119.92626443949567,
+          "wallFrames": 0,
+          "contactFrames": 13,
+          "shoulderFrames": 0,
+          "positions": [
+            8,
+            9,
+            10,
+            11
+          ],
+          "maxLeaderGapSeconds": 8.26573679300644,
+          "position": 11,
+          "finishSeconds": 85.05067391305711,
+          "gapToWinnerSeconds": 8.216187823546093
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "lapSeconds": [
+            44.418648951157344,
+            39.44929680382913
+          ],
+          "peakPace": 0.002236846179950023,
+          "assistedSeconds": 76.46666666666489,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 76.46666666666489,
+          "peakKmh": 120.56930707747378,
+          "wallFrames": 0,
+          "contactFrames": 0,
+          "shoulderFrames": 0,
+          "positions": [
+            12
+          ],
+          "maxLeaderGapSeconds": 9.127426901596081,
+          "position": 12,
+          "finishSeconds": 85.9140906127946,
+          "gapToWinnerSeconds": 9.079604523283578
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "lapSeconds": [
+            45.144566374848225,
+            39.209428815612846
+          ],
+          "peakPace": 0.0032153239006479963,
+          "assistedSeconds": 77.29999999999818,
+          "recoverySeconds": 0,
+          "duelAssistedSeconds": 77.29999999999818,
+          "peakKmh": 119.93173231013056,
+          "wallFrames": 0,
+          "contactFrames": 0,
+          "shoulderFrames": 0,
+          "positions": [
+            13
+          ],
+          "maxLeaderGapSeconds": 9.82648404016603,
+          "position": 13,
+          "finishSeconds": 86.59671828249806,
+          "gapToWinnerSeconds": 9.762232192987042
+        }
+      ]
+    }
+  ]
+}

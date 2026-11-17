@@ -139,3 +139,8 @@ Kraft-/Widerstandsparameter an den unveränderten Physikkern. `RaceSession` lief
 kopierte Effektzustände; `wake-visuals.js` und `wake3d.js` stellen genau diese
 dar. Die freien Fahrtests und das klassische Spiel bleiben getrennt.
 Parameter, Topologieschutz, A/B-Abschaltung und Prüfungen: [SLIPSTREAM.md](SLIPSTREAM.md).
+
+`race-gaps.js` hält eine begrenzte Passagehistorie für laufende Zeitabstände.
+`catchup.js` berechnet daraus das kleine KI-Motorbudget und übergibt es an den
+gemeinsamen Physikpfad. Spieler, Podiumsplätze und Auslaufrunden bleiben ohne
+Aufholhilfe. Regeln, A/B-Abschaltung und Prüfungen: [CATCHUP.md](CATCHUP.md).

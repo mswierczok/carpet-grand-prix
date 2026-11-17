@@ -96,9 +96,10 @@
         acceleration = highSpeed ? Math.max(0, p.rollingDrag + p.aeroDrag * p.maxSpeed ** 2 -
           settings.governorResponse * Math.max(0, forward - p.maxSpeed)) : p.acceleration;
       return base.step(previous, input, surface, {
-        ...p, aeroDrag: p.aeroDrag * (1 - strength * reduction(p)),
+        ...p, aeroDrag: p.aeroDrag * (1 - strength * reduction(wake.aerodynamicBase || p)),
         acceleration,
-        maxSpeed: highSpeed ? p.maxSpeed + settings.maxGainKmh / (p.metersPerUnit * 3.6) : p.maxSpeed,
+        maxSpeed: highSpeed ? Math.max(p.maxSpeed + settings.maxGainKmh / (p.metersPerUnit * 3.6),
+          wake.catchup === undefined ? 0 : forward) : p.maxSpeed,
       }, dt);
     },
   });
