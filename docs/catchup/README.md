@@ -1,5 +1,8 @@
 # Aufholhilfe: A/B-Messprotokoll
 
+Diese Messungen verwenden den damaligen 3-km/h-Windschatten. Die aktuelle
+5-km/h-Abstimmung steht in [SLIPSTREAM_CLOSE.md](../SLIPSTREAM_CLOSE.md).
+
 Ausgangsstand `2bc124a11c274c0f52eb516bd9a0f1ea9e0d377f` (PR #29), ergänzt
 um die durch 19 SHA-256-Prüfsummen bezeichneten Arbeitsquellen in
 [field-ab.json](field-ab.json). Messzeit: 2026-11-17T14:21:43.759Z.

@@ -14,12 +14,13 @@
       const strength = emitters.get(entry.id) || 0;
       if (!strength) continue;
       const pose = entry.visual, cs = Math.cos(pose.heading), sn = Math.sin(pose.heading),
-        pitch = pose.pitch || 0, phase = (snapshot.race?.elapsed || 0) * 3;
+        pitch = pose.pitch || 0, phase = (snapshot.race?.elapsed || 0) * 3,
+        fullRange = 2 * A.Physics.parameters.halfLength * A.Slipstream.settings.fadeLengths;
       for (const side of [-1, 1]) for (let line = 0; line < 2; line++) {
         const points = [];
         for (let i = 0; i <= 24; i++) {
           const u = i / 24,
-            x = -5.2 - u * (10 + line * 4),
+            x = -5.2 - u * (fullRange - 5.2 - line * 1.5),
             z = side * (2.1 + u * 1.4 + Math.sin(u * Math.PI * 2.3 - phase + line) * u * 0.8),
             y = 2.3 + Math.sin(u * Math.PI * 2 - phase) * u * 0.35;
           points.push({ x: pose.x + x * cs - z * sn,

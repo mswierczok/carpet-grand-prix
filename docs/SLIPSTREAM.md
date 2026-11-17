@@ -1,5 +1,10 @@
 # Phase 2.3: Windschatten im POV-Rennen
 
+Aktuelle Anschlussabstimmung: [SLIPSTREAM_CLOSE.md](SLIPSTREAM_CLOSE.md)
+beschreibt +5 km/h bei einer bis drei Längen und den festen Stopp bei sechs.
+Die folgende Beschreibung und die ursprünglichen Protokolle dokumentieren
+den damaligen 3-km/h-Stand von PR #29.
+
 Ausgangspunkt: `main` nach PR #28, Commit
 `1bf76bb90b0b5e99e693cab1b24ba57336a9746e`.
 Dieser Schritt ergänzt ausschließlich Windschatten und dessen Heckwirbel.
@@ -37,7 +42,7 @@ ohne aktiven Effekt exakt. Bei aktivem Effekt gibt er oberhalb 110 nur die
 begrenzte Antriebskraft frei, die das Basismodell zum Halten seiner ursprünglichen
 Endgeschwindigkeit braucht. Diese Kraft fällt oberhalb der Basisgrenze linear
 mit 3 Einheiten/s² pro zusätzlicher Einheit/s. Die maximale Widerstandsreduktion
-wird aus dem Gleichgewicht dieser Kräfte für +3 km/h berechnet (bei den aktuellen
+wird aus dem Gleichgewicht dieser Kräfte für +3 km/h berechnet (bei den damaligen
 Parametern ungefähr 48,5 % des **aerodynamischen Anteils**, nicht der gesamten
 Fahrzeugwiderstände). Ein fester oberer Sicherheitsbegrenzer bleibt bei 121,8 km/h.
 

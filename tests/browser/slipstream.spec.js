@@ -14,12 +14,14 @@ async function observeWake(page) {
             const expected = new Set(snapshot.entries.filter((e) => e.slipstream?.strength > 0)
               .map((e) => e.slipstream.sourceId)).size,
               stats = (globalThis.__wakeStats ||= { samples: 0, activeSamples: 0, mismatches: 0,
-                peakTriangles: 0, peakEmitters: 0 });
+                peakTriangles: 0, peakEmitters: 0, rangeViolations: 0 });
             stats.samples++;
             if (expected > 0) stats.activeSamples++;
             stats.mismatches += Number(real.diagnostics().emitters !== expected || real.mesh.visible !== (expected > 0));
             stats.peakTriangles = Math.max(stats.peakTriangles, real.diagnostics().triangles);
             stats.peakEmitters = Math.max(stats.peakEmitters, expected);
+            stats.rangeViolations += snapshot.entries.filter((e) => e.slipstream?.strength > 0 &&
+              (e.slipstream.distanceLengths < 1 || e.slipstream.distanceLengths >= 6)).length;
           } };
         } };
       } });
@@ -53,6 +55,7 @@ test("Windschatten: echter 3D-Heckwirbel entspricht der Physik, Pause/Neustart b
   let stats = await page.evaluate(() => __wakeStats);
   expect(stats.activeSamples).toBeGreaterThan(4);
   expect(stats.mismatches).toBe(0);
+  expect(stats.rangeViolations).toBe(0);
   expect(stats.peakTriangles).toBeLessThanOrEqual(2496);
   await expect(page.locator("#balanceReadout")).toContainText("windschatten");
   for (let i = 0; i < 100; i++) {

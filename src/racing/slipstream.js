@@ -3,11 +3,11 @@
   const A = globalThis.CGPArcade,
     base = A.Physics,
     settings = Object.freeze({
-      minKmh: 80, fullKmh: 90, minLengths: 2, fullLengths: 3,
-      fadeLengths: 6, maxLengths: 8, releaseLengths: 9,
+      minKmh: 80, fullKmh: 90, minLengths: 1, fullLengths: 1,
+      fadeLengths: 3, maxLengths: 6, releaseLengths: 6,
       lateralWidths: 0.8, releaseWidths: 1.2,
       riseSeconds: 0.65, fallSeconds: 0.45,
-      maxGainKmh: 3, governorResponse: 3,
+      maxGainKmh: 5, governorResponse: 3,
     });
   const clamp = (v) => Math.max(0, Math.min(1, v));
   const smooth = (v) => { const t = clamp(v); return t * t * (3 - 2 * t); };
@@ -18,7 +18,7 @@
     const gain = settings.maxGainKmh / (p.metersPerUnit * 3.6);
     // At full throttle the existing speed limiter supplies only the force
     // needed at maxSpeed. Above it, the engine governor tapers that force.
-    // Solve the drag equilibrium for exactly +3 km/h, never assign velocity.
+    // Solve the drag equilibrium for the configured gain, never assign velocity.
     return clamp(1 - (p.aeroDrag * p.maxSpeed ** 2 - settings.governorResponse * gain) /
       (p.aeroDrag * (p.maxSpeed + gain) ** 2));
   }
@@ -36,7 +36,7 @@
       lateral = -dx * Math.sin(b.heading) + dy * Math.cos(b.heading),
       lengths = along / length,
       width = 2 * p.halfWidth * (release ? settings.releaseWidths : settings.lateralWidths);
-    if (lengths < settings.minLengths || lengths > (release ? settings.releaseLengths : settings.maxLengths) ||
+    if (lengths < settings.minLengths || along >= settings.maxLengths * length - 1e-8 ||
       Math.abs(lateral) >= width || Math.cos(a.heading - b.heading) < 0.94 ||
       Math.abs((a.elevation || 0) - (b.elevation || 0)) > 2)
       return null;
@@ -56,7 +56,6 @@
         return null;
     }
     const strength = smooth((kmh - settings.minKmh) / (settings.fullKmh - settings.minKmh)) *
-      smooth((lengths - settings.minLengths) / (settings.fullLengths - settings.minLengths)) *
       (1 - smooth((lengths - settings.fadeLengths) / (settings.maxLengths - settings.fadeLengths))) *
       (1 - smooth(Math.abs(lateral) / (2 * p.halfWidth * settings.lateralWidths)));
     return { strength, sourceId: leader.id, distanceLengths: lengths, lateral };
@@ -71,8 +70,8 @@
       const prior = entry.slipstream || empty(),
         source = entries.find((e) => e.id === prior.sourceId),
         support = source && pair(entry, source, surface, p, true);
-      // Invalid topology/contact is cut immediately for safety. The ordinary
-      // lateral/distance release fades while the original corridor stays valid.
+      // Six lengths is a hard eligibility boundary, including release. Ordinary
+      // lateral release fades only while the original corridor stays valid.
       if (!best && !support) return empty();
       const target = best || { ...support, strength: 0 },
         previous = target.sourceId === prior.sourceId ? prior.strength : 0,
