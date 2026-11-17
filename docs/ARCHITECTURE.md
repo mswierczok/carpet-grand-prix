@@ -132,3 +132,10 @@ Die gemeinsame Build-Aufbereitung erzeugt Ränder und sichere Trennseile;
 Laufzeitdaten bleiben statisch. `bridge-surface` und `bridge-physics` ergänzen
 getrennte Fahrbahnkorridore und Höhen um den unveränderten Physikkern.
 Umfang und nächste Integration: [POV_CALENDAR.md](POV_CALENDAR.md).
+
+Im POV-Rennen berechnet `slipstream.js` eine gemeinsame aerodynamische Wirkung
+vor den festen Physikschritten. Sein optionaler Adapter übergibt ausschließlich
+Kraft-/Widerstandsparameter an den unveränderten Physikkern. `RaceSession` liefert
+kopierte Effektzustände; `wake-visuals.js` und `wake3d.js` stellen genau diese
+dar. Die freien Fahrtests und das klassische Spiel bleiben getrennt.
+Parameter, Topologieschutz, A/B-Abschaltung und Prüfungen: [SLIPSTREAM.md](SLIPSTREAM.md).

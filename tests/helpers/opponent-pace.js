@@ -24,7 +24,10 @@ export function measureField(published = false) {
   const { api, data } = loadArcade({ race: true });
   const reference = publishedOpponents(api);
   if (published) api.Opponents = reference;
-  const race = api.RaceSession.create(data.tracks.bahrain, { laps: 3 }),
+  // This historical test isolates the AI competence improvement against a
+  // controller that predates aerodynamic headroom. Do not mix the newly
+  // authorized wind mechanic into either side; its A/B races live separately.
+  const race = api.RaceSession.create(data.tracks.bahrain, { laps: 3, slipstream: false }),
     playerDriver = reference.create(race.surface, race.parameters),
     memory = playerDriver.memory(0, -6),
     peaks = {},

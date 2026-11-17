@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#192b33" />
     <title>Carpet Grand Prix · Bahrain-Rennen</title>
     <link rel="stylesheet" href="./styles/arcade.css?v=pov-tracks-1" />
-    <link rel="stylesheet" href="./styles/arcade-race.css?v=full-grid-race-1" />
+    <link rel="stylesheet" href="./styles/arcade-race.css?v=slipstream-1" />
   </head>
   <body>
     <main id="arcadeApp" data-renderer="3d" data-mode="race">
@@ -84,6 +84,7 @@
             <div class="track-hud" aria-hidden="true">
               <strong id="viewSpeed">0 km/h</strong
               ><span id="viewTime">0:00.000</span>
+              <span id="viewDraft" hidden>Windschatten</span>
             </div>
             <canvas
               id="arcadeCanvas"
@@ -223,20 +224,23 @@
     <script src="./src/racing/ai-difficulty.js?v=ai-competence-1"></script>
     <script src="./src/persistence/pov-preferences.js?v=ai-competence-1"></script>
     <script src="./src/racing/opponent-line.js?v=ai-competence-1"></script>
-    <script src="./src/racing/opponents.js?v=ai-competence-1"></script>
+    <script src="./src/racing/opponents.js?v=slipstream-1"></script>
+    <script src="./src/racing/slipstream.js?v=slipstream-1"></script>
     <script src="./src/data/race-formats.js?v=race-duration-1"></script>
-    <script src="./src/racing/race-session.js?v=ai-competence-1"></script>
-    <script src="./src/ui/arcade-race-ui.js?v=ai-competence-1"></script>
+    <script src="./src/racing/race-session.js?v=slipstream-1"></script>
+    <script src="./src/ui/arcade-race-ui.js?v=slipstream-1"></script>
     <script src="./src/racing/controls.js"></script>
-    <script src="./src/rendering/arcade2d.js?v=pov-calendar-1"></script>
+    <script src="./src/rendering/wake-visuals.js?v=slipstream-1"></script>
+    <script src="./src/rendering/arcade2d.js?v=slipstream-1"></script>
     <script src="./src/vendor/three.js?v=full-grid-race-1"></script>
     <script src="./src/rendering/camera3d.js?v=pov-calendar-1"></script>
     <script src="./src/rendering/materials3d.js?v=full-grid-race-1"></script>
     <script src="./src/rendering/vehicles3d.js?v=pov-calendar-1"></script>
     <script src="./src/rendering/tracks3d.js?v=pov-calendar-1"></script>
     <script src="./src/rendering/fleet3d.js?v=pov-calendar-1"></script>
-    <script src="./src/rendering/arcade3d.js?v=pov-tracks-1"></script>
+    <script src="./src/rendering/wake3d.js?v=slipstream-1"></script>
+    <script src="./src/rendering/arcade3d.js?v=slipstream-1"></script>
     <script src="./src/racing/track-catalog.js?v=pov-calendar-1"></script>
-    <script src="./src/arcade-main.js?v=ai-competence-1"></script>
+    <script src="./src/arcade-main.js?v=slipstream-1"></script>
   </body>
 </html>

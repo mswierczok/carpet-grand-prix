@@ -28,6 +28,7 @@
     "measure:race-duration": "node scripts/measure-race-duration.js",
     "measure:race-field": "node scripts/measure-race-field.js",
     "measure:ai-balance": "node scripts/measure-ai-balance.js",
+    "measure:slipstream": "node scripts/measure-slipstream.js",
     "build:race-formats": "node scripts/build-race-formats.js",
     "check:race-formats": "node scripts/build-race-formats.js --check",
     "build:arcade-boundaries": "node scripts/build-arcade-boundaries.js",

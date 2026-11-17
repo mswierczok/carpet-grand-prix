@@ -168,6 +168,15 @@
           ctx.stroke();
         }
       }
+      for (const stroke of A.WakeVisuals?.strokes(snapshot) || []) {
+        if (surface.bridge?.covered(stroke.pose)) continue;
+        for (let i = 0; i < stroke.points.length - 1; i++) {
+          const a = stroke.points[i], b = stroke.points[i + 1];
+          ctx.strokeStyle = `rgba(224,242,242,${a.alpha})`;
+          ctx.lineWidth = a.width * 2;
+          ctx.beginPath(); ctx.moveTo(a.x, a.z); ctx.lineTo(b.x, b.z); ctx.stroke();
+        }
+      }
       const pose = {
         x: snapshot.visual.x,
         y: snapshot.visual.y,
