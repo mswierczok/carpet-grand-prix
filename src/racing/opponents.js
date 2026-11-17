@@ -2,11 +2,14 @@
   "use strict";
   const A = globalThis.CGPArcade,
     clamp = (n, a, b) => Math.max(a, Math.min(b, n));
-  function create(surface, parameters) {
+  function create(surface, parameters, options = {}) {
     const p = parameters,
+      profile = A.AIDifficulty.forTrack(options.difficulty, surface.id),
+      returnAnticipation = profile.steeringAnticipation > 0
+        ? 1 / Math.expm1(p.steerReturnResponse * Math.log1p(1 / profile.steeringAnticipation) / p.steerResponse) : 0,
       stride = 5,
       passingOffset = Math.min(8, surface.roadRadius - p.halfWidth - 3),
-      lines = A.OpponentLine.create(surface),
+      lines = A.OpponentLine.create(surface, profile),
       plans = new Map();
     function plan(lane) {
       if (plans.has(lane)) return plans.get(lane);
@@ -23,12 +26,12 @@
               );
             const curvature = Math.max(0.001, Math.abs(turn) / 8),
               cornerSquared =
-                (p.maxLateralAcceleration * (lane === 0 ? 1.5 : 0.85)) /
+                (p.maxLateralAcceleration * (lane === 0 ? profile.cornerConfidence : profile.passingConfidence)) /
                 curvature,
-              brakingDistance = Math.max(0, ahead - 12);
+              brakingDistance = Math.max(0, ahead - profile.brakeDistance);
             allowed = Math.min(
               allowed,
-              Math.sqrt(cornerSquared + 2 * p.braking * 0.8 * brakingDistance),
+              Math.sqrt(cornerSquared + 2 * p.braking * profile.brakeConfidence * brakingDistance),
             );
           }
           return allowed;
@@ -40,7 +43,8 @@
     function motion(car, state) {
       const { route, speedTable, samples } = plan(state.lane),
         s = route.project(car),
-        index = Math.min(samples - 1, Math.floor(s / stride)),
+        precision = profile.inconsistency * (1 + Math.sin(car.s * 6 * Math.PI / surface.g.len + state.index)),
+        index = Math.min(samples - 1, Math.floor(Math.max(0, s - precision) / stride)),
         point = route.at(s),
         road = surface.at(point.trackS),
         lane =
@@ -51,15 +55,13 @@
         s,
         lane,
         distance: Math.hypot(car.x - point.x, car.y - point.y),
-        pace: Math.min(p.maxSpeed, speedTable[index] * state.pace),
+        pace: speedTable[index],
       };
     }
     const memory = (index, lane = 0) => ({
       lane,
       hold: 0,
-      // Small differences in corner commitment; every driver can use the
-      // player's complete straight-line speed range.
-      pace: 1 + (index % 3) * 0.01,
+      index,
     });
     function prepare(cars) {
       return cars.map((car) => {
@@ -94,10 +96,28 @@
           }),
         ahead = traffic
           .filter(
-            (v) => v.gap > 0 && v.gap < 75 && Math.abs(v.lane - lane) < 5.8,
+            (v) => v.gap > 0 && v.gap < profile.attackDistance && Math.abs(v.lane - lane) < 5.8,
           )
           .sort((a, b) => a.gap - b.gap)[0];
       state.hold = Math.max(0, state.hold - dt);
+      const safeLane = (target, behind = -16) => !traffic.some((v) =>
+        v.gap > behind && v.gap < 35 && Math.abs(v.lane - target) < 6.5);
+      const rear = car.inRace === false ? null : traffic.find((v) => v.car.inRace !== false && v.gap < -2 * p.halfLength - 8 &&
+        v.gap > -profile.defenseDistance && v.car.speed > car.speed + 2);
+      if (state.defending && (car.inRace === false || !traffic.some((v) => v.car.inRace !== false && v.car.id === state.defending && v.gap < -12 && v.gap > -60)))
+        state.defending = null;
+      if (!ahead && !state.defending && rear && state.hold === 0) {
+        const a = surface.at(car.s + 20), b = surface.at(car.s + 90),
+          bend = Math.atan2(Math.sin(b.ang - a.ang), Math.cos(b.ang - a.ang)),
+          inside = Math.sign(bend) * passingOffset;
+        // One early move while the attacker is still behind. Never sweep
+        // across an adjacent car, assign a position or force an overtake.
+        if (Math.abs(bend) > 0.2 && Math.abs(inside - lane) > 3 && safeLane(inside, -24)) {
+          state.lane = inside;
+          state.hold = 1.5;
+          state.defending = rear.car.id;
+        }
+      }
       let path = motion(car, state);
       const passing = ahead && Math.abs(path.lane - ahead.lane) > 6.5;
       if (
@@ -109,17 +129,24 @@
         const choices = [-passingOffset, passingOffset].filter(
           (target) =>
             Math.abs(target - lane) > 3 &&
-            !traffic.some(
-              (v) =>
-                v.gap > -16 && v.gap < 35 && Math.abs(v.lane - target) < 6.5,
-            ),
+            safeLane(target),
         );
         if (choices.length) {
-          choices.sort((a, b) => Math.abs(a - lane) - Math.abs(b - lane));
+          const cost = (target) => {
+            if (!profile.smartPassing) return Math.abs(target - lane);
+            const candidate = plan(target), at = candidate.route.project(car);
+            let seconds = Math.abs(target - lane) / Math.max(40, car.speed) * 0.2;
+            for (let look = 0; look <= 80; look += 20) {
+              const index = Math.floor(((at + look) % candidate.route.length) / stride);
+              seconds += 20 / Math.max(10, candidate.speedTable[Math.min(candidate.samples - 1, index)]);
+            }
+            return seconds;
+          };
+          choices.sort((a, b) => cost(a) - cost(b));
           state.lane = choices[0];
           state.hold = 2;
         }
-      } else if (!ahead && state.hold === 0 && state.lane !== 0) {
+      } else if (!ahead && !state.defending && state.hold === 0 && state.lane !== 0) {
         const nominal = motion(car, { ...state, lane: 0 });
         // The leading car may merge into a clear racing line. A car ahead
         // gets priority, so adjacent drivers do not converge simultaneously.
@@ -136,7 +163,7 @@
         }
       }
       path = motion(car, state);
-      const look = clamp(8 + car.speed * 0.25, 12, 35),
+      const look = clamp(8 + car.speed * profile.look, 12, 35),
         target = path.route.at(path.s + look),
         error = Math.atan2(
           Math.sin(
@@ -150,16 +177,28 @@
           p.maxSteer /
           (1 +
             p.steerSpeedReduction * (car.speed / p.steerSpeedReference) ** 2),
+        chord = Math.hypot(target.x - car.x, target.y - car.y),
+        steeringDistance = Math.max(4, look + (chord - look) * profile.steeringPrecision),
+        wantedSteering = Math.atan2(2 * p.wheelbase * Math.sin(error), steeringDistance),
+        turnIn = wantedSteering + profile.steeringAnticipation * (wantedSteering - car.steering),
+        correctedSteering = turnIn * car.steering < 0 && wantedSteering * car.steering >= 0
+          ? 0
+          : wantedSteering * car.steering < 0
+            ? wantedSteering + returnAnticipation * (wantedSteering - car.steering)
+            : turnIn,
         steer = clamp(
-          Math.atan2(2 * p.wheelbase * Math.sin(error), look) / maxSteer,
+          correctedSteering / maxSteer,
           -1,
           1,
         );
-      let desired = path.pace;
+      let desired = path.pace,
+        reason = desired < p.maxSpeed ? "corner-preview" : "straight";
       // A merge can start far from its new path. Settle onto it before using
       // qualifying pace, rather than running wide with the old steering angle.
-      if (path.distance > 6 && Math.abs(error) > 0.2)
+      if (path.distance > profile.settleDistance && Math.abs(error) > profile.settleAngle) {
         desired = Math.min(desired, 65);
+        reason = "settling";
+      }
       // Brake before a blocked nose; do not hold the brake into reverse.
       const blocker = traffic
         .filter(
@@ -170,6 +209,7 @@
         )
         .sort((a, b) => a.gap - b.gap)[0];
       if (blocker) {
+        const freeDesired = desired;
         // Keep room for the body, reaction and braking away closing speed.
         // Matched-speed cars do not need a large speed-dependent empty gap.
         const closing = Math.max(
@@ -211,8 +251,31 @@
           )
             desired = 8;
         }
+        if (desired < freeDesired) reason = "traffic";
       }
-      if (Math.abs(error) > 0.9) desired = Math.min(desired, 40);
+      if (profile.edgePreview > 0 && car.longitudinalSpeed > 35) {
+        const tau = profile.edgePreview, v = car.longitudinalSpeed,
+          targetSteering = steer * maxSteer,
+          response = steer === 0 || car.steering * targetSteering < 0
+            ? p.steerReturnResponse : p.steerResponse,
+          meanSteering = targetSteering + (car.steering - targetSteering) *
+            (-Math.expm1(-response * tau)) / (response * tau),
+          grip = p.maxLateralAcceleration * (car.offroad ? p.offroadGrip : 1),
+          omega = clamp(v / p.wheelbase * Math.tan(meanSteering), -grip / v, grip / v),
+          h = car.heading, w = h + omega * tau,
+          future = { ...car,
+            x: car.x + (Math.abs(omega) > 0.0001 ? v / omega * (Math.sin(w) - Math.sin(h)) : v * Math.cos(h) * tau) + (car.vx - v * Math.cos(h)) * tau,
+            y: car.y + (Math.abs(omega) > 0.0001 ? v / omega * (Math.cos(h) - Math.cos(w)) : v * Math.sin(h) * tau) + (car.vy - v * Math.sin(h)) * tau },
+          forecast = surface.project(future, car.s + v * tau);
+        if (forecast.distance > surface.roadRadius - 0.3 && forecast.distance > projection.distance + 0.1) {
+          desired = Math.min(desired, Math.max(35, car.speed - p.braking * 0.12));
+          reason = "edge-preview";
+        }
+      }
+      if (Math.abs(error) > 0.9 && desired > 40) {
+        desired = Math.min(desired, 40);
+        reason = "heading-recovery";
+      }
       state.blocked =
         car.hitWall && car.speed < 0.5 ? (state.blocked || 0) + dt : 0;
       if (state.blocked > 0.2) {
@@ -231,9 +294,13 @@
             other.id !== car.id && A.VehicleContacts.overlap(rear, other, p),
         );
         // Ordinary reverse controls, including the shared delay, no reset.
-        return { throttle: Number(busy), brake: Number(!busy), steer: -steer };
+        const command = { throttle: Number(busy), brake: Number(!busy), steer: -steer };
+        if (options.diagnostics) state.telemetry = { reason: "reverse-recovery", speed: car.speed,
+          desiredSpeed: 0, freeTarget: path.pace, pathError: path.distance,
+          headingError: error, lane: state.lane, blockerGap: blocker?.gap ?? null, ...command };
+        return command;
       }
-      return {
+      const command = {
         // At the shared limiter keep the pedal down like a human holding W;
         // lifting for a whole input frame needlessly loses straight-line pace.
         throttle: Number(desired >= p.maxSpeed || car.speed < desired - 0.05),
@@ -242,11 +309,16 @@
         ),
         steer,
       };
+      if (options.diagnostics) state.telemetry = { reason, speed: car.speed,
+        desiredSpeed: desired, freeTarget: path.pace, pathError: path.distance,
+        headingError: error, lane: state.lane, blockerGap: blocker?.gap ?? null, ...command };
+      return command;
     }
     // Build every racing/passing profile before the countdown. Input updates
     // must never pay the path-planning cost during a race.
     for (const lane of [-passingOffset, -6, 0, 6, passingOffset]) plan(lane);
-    return Object.freeze({ memory, input, prepare });
+    return Object.freeze({ memory, input, prepare,
+      diagnostics: (state) => state.telemetry ? { ...state.telemetry } : null });
   }
   A.Opponents = Object.freeze({ create });
 })();

@@ -96,6 +96,9 @@ it("liefert auf den vier abgenommenen Strecken dieselben Rennen trotz optionaler
   expect(plain(after.api.Physics.parameters)).toEqual(
     plain(scope.CGPArcade.Physics.parameters),
   );
+  // Isolate the original bridge-adapter regression from the explicitly
+  // authorized new AI. Both kernels replay the same published controller.
+  after.api.Opponents = scope.CGPArcade.Opponents;
   for (const id of povIds.slice(0, 4)) {
     const a = scope.CGPArcade.RaceSession.create(
         scope.CGPArcadeData.tracks[id],
@@ -111,8 +114,11 @@ it("liefert auf den vier abgenommenen Strecken dieselben Rennen trotz optionaler
       };
       a.advance(input, 1 / 30);
       b.advance(input, 1 / 30);
-      if (frame % 30 === 0)
-        expect(plain(b.snapshot())).toEqual(plain(a.snapshot()));
+      if (frame % 30 === 0) {
+        const current = plain(b.snapshot());
+        delete current.race.difficulty;
+        expect(current).toEqual(plain(a.snapshot()));
+      }
     }
   }
 }, 120000);

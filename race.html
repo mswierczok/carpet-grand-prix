@@ -171,6 +171,16 @@
             Fahrphysik.
           </p>
         </div>
+        <div class="difficulty-choice">
+          <label for="difficulty">Schwierigkeit</label>
+          <select id="difficulty" aria-describedby="difficultyNote">
+            <option value="beginner">Anfänger</option>
+            <option value="normal" selected>Normal</option>
+            <option value="hard">Schwer</option>
+            <option value="expert">Experte</option>
+          </select>
+          <p class="hint" id="difficultyNote">Vor dem Start wählen. Für POV-Rennen gespeichert.</p>
+        </div>
         <div class="recovery">
           <button id="recover" type="button">
             Auto zurücksetzen <kbd>R</kbd></button
@@ -184,6 +194,12 @@
         Teppichrand verlierst du Tempo. Auch auf dem dunklen Rand bleibt die
         Rundenzeit gültig. Runden zählen nach beiden Sektoren und Start/Ziel.
       </p>
+      <details id="balancePanel" hidden>
+        <summary>KI-Fahrdaten</summary>
+        <label for="balanceTeam">Fahrzeug</label>
+        <select id="balanceTeam"></select>
+        <pre id="balanceReadout"></pre>
+      </details>
       <footer>
         Du startest auf Platz 13. Nach deinem Ziel übernimmt die KI die
         Auslaufrunde, bis alle im Ziel sind. Dein klassischer Spielstand wird
@@ -204,11 +220,13 @@
     <script src="./src/racing/timing.js?v=sector-checkpoints-1"></script>
     <script src="./src/racing/session.js?v=pov-calendar-1"></script>
     <script src="./src/racing/vehicle-contacts.js?v=pov-calendar-1"></script>
-    <script src="./src/racing/opponent-line.js?v=pov-tracks-1"></script>
-    <script src="./src/racing/opponents.js?v=pov-calendar-1"></script>
+    <script src="./src/racing/ai-difficulty.js?v=ai-competence-1"></script>
+    <script src="./src/persistence/pov-preferences.js?v=ai-competence-1"></script>
+    <script src="./src/racing/opponent-line.js?v=ai-competence-1"></script>
+    <script src="./src/racing/opponents.js?v=ai-competence-1"></script>
     <script src="./src/data/race-formats.js?v=race-duration-1"></script>
-    <script src="./src/racing/race-session.js?v=race-duration-1"></script>
-    <script src="./src/ui/arcade-race-ui.js?v=race-duration-1"></script>
+    <script src="./src/racing/race-session.js?v=ai-competence-1"></script>
+    <script src="./src/ui/arcade-race-ui.js?v=ai-competence-1"></script>
     <script src="./src/racing/controls.js"></script>
     <script src="./src/rendering/arcade2d.js?v=pov-calendar-1"></script>
     <script src="./src/vendor/three.js?v=full-grid-race-1"></script>
@@ -219,6 +237,6 @@
     <script src="./src/rendering/fleet3d.js?v=pov-calendar-1"></script>
     <script src="./src/rendering/arcade3d.js?v=pov-tracks-1"></script>
     <script src="./src/racing/track-catalog.js?v=pov-calendar-1"></script>
-    <script src="./src/arcade-main.js?v=pov-tracks-1"></script>
+    <script src="./src/arcade-main.js?v=ai-competence-1"></script>
   </body>
 </html>

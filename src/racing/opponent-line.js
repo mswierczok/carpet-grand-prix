@@ -15,8 +15,10 @@
         Math.hypot(c.x - a.x, c.y - a.y) || 1)
     );
   }
-  function create(surface) {
-    if (cache.has(surface)) return cache.get(surface);
+  function create(surface, profile = A.AIDifficulty.get()) {
+    if (!cache.has(surface)) cache.set(surface, new Map());
+    const cached = cache.get(surface);
+    if (cached.has(profile.id)) return cached.get(profile.id);
     const n = Math.ceil(surface.g.len / 8),
       stride = surface.g.len / n,
       base = Array.from({ length: n }, (_, i) => surface.at(i * stride)),
@@ -26,11 +28,11 @@
         y: base[i].y + Math.cos(base[i].ang) * lane,
       }),
       points = base.map((_, i) => pos(i, 0)),
-      limit = Math.min(12, surface.roadRadius - 4),
+      limit = Math.min(profile.lineWidth, surface.roadRadius - profile.edgeMargin),
       routes = new Map();
     // Spread curvature over entry/apex/exit within the existing road. These
     // are steering targets, never positions assigned to a simulated car.
-    for (let pass = 0; pass < 1200; pass++)
+    for (let pass = 0; pass < profile.iterations; pass++)
       for (let step = 0; step < n; step++) {
         const i = pass % 2 ? step : n - 1 - step,
           a = points[(i + n - 1) % n],
@@ -53,8 +55,13 @@
         );
         points[i] = pos(i, offsets[i]);
       }
+    for (let i = 0; i < n; i++) {
+      const bend = curvature(base[(i + n - 3) % n], base[i], base[(i + 3) % n]);
+      offsets[i] = clamp(offsets[i] + Math.sign(bend) *
+        Math.min(1, Math.abs(bend) * 80) * profile.apexInset, -limit, limit);
+      points[i] = pos(i, offsets[i]);
+    }
     const vehicle = A.Physics.parameters,
-      narrow = surface.roadRadius < 8 + vehicle.halfWidth + 2,
       minimumRadius = vehicle.wheelbase / Math.tan(vehicle.maxSteer),
       bends = base.map((b, i) =>
         Math.abs(curvature(base[(i + n - 1) % n], b, base[(i + 1) % n])),
@@ -66,10 +73,9 @@
             ? points
             : base.map((_, i) => {
                 const side = pos(i, lane);
-                if (!narrow) return side;
-                // A fixed inner lane cannot turn inside the vehicle's steering
-                // radius. On narrow hairpins the passing lanes converge onto the
-                // racing line; the ordinary traffic controller queues the cars.
+                // Even a wide road can have an inner passing radius smaller
+                // than the vehicle can steer. Merge by local curvature on every
+                // track; road width alone does not describe a hairpin.
                 let bend = 0;
                 for (let d = -3; d <= 3; d++)
                   bend = Math.max(bend, bends[(i + d + n) % n]);
@@ -152,7 +158,7 @@
       return result;
     }
     const result = Object.freeze({ route });
-    cache.set(surface, result);
+    cached.set(profile.id, result);
     return result;
   }
   A.OpponentLine = Object.freeze({ create });
