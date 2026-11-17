@@ -59,6 +59,7 @@
             throttle: info.throttle, brake: info.brake, steer: +info.steer.toFixed(3),
             } : { note: "Noch keine KI-Fahrdaten für dieses Fahrzeug." }),
             windschatten: entry?.slipstream || null,
+            aufholhilfe: entry?.catchup || null,
           }, null, 2));
         }
       }
@@ -83,6 +84,8 @@
       );
       el("team").disabled = r.phase !== "grid";
       el("difficulty").disabled = r.phase !== "grid";
+      el("catchup").disabled = r.phase !== "grid";
+      el("catchup").value = r.catchup ? "on" : "off";
       el("difficulty").value = r.difficulty;
       if (el("track")) el("track").disabled = r.phase !== "grid";
       el("recover").disabled = r.phase !== "racing";

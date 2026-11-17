@@ -181,6 +181,12 @@
             <option value="expert">Experte</option>
           </select>
           <p class="hint" id="difficultyNote">Vor dem Start wählen. Für POV-Rennen gespeichert.</p>
+          <label for="catchup">KI-Aufholhilfe</label>
+          <select id="catchup" aria-describedby="catchupNote">
+            <option value="on">Dezent</option>
+            <option value="off">Aus</option>
+          </select>
+          <p class="hint" id="catchupNote">Kleine Hilfe für zurückliegende Gegner. Gilt für diese Fahrt.</p>
         </div>
         <div class="recovery">
           <button id="recover" type="button">
@@ -224,11 +230,13 @@
     <script src="./src/racing/ai-difficulty.js?v=ai-competence-1"></script>
     <script src="./src/persistence/pov-preferences.js?v=ai-competence-1"></script>
     <script src="./src/racing/opponent-line.js?v=ai-competence-1"></script>
-    <script src="./src/racing/opponents.js?v=slipstream-1"></script>
-    <script src="./src/racing/slipstream.js?v=slipstream-1"></script>
+    <script src="./src/racing/opponents.js?v=catchup-1"></script>
+    <script src="./src/racing/slipstream.js?v=catchup-1"></script>
     <script src="./src/data/race-formats.js?v=race-duration-1"></script>
-    <script src="./src/racing/race-session.js?v=slipstream-1"></script>
-    <script src="./src/ui/arcade-race-ui.js?v=slipstream-1"></script>
+    <script src="./src/racing/race-gaps.js?v=catchup-1"></script>
+    <script src="./src/racing/catchup.js?v=catchup-1"></script>
+    <script src="./src/racing/race-session.js?v=catchup-1"></script>
+    <script src="./src/ui/arcade-race-ui.js?v=catchup-1"></script>
     <script src="./src/racing/controls.js"></script>
     <script src="./src/rendering/wake-visuals.js?v=slipstream-1"></script>
     <script src="./src/rendering/arcade2d.js?v=slipstream-1"></script>
@@ -241,6 +249,6 @@
     <script src="./src/rendering/wake3d.js?v=slipstream-1"></script>
     <script src="./src/rendering/arcade3d.js?v=slipstream-1"></script>
     <script src="./src/racing/track-catalog.js?v=pov-calendar-1"></script>
-    <script src="./src/arcade-main.js?v=slipstream-1"></script>
+    <script src="./src/arcade-main.js?v=catchup-1"></script>
   </body>
 </html>

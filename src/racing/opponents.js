@@ -302,12 +302,13 @@
       }
       const aerodynamicHeadroom = desired >= p.maxSpeed && car.slipstream
         ? A.Slipstream.settings.maxGainKmh / (p.metersPerUnit * 3.6) : 0;
+      const catchupHeadroom = desired >= p.maxSpeed ? p.maxSpeed * (car.catchup?.pace || 0) : 0;
       const command = {
         // At the shared limiter keep the pedal down like a human holding W;
         // lifting for a whole input frame needlessly loses straight-line pace.
         throttle: Number(desired >= p.maxSpeed || car.speed < desired - 0.05),
         brake: Number(
-          car.longitudinalSpeed > 0.25 && car.speed > desired + aerodynamicHeadroom + 0.8,
+          car.longitudinalSpeed > 0.25 && car.speed > desired + aerodynamicHeadroom + catchupHeadroom + 0.8,
         ),
         steer,
       };

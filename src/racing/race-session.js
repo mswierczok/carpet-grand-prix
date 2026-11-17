@@ -9,6 +9,7 @@
       teams = options.teams || CGPArcadeData.roster.teams,
       laps = options.laps ?? A.RaceFormats.get(track.id).laps;
     const slipstreamEnabled = options.slipstream !== false;
+    let catchupEnabled = options.catchup !== false, gapHistory;
     let difficulty = A.AIDifficulty.get(options.difficulty),
       controller = A.Opponents.create(surface, parameters, { difficulty: difficulty.id, diagnostics: !!options.diagnostics });
     if (!Number.isInteger(laps) || laps < 1)
@@ -40,6 +41,7 @@
       elapsed = accumulator = tick = playerContacts = 0;
       paused = true;
       pairs = new Set();
+      gapHistory = catchupEnabled ? A.RaceGaps.create() : null;
       const order = [
         ...teams.filter((t) => t.id !== playerTeam),
         teams.find((t) => t.id === playerTeam),
@@ -59,6 +61,7 @@
           driver: controller.memory(i, lane),
           command: neutral,
           ...(slipstreamEnabled ? { slipstream: A.Slipstream.empty() } : {}),
+          ...(catchupEnabled ? { catchup: A.Catchup.empty() } : {}),
         };
       });
     }
@@ -85,6 +88,12 @@
       restart();
       return true;
     }
+    function selectCatchup(enabled) {
+      if (phase !== "grid" || typeof enabled !== "boolean") return false;
+      catchupEnabled = enabled;
+      restart();
+      return true;
+    }
     function step(input) {
       if (phase === "countdown") {
         countdown = Math.max(0, countdown - fixedStep);
@@ -94,6 +103,10 @@
         }
         return;
       }
+      if (catchupEnabled) {
+        const support = A.Catchup.update(entries, surface, parameters, elapsed, fixedStep, gapHistory, progress);
+        entries.forEach((e, i) => { e.catchup = support[i]; });
+      }
       if (tick % 4 === 0) {
         const traffic = controller.prepare(
           entries.map((e) => ({
@@ -101,6 +114,7 @@
             id: e.id,
             inRace: e.finishTime === null,
             ...(slipstreamEnabled ? { slipstream: e.slipstream } : {}),
+            ...(catchupEnabled ? { catchup: e.catchup } : {}),
           })),
         );
         entries.forEach((e, i) => {
@@ -118,7 +132,7 @@
             surface,
             parameters,
             fixedStep,
-            wakes?.[i] || null,
+            catchupEnabled ? { ...(wakes?.[i] || { strength: 0 }), catchup: e.catchup.pace } : wakes?.[i] || null,
           ),
         ),
         resolved = A.VehicleContacts.resolve(
@@ -155,6 +169,7 @@
           e.finishTime = e.timing.lapStart;
           e.driver = controller.memory(i, 0);
           if (slipstreamEnabled) e.slipstream = A.Slipstream.empty();
+          if (catchupEnabled) e.catchup = A.Catchup.empty();
         }
       });
       if (entries.every((e) => e.finishTime !== null)) {
@@ -245,6 +260,7 @@
             finishTime: e.finishTime,
             progress: progress(e),
             ...(slipstreamEnabled ? { slipstream: { ...e.slipstream } } : {}),
+            ...(catchupEnabled ? { catchup: A.Catchup.visible(e.catchup) } : {}),
             ...(options.diagnostics ? { telemetry: controller.diagnostics(e.driver) } : {}),
           };
         }),
@@ -272,6 +288,7 @@
         entries: visible,
         race: {
           difficulty: difficulty.id,
+          ...(catchupEnabled ? { catchup: true } : {}),
           phase,
           countdown: Math.max(0, Math.ceil(countdown - 1e-9)),
           elapsed,
@@ -302,6 +319,7 @@
       snapshot,
       selectTeam,
       selectDifficulty,
+      selectCatchup,
     });
   }
   A.RaceSession = Object.freeze({ create, fixedStep });

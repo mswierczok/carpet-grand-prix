@@ -14,6 +14,7 @@ Node.js 24 LTS verwenden. `npm ci`, anschließend einmalig
 | `npm run measure:ai-balance` | Vier Fahrkompetenzstufen, eingefrorene KI/Tastaturreferenz und räumliche Kurven-Telemetrie auf fünf unterschiedlichen Strecken |
 | `npm run measure:ai-balance -- --catalog` | Neue Normal-/Schwer-/Experten-KI auf allen 22 Strecken mit identischer Fahrzeugphysik |
 | `npm run measure:slipstream` | Windschatten an/aus im tatsächlichen 13er-Feld auf sechs unterschiedlichen Strecken, mit Quellprüfsummen |
+| `npm run measure:catchup` | Aufholhilfe an/aus mit unverändert aktivem Windschatten und 13 Fahrzeugen auf sechs unterschiedlichen Strecken |
 | `npm run check:race-formats` | Feste Rundentabelle gegen die dokumentierten Messungen prüfen |
 | `npm run serve:test` | Anwendung nur unter `/carpet-grand-prix/` |
 | `npm run build:offline` | Eigenständige HTML-Datei mit allen Bildern und Styles unter `dist/` |

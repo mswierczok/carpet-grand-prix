@@ -29,6 +29,8 @@ export function loadArcade({ race = false, formats = true } = {}) {
           "racing/opponent-line",
           "racing/opponents",
           "racing/slipstream",
+          "racing/race-gaps",
+          "racing/catchup",
           "racing/race-session",
         ]
       : []),

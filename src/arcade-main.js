@@ -13,6 +13,7 @@
     };
   let canvas = document.getElementById("arcadeCanvas"),
     difficultyId = racing ? A.POVPreferences.load().difficulty : null,
+    catchupEnabled = new URLSearchParams(location.search).get("catchup") !== "0",
     teamId = teams[0].id,
     trackId = catalog.tracks.some((t) => t.id === requestedTrack)
       ? requestedTrack
@@ -38,6 +39,7 @@
       catalog.get(trackId),
       racing ? { playerTeam: teamId, difficulty: difficultyId,
         slipstream: new URLSearchParams(location.search).get("slipstream") !== "0",
+        catchup: catchupEnabled,
         diagnostics: new URLSearchParams(location.search).has("balance") } : {},
     );
   }
@@ -244,6 +246,16 @@
     dirty = true;
   };
   if (racing) {
+    el("catchup").value = catchupEnabled ? "on" : "off";
+    el("catchup").onchange = (event) => {
+      if (session.selectCatchup(event.target.value === "on")) {
+        catchupEnabled = event.target.value === "on";
+        controls.clear();
+        renderer.resetCamera?.();
+        dirty = true;
+        updateUI();
+      }
+    };
     el("difficulty").value = difficultyId;
     el("difficulty").onchange = (event) => {
       if (!session.selectDifficulty(event.target.value)) {

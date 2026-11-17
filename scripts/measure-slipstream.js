@@ -18,7 +18,7 @@ const hashes = () => Object.fromEntries(files.map((file) =>
 
 export function measureSlipstream(id, enabled, { laps = 2, difficulty = "normal" } = {}) {
   const { api } = loadArcade({ race: true }),
-    session = api.RaceSession.create(api.TrackCatalog.get(id), { laps, difficulty, slipstream: enabled }),
+    session = api.RaceSession.create(api.TrackCatalog.get(id), { laps, difficulty, slipstream: enabled, catchup: false }),
     p = session.parameters, kmh = p.metersPerUnit * 3.6,
     driver = api.Opponents.create(session.surface, p, { difficulty }), memory = driver.memory(0, -6),
     stats = Object.fromEntries(session.snapshot().entries.map((e) => [e.id, {
