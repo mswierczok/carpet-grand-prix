@@ -278,6 +278,17 @@
       }
       state.blocked =
         car.hitWall && car.speed < 0.5 ? (state.blocked || 0) + dt : 0;
+      // A stopped obstacle can leave too little room to turn onto a clear
+      // passing line. Use the same ordinary reverse manoeuvre as at a rail;
+      // standing still with steering alone cannot change a vehicle's heading.
+      state.trafficBlocked = blocker && blocker.car.speed < 1 &&
+        blocker.gap < 2 * p.halfLength + 4 && car.speed < 0.5 && desired < 1 &&
+        path.distance > p.halfWidth * 2
+          ? (state.trafficBlocked || 0) + dt : 0;
+      if (state.trafficBlocked > 1.2) {
+        state.retreat = 0.9;
+        state.trafficBlocked = 0;
+      }
       if (state.blocked > 0.2) {
         state.retreat = 0.9;
         state.blocked = 0;

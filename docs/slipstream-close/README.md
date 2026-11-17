@@ -2,7 +2,9 @@
 
 Ausgangsstand `f40de2d3f45fc6697dac04f2e4a3a73e0148e3b9` (PR #30), ergänzt
 um die Arbeitsquellen mit den 19 SHA-256-Prüfsummen in [field-ab.json](field-ab.json).
-Messzeit: 2026-11-17T15:48:27.691Z. Alle Prüfsummen wurden vor/nach den Fahrten geprüft.
+Messzeit: 2026-11-17T16:14:34.864Z. Die Prüfsummen wurden vor/nach den Fahrten geprüft.
+Der ausgecheckte Messstand war `e47c4c869f1474bef8a8071da3044d05c387bb19`; die ergänzenden
+Arbeitsquellen sind durch dieselben 19 Prüfsummen bezeichnet.
 
 Sechs tatsächliche RaceSession-Fahrten: Bahrain, Frankreich und Russland,
 Windschatten an/aus, je zwei Runden, 13 Fahrzeuge, Schwierigkeit Normal.
@@ -31,6 +33,11 @@ Frames, keine Anzahl unabhängiger Unfälle. Geänderter Windschatten verändert
 reale Verkehrsentscheidungen; er garantiert weder Überholen noch einen festen
 Rundenzeitgewinn. Auslaufrunden gehören weiter zu Tempo-/Kontaktbeobachtungen,
 erzeugen und erhalten aber keinen aktiven Windschatten.
+
+Ein zusätzlicher Rückstauversuch lässt den Spieler durchgehend stehen. Die neue
+enge Hindernisbehandlung beendet dabei alle zwölf KI-Rennen in rund 43,73 s,
+innerhalb derselben unveränderten 110-s-Testgrenze. Ein gezielter Kontrollfall
+mit einem Fahrzeug direkt dahinter verhindert das Rückwärtsrangieren.
 
 Die bis drei Fahrzeuglängen verlängerte Wirbelgeometrie wird mit demselben
 aktiven Zustand wie die Physik gezeichnet. Abstandstests prüfen ausdrücklich

@@ -150,6 +150,24 @@ it("lässt die KI den gemeinsamen Windschatten auf freien Geraden nutzen und beh
   expect(brakingCases).toBeGreaterThan(0);
 });
 
+it("rangiert bei zu engem Stillstand vor einem Hindernis rückwärts, aber nicht in ein dahinter stehendes Auto", () => {
+  const { api } = loadArcade({ race: true }), surface = api.Surface.create(api.TrackCatalog.get("bahrain")),
+    driver = api.Opponents.create(surface, api.Physics.parameters),
+    placed = (id, s, lane) => {
+      const at = surface.at(s, lane);
+      return { ...api.Physics.spawn(surface, s), id, x: at.x, y: at.y, heading: at.ang };
+    },
+    car = placed("ego", -200, -8.8), obstacle = placed("parked", -188, -6),
+    rear = placed("rear", -212, -8.8);
+  function commands(others) {
+    const memory = driver.memory(0, 8), traffic = driver.prepare([car, ...others]), result = [];
+    for (let frame = 0; frame < 55; frame++) result.push(driver.input(traffic[0], traffic, memory));
+    return result;
+  }
+  expect(commands([obstacle]).some((c) => c.brake === 1 && c.throttle === 0)).toBe(true);
+  expect(commands([obstacle, rear]).every((c) => c.brake === 0)).toBe(true);
+});
+
 it("schließt reale Brückenebenen und nahe Nachbararme auf allen 22 Strecken aus", () => {
   const { api } = loadArcade({ race: true }), p = api.Physics.parameters;
   let nearbyChecks = 0, ordinaryPairs = 0;

@@ -52,6 +52,16 @@ Teams, Fahrer und Speicherformate bleiben erhalten. Die geänderten Laufzeit-
 dateien werden unter neuen URLs geladen, damit ein Browser keine alten
 Windschattenparameter mit der neuen Wirbelgeometrie mischt.
 
+Die stärkere Wirkung machte außerdem einen bestehenden engen Rückstau-Fall
+sichtbar: Eine KI konnte zu nah hinter einem stehenden Fahrzeug bremsen und
+hatte dann keinen Platz mehr, auf ihre freie Ausweichlinie einzulenken.
+Nach 1,2 Sekunden tatsächlichem Stillstand in dieser engen Situation nutzt sie
+jetzt die vorhandene kurze Rückwärtsbefreiung, weiterhin mit normalen Pedal-/
+Lenkbefehlen und Prüfung des dahinter belegten Raums. Freie Runden, KI-Profile
+und Brems-/Kurvenziele werden dadurch nicht schneller gestellt. Der unveränderte
+Regressionstest mit stehendem Spieler beendet wieder alle zwölf KI-Rennen;
+zusätzlich wird freies gegenüber belegtem Heck gezielt geprüft.
+
 ## Prüfungen und Messungen
 
 Modulprüfungen sichern die volle Wirkung bei 1 / 1,5 / 2 / 2,5 / 3 Längen,

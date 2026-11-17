@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "measuredAt": "2026-11-17T15:48:27.691Z",
-  "baseCommit": "f40de2d3f45fc6697dac04f2e4a3a73e0148e3b9",
+  "measuredAt": "2026-11-17T16:14:34.864Z",
+  "baseCommit": "e47c4c869f1474bef8a8071da3044d05c387bb19",
   "protocol": "Actual 120Hz physics and 30Hz ordinary inputs; observations at 30Hz. Deterministic binary player surrogate, no human or FPS claim. Two-lap A/B field probes do not replace full default-length regression tests. Contacts and shoulders are observed frames, not unique incidents. Outlaps are included in peak/contact observations, but finished cars neither emit nor receive wake. Position changes are rank transitions, not certified overtakes.",
   "hashes": {
     "src/racing/slipstream.js": "75e74a19f741daa95256cfaa0735ae960fc54ae08fe7d3509b9308a3dc0eed7a",
     "src/racing/race-session.js": "5f223174fe26d72445a58c2570d40ed33a0ccf3cb21235b705bbba7553612fee",
-    "src/racing/opponents.js": "65f3941f360babe90286ffcf9d3c8e0d7be37002f8d6eeef7b45a0e227ee5354",
+    "src/racing/opponents.js": "3c15a8552876c921152f6d01d389ebe5e03170d4988797ca998e966ec3a64825",
     "src/racing/opponent-line.js": "5946ff84efc6ad562639de488d04f882028bd9ea7cb7c0d3844755236d8c6dd3",
     "src/racing/ai-difficulty.js": "0e744f574eb96a73fd36e0cc03d405c6d1c768774c28698df4224295f7f1ca88",
     "src/racing/physics.js": "082782a78df28b280f7d38b23d41a5df03ba7e06153e737f22a055a3badd9764",
