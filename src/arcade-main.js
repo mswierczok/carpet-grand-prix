@@ -37,6 +37,7 @@
     return (racing ? A.RaceSession : A.Session).create(
       catalog.get(trackId),
       racing ? { playerTeam: teamId, difficulty: difficultyId,
+        slipstream: new URLSearchParams(location.search).get("slipstream") !== "0",
         diagnostics: new URLSearchParams(location.search).has("balance") } : {},
     );
   }

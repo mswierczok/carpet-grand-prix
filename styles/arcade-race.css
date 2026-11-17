@@ -129,3 +129,6 @@ select:disabled {
     grid-template-columns: 1fr;
   }
 }
+.track-hud #viewDraft {
+  color: #bde5e5;
+}

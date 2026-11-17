@@ -33,6 +33,7 @@
       set("raceLength", r.laps + " Runden");
       set("raceLap", Math.min(r.laps, t.completed + 1) + " / " + r.laps);
       set("raceClock", format(r.elapsed));
+      el("viewDraft").hidden = !(snapshot.entries.find((e) => e.player)?.slipstream?.strength > 0.03);
       const panel = el("balancePanel");
       if (snapshot.entries.some((e) => Object.hasOwn(e, "telemetry"))) {
         panel.hidden = false;
@@ -48,14 +49,17 @@
         }
         if (panel.open) {
           const entry = snapshot.entries.find((e) => e.id === chooser.value), info = entry?.telemetry;
-          set("balanceReadout", info ? JSON.stringify({
+          set("balanceReadout", JSON.stringify({
+            ...(info ? {
             reason: info.reason, speedKmh: +(info.speed * kilometers).toFixed(1),
             targetKmh: +(info.desiredSpeed * kilometers).toFixed(1),
             freeTargetKmh: +(info.freeTarget * kilometers).toFixed(1),
             lineError: +info.pathError.toFixed(2), headingError: +info.headingError.toFixed(3),
             lane: info.lane, blockerGap: info.blockerGap === null ? null : +info.blockerGap.toFixed(2),
             throttle: info.throttle, brake: info.brake, steer: +info.steer.toFixed(3),
-          }, null, 2) : "Noch keine KI-Fahrdaten für dieses Fahrzeug.");
+            } : { note: "Noch keine KI-Fahrdaten für dieses Fahrzeug." }),
+            windschatten: entry?.slipstream || null,
+          }, null, 2));
         }
       }
       set(

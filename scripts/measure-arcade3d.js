@@ -3,6 +3,8 @@ import { chromium } from "@playwright/test";
 import { writeFileSync } from "node:fs";
 const software = process.argv.includes("--software-webgl");
 const raceMode = process.argv.includes("--race");
+const slipstreamDisabled = process.argv.includes("--slipstream=0");
+const waitForWake = raceMode && !slipstreamDisabled && process.argv.includes("--wait-for-wake");
 const browser = await chromium.launch({
   ...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
     ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH }
@@ -38,6 +40,8 @@ try {
                   __frames.push({
                     frameSeconds: rest[2],
                     submitMs: performance.now() - start,
+                    wakeEmitters: renderer.diagnostics().wake?.emitters || 0,
+                    wakeTriangles: renderer.diagnostics().wake?.triangles || 0,
                   });
               },
             };
@@ -48,7 +52,7 @@ try {
   });
   await page.goto(
     "http://127.0.0.1:4173/carpet-grand-prix/" +
-      (raceMode ? "race.html" : "arcade3d.html"),
+      (raceMode ? "race.html" + (slipstreamDisabled ? "?slipstream=0" : "") : "arcade3d.html"),
   );
   if (
     (await page.locator("#arcadeApp").getAttribute("data-rendering")) !== "3d"
@@ -64,6 +68,11 @@ try {
     await page.waitForFunction(
       () => globalThis.__benchSnapshot?.race?.phase === "racing",
     );
+  if (waitForWake) {
+    await page.waitForFunction(() => __benchSnapshot.entries.some((e) => e.slipstream?.strength > 0.03), null,
+      { timeout: 60000 });
+    await page.evaluate(() => { __frames = []; });
+  }
   await page.waitForTimeout(raceMode ? 2500 : 4000);
   await page.keyboard.up("w");
   await page.keyboard.press("p");
@@ -90,12 +99,17 @@ try {
         frames.map((f) => f.submitMs),
         0.95,
       ),
+      activeWakeFrames: frames.filter((f) => f.wakeEmitters > 0).length,
+      peakWakeEmitters: Math.max(0, ...frames.map((f) => f.wakeEmitters)),
+      peakWakeTriangles: Math.max(0, ...frames.map((f) => f.wakeTriangles)),
       renderer: debug
         ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL)
         : gl.getParameter(gl.RENDERER),
       graphics: __benchRenderer.diagnostics(),
       vehicles: globalThis.__benchSnapshot?.entries?.length || 1,
       difficulty: globalThis.__benchSnapshot?.race?.difficulty || null,
+      slipstreamEnabled: globalThis.__benchSnapshot?.entries
+        ? globalThis.__benchSnapshot.entries.some((e) => Object.hasOwn(e, "slipstream")) : null,
     };
   });
   Object.assign(report, {
@@ -104,6 +118,7 @@ try {
     viewport: { width: 1000, height: 800 },
     softwareRequested: software,
     raceMode,
+    waitedForActiveWake: waitForWake,
     limits:
       "Short headless straight-line sample, no physical-device or 60-FPS acceptance. CPU submit is not GPU frame time.",
   });

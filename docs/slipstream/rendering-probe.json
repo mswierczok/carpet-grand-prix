@@ -1,0 +1,43 @@
+{
+  "frames": 8,
+  "activeSeconds": 2.066599999999999,
+  "frameIntervalP50ms": 266.59999999999854,
+  "frameIntervalP95ms": 350.1000000000022,
+  "cpuSubmitP95ms": 4.100000023841858,
+  "activeWakeFrames": 1,
+  "peakWakeEmitters": 2,
+  "peakWakeTriangles": 384,
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "graphics": {
+    "drawCalls": 127,
+    "triangles": 52057,
+    "geometries": 115,
+    "textures": 22,
+    "pixelRatio": 0.75,
+    "quality": "low",
+    "lost": false,
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  "vehicles": 13,
+  "difficulty": "normal",
+  "slipstreamEnabled": true,
+  "recordedAt": "2026-11-17T12:53:59.745Z",
+  "browser": "155.0.8059.79",
+  "viewport": {
+    "width": 1000,
+    "height": 800
+  },
+  "softwareRequested": true,
+  "raceMode": true,
+  "waitedForActiveWake": true,
+  "limits": "Short headless straight-line sample, no physical-device or 60-FPS acceptance. CPU submit is not GPU frame time.",
+  "sourceHashes": {
+    "scripts/measure-arcade3d.js": "3041e88a0645f71e3803bccbb7607af68c2b6b104f64bfedf285e65ab2ace959",
+    "src/rendering/arcade3d.js": "9e037cb7c44f2e1da3e49b08477dd11b35664bdcd649b638da7bfd293810ab07",
+    "src/rendering/wake3d.js": "89a567c53a76f874610cea46c55baf7d8fe7eeb2f590e451989445f6d044f72c",
+    "src/rendering/wake-visuals.js": "9a9dbfcd2a0a051dbf1b79d4f5595e145885bc7ce880d59471ab475bb43ad32c"
+  }
+}

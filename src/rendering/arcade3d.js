@@ -38,7 +38,8 @@
       lost = false,
       quality = "auto",
       slowFrames = 0,
-      fleet = null;
+      fleet = null,
+      wakes = null;
     function resize() {
       const rect = canvas.getBoundingClientRect(),
         dpr = Math.min(
@@ -61,6 +62,11 @@
       if (lost) return;
       resize();
       if (snapshot.entries) {
+        if (!wakes && A.Wake3D) {
+          wakes = A.Wake3D.create();
+          scene.add(wakes.mesh);
+        }
+        wakes?.update(snapshot);
         if (!fleet) {
           fleet = A.Fleet3D.create(vehicle, materials);
           scene.add(fleet.group);
@@ -128,6 +134,7 @@
           pixelRatio: renderer.getPixelRatio(),
           quality,
           lost,
+          ...(wakes ? { wake: wakes.diagnostics() } : {}),
         };
       },
       dispose() {
@@ -136,6 +143,7 @@
         track.dispose();
         vehicle.dispose();
         fleet?.dispose();
+        wakes?.dispose();
         materials.dispose();
         renderer.dispose();
         renderer.forceContextLoss();

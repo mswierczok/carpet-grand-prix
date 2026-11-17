@@ -8,6 +8,7 @@
       parameters = A.Physics.parameters,
       teams = options.teams || CGPArcadeData.roster.teams,
       laps = options.laps ?? A.RaceFormats.get(track.id).laps;
+    const slipstreamEnabled = options.slipstream !== false;
     let difficulty = A.AIDifficulty.get(options.difficulty),
       controller = A.Opponents.create(surface, parameters, { difficulty: difficulty.id, diagnostics: !!options.diagnostics });
     if (!Number.isInteger(laps) || laps < 1)
@@ -57,6 +58,7 @@
           lastSafe: car.s,
           driver: controller.memory(i, lane),
           command: neutral,
+          ...(slipstreamEnabled ? { slipstream: A.Slipstream.empty() } : {}),
         };
       });
     }
@@ -98,6 +100,7 @@
             ...e.car,
             id: e.id,
             inRace: e.finishTime === null,
+            ...(slipstreamEnabled ? { slipstream: e.slipstream } : {}),
           })),
         );
         entries.forEach((e, i) => {
@@ -105,14 +108,17 @@
             e.command = controller.input(traffic[i], traffic, e.driver);
         });
       }
+      const wakes = slipstreamEnabled ? A.Slipstream.update(entries, surface, parameters, fixedStep) : null;
+      if (wakes) entries.forEach((entry, i) => { entry.slipstream = wakes[i]; });
       const previous = entries.map((e) => e.car),
-        proposed = entries.map((e) =>
+        proposed = entries.map((e, i) =>
           A.Physics.step(
             e.car,
             e.player && e.finishTime === null ? input : e.command,
             surface,
             parameters,
             fixedStep,
+            wakes?.[i] || null,
           ),
         ),
         resolved = A.VehicleContacts.resolve(
@@ -148,6 +154,7 @@
         if (e.timing.completed >= laps) {
           e.finishTime = e.timing.lapStart;
           e.driver = controller.memory(i, 0);
+          if (slipstreamEnabled) e.slipstream = A.Slipstream.empty();
         }
       });
       if (entries.every((e) => e.finishTime !== null)) {
@@ -187,6 +194,7 @@
           )
             continue;
           entry.car = entry.previous = car;
+          if (slipstreamEnabled) entries.forEach((e) => { e.slipstream = A.Slipstream.empty(); });
           accumulator = 0;
           return true;
         }
@@ -236,6 +244,7 @@
             },
             finishTime: e.finishTime,
             progress: progress(e),
+            ...(slipstreamEnabled ? { slipstream: { ...e.slipstream } } : {}),
             ...(options.diagnostics ? { telemetry: controller.diagnostics(e.driver) } : {}),
           };
         }),
