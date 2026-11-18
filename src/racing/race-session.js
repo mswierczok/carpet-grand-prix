@@ -42,6 +42,12 @@
         at = surface.at(s, lane);
       return { ...car, x: at.x, y: at.y, heading: at.ang };
     }
+    function driverMemory(team, lane) {
+      const memory = controller.memory(driverSeeds.get(team.id), lane),
+        variation = options.qualifyingDrivers?.[team.id];
+      if (variation) memory.qualifying = variation;
+      return memory;
+    }
     function restart() {
       phase = "grid";
       countdown = 3;
@@ -67,7 +73,7 @@
           timing: A.Timing.create(),
           finishTime: null,
           lastSafe: car.s,
-          driver: controller.memory(driverSeeds.get(team.id), lane),
+          driver: driverMemory(team, lane),
           command: neutral,
           ...(slipstreamEnabled ? { slipstream: A.Slipstream.empty() } : {}),
           ...(catchupEnabled ? { catchup: A.Catchup.empty() } : {}),
@@ -185,7 +191,7 @@
         );
         if (e.timing.completed >= laps) {
           e.finishTime = e.timing.lapStart;
-          e.driver = controller.memory(driverSeeds.get(e.id), 0);
+          e.driver = driverMemory(e.team, 0);
           if (slipstreamEnabled) e.slipstream = A.Slipstream.empty();
           if (catchupEnabled) e.catchup = A.Catchup.empty();
         }

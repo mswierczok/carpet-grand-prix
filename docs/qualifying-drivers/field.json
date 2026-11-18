@@ -1,0 +1,2381 @@
+{
+  "version": 1,
+  "measuredAt": "2026-11-18T15:11:03.276Z",
+  "baseline": "0344fcc3bd89c2174c50803e110ff1221204065f",
+  "hashes": {
+    "src/racing/qualifying-drivers.js": "2af8b5aaa6f9f45e10dd4c4897388b2d416cb9a5368ba4fd5d10bbe4d56e2ade",
+    "src/racing/qualifying-session.js": "4d05b28685996743270beef33681915e96e527f80ff77ff6b9773862718cb191",
+    "src/racing/race-session.js": "c27615601dbe266f8440fd1eca544e8b1b3eba84f91066dc12a6447d59d5c14e",
+    "src/racing/opponents.js": "ca6db01c6a2a1f88ff1a98385cad533151b432db673b3c39346c59f2922213dc",
+    "src/racing/opponent-line.js": "5946ff84efc6ad562639de488d04f882028bd9ea7cb7c0d3844755236d8c6dd3",
+    "src/racing/ai-difficulty.js": "0e744f574eb96a73fd36e0cc03d405c6d1c768774c28698df4224295f7f1ca88",
+    "src/racing/physics.js": "082782a78df28b280f7d38b23d41a5df03ba7e06153e737f22a055a3badd9764",
+    "src/racing/bridge-physics.js": "d85cc9dccf4677412371c964aa6e0f80287a07a3eaf5ba4f444fe7ae04bfe41d",
+    "src/racing/timing.js": "481fe30b728721d983e47c7ab08ad2cc933881d8fec9c2ab9a2a63b692ca826c",
+    "src/racing/track-surface.js": "88a759d87d9927a6275dee629029bb7279eeadacb330397b895acc9688a62c28",
+    "src/racing/bridge-surface.js": "b06a944a11c3b072df0a21c8f9caf826095d94c6f2b475cad33b7ca94565d89f",
+    "src/racing/track-shape.js": "6daa38097b708423268d41829df429b05238965ee7f9065dfdfde8511ac95d88",
+    "src/data/arcade-tracks.js": "22a1ddf491f9a030ef1ecee9f3fac88deec0269ff17625c4096c3a53dc51f165",
+    "src/data/arcade-boundaries.js": "ddd8b5b4d97b122f9e993e2d06b4c0ae9d26c23cbf3d8d1e6aa323621eb5cb00",
+    "src/data/arcade-roster.js": "9e64b6cc8693a96a4cdd6924200055bb4840adde58b13c8f117bc476142b0920",
+    "tests/helpers/arcade.js": "219f160b9fcb5f0d66763b4802685a9715c8c7590fba0a56d02d5ce6fe81eb5f",
+    "scripts/measure-qualifying-drivers.js": "bd97d662ef6887c73fc007c18b79b4e1fc7e520534e44baafd91b8fc73b230e6"
+  },
+  "baselineHashes": {
+    "src/racing/opponents.js": "3c15a8552876c921152f6d01d389ebe5e03170d4988797ca998e966ec3a64825",
+    "src/racing/race-session.js": "333482adc229e87fed3dd97cd6cf0c6f9a11ce227e59d68d635ab26ad7ab2106",
+    "src/racing/qualifying-session.js": "9324f20fcab2ea8d10f209b9b2eaf436b25a803966e412211c0f762f25022bd2"
+  },
+  "protocol": "Actual 120-Hz physics and 30-Hz commands/observations. Parked player excluded. Twelve independent AI runs, one discarded outlap and two timed laps, no traffic/slipstream/catch-up. Baseline uses the published three simulation modules with unchanged track/physics data. Diagnostic command samples and observed contact/shoulder frames include outlaps, stop after each AI finishes, and are not unique-event counts or device-FPS/human-skill measurements.",
+  "runs": [
+    {
+      "trackId": "bahrain",
+      "difficulty": "normal",
+      "legacy": true,
+      "finishedOpponents": 12,
+      "playerExcluded": true,
+      "fastestSeconds": 25.976234043519806,
+      "slowestSeconds": 26.129077330340426,
+      "spreadSeconds": 0.15284328682061954,
+      "distinctMilliseconds": 7,
+      "entries": [
+        {
+          "id": "t02",
+          "name": "Alderwick Racing",
+          "laps": [
+            25.976234043519806,
+            26.128409107580104
+          ],
+          "bestLap": 25.976234043519806,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2382,
+          "brakeFrames": 109,
+          "throttleFrames": 2251,
+          "reasons": {
+            "straight": 2112,
+            "corner-preview": 223,
+            "settling": 47
+          }
+        },
+        {
+          "id": "t05",
+          "name": "Eisenbach Motorsport",
+          "laps": [
+            25.986029237292193,
+            26.094503173590468
+          ],
+          "bestLap": 25.986029237292193,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2385,
+          "brakeFrames": 112,
+          "throttleFrames": 2253,
+          "reasons": {
+            "straight": 2115,
+            "corner-preview": 220,
+            "settling": 50
+          }
+        },
+        {
+          "id": "t07",
+          "name": "Ragos Racing",
+          "laps": [
+            26.006871736394228,
+            26.13152651224228
+          ],
+          "bestLap": 26.006871736394228,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2386,
+          "brakeFrames": 114,
+          "throttleFrames": 2248,
+          "reasons": {
+            "straight": 2112,
+            "corner-preview": 220,
+            "settling": 54
+          }
+        },
+        {
+          "id": "t13",
+          "name": "Redwood GP",
+          "laps": [
+            26.006871736394228,
+            26.00761340017376
+          ],
+          "bestLap": 26.006871736394228,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2383,
+          "brakeFrames": 109,
+          "throttleFrames": 2250,
+          "reasons": {
+            "straight": 2115,
+            "corner-preview": 220,
+            "settling": 48
+          }
+        },
+        {
+          "id": "t11",
+          "name": "Rivage Racing",
+          "laps": [
+            26.009464992474314,
+            26.030470831379418
+          ],
+          "bestLap": 26.009464992474314,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2384,
+          "brakeFrames": 112,
+          "throttleFrames": 2258,
+          "reasons": {
+            "straight": 2116,
+            "corner-preview": 220,
+            "settling": 48
+          }
+        },
+        {
+          "id": "t03",
+          "name": "Falkenheim GP",
+          "laps": [
+            26.03443621247156,
+            26.06119145637544
+          ],
+          "bestLap": 26.03443621247156,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2382,
+          "brakeFrames": 112,
+          "throttleFrames": 2258,
+          "reasons": {
+            "straight": 2114,
+            "corner-preview": 222,
+            "settling": 46
+          }
+        },
+        {
+          "id": "t04",
+          "name": "Scuderia Bellarossa",
+          "laps": [
+            26.03443621247156,
+            26.06074831470353
+          ],
+          "bestLap": 26.03443621247156,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2382,
+          "brakeFrames": 112,
+          "throttleFrames": 2258,
+          "reasons": {
+            "straight": 2114,
+            "corner-preview": 222,
+            "settling": 46
+          }
+        },
+        {
+          "id": "t09",
+          "name": "Lincoln",
+          "laps": [
+            26.03443621247156,
+            26.06628274677982
+          ],
+          "bestLap": 26.03443621247156,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2382,
+          "brakeFrames": 111,
+          "throttleFrames": 2257,
+          "reasons": {
+            "straight": 2115,
+            "corner-preview": 222,
+            "settling": 45
+          }
+        },
+        {
+          "id": "t10",
+          "name": "Panther Racing",
+          "laps": [
+            26.03443621247156,
+            26.06074831470353
+          ],
+          "bestLap": 26.03443621247156,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2382,
+          "brakeFrames": 112,
+          "throttleFrames": 2258,
+          "reasons": {
+            "straight": 2114,
+            "corner-preview": 222,
+            "settling": 46
+          }
+        },
+        {
+          "id": "t06",
+          "name": "Orange",
+          "laps": [
+            26.062861615601328,
+            26.160655639939257
+          ],
+          "bestLap": 26.062861615601328,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2389,
+          "brakeFrames": 117,
+          "throttleFrames": 2254,
+          "reasons": {
+            "straight": 2115,
+            "corner-preview": 219,
+            "settling": 55
+          }
+        },
+        {
+          "id": "t12",
+          "name": "Scuderia Vespera",
+          "laps": [
+            26.062861615601328,
+            26.160655639939257
+          ],
+          "bestLap": 26.062861615601328,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2389,
+          "brakeFrames": 117,
+          "throttleFrames": 2254,
+          "reasons": {
+            "straight": 2115,
+            "corner-preview": 219,
+            "settling": 55
+          }
+        },
+        {
+          "id": "t08",
+          "name": "Mugan",
+          "laps": [
+            26.129077330340426,
+            26.12942612853903
+          ],
+          "bestLap": 26.129077330340426,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2386,
+          "brakeFrames": 114,
+          "throttleFrames": 2249,
+          "reasons": {
+            "straight": 2110,
+            "corner-preview": 223,
+            "settling": 53
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "bahrain",
+      "difficulty": "normal",
+      "legacy": false,
+      "finishedOpponents": 12,
+      "playerExcluded": true,
+      "fastestSeconds": 26.060823723446042,
+      "slowestSeconds": 26.855202185793402,
+      "spreadSeconds": 0.7943784623473604,
+      "distinctMilliseconds": 12,
+      "entries": [
+        {
+          "id": "t02",
+          "name": "Alderwick Racing",
+          "laps": [
+            26.13072964626349,
+            26.060823723446042
+          ],
+          "bestLap": 26.060823723446042,
+          "profile": {
+            "brakeLead": 0.3264130434782607,
+            "caution": 0.020144040818106487,
+            "execution": 0.004521739130434782,
+            "phase": 0.5215043804959056,
+            "rhythm": 1.6752
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2385,
+          "brakeFrames": 103,
+          "throttleFrames": 2246,
+          "reasons": {
+            "straight": 2118,
+            "corner-preview": 227,
+            "settling": 40
+          }
+        },
+        {
+          "id": "t04",
+          "name": "Scuderia Bellarossa",
+          "laps": [
+            26.131915724667376,
+            26.089081748437955
+          ],
+          "bestLap": 26.089081748437955,
+          "profile": {
+            "brakeLead": 0.7117391304347827,
+            "caution": 0.027862413326937334,
+            "execution": 0.005565217391304348,
+            "phase": 3.7384952577718535,
+            "rhythm": 1.5415
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2388,
+          "brakeFrames": 107,
+          "throttleFrames": 2255,
+          "reasons": {
+            "straight": 2119,
+            "corner-preview": 228,
+            "settling": 41
+          }
+        },
+        {
+          "id": "t03",
+          "name": "Falkenheim GP",
+          "laps": [
+            26.094804131234145,
+            26.11254383639094
+          ],
+          "bestLap": 26.094804131234145,
+          "profile": {
+            "brakeLead": 0.7313260869565219,
+            "caution": 0.026937028476734556,
+            "execution": 0.005043478260869566,
+            "phase": 5.196194249037518,
+            "rhythm": 1.3917000000000002
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2388,
+          "brakeFrames": 106,
+          "throttleFrames": 2254,
+          "reasons": {
+            "straight": 2116,
+            "corner-preview": 230,
+            "settling": 42
+          }
+        },
+        {
+          "id": "t08",
+          "name": "Mugan",
+          "laps": [
+            26.39063769177616,
+            26.331107240259925
+          ],
+          "bestLap": 26.331107240259925,
+          "profile": {
+            "brakeLead": 2.029717391304348,
+            "caution": 0.08242174349134358,
+            "execution": 0.008695652173913044,
+            "phase": 3.286105915654924,
+            "rhythm": 1.6416
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2411,
+          "brakeFrames": 121,
+          "throttleFrames": 2267,
+          "reasons": {
+            "straight": 2127,
+            "corner-preview": 242,
+            "settling": 42
+          }
+        },
+        {
+          "id": "t05",
+          "name": "Eisenbach Motorsport",
+          "laps": [
+            26.367130087603034,
+            26.34294575986422
+          ],
+          "bestLap": 26.34294575986422,
+          "profile": {
+            "brakeLead": 2.3340434782608694,
+            "caution": 0.08943800968121757,
+            "execution": 0.009739130434782608,
+            "phase": 2.12999981913388,
+            "rhythm": 1.9586999999999999
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2411,
+          "brakeFrames": 116,
+          "throttleFrames": 2255,
+          "reasons": {
+            "straight": 2122,
+            "corner-preview": 247,
+            "settling": 42
+          }
+        },
+        {
+          "id": "t11",
+          "name": "Rivage Racing",
+          "laps": [
+            26.46542085062251,
+            26.533252306747386
+          ],
+          "bestLap": 26.46542085062251,
+          "profile": {
+            "brakeLead": 2.7443695652173914,
+            "caution": 0.11144926082595615,
+            "execution": 0.010782608695652174,
+            "phase": 1.8095573684677206,
+            "rhythm": 1.9503
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2422,
+          "brakeFrames": 125,
+          "throttleFrames": 2265,
+          "reasons": {
+            "straight": 2126,
+            "corner-preview": 254,
+            "settling": 42
+          }
+        },
+        {
+          "id": "t13",
+          "name": "Redwood GP",
+          "laps": [
+            26.470518026032423,
+            26.57820747500424
+          ],
+          "bestLap": 26.470518026032423,
+          "profile": {
+            "brakeLead": 3.0546956521739133,
+            "caution": 0.12503523614321224,
+            "execution": 0.01182608695652174,
+            "phase": 4.875751798371359,
+            "rhythm": 1.3833
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2424,
+          "brakeFrames": 125,
+          "throttleFrames": 2268,
+          "reasons": {
+            "straight": 2126,
+            "corner-preview": 256,
+            "settling": 42
+          }
+        },
+        {
+          "id": "t07",
+          "name": "Ragos Racing",
+          "laps": [
+            26.57885496911139,
+            26.633100015539767
+          ],
+          "bestLap": 26.57885496911139,
+          "profile": {
+            "brakeLead": 3.5889347826086957,
+            "caution": 0.1462868169726571,
+            "execution": 0.013391304347826087,
+            "phase": 5.3469906964098275,
+            "rhythm": 1.825
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2433,
+          "brakeFrames": 129,
+          "throttleFrames": 2272,
+          "reasons": {
+            "straight": 2129,
+            "corner-preview": 262,
+            "settling": 42
+          }
+        },
+        {
+          "id": "t10",
+          "name": "Panther Racing",
+          "laps": [
+            26.61787118420142,
+            26.64706494137971
+          ],
+          "bestLap": 26.61787118420142,
+          "profile": {
+            "brakeLead": 3.1715217391304344,
+            "caution": 0.14172050935414937,
+            "execution": 0.012869565217391304,
+            "phase": 0.20106192982974677,
+            "rhythm": 1.6668
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2433,
+          "brakeFrames": 133,
+          "throttleFrames": 2280,
+          "reasons": {
+            "straight": 2128,
+            "corner-preview": 263,
+            "settling": 42
+          }
+        },
+        {
+          "id": "t06",
+          "name": "Orange",
+          "laps": [
+            26.728442730202598,
+            26.68076324865889
+          ],
+          "bestLap": 26.68076324865889,
+          "profile": {
+            "brakeLead": 3.7057608695652173,
+            "caution": 0.16297209018359424,
+            "execution": 0.014434782608695651,
+            "phase": 0.6723008278682158,
+            "rhythm": 1.4085
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2440,
+          "brakeFrames": 136,
+          "throttleFrames": 2285,
+          "reasons": {
+            "straight": 2132,
+            "corner-preview": 266,
+            "settling": 42
+          }
+        },
+        {
+          "id": "t09",
+          "name": "Lincoln",
+          "laps": [
+            26.81230397509886,
+            26.757321714720675
+          ],
+          "bestLap": 26.757321714720675,
+          "profile": {
+            "brakeLead": 4.021586956521739,
+            "caution": 0.18312777462823251,
+            "execution": 0.015478260869565217,
+            "phase": 1.6776104770169495,
+            "rhythm": 1.3588
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2450,
+          "brakeFrames": 138,
+          "throttleFrames": 2282,
+          "reasons": {
+            "straight": 2130,
+            "corner-preview": 276,
+            "settling": 44
+          }
+        },
+        {
+          "id": "t12",
+          "name": "Scuderia Vespera",
+          "laps": [
+            26.855202185793402,
+            26.86142914397071
+          ],
+          "bestLap": 26.855202185793402,
+          "profile": {
+            "brakeLead": 4.177,
+            "caution": 0.18661083249749247,
+            "execution": 0.016,
+            "phase": 3.267256359733385,
+            "rhythm": 1.8005
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2455,
+          "brakeFrames": 141,
+          "throttleFrames": 2288,
+          "reasons": {
+            "straight": 2137,
+            "corner-preview": 274,
+            "settling": 44
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "bahrain",
+      "difficulty": "expert",
+      "legacy": true,
+      "finishedOpponents": 12,
+      "playerExcluded": true,
+      "fastestSeconds": 25.043759825088884,
+      "slowestSeconds": 25.045545027876024,
+      "spreadSeconds": 0.0017852027871398946,
+      "distinctMilliseconds": 2,
+      "entries": [
+        {
+          "id": "t03",
+          "name": "Falkenheim GP",
+          "laps": [
+            25.056244777317,
+            25.043759825088884
+          ],
+          "bestLap": 25.043759825088884,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2293,
+          "brakeFrames": 45,
+          "throttleFrames": 2239,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 119
+          }
+        },
+        {
+          "id": "t04",
+          "name": "Scuderia Bellarossa",
+          "laps": [
+            25.056244777317,
+            25.043759825088884
+          ],
+          "bestLap": 25.043759825088884,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2293,
+          "brakeFrames": 45,
+          "throttleFrames": 2239,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 119
+          }
+        },
+        {
+          "id": "t05",
+          "name": "Eisenbach Motorsport",
+          "laps": [
+            25.056244777317,
+            25.043759825088884
+          ],
+          "bestLap": 25.043759825088884,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2293,
+          "brakeFrames": 45,
+          "throttleFrames": 2239,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 119
+          }
+        },
+        {
+          "id": "t09",
+          "name": "Lincoln",
+          "laps": [
+            25.056244777317,
+            25.043759825088884
+          ],
+          "bestLap": 25.043759825088884,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2293,
+          "brakeFrames": 45,
+          "throttleFrames": 2239,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 119
+          }
+        },
+        {
+          "id": "t10",
+          "name": "Panther Racing",
+          "laps": [
+            25.056244777317,
+            25.043759825088884
+          ],
+          "bestLap": 25.043759825088884,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2293,
+          "brakeFrames": 45,
+          "throttleFrames": 2239,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 119
+          }
+        },
+        {
+          "id": "t11",
+          "name": "Rivage Racing",
+          "laps": [
+            25.056244777317,
+            25.043759825088884
+          ],
+          "bestLap": 25.043759825088884,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2293,
+          "brakeFrames": 45,
+          "throttleFrames": 2239,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 119
+          }
+        },
+        {
+          "id": "t02",
+          "name": "Alderwick Racing",
+          "laps": [
+            25.05194023440622,
+            25.045545027876024
+          ],
+          "bestLap": 25.045545027876024,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2292,
+          "brakeFrames": 45,
+          "throttleFrames": 2236,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 118
+          }
+        },
+        {
+          "id": "t06",
+          "name": "Orange",
+          "laps": [
+            25.05194023440622,
+            25.045545027876024
+          ],
+          "bestLap": 25.045545027876024,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2292,
+          "brakeFrames": 45,
+          "throttleFrames": 2236,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 118
+          }
+        },
+        {
+          "id": "t07",
+          "name": "Ragos Racing",
+          "laps": [
+            25.05194023440622,
+            25.045545027876024
+          ],
+          "bestLap": 25.045545027876024,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2292,
+          "brakeFrames": 45,
+          "throttleFrames": 2236,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 118
+          }
+        },
+        {
+          "id": "t08",
+          "name": "Mugan",
+          "laps": [
+            25.05194023440622,
+            25.045545027876024
+          ],
+          "bestLap": 25.045545027876024,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2292,
+          "brakeFrames": 45,
+          "throttleFrames": 2236,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 118
+          }
+        },
+        {
+          "id": "t12",
+          "name": "Scuderia Vespera",
+          "laps": [
+            25.05194023440622,
+            25.045545027876024
+          ],
+          "bestLap": 25.045545027876024,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2292,
+          "brakeFrames": 45,
+          "throttleFrames": 2236,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 118
+          }
+        },
+        {
+          "id": "t13",
+          "name": "Redwood GP",
+          "laps": [
+            25.05194023440622,
+            25.045545027876024
+          ],
+          "bestLap": 25.045545027876024,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2292,
+          "brakeFrames": 45,
+          "throttleFrames": 2236,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 118
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "bahrain",
+      "difficulty": "expert",
+      "legacy": false,
+      "finishedOpponents": 12,
+      "playerExcluded": true,
+      "fastestSeconds": 25.03953210798018,
+      "slowestSeconds": 25.49922985914946,
+      "spreadSeconds": 0.4596977511692799,
+      "distinctMilliseconds": 12,
+      "entries": [
+        {
+          "id": "t04",
+          "name": "Scuderia Bellarossa",
+          "laps": [
+            25.089367544987773,
+            25.03953210798018
+          ],
+          "bestLap": 25.03953210798018,
+          "profile": {
+            "brakeLead": 0.7117391304347827,
+            "caution": 0.027862413326937334,
+            "execution": 0.005565217391304348,
+            "phase": 3.7384952577718535,
+            "rhythm": 1.5415
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2294,
+          "brakeFrames": 51,
+          "throttleFrames": 2228,
+          "reasons": {
+            "straight": 2172,
+            "corner-preview": 122
+          }
+        },
+        {
+          "id": "t02",
+          "name": "Alderwick Racing",
+          "laps": [
+            25.04657837155558,
+            25.042540441148738
+          ],
+          "bestLap": 25.042540441148738,
+          "profile": {
+            "brakeLead": 0.3264130434782607,
+            "caution": 0.020144040818106487,
+            "execution": 0.004521739130434782,
+            "phase": 0.5215043804959056,
+            "rhythm": 1.6752
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2292,
+          "brakeFrames": 47,
+          "throttleFrames": 2226,
+          "reasons": {
+            "straight": 2173,
+            "corner-preview": 119
+          }
+        },
+        {
+          "id": "t03",
+          "name": "Falkenheim GP",
+          "laps": [
+            25.084279657496726,
+            25.05899972993491
+          ],
+          "bestLap": 25.05899972993491,
+          "profile": {
+            "brakeLead": 0.7313260869565219,
+            "caution": 0.026937028476734556,
+            "execution": 0.005043478260869566,
+            "phase": 5.196194249037518,
+            "rhythm": 1.3917000000000002
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2294,
+          "brakeFrames": 51,
+          "throttleFrames": 2232,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 120
+          }
+        },
+        {
+          "id": "t08",
+          "name": "Mugan",
+          "laps": [
+            25.16285603124371,
+            25.171534857787336
+          ],
+          "bestLap": 25.16285603124371,
+          "profile": {
+            "brakeLead": 2.029717391304348,
+            "caution": 0.08242174349134358,
+            "execution": 0.008695652173913044,
+            "phase": 3.286105915654924,
+            "rhythm": 1.6416
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2304,
+          "brakeFrames": 64,
+          "throttleFrames": 2225,
+          "reasons": {
+            "straight": 2170,
+            "corner-preview": 129,
+            "settling": 5
+          }
+        },
+        {
+          "id": "t05",
+          "name": "Eisenbach Motorsport",
+          "laps": [
+            25.201509365949583,
+            25.203051651836013
+          ],
+          "bestLap": 25.201509365949583,
+          "profile": {
+            "brakeLead": 2.3340434782608694,
+            "caution": 0.08943800968121757,
+            "execution": 0.009739130434782608,
+            "phase": 2.12999981913388,
+            "rhythm": 1.9586999999999999
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2307,
+          "brakeFrames": 71,
+          "throttleFrames": 2227,
+          "reasons": {
+            "straight": 2166,
+            "corner-preview": 132,
+            "settling": 9
+          }
+        },
+        {
+          "id": "t11",
+          "name": "Rivage Racing",
+          "laps": [
+            25.253629132903107,
+            25.27432123558728
+          ],
+          "bestLap": 25.253629132903107,
+          "profile": {
+            "brakeLead": 2.7443695652173914,
+            "caution": 0.11144926082595615,
+            "execution": 0.010782608695652174,
+            "phase": 1.8095573684677206,
+            "rhythm": 1.9503
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2312,
+          "brakeFrames": 74,
+          "throttleFrames": 2230,
+          "reasons": {
+            "straight": 2168,
+            "corner-preview": 136,
+            "settling": 8
+          }
+        },
+        {
+          "id": "t07",
+          "name": "Ragos Racing",
+          "laps": [
+            25.302333279871974,
+            25.389055384572252
+          ],
+          "bestLap": 25.302333279871974,
+          "profile": {
+            "brakeLead": 3.5889347826086957,
+            "caution": 0.1462868169726571,
+            "execution": 0.013391304347826087,
+            "phase": 5.3469906964098275,
+            "rhythm": 1.825
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2320,
+          "brakeFrames": 79,
+          "throttleFrames": 2229,
+          "reasons": {
+            "straight": 2170,
+            "corner-preview": 140,
+            "settling": 10
+          }
+        },
+        {
+          "id": "t13",
+          "name": "Redwood GP",
+          "laps": [
+            25.3057689937991,
+            25.357052545795682
+          ],
+          "bestLap": 25.3057689937991,
+          "profile": {
+            "brakeLead": 3.0546956521739133,
+            "caution": 0.12503523614321224,
+            "execution": 0.01182608695652174,
+            "phase": 4.875751798371359,
+            "rhythm": 1.3833
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2315,
+          "brakeFrames": 76,
+          "throttleFrames": 2231,
+          "reasons": {
+            "straight": 2172,
+            "corner-preview": 134,
+            "settling": 9
+          }
+        },
+        {
+          "id": "t10",
+          "name": "Panther Racing",
+          "laps": [
+            25.350448674182903,
+            25.352668883407198
+          ],
+          "bestLap": 25.350448674182903,
+          "profile": {
+            "brakeLead": 3.1715217391304344,
+            "caution": 0.14172050935414937,
+            "execution": 0.012869565217391304,
+            "phase": 0.20106192982974677,
+            "rhythm": 1.6668
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2321,
+          "brakeFrames": 80,
+          "throttleFrames": 2233,
+          "reasons": {
+            "straight": 2172,
+            "corner-preview": 140,
+            "settling": 9
+          }
+        },
+        {
+          "id": "t06",
+          "name": "Orange",
+          "laps": [
+            25.451660732330033,
+            25.443975677615697
+          ],
+          "bestLap": 25.443975677615697,
+          "profile": {
+            "brakeLead": 3.7057608695652173,
+            "caution": 0.16297209018359424,
+            "execution": 0.014434782608695651,
+            "phase": 0.6723008278682158,
+            "rhythm": 1.4085
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2328,
+          "brakeFrames": 83,
+          "throttleFrames": 2233,
+          "reasons": {
+            "straight": 2176,
+            "corner-preview": 143,
+            "settling": 9
+          }
+        },
+        {
+          "id": "t09",
+          "name": "Lincoln",
+          "laps": [
+            25.499663153036895,
+            25.455401005689744
+          ],
+          "bestLap": 25.455401005689744,
+          "profile": {
+            "brakeLead": 4.021586956521739,
+            "caution": 0.18312777462823251,
+            "execution": 0.015478260869565217,
+            "phase": 1.6776104770169495,
+            "rhythm": 1.3588
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2332,
+          "brakeFrames": 87,
+          "throttleFrames": 2235,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 148,
+            "settling": 10
+          }
+        },
+        {
+          "id": "t12",
+          "name": "Scuderia Vespera",
+          "laps": [
+            25.49922985914946,
+            25.54221738576293
+          ],
+          "bestLap": 25.49922985914946,
+          "profile": {
+            "brakeLead": 4.177,
+            "caution": 0.18661083249749247,
+            "execution": 0.016,
+            "phase": 3.267256359733385,
+            "rhythm": 1.8005
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 2334,
+          "brakeFrames": 87,
+          "throttleFrames": 2235,
+          "reasons": {
+            "straight": 2174,
+            "corner-preview": 152,
+            "settling": 8
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "france",
+      "difficulty": "expert",
+      "legacy": true,
+      "finishedOpponents": 12,
+      "playerExcluded": true,
+      "fastestSeconds": 35.569689204089016,
+      "slowestSeconds": 35.632745443026685,
+      "spreadSeconds": 0.0630562389376692,
+      "distinctMilliseconds": 5,
+      "entries": [
+        {
+          "id": "t03",
+          "name": "Falkenheim GP",
+          "laps": [
+            35.6301943880346,
+            35.569689204089016
+          ],
+          "bestLap": 35.569689204089016,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3242,
+          "brakeFrames": 187,
+          "throttleFrames": 3014,
+          "reasons": {
+            "straight": 2630,
+            "corner-preview": 612
+          }
+        },
+        {
+          "id": "t06",
+          "name": "Orange",
+          "laps": [
+            35.61180643622198,
+            35.58889957772429
+          ],
+          "bestLap": 35.58889957772429,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3242,
+          "brakeFrames": 187,
+          "throttleFrames": 3012,
+          "reasons": {
+            "straight": 2629,
+            "corner-preview": 611,
+            "edge-preview": 2
+          }
+        },
+        {
+          "id": "t12",
+          "name": "Scuderia Vespera",
+          "laps": [
+            35.61180643622198,
+            35.58889957772429
+          ],
+          "bestLap": 35.58889957772429,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3242,
+          "brakeFrames": 187,
+          "throttleFrames": 3012,
+          "reasons": {
+            "straight": 2629,
+            "corner-preview": 611,
+            "edge-preview": 2
+          }
+        },
+        {
+          "id": "t05",
+          "name": "Eisenbach Motorsport",
+          "laps": [
+            35.64467144016733,
+            35.58890028164521
+          ],
+          "bestLap": 35.58890028164521,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3243,
+          "brakeFrames": 187,
+          "throttleFrames": 3011,
+          "reasons": {
+            "straight": 2629,
+            "corner-preview": 612,
+            "edge-preview": 2
+          }
+        },
+        {
+          "id": "t07",
+          "name": "Ragos Racing",
+          "laps": [
+            35.6001583055406,
+            35.60003738773689
+          ],
+          "bestLap": 35.60003738773689,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3242,
+          "brakeFrames": 186,
+          "throttleFrames": 3012,
+          "reasons": {
+            "straight": 2626,
+            "corner-preview": 616
+          }
+        },
+        {
+          "id": "t13",
+          "name": "Redwood GP",
+          "laps": [
+            35.6001583055406,
+            35.60003738773689
+          ],
+          "bestLap": 35.60003738773689,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3242,
+          "brakeFrames": 186,
+          "throttleFrames": 3012,
+          "reasons": {
+            "straight": 2626,
+            "corner-preview": 616
+          }
+        },
+        {
+          "id": "t11",
+          "name": "Rivage Racing",
+          "laps": [
+            35.632745443026685,
+            35.61175294809536
+          ],
+          "bestLap": 35.61175294809536,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3243,
+          "brakeFrames": 188,
+          "throttleFrames": 3012,
+          "reasons": {
+            "straight": 2628,
+            "corner-preview": 613,
+            "edge-preview": 2
+          }
+        },
+        {
+          "id": "t02",
+          "name": "Alderwick Racing",
+          "laps": [
+            35.632745443026685,
+            35.6334355972386
+          ],
+          "bestLap": 35.632745443026685,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3244,
+          "brakeFrames": 188,
+          "throttleFrames": 3014,
+          "reasons": {
+            "straight": 2631,
+            "corner-preview": 613
+          }
+        },
+        {
+          "id": "t04",
+          "name": "Scuderia Bellarossa",
+          "laps": [
+            35.632745443026685,
+            35.6345727763851
+          ],
+          "bestLap": 35.632745443026685,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3244,
+          "brakeFrames": 188,
+          "throttleFrames": 3013,
+          "reasons": {
+            "straight": 2628,
+            "corner-preview": 616
+          }
+        },
+        {
+          "id": "t08",
+          "name": "Mugan",
+          "laps": [
+            35.632745443026685,
+            35.6334355972386
+          ],
+          "bestLap": 35.632745443026685,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3244,
+          "brakeFrames": 188,
+          "throttleFrames": 3014,
+          "reasons": {
+            "straight": 2630,
+            "corner-preview": 614
+          }
+        },
+        {
+          "id": "t09",
+          "name": "Lincoln",
+          "laps": [
+            35.632745443026685,
+            35.6334355972386
+          ],
+          "bestLap": 35.632745443026685,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3244,
+          "brakeFrames": 188,
+          "throttleFrames": 3014,
+          "reasons": {
+            "straight": 2631,
+            "corner-preview": 613
+          }
+        },
+        {
+          "id": "t10",
+          "name": "Panther Racing",
+          "laps": [
+            35.632745443026685,
+            35.6345727763851
+          ],
+          "bestLap": 35.632745443026685,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3244,
+          "brakeFrames": 188,
+          "throttleFrames": 3013,
+          "reasons": {
+            "straight": 2629,
+            "corner-preview": 615
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "france",
+      "difficulty": "expert",
+      "legacy": false,
+      "finishedOpponents": 12,
+      "playerExcluded": true,
+      "fastestSeconds": 35.72883447720021,
+      "slowestSeconds": 37.45186315794194,
+      "spreadSeconds": 1.7230286807417343,
+      "distinctMilliseconds": 12,
+      "entries": [
+        {
+          "id": "t02",
+          "name": "Alderwick Racing",
+          "laps": [
+            35.76953859670134,
+            35.72883447720021
+          ],
+          "bestLap": 35.72883447720021,
+          "profile": {
+            "brakeLead": 0.3264130434782607,
+            "caution": 0.020144040818106487,
+            "execution": 0.004521739130434782,
+            "phase": 0.5215043804959056,
+            "rhythm": 1.6752
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3254,
+          "brakeFrames": 188,
+          "throttleFrames": 3002,
+          "reasons": {
+            "straight": 2631,
+            "corner-preview": 623
+          }
+        },
+        {
+          "id": "t04",
+          "name": "Scuderia Bellarossa",
+          "laps": [
+            35.76487016739813,
+            35.76193343807431
+          ],
+          "bestLap": 35.76193343807431,
+          "profile": {
+            "brakeLead": 0.7117391304347827,
+            "caution": 0.027862413326937334,
+            "execution": 0.005565217391304348,
+            "phase": 3.7384952577718535,
+            "rhythm": 1.5415
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3257,
+          "brakeFrames": 193,
+          "throttleFrames": 3002,
+          "reasons": {
+            "straight": 2626,
+            "corner-preview": 631
+          }
+        },
+        {
+          "id": "t03",
+          "name": "Falkenheim GP",
+          "laps": [
+            35.76604366544276,
+            35.77605208873503
+          ],
+          "bestLap": 35.76604366544276,
+          "profile": {
+            "brakeLead": 0.7313260869565219,
+            "caution": 0.026937028476734556,
+            "execution": 0.005043478260869566,
+            "phase": 5.196194249037518,
+            "rhythm": 1.3917000000000002
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3258,
+          "brakeFrames": 195,
+          "throttleFrames": 3010,
+          "reasons": {
+            "straight": 2629,
+            "corner-preview": 629
+          }
+        },
+        {
+          "id": "t08",
+          "name": "Mugan",
+          "laps": [
+            36.18623521603706,
+            36.159345915392265
+          ],
+          "bestLap": 36.159345915392265,
+          "profile": {
+            "brakeLead": 2.029717391304348,
+            "caution": 0.08242174349134358,
+            "execution": 0.008695652173913044,
+            "phase": 3.286105915654924,
+            "rhythm": 1.6416
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3293,
+          "brakeFrames": 215,
+          "throttleFrames": 3013,
+          "reasons": {
+            "straight": 2624,
+            "corner-preview": 669
+          }
+        },
+        {
+          "id": "t05",
+          "name": "Eisenbach Motorsport",
+          "laps": [
+            36.207792667944126,
+            36.268828618642715
+          ],
+          "bestLap": 36.207792667944126,
+          "profile": {
+            "brakeLead": 2.3340434782608694,
+            "caution": 0.08943800968121757,
+            "execution": 0.009739130434782608,
+            "phase": 2.12999981913388,
+            "rhythm": 1.9586999999999999
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3298,
+          "brakeFrames": 219,
+          "throttleFrames": 3021,
+          "reasons": {
+            "straight": 2622,
+            "corner-preview": 676
+          }
+        },
+        {
+          "id": "t11",
+          "name": "Rivage Racing",
+          "laps": [
+            36.51149981426934,
+            36.555000527853494
+          ],
+          "bestLap": 36.51149981426934,
+          "profile": {
+            "brakeLead": 2.7443695652173914,
+            "caution": 0.11144926082595615,
+            "execution": 0.010782608695652174,
+            "phase": 1.8095573684677206,
+            "rhythm": 1.9503
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3325,
+          "brakeFrames": 236,
+          "throttleFrames": 3044,
+          "reasons": {
+            "straight": 2625,
+            "corner-preview": 700
+          }
+        },
+        {
+          "id": "t13",
+          "name": "Redwood GP",
+          "laps": [
+            36.68492172122755,
+            36.66473174527813
+          ],
+          "bestLap": 36.66473174527813,
+          "profile": {
+            "brakeLead": 3.0546956521739133,
+            "caution": 0.12503523614321224,
+            "execution": 0.01182608695652174,
+            "phase": 4.875751798371359,
+            "rhythm": 1.3833
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3337,
+          "brakeFrames": 234,
+          "throttleFrames": 3030,
+          "reasons": {
+            "straight": 2629,
+            "corner-preview": 708
+          }
+        },
+        {
+          "id": "t10",
+          "name": "Panther Racing",
+          "laps": [
+            36.79862601332058,
+            36.88342175264998
+          ],
+          "bestLap": 36.79862601332058,
+          "profile": {
+            "brakeLead": 3.1715217391304344,
+            "caution": 0.14172050935414937,
+            "execution": 0.012869565217391304,
+            "phase": 0.20106192982974677,
+            "rhythm": 1.6668
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3354,
+          "brakeFrames": 238,
+          "throttleFrames": 3030,
+          "reasons": {
+            "straight": 2635,
+            "corner-preview": 719
+          }
+        },
+        {
+          "id": "t07",
+          "name": "Ragos Racing",
+          "laps": [
+            36.88009301354028,
+            36.87319895554194
+          ],
+          "bestLap": 36.87319895554194,
+          "profile": {
+            "brakeLead": 3.5889347826086957,
+            "caution": 0.1462868169726571,
+            "execution": 0.013391304347826087,
+            "phase": 5.3469906964098275,
+            "rhythm": 1.825
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3360,
+          "brakeFrames": 247,
+          "throttleFrames": 3052,
+          "reasons": {
+            "straight": 2632,
+            "corner-preview": 728
+          }
+        },
+        {
+          "id": "t06",
+          "name": "Orange",
+          "laps": [
+            37.0676284615335,
+            37.100972987853964
+          ],
+          "bestLap": 37.0676284615335,
+          "profile": {
+            "brakeLead": 3.7057608695652173,
+            "caution": 0.16297209018359424,
+            "execution": 0.014434782608695651,
+            "phase": 0.6723008278682158,
+            "rhythm": 1.4085
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3379,
+          "brakeFrames": 253,
+          "throttleFrames": 3054,
+          "reasons": {
+            "straight": 2635,
+            "corner-preview": 744
+          }
+        },
+        {
+          "id": "t09",
+          "name": "Lincoln",
+          "laps": [
+            37.30628000291417,
+            37.31838974184241
+          ],
+          "bestLap": 37.30628000291417,
+          "profile": {
+            "brakeLead": 4.021586956521739,
+            "caution": 0.18312777462823251,
+            "execution": 0.015478260869565217,
+            "phase": 1.6776104770169495,
+            "rhythm": 1.3588
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3398,
+          "brakeFrames": 261,
+          "throttleFrames": 3066,
+          "reasons": {
+            "straight": 2643,
+            "corner-preview": 755
+          }
+        },
+        {
+          "id": "t12",
+          "name": "Scuderia Vespera",
+          "laps": [
+            37.487863966140736,
+            37.45186315794194
+          ],
+          "bestLap": 37.45186315794194,
+          "profile": {
+            "brakeLead": 4.177,
+            "caution": 0.18661083249749247,
+            "execution": 0.016,
+            "phase": 3.267256359733385,
+            "rhythm": 1.8005
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3408,
+          "brakeFrames": 263,
+          "throttleFrames": 3063,
+          "reasons": {
+            "straight": 2642,
+            "corner-preview": 766
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "russia",
+      "difficulty": "expert",
+      "legacy": true,
+      "finishedOpponents": 12,
+      "playerExcluded": true,
+      "fastestSeconds": 37.49664749242662,
+      "slowestSeconds": 37.49664749242662,
+      "spreadSeconds": 0,
+      "distinctMilliseconds": 1,
+      "entries": [
+        {
+          "id": "t02",
+          "name": "Alderwick Racing",
+          "laps": [
+            37.49679594860697,
+            37.49664749242662
+          ],
+          "bestLap": 37.49664749242662,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3413,
+          "brakeFrames": 9,
+          "throttleFrames": 3404,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 33
+          }
+        },
+        {
+          "id": "t03",
+          "name": "Falkenheim GP",
+          "laps": [
+            37.49679594860697,
+            37.49664749242662
+          ],
+          "bestLap": 37.49664749242662,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3413,
+          "brakeFrames": 9,
+          "throttleFrames": 3404,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 33
+          }
+        },
+        {
+          "id": "t04",
+          "name": "Scuderia Bellarossa",
+          "laps": [
+            37.49679594860697,
+            37.49664749242662
+          ],
+          "bestLap": 37.49664749242662,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3413,
+          "brakeFrames": 9,
+          "throttleFrames": 3404,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 33
+          }
+        },
+        {
+          "id": "t05",
+          "name": "Eisenbach Motorsport",
+          "laps": [
+            37.49679594860697,
+            37.49664749242662
+          ],
+          "bestLap": 37.49664749242662,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3413,
+          "brakeFrames": 9,
+          "throttleFrames": 3404,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 33
+          }
+        },
+        {
+          "id": "t06",
+          "name": "Orange",
+          "laps": [
+            37.49679594860697,
+            37.49664749242662
+          ],
+          "bestLap": 37.49664749242662,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3413,
+          "brakeFrames": 9,
+          "throttleFrames": 3404,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 33
+          }
+        },
+        {
+          "id": "t07",
+          "name": "Ragos Racing",
+          "laps": [
+            37.49679594860697,
+            37.49664749242662
+          ],
+          "bestLap": 37.49664749242662,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3413,
+          "brakeFrames": 9,
+          "throttleFrames": 3404,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 33
+          }
+        },
+        {
+          "id": "t08",
+          "name": "Mugan",
+          "laps": [
+            37.49679594860697,
+            37.49664749242662
+          ],
+          "bestLap": 37.49664749242662,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3413,
+          "brakeFrames": 9,
+          "throttleFrames": 3404,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 33
+          }
+        },
+        {
+          "id": "t09",
+          "name": "Lincoln",
+          "laps": [
+            37.49679594860697,
+            37.49664749242662
+          ],
+          "bestLap": 37.49664749242662,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3413,
+          "brakeFrames": 9,
+          "throttleFrames": 3404,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 33
+          }
+        },
+        {
+          "id": "t10",
+          "name": "Panther Racing",
+          "laps": [
+            37.49679594860697,
+            37.49664749242662
+          ],
+          "bestLap": 37.49664749242662,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3413,
+          "brakeFrames": 9,
+          "throttleFrames": 3404,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 33
+          }
+        },
+        {
+          "id": "t11",
+          "name": "Rivage Racing",
+          "laps": [
+            37.49679594860697,
+            37.49664749242662
+          ],
+          "bestLap": 37.49664749242662,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3413,
+          "brakeFrames": 9,
+          "throttleFrames": 3404,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 33
+          }
+        },
+        {
+          "id": "t12",
+          "name": "Scuderia Vespera",
+          "laps": [
+            37.49679594860697,
+            37.49664749242662
+          ],
+          "bestLap": 37.49664749242662,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3413,
+          "brakeFrames": 9,
+          "throttleFrames": 3404,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 33
+          }
+        },
+        {
+          "id": "t13",
+          "name": "Redwood GP",
+          "laps": [
+            37.49679594860697,
+            37.49664749242662
+          ],
+          "bestLap": 37.49664749242662,
+          "profile": null,
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3413,
+          "brakeFrames": 9,
+          "throttleFrames": 3404,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 33
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "russia",
+      "difficulty": "expert",
+      "legacy": false,
+      "finishedOpponents": 12,
+      "playerExcluded": true,
+      "fastestSeconds": 37.500553115534174,
+      "slowestSeconds": 37.59949157939504,
+      "spreadSeconds": 0.09893846386086835,
+      "distinctMilliseconds": 10,
+      "entries": [
+        {
+          "id": "t03",
+          "name": "Falkenheim GP",
+          "laps": [
+            37.502221593497936,
+            37.500553115534174
+          ],
+          "bestLap": 37.500553115534174,
+          "profile": {
+            "brakeLead": 0.7313260869565219,
+            "caution": 0.026937028476734556,
+            "execution": 0.005043478260869566,
+            "phase": 5.196194249037518,
+            "rhythm": 1.3917000000000002
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3414,
+          "brakeFrames": 10,
+          "throttleFrames": 3399,
+          "reasons": {
+            "straight": 3381,
+            "corner-preview": 33
+          }
+        },
+        {
+          "id": "t02",
+          "name": "Alderwick Racing",
+          "laps": [
+            37.50219344642531,
+            37.508458622667604
+          ],
+          "bestLap": 37.50219344642531,
+          "profile": {
+            "brakeLead": 0.3264130434782607,
+            "caution": 0.020144040818106487,
+            "execution": 0.004521739130434782,
+            "phase": 0.5215043804959056,
+            "rhythm": 1.6752
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3414,
+          "brakeFrames": 10,
+          "throttleFrames": 3400,
+          "reasons": {
+            "straight": 3381,
+            "corner-preview": 33
+          }
+        },
+        {
+          "id": "t04",
+          "name": "Scuderia Bellarossa",
+          "laps": [
+            37.5163764259549,
+            37.50226880502953
+          ],
+          "bestLap": 37.50226880502953,
+          "profile": {
+            "brakeLead": 0.7117391304347827,
+            "caution": 0.027862413326937334,
+            "execution": 0.005565217391304348,
+            "phase": 3.7384952577718535,
+            "rhythm": 1.5415
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3414,
+          "brakeFrames": 10,
+          "throttleFrames": 3399,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 34
+          }
+        },
+        {
+          "id": "t05",
+          "name": "Eisenbach Motorsport",
+          "laps": [
+            37.552537188214814,
+            37.52245227342473
+          ],
+          "bestLap": 37.52245227342473,
+          "profile": {
+            "brakeLead": 2.3340434782608694,
+            "caution": 0.08943800968121757,
+            "execution": 0.009739130434782608,
+            "phase": 2.12999981913388,
+            "rhythm": 1.9586999999999999
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3417,
+          "brakeFrames": 14,
+          "throttleFrames": 3400,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 37
+          }
+        },
+        {
+          "id": "t08",
+          "name": "Mugan",
+          "laps": [
+            37.5303487192694,
+            37.53041475720089
+          ],
+          "bestLap": 37.5303487192694,
+          "profile": {
+            "brakeLead": 2.029717391304348,
+            "caution": 0.08242174349134358,
+            "execution": 0.008695652173913044,
+            "phase": 3.286105915654924,
+            "rhythm": 1.6416
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3416,
+          "brakeFrames": 12,
+          "throttleFrames": 3399,
+          "reasons": {
+            "straight": 3381,
+            "corner-preview": 35
+          }
+        },
+        {
+          "id": "t11",
+          "name": "Rivage Racing",
+          "laps": [
+            37.54713749144496,
+            37.55625723062472
+          ],
+          "bestLap": 37.54713749144496,
+          "profile": {
+            "brakeLead": 2.7443695652173914,
+            "caution": 0.11144926082595615,
+            "execution": 0.010782608695652174,
+            "phase": 1.8095573684677206,
+            "rhythm": 1.9503
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3418,
+          "brakeFrames": 15,
+          "throttleFrames": 3402,
+          "reasons": {
+            "straight": 3380,
+            "corner-preview": 38
+          }
+        },
+        {
+          "id": "t13",
+          "name": "Redwood GP",
+          "laps": [
+            37.5844267799843,
+            37.565934239972805
+          ],
+          "bestLap": 37.565934239972805,
+          "profile": {
+            "brakeLead": 3.0546956521739133,
+            "caution": 0.12503523614321224,
+            "execution": 0.01182608695652174,
+            "phase": 4.875751798371359,
+            "rhythm": 1.3833
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3420,
+          "brakeFrames": 16,
+          "throttleFrames": 3400,
+          "reasons": {
+            "straight": 3382,
+            "corner-preview": 38
+          }
+        },
+        {
+          "id": "t10",
+          "name": "Panther Racing",
+          "laps": [
+            37.577340900959,
+            37.58450846082255
+          ],
+          "bestLap": 37.577340900959,
+          "profile": {
+            "brakeLead": 3.1715217391304344,
+            "caution": 0.14172050935414937,
+            "execution": 0.012869565217391304,
+            "phase": 0.20106192982974677,
+            "rhythm": 1.6668
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3421,
+          "brakeFrames": 17,
+          "throttleFrames": 3399,
+          "reasons": {
+            "straight": 3382,
+            "corner-preview": 39
+          }
+        },
+        {
+          "id": "t07",
+          "name": "Ragos Racing",
+          "laps": [
+            37.5862201493607,
+            37.59397846284706
+          ],
+          "bestLap": 37.5862201493607,
+          "profile": {
+            "brakeLead": 3.5889347826086957,
+            "caution": 0.1462868169726571,
+            "execution": 0.013391304347826087,
+            "phase": 5.3469906964098275,
+            "rhythm": 1.825
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3421,
+          "brakeFrames": 18,
+          "throttleFrames": 3402,
+          "reasons": {
+            "straight": 3381,
+            "corner-preview": 40
+          }
+        },
+        {
+          "id": "t06",
+          "name": "Orange",
+          "laps": [
+            37.596645623320846,
+            37.59977483541475
+          ],
+          "bestLap": 37.596645623320846,
+          "profile": {
+            "brakeLead": 3.7057608695652173,
+            "caution": 0.16297209018359424,
+            "execution": 0.014434782608695651,
+            "phase": 0.6723008278682158,
+            "rhythm": 1.4085
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3422,
+          "brakeFrames": 18,
+          "throttleFrames": 3401,
+          "reasons": {
+            "straight": 3382,
+            "corner-preview": 40
+          }
+        },
+        {
+          "id": "t09",
+          "name": "Lincoln",
+          "laps": [
+            37.59945525837749,
+            37.63206465790833
+          ],
+          "bestLap": 37.59945525837749,
+          "profile": {
+            "brakeLead": 4.021586956521739,
+            "caution": 0.18312777462823251,
+            "execution": 0.015478260869565217,
+            "phase": 1.6776104770169495,
+            "rhythm": 1.3588
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3424,
+          "brakeFrames": 20,
+          "throttleFrames": 3403,
+          "reasons": {
+            "straight": 3383,
+            "corner-preview": 41
+          }
+        },
+        {
+          "id": "t12",
+          "name": "Scuderia Vespera",
+          "laps": [
+            37.59949157939504,
+            37.63194543605043
+          ],
+          "bestLap": 37.59949157939504,
+          "profile": {
+            "brakeLead": 4.177,
+            "caution": 0.18661083249749247,
+            "execution": 0.016,
+            "phase": 3.267256359733385,
+            "rhythm": 1.8005
+          },
+          "observedWallFrames": 0,
+          "observedShoulderFrames": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "inputFrames": 3423,
+          "brakeFrames": 19,
+          "throttleFrames": 3402,
+          "reasons": {
+            "straight": 3382,
+            "corner-preview": 41
+          }
+        }
+      ]
+    }
+  ]
+}

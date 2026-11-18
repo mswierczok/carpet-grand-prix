@@ -65,6 +65,10 @@ Neustart/Verwerfen und Offlinebetrieb. Das Solo-Qualifying prüft zusätzlich
 unveränderte Gegnerposen bei anderer Spielerfahrt, fehlende Fahrzeugkontakte,
 tatsächlich ausgeblendete 3D-Modelle und Spieler-Sprites in 2D. Im Rennen muss
 das volle Feld wieder sichtbar sein. Details: [POV_QUALIFYING.md](POV_QUALIFYING.md).
+Individuelle Hintergrundfahrer haben zusätzliche Brems-/Eigenschaftstests und
+einen realen Expertenlauf gegen die gemeldeten fast gleichen Zeiten.
+`node scripts/measure-qualifying-drivers.js` misst neue Vorher-/Nachher-Läufe
+ohne Einfluss der eigenen Spielerzeit; Einzelheiten: [QUALIFYING_DRIVERS.md](QUALIFYING_DRIVERS.md).
 
 `tests/helpers/game.js` führt das Originalscript in einer isolierten Node-VM aus.
 Nur die temporäre Testkopie gibt Interna frei; HTML wird nicht verändert. DOM-Neuzeichnung
