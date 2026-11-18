@@ -59,6 +59,10 @@ beschreibt [POV_CALENDAR.md](POV_CALENDAR.md).
 
 ## Referenzen und Adapter
 
+Das optionale POV-Qualifying hat eigene Modul-/Browserprüfungen für tatsächliche
+Bestzeiten aus zwei schnellen Runden, Startlistenübernahme, Direktstart-Replay,
+Neustart/Verwerfen und Offlinebetrieb. Details: [POV_QUALIFYING.md](POV_QUALIFYING.md).
+
 `tests/helpers/game.js` führt das Originalscript in einer isolierten Node-VM aus.
 Nur die temporäre Testkopie gibt Interna frei; HTML wird nicht verändert. DOM-Neuzeichnung
 ist dort ersetzt. Echte Bedienung, Rendering und Storage prüft Playwright separat.

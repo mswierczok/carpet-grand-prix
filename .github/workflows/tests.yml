@@ -91,11 +91,35 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:browser -- --project=${{ matrix.project }} --grep-invert 'POV-Kalender:'
+      - run: npm run test:browser -- --project=${{ matrix.project }} --grep-invert 'POV-Kalender:|Qualifying:'
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: browser-test-diagnostics-${{ matrix.project }}
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+  qualifying:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [chromium, mobile-chromium]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test tests/browser/qualifying.spec.js --project=${{ matrix.project }}
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: qualifying-${{ matrix.project }}
           path: |
             playwright-report/
             test-results/

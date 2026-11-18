@@ -149,6 +149,13 @@ Rennsekunden ab Grün; Countdown und Pause zählen nicht. Das Windmodul lässt
 danach nur Paare mit mindestens 100 km/h vorwärts zu. Grenzen und Prüfungen:
 [SLIPSTREAM_START.md](SLIPSTREAM_START.md).
 
+`qualifying-session.js` wertet die zwei schnellen Runden nach einer vollständigen
+Auslaufrunde einer echten `RaceSession` aus. `race-weekend.js` koordiniert die
+optionale Qualifikation und übergibt die geprüfte `gridOrder` an das Rennen.
+`qualifying-ui.js` stellt Bestzeiten und Übernahme der Startaufstellung dar.
+Direktstart, Kräfte und klassische Spielstände bleiben erhalten. Regeln,
+Zurücksetzen und Prüfungen: [POV_QUALIFYING.md](POV_QUALIFYING.md).
+
 `race-gaps.js` hält eine begrenzte Passagehistorie für laufende Zeitabstände.
 `catchup.js` berechnet daraus das kleine KI-Motorbudget und übergibt es an den
 gemeinsamen Physikpfad. Spieler, Podiumsplätze und Auslaufrunden bleiben ohne

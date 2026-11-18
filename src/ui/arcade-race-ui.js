@@ -93,7 +93,7 @@
         button.disabled = r.phase === "finishing" || r.phase === "finished";
       const message =
         r.phase === "grid"
-          ? "13 Teams bereit · Startplatz 13 · " + r.laps + " Runden"
+          ? "13 Teams bereit · Startplatz " + r.position + " · " + r.laps + " Runden"
           : r.phase === "countdown"
             ? snapshot.paused
               ? "Start pausiert"
