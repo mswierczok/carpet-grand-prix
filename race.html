@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#192b33" />
     <title>Carpet Grand Prix · Bahrain-Rennen</title>
     <link rel="stylesheet" href="./styles/arcade.css?v=pov-tracks-1" />
-    <link rel="stylesheet" href="./styles/arcade-race.css?v=slipstream-1" />
+    <link rel="stylesheet" href="./styles/arcade-race.css?v=qualifying-1" />
   </head>
   <body>
     <main id="arcadeApp" data-renderer="3d" data-mode="race">
@@ -65,6 +65,9 @@
               </p>
             </div>
             <div class="actions">
+              <button id="startQualifying" type="button">Qualifying starten</button>
+              <button id="acceptQualifying" type="button" hidden>Startaufstellung übernehmen</button>
+              <button id="cancelQualifying" type="button" hidden>Qualifying verwerfen</button>
               <button id="pause" type="button">Rennen starten</button
               ><button id="overview" type="button" aria-pressed="false">
                 Gesamtstrecke
@@ -130,6 +133,16 @@
           <ol id="raceOrder"></ol>
         </aside>
       </div>
+      <p id="weekendNote" class="race-lap-details">Fahre zuerst das Qualifying oder starte direkt von Platz 13 ins Rennen.</p>
+      <section id="qualifyingResults" class="race-results" aria-label="Qualifying-Ergebnis und Startaufstellung" hidden>
+        <span class="eyebrow">QUALIFYING</span>
+        <h2>Deine Startaufstellung</h2>
+        <p>Die beste schnelle Runde bestimmt den Startplatz. Ohne Zeit zählt die ursprüngliche Reihenfolge.</p>
+        <div class="result-scroll"><table>
+          <thead><tr><th>Startplatz</th><th>Team</th><th>Bestzeit</th></tr></thead>
+          <tbody id="qualifyingRows"></tbody>
+        </table></div>
+      </section>
       <p class="race-lap-details">
         Deine Runde: <b id="lapTime">0:00.000</b> · Bestzeit:
         <b id="bestLap">—</b> · Beendet: <b id="laps">0</b>
@@ -207,7 +220,7 @@
         <select id="balanceTeam"></select>
         <pre id="balanceReadout"></pre>
       </details>
-      <footer>
+      <footer id="weekendFooter">
         Du startest auf Platz 13. Nach deinem Ziel übernimmt die KI die
         Auslaufrunde, bis alle im Ziel sind. Dein klassischer Spielstand wird
         nicht verwendet oder verändert.
@@ -235,8 +248,11 @@
     <script src="./src/data/race-formats.js?v=race-duration-1"></script>
     <script src="./src/racing/race-gaps.js?v=catchup-1"></script>
     <script src="./src/racing/catchup.js?v=catchup-1"></script>
-    <script src="./src/racing/race-session.js?v=draft-start-100-7"></script>
-    <script src="./src/ui/arcade-race-ui.js?v=catchup-1"></script>
+    <script src="./src/racing/race-session.js?v=qualifying-1"></script>
+    <script src="./src/racing/qualifying-session.js?v=qualifying-1"></script>
+    <script src="./src/racing/race-weekend.js?v=qualifying-1"></script>
+    <script src="./src/ui/arcade-race-ui.js?v=qualifying-1"></script>
+    <script src="./src/ui/qualifying-ui.js?v=qualifying-1"></script>
     <script src="./src/racing/controls.js"></script>
     <script src="./src/rendering/wake-visuals.js?v=close-slipstream-5"></script>
     <script src="./src/rendering/arcade2d.js?v=slipstream-1"></script>
@@ -249,6 +265,6 @@
     <script src="./src/rendering/wake3d.js?v=slipstream-1"></script>
     <script src="./src/rendering/arcade3d.js?v=slipstream-1"></script>
     <script src="./src/racing/track-catalog.js?v=pov-calendar-1"></script>
-    <script src="./src/arcade-main.js?v=catchup-1"></script>
+    <script src="./src/arcade-main.js?v=qualifying-1"></script>
   </body>
 </html>

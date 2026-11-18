@@ -18,7 +18,13 @@
       throw Error(
         "Das volle Startfeld benötigt genau 13 unterschiedliche Teams.",
       );
+    const gridOrder = options.gridOrder === undefined ? null : options.gridOrder;
+    if (gridOrder !== null && (!Array.isArray(gridOrder) || gridOrder.length !== 13 ||
+      new Set(gridOrder).size !== 13 || gridOrder.some((id) => !teams.some((t) => t.id === id))))
+      throw Error("Die Startaufstellung muss alle 13 Teams genau einmal enthalten.");
+    const grid = gridOrder ? [...gridOrder] : null;
     let playerTeam = options.playerTeam || teams[0].id,
+      driverSeeds,
       entries,
       phase,
       countdown,
@@ -42,10 +48,12 @@
       paused = true;
       pairs = new Set();
       gapHistory = catchupEnabled ? A.RaceGaps.create() : null;
-      const order = [
+      const defaultOrder = [
         ...teams.filter((t) => t.id !== playerTeam),
         teams.find((t) => t.id === playerTeam),
       ];
+      driverSeeds = new Map(defaultOrder.map((team, i) => [team.id, i]));
+      const order = grid ? grid.map((id) => teams.find((t) => t.id === id)) : defaultOrder;
       entries = order.map((team, i) => {
         const lane = i % 2 ? 6 : -6,
           car = pose(-22 - Math.floor(i / 2) * 16 - (i % 2) * 3, lane);
@@ -58,7 +66,7 @@
           timing: A.Timing.create(),
           finishTime: null,
           lastSafe: car.s,
-          driver: controller.memory(i, lane),
+          driver: controller.memory(driverSeeds.get(team.id), lane),
           command: neutral,
           ...(slipstreamEnabled ? { slipstream: A.Slipstream.empty() } : {}),
           ...(catchupEnabled ? { catchup: A.Catchup.empty() } : {}),
@@ -173,7 +181,7 @@
         );
         if (e.timing.completed >= laps) {
           e.finishTime = e.timing.lapStart;
-          e.driver = controller.memory(i, 0);
+          e.driver = controller.memory(driverSeeds.get(e.id), 0);
           if (slipstreamEnabled) e.slipstream = A.Slipstream.empty();
           if (catchupEnabled) e.catchup = A.Catchup.empty();
         }

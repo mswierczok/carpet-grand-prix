@@ -33,9 +33,9 @@
     const node = el(id);
     if (node.textContent !== text) node.textContent = text;
   };
-  const raceUI = racing ? A.RaceUI.attach(root, format) : null;
+  const raceUI = racing ? A.QualifyingUI.attach(root, format) : null;
   function createSession() {
-    return (racing ? A.RaceSession : A.Session).create(
+    return (racing ? A.RaceWeekend : A.Session).create(
       catalog.get(trackId),
       racing ? { playerTeam: teamId, difficulty: difficultyId,
         slipstream: new URLSearchParams(location.search).get("slipstream") !== "0",
@@ -246,6 +246,19 @@
     dirty = true;
   };
   if (racing) {
+    const changeStage = (action) => {
+      if (!action()) return;
+      controls.clear();
+      renderer.resetCamera?.();
+      lastRacePhase = null;
+      lastFrame = performance.now();
+      dirty = true;
+      updateUI();
+      el("pause").focus({ preventScroll: true });
+    };
+    el("startQualifying").onclick = () => changeStage(() => session.startQualifying());
+    el("acceptQualifying").onclick = () => changeStage(() => session.acceptQualifying());
+    el("cancelQualifying").onclick = () => changeStage(() => session.cancelQualifying());
     el("catchup").value = catchupEnabled ? "on" : "off";
     el("catchup").onchange = (event) => {
       if (session.selectCatchup(event.target.value === "on")) {

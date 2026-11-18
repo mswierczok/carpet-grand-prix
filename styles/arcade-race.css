@@ -132,3 +132,5 @@ select:disabled {
 .track-hud #viewDraft {
   color: #bde5e5;
 }
+.race-heading .actions { flex-wrap: wrap; }
+.is-qualifying .field-panel li { grid-template-columns: 20px minmax(0, 1fr) 68px; }
