@@ -88,7 +88,9 @@ test("Windschatten: echter 3D-Heckwirbel entspricht der Physik, Pause/Neustart b
   await page.locator("#track").selectOption("russia");
   await page.clock.runFor(64);
   expect(await page.evaluate(() => __inspect3D.diagnostics().wake.emitters)).toBe(0);
-  expect(await page.evaluate(() => ({ ...localStorage }))).toEqual(before);
+  expect(await page.evaluate(() => ({ ...localStorage }))).toEqual({ ...before,
+    carpet_gp_pov_selection_v1: JSON.stringify({ version: 1, teamId: "t01", trackId: "russia" }),
+  });
   expect(errors).toEqual([]);
 });
 
