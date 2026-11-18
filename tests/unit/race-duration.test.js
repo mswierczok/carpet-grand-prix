@@ -51,7 +51,7 @@ it("erhält Neustart, Teamwechsel und explizite Test-Rundenzahlen ohne Speicherz
 });
 
 it("schützt Physik, Grafik, Daten und Originalspiel trotz freigegebener KI-Änderungen bytegenau", () => {
-  const files = ["index.html", "src/racing/physics.js", "src/racing/bridge-physics.js", "src/racing/vehicle-contacts.js", "src/racing/track-surface.js", "src/racing/bridge-surface.js", "src/racing/track-shape.js", "src/racing/timing.js", "src/racing/controls.js", "src/data/arcade-roster.js", "src/data/arcade-tracks.js", "src/data/arcade-boundaries.js", "src/rendering/camera3d.js", "src/rendering/vehicles3d.js"];
+  const files = ["index.html", "src/racing/physics.js", "src/racing/bridge-physics.js", "src/racing/vehicle-contacts.js", "src/racing/track-surface.js", "src/racing/bridge-surface.js", "src/racing/track-shape.js", "src/racing/timing.js", "src/data/arcade-roster.js", "src/data/arcade-tracks.js", "src/data/arcade-boundaries.js", "src/rendering/camera3d.js", "src/rendering/vehicles3d.js"];
   for (const file of files) {
     const current = read(file),
       original = execFileSync("git", ["show", `${baseline}:${file}`], { cwd: ROOT, encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });

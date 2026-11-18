@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { capture2D, capture3D } from "../helpers/arcade-browser.js";
+import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
 
 test("KI-Stufen: Auswahl bleibt über Streckenwechsel und Neuladen erhalten, klassische Daten bleiben unangetastet", async ({ page }) => {
@@ -10,9 +10,9 @@ test("KI-Stufen: Auswahl bleibt über Streckenwechsel und Neuladen erhalten, kla
   await page.clock.runFor(32);
   await expect(page.locator("#difficulty option")).toHaveCount(4);
   await page.locator("#team").selectOption("t05");
-  await page.locator("#quality").selectOption("low");
+  await selectDriveSetting(page, "quality", "low");
   for (const id of ["beginner", "hard", "expert", "normal", "expert"]) {
-    await page.locator("#difficulty").selectOption(id);
+    await selectDriveSetting(page, "difficulty", id);
     await page.clock.runFor(32);
     expect(await page.evaluate(() => __driveSnapshot.race.difficulty)).toBe(id);
     expect(await page.evaluate(() => __driveSnapshot.race.playerTeam)).toBe("t05");
@@ -50,7 +50,7 @@ test("KI-Stufen: verweigerter Speicher blockiert die Fahrt nicht und wird verst�
   });
   await page.goto("race.html");
   await page.clock.runFor(32);
-  await page.locator("#difficulty").selectOption("expert");
+  await selectDriveSetting(page, "difficulty", "expert");
   await page.clock.runFor(32);
   await expect(page.locator("#difficultyNote")).toContainText("nicht gespeichert");
   expect(await page.evaluate(() => __driveSnapshot.race.difficulty)).toBe("expert");
@@ -83,9 +83,9 @@ CGPArcade.RaceSession = { ...module, create(track, options = {}) {
     });
     await page.goto(`race.html?track=${id}&balance=1`);
     await page.clock.runFor(32);
-    await page.locator("#difficulty").selectOption(difficulty);
+    await selectDriveSetting(page, "difficulty", difficulty);
     await page.clock.runFor(32);
-    if (id === "bahrain") await page.locator("#quality").selectOption("low");
+    if (id === "bahrain") await selectDriveSetting(page, "quality", "low");
     const storage = await page.evaluate(() => ({ ...localStorage }));
     await page.locator("#balancePanel summary").click();
     await page.locator("#pause").click();

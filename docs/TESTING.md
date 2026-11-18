@@ -160,6 +160,13 @@ Die bestehende Pages-Veröffentlichung wird nicht umgestellt.
 
 ## Grenzen
 
+Die kompakten POV-Einstellungen und Mehrfinger-Eingaben haben eigene Desktop-/
+Mobilprüfungen in `race-settings.spec.js`: nativer Dialog, Fokus/Escape, Pause,
+Reset oben, Offlinebetrieb und echte CDP-Touchfolgen mit Abbruch und erneuter
+Bedienung. Historische Bytevergleiche schützen weiterhin Physik und Daten;
+die ausdrücklich geänderte `controls.js` wird durch Verhaltensprüfungen abgedeckt.
+Details und Safari-Grenzen: [POV_SETTINGS_TOUCH.md](POV_SETTINGS_TOUCH.md).
+
 Künstliche Referenzstände ersetzen keine historischen Nutzerdateien. Mobilformat
 ersetzt keine echten Safari-/iPhone-Tests. Gezielte Verkehr-/Kontakt-/Boxenszenarien,
 Langzeitreglementtests und Performancevergleiche vor der jeweiligen

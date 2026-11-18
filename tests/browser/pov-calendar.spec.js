@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { capture2D, capture3D } from "../helpers/arcade-browser.js";
+import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace, threeLapRegression } from "../helpers/arcade-race-browser.js";
 import { povIds, newPovIds } from "../helpers/pov-catalog.js";
 
@@ -28,7 +28,7 @@ test("POV-Kalender: lädt neue Strecken im echten 3D-Modus und gibt die vorherig
       .evaluateAll((nodes) => nodes.map((n) => n.value)),
   ).toEqual(povIds);
   await page.locator("#team").selectOption("t05");
-  await page.locator("#quality").selectOption("low");
+  await selectDriveSetting(page, "quality", "low");
   for (const id of newPovIds) {
     await page.evaluate(
       () =>
@@ -137,7 +137,7 @@ for (const id of newPovIds.filter((id) => id === "korea" || id === "russia"))
     // keyboard commands and the simulation clock run at their normal rates.
     await capture3D(page, { renderEvery: 8, observeElevation: true });
     await page.goto(`race.html?track=${id}`);
-    await page.locator("#quality").selectOption("low");
+    await selectDriveSetting(page, "quality", "low");
     await page.clock.runFor(64);
     await page.locator("#pause").click();
     await page.evaluate(pilotRace);

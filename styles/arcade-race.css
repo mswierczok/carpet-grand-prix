@@ -134,3 +134,52 @@ select:disabled {
 }
 .race-heading .actions { flex-wrap: wrap; }
 .is-qualifying .field-panel li { grid-template-columns: 20px minmax(0, 1fr) 68px; }
+
+.race-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 0;
+  margin-bottom: 8px;
+  background: #17252d;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+.race-toolbar button { min-height: 44px; touch-action: manipulation; }
+#recover { border-color: var(--accent); }
+#raceSettings {
+  width: min(480px, calc(100% - 24px));
+  max-height: 90dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 20px;
+  border: 1px solid #77908f;
+  border-radius: 14px;
+  background: #263b44;
+  color: var(--paper);
+}
+#raceSettings::backdrop { background: #081419bb; }
+.settings-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.settings-heading h2 { margin: 0; font-size: 22px; }
+.settings-field {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+.settings-field label { font-weight: 700; font-size: 14px; }
+.settings-field .hint { margin: 0 0 8px; }
+#raceSettings button, #raceSettings select { min-height: 44px; }
+@media (max-width: 420px) {
+  .race-toolbar button { font-size: 13px; padding: 8px; }
+  .race-toolbar kbd { display: none; }
+  #raceSettings { padding: 14px; }
+}

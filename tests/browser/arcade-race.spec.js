@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { capture2D, capture3D } from "../helpers/arcade-browser.js";
+import { selectDriveSetting, switchToTopDown, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace, threeLapRegression } from "../helpers/arcade-race-browser.js";
 
 test("zeigt alle 13 echten Teamfahrzeuge mit gebündelter 3D-Geometrie und stabiler Teamwahl", async ({
@@ -61,7 +61,7 @@ test("hält das volle Feld bei Rot an, pausiert alle Fahrer und erhält sie beim
   await capture3D(page);
   await page.goto("race.html");
   await page.clock.runFor(32);
-  await page.locator("#quality").selectOption("low");
+  await selectDriveSetting(page, "quality", "low");
   const initial = await page.evaluate(() =>
     __driveSnapshot.entries.map((e) => [e.car.x, e.car.y]),
   );
@@ -93,7 +93,7 @@ test("hält das volle Feld bei Rot an, pausiert alle Fahrer und erhält sie beim
     paused.entries,
   );
   await expect(page.locator("#pause")).toHaveText("Fortsetzen");
-  await page.locator("#fallback").click();
+  await switchToTopDown(page);
   await expect(page.locator("#arcadeApp")).toHaveAttribute(
     "data-rendering",
     "2d",
@@ -125,7 +125,7 @@ test("enthält das volle Feld auch im netzwerkfreien Renn-HTML", async ({
     "data-rendering",
     "3d",
   );
-  await page.locator("#quality").selectOption("low");
+  await selectDriveSetting(page, "quality", "low");
   await page.locator("#pause").click();
   await page.keyboard.down("w");
   await page.clock.runFor(5500);

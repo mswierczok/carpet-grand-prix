@@ -127,6 +127,15 @@
       updateUI();
     },
   });
+  if (racing) A.RaceSettings.attach(root, {
+    onOpen() {
+      session.pause(true);
+      controls.clear();
+      dirty = true;
+      updateUI();
+    },
+    onClose: () => controls.clear(),
+  });
   teams.forEach((team) => {
     const option = document.createElement("option");
     option.value = team.id;

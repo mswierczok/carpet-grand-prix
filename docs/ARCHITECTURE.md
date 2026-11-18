@@ -168,3 +168,9 @@ Ursache, Grenzen und echte Vergleichsläufe: [QUALIFYING_DRIVERS.md](QUALIFYING_
 `catchup.js` berechnet daraus das kleine KI-Motorbudget und übergibt es an den
 gemeinsamen Physikpfad. Spieler, Podiumsplätze und Auslaufrunden bleiben ohne
 Aufholhilfe. Regeln, A/B-Abschaltung und Prüfungen: [CATCHUP.md](CATCHUP.md).
+
+`race-settings.js` bündelt die vorhandenen POV-Renneinstellungen in einem nativen
+Dialog. `arcade-main.js` pausiert beim Öffnen und leert die Eingaben. Die gemeinsame
+Steuerung schützt die Fahrfläche vor Auswahl/Gesten und verwaltet mehrere Pointer
+mit expliziter Freigabe. Oberfläche, Speicherregeln und Geräte-Testgrenzen:
+[POV_SETTINGS_TOUCH.md](POV_SETTINGS_TOUCH.md).

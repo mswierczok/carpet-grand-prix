@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { capture2D, capture3D } from "../helpers/arcade-browser.js";
+import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
 
 async function observeWake(page) {
@@ -43,7 +43,7 @@ test("Windschatten: echter 3D-Heckwirbel entspricht der Physik, Pause/Neustart b
   await capture3D(page, { renderEvery: 8 });
   await observeWake(page);
   await page.goto("race.html?balance=1");
-  await page.locator("#quality").selectOption("low");
+  await selectDriveSetting(page, "quality", "low");
   await page.clock.runFor(64);
   const before = await page.evaluate(() => ({ ...localStorage }));
   await page.locator("#balancePanel summary").click();
