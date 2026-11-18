@@ -1,7 +1,7 @@
 # POV-Qualifying und Startaufstellung
 
-Ausgangsbasis: veröffentlichtes `main` nach PR #33,
-`0cf24b1689eaafbf81ef03b950f26e1018cbc997`.
+Aktuelle Anschlussänderung: Solo-Qualifying auf Basis des veröffentlichten `main`
+nach PR #34, `dbc552058f317d1376869c0a0a47a9cae9d773e9`.
 Dieser Schritt ergänzt ausschließlich Qualifying und Startplätze. Meisterschaft,
 Punkte und dauerhafte Wochenend-Spielstände folgen in getrennten Schritten.
 
@@ -10,14 +10,18 @@ Punkte und dauerhafte Wochenend-Spielstände folgen in getrennten Schritten.
 Unter `race.html` gibt es vor dem Start zusätzlich **Qualifying starten**.
 Der bisherige Direktstart bleibt verfügbar und beginnt weiterhin auf Platz 13.
 
-Alle 13 Fahrzeuge absolvieren mit der vorhandenen Physik und KI eine gemeinsame
-Auslaufrunde sowie zwei schnelle Runden. Die erste volle Runde zählt nicht zur
+Du fährst allein eine Auslaufrunde sowie zwei schnelle Runden. Die zwölf Gegner
+fahren gleichzeitig im Hintergrund mit der vorhandenen Physik und KI, jeder
+auf einer unabhängigen freien Strecke. Die erste volle Runde zählt nicht zur
 Bestzeit. Die schnellste der beiden folgenden Runden bestimmt den Startplatz;
 es zählen echte Sektor- und Ziellinienüberfahrten. Es gibt keine erzeugten
 KI-Zeitwerte und keinen zusätzlichen Leistungsfaktor. Im Qualifying sind
 Windschatten und Aufholhilfe für alle ausgeschaltet, um die Zeitwertung nicht
-mit diesen Rennhilfen zu vermischen. Fahrzeugkontakte und der langsamere
-dunkle Rand funktionieren wie bisher; Runden bleiben gemäß Sektorregeln gültig.
+mit diesen Rennhilfen zu vermischen. Es gibt keinen Fahrzeugverkehr und keine
+Fahrzeugkontakte im Qualifying, auch nicht zwischen Hintergrundgegnern. Seile,
+Kurven, Bremsen und der langsamere dunkle Rand funktionieren wie bisher;
+Runden bleiben gemäß Sektorregeln gültig. Die Bestzeiten aller 13 Teams bleiben
+in der Tabelle sichtbar. Pause und Neustart betreffen alle Fahrten gemeinsam.
 
 Der Tower zeigt die Bestzeiten, noch ohne Zeit erscheint ein Strich. Bei exakt
 gleicher Zeit zählt die ursprüngliche Aufstellungsreihenfolge; ohne Zeit folgt
@@ -39,7 +43,17 @@ Wochenende. Eine laufende Sitzung sperrt die bisherigen Auswahlfelder weiter.
 
 - `qualifying-session.js` verwendet eine echte Drei-Runden-`RaceSession` und
   sammelt ausschließlich deren zweite und dritte Runden. Es sortiert die Zeiten
-  und liefert kopierte Ergebnislisten.
+  und liefert kopierte Ergebnislisten. Der Modus `isolated` gibt jedem Fahrer
+  einen unabhängigen Streckenlauf mit gleichem Startpunkt auf der Mitte der
+  Fahrbahn. Die KI erhält nur ihr eigenes Fahrzeug als Verkehr; Fahrzeugkontakte,
+  Windschatten und Aufholhilfe werden für diesen Modus ausgeschlossen. Die
+  unveränderte Einzelwagenphysik prüft weiterhin Seile und Fahrbahnränder.
+- `visibleEntries` enthält im Qualifying ausschließlich den Spieler. Beide
+  Renderer verwenden diese Liste für die sichtbaren Fahrzeuge und blenden
+  gegebenenfalls schon zwischengespeicherte Gegner aus. `entries` enthält für
+  Zeitwertung und Hintergrunddaten weiterhin alle 13 tatsächlich simulierten
+  Fahrzeuge. Im Rennen gibt es diese Einschränkung nicht; alle 13 Autos werden
+  wieder dargestellt und beeinflussen einander mit den bisherigen Regeln.
 - `race-weekend.js` koordiniert Direktstart, Qualifying, Übernahme und Verwerfen.
   Es besitzt keine eigene Physik, Zeitmessung oder Fahrzeugbewegung.
 - `RaceSession` akzeptiert optional `gridOrder`: alle 13 gültigen Team-IDs genau
@@ -66,11 +80,20 @@ fehlende Zeiten, kopierte Ergebnisse und einen tatsächlichen vollständigen
 Qualifying-/Rennablauf. Bestehende Renn-/Windschatten-/Aufholhilfereplays bleiben
 erhalten. Referenzdateien werden nicht erneuert.
 
+Die Solo-Regressionsprüfung vergleicht identische Gegnerfahrten bei stehendem
+Spieler gegenüber Gas/Lenken/Seilkontakt und Rücksetzen. Gegnerposen und Zeiten
+müssen identisch bleiben; keine Fahrzeugkontaktauflösung darf aufgerufen werden
+und alle KI-Befehle erhalten nur ihr eigenes Auto. Seilkontakte bleiben aktiv.
+
 Browserprüfungen fahren nur über Tastatur: tatsächlicher 3D-Start, Pause im
 Countdown, Wechsel in die Draufsicht, volle Qualifying-Fahrten, Übernahme,
 Rennen mit 13 Zieleinläufen, Neustart und Verwerfen. Desktop und Mobil sowie
 die netzwerkfreie Renndatei werden geprüft. Der klassische Speicher bleibt
 unverändert. Die vollständigen Kalenderprüfungen laufen weiterhin in CI.
+Zusätzlich werden die tatsächlich sichtbaren 3D-Gegnermodelle gezählt (null),
+die tatsächlich gezeichneten 2D-Sprites (nur der Spieler) und nach Übernahme
+der Startliste wieder das vollständige sichtbare Feld. Eine echte 3D-Aufnahme
+steht unter [solo-qualifying/preview.png](solo-qualifying/preview.png).
 Die längeren Qualifying-/Rennfahrten laufen in zwei eigenen Browserjobs,
 damit die bisherigen Regressionen ihre bisherigen Zeitbudgets behalten.
 Volle neue Qualifying-Fahrten werden gezielt auf Bahrain geprüft; dies ist

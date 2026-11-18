@@ -182,7 +182,7 @@
         y: snapshot.visual.y,
         ang: snapshot.visual.heading,
       };
-      for (const entry of snapshot.entries || []) {
+      for (const entry of snapshot.visibleEntries || snapshot.entries || []) {
         if (entry.player) continue;
         if (surface.bridge?.covered(entry.visual)) continue;
         globalThis.CGPRaceSprites.draw(

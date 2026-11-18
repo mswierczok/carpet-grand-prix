@@ -71,7 +71,7 @@
           fleet = A.Fleet3D.create(vehicle, materials);
           scene.add(fleet.group);
         }
-        fleet.update(snapshot.entries);
+        fleet.update(snapshot.visibleEntries || snapshot.entries);
       }
       vehicle.update(snapshot.visual, teamId);
       const pose = cameraRig.update(snapshot.visual, surface, frameSeconds, {

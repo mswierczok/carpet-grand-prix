@@ -3,7 +3,7 @@
   const A = globalThis.CGPArcade, timedLaps = 2;
   function create(track, options = {}) {
     const session = A.RaceSession.create(track, { ...options, gridOrder: undefined,
-      laps: timedLaps + 1, slipstream: false, catchup: false });
+      laps: timedLaps + 1, isolated: true, slipstream: false, catchup: false });
     let records;
     function clear() {
       records = new Map(session.snapshot().entries.map((e, i) => [e.id,
@@ -29,7 +29,7 @@
         bestLap: record.laps.length ? Math.min(...record.laps) : null,
       })).sort((a, b) => (a.bestLap ?? Infinity) - (b.bestLap ?? Infinity) || a.seed - b.seed);
       standings.forEach((e, i) => { e.position = i + 1; });
-      return { ...s, qualifying: { timedLaps, standings,
+      return { ...s, visibleEntries: s.entries.filter((e) => e.player), qualifying: { timedLaps, standings,
         finished: s.race.phase === "finished", player: standings.find((e) => e.player) } };
     }
     function restart() { session.restart(); clear(); }
