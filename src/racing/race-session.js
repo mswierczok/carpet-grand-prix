@@ -8,8 +8,9 @@
       parameters = A.Physics.parameters,
       teams = options.teams || CGPArcadeData.roster.teams,
       laps = options.laps ?? A.RaceFormats.get(track.id).laps;
-    const slipstreamEnabled = options.slipstream !== false;
-    let catchupEnabled = options.catchup !== false, gapHistory;
+    const isolated = options.isolated === true,
+      slipstreamEnabled = !isolated && options.slipstream !== false;
+    let catchupEnabled = !isolated && options.catchup !== false, gapHistory;
     let difficulty = A.AIDifficulty.get(options.difficulty),
       controller = A.Opponents.create(surface, parameters, { difficulty: difficulty.id, diagnostics: !!options.diagnostics });
     if (!Number.isInteger(laps) || laps < 1)
@@ -55,8 +56,8 @@
       driverSeeds = new Map(defaultOrder.map((team, i) => [team.id, i]));
       const order = grid ? grid.map((id) => teams.find((t) => t.id === id)) : defaultOrder;
       entries = order.map((team, i) => {
-        const lane = i % 2 ? 6 : -6,
-          car = pose(-22 - Math.floor(i / 2) * 16 - (i % 2) * 3, lane);
+        const lane = isolated ? 0 : i % 2 ? 6 : -6,
+          car = pose(isolated ? -22 : -22 - Math.floor(i / 2) * 16 - (i % 2) * 3, lane);
         return {
           id: team.id,
           team,
@@ -97,7 +98,7 @@
       return true;
     }
     function selectCatchup(enabled) {
-      if (phase !== "grid" || typeof enabled !== "boolean") return false;
+      if (phase !== "grid" || typeof enabled !== "boolean" || (isolated && enabled)) return false;
       catchupEnabled = enabled;
       restart();
       return true;
@@ -127,7 +128,7 @@
         );
         entries.forEach((e, i) => {
           if (!e.player || e.finishTime !== null)
-            e.command = controller.input(traffic[i], traffic, e.driver);
+            e.command = controller.input(traffic[i], isolated ? [traffic[i]] : traffic, e.driver);
         });
       }
       // elapsed starts at green and advances only in live simulation steps.
@@ -149,7 +150,10 @@
             catchupEnabled ? { ...(wakes?.[i] || { strength: 0 }), catchup: e.catchup.pace } : wakes?.[i] || null,
           ),
         ),
-        resolved = A.VehicleContacts.resolve(
+        // Each isolated run has its own track: cars may occupy identical world
+        // coordinates but never share traffic or physical contacts. Rope/road
+        // collisions still belong to the unchanged per-car Physics.step.
+        resolved = isolated ? { cars: proposed, contacts: [] } : A.VehicleContacts.resolve(
           proposed,
           previous,
           surface,
@@ -215,11 +219,11 @@
               A.VehicleContacts.footprint(car, parameters),
               car.s,
             ) ||
-            entries.some(
+            (!isolated && entries.some(
               (other) =>
                 other !== entry &&
                 A.VehicleContacts.overlap(car, other.car, parameters),
-            )
+            ))
           )
             continue;
           entry.car = entry.previous = car;

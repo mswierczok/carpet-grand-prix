@@ -61,7 +61,10 @@ beschreibt [POV_CALENDAR.md](POV_CALENDAR.md).
 
 Das optionale POV-Qualifying hat eigene Modul-/Browserprüfungen für tatsächliche
 Bestzeiten aus zwei schnellen Runden, Startlistenübernahme, Direktstart-Replay,
-Neustart/Verwerfen und Offlinebetrieb. Details: [POV_QUALIFYING.md](POV_QUALIFYING.md).
+Neustart/Verwerfen und Offlinebetrieb. Das Solo-Qualifying prüft zusätzlich
+unveränderte Gegnerposen bei anderer Spielerfahrt, fehlende Fahrzeugkontakte,
+tatsächlich ausgeblendete 3D-Modelle und Spieler-Sprites in 2D. Im Rennen muss
+das volle Feld wieder sichtbar sein. Details: [POV_QUALIFYING.md](POV_QUALIFYING.md).
 
 `tests/helpers/game.js` führt das Originalscript in einer isolierten Node-VM aus.
 Nur die temporäre Testkopie gibt Interna frei; HTML wird nicht verändert. DOM-Neuzeichnung

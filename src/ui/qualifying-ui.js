@@ -22,12 +22,12 @@
       set("restart", q ? "Qualifying neu starten" : snapshot.qualifyingResult ? "Rennen neu starten" : "Neues Rennen");
       el("qualifyingResults").hidden = !result;
       set("weekendNote", q
-        ? "Eine Auslaufrunde, dann zwei schnelle Runden. Die beste Zeit bestimmt deinen Startplatz."
+        ? "Du fährst allein: eine Auslaufrunde, dann zwei schnelle Runden. Die Gegner fahren ihre Zeiten im Hintergrund."
         : snapshot.qualifyingResult
           ? "Qualifying übernommen · Startplatz " + result.find((e) => e.player).position + "."
           : "Fahre zuerst das Qualifying oder starte direkt von Platz 13 ins Rennen.");
       set("weekendFooter", q
-        ? "Alle Zeiten werden auf der Strecke gefahren. Im Qualifying sind Windschatten und Aufholhilfe aus. Nach zwei schnellen Runden übernimmt die KI, bis alle fertig sind."
+        ? "Freie Strecke für dich. Die Gegner fahren unabhängige Runden im Hintergrund; ihre Bestzeiten erscheinen in der Tabelle. Nach zwei schnellen Runden übernimmt die KI, bis alle fertig sind."
         : "Du startest auf Platz " + (snapshot.qualifyingResult?.find((e) => e.player).position || 13) +
           ". Nach deinem Ziel übernimmt die KI die Auslaufrunde, bis alle im Ziel sind. Dein klassischer Spielstand wird nicht verwendet oder verändert.");
       if (q) {
@@ -46,7 +46,7 @@
           : r.phase === "grid" ? "Bereit zum Qualifying"
             : snapshot.paused ? "Qualifying pausiert"
               : r.phase === "countdown" ? "Qualifying startet in " + r.countdown
-                : r.phase === "finishing" ? "Deine schnellen Runden sind beendet · Feld fährt zu Ende"
+                : r.phase === "finishing" ? "Deine schnellen Runden sind beendet · Gegner schließen ihre Fahrten ab"
                   : running && completed === 0 ? "Auslaufrunde · Reifen und Strecke kennenlernen"
                     : "Schnelle Runde " + Math.min(q.timedLaps, completed) + " / " + q.timedLaps);
         for (const e of q.standings) {

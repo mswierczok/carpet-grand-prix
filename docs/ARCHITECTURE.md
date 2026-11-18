@@ -155,6 +155,10 @@ optionale Qualifikation und übergibt die geprüfte `gridOrder` an das Rennen.
 `qualifying-ui.js` stellt Bestzeiten und Übernahme der Startaufstellung dar.
 Direktstart, Kräfte und klassische Spielstände bleiben erhalten. Regeln,
 Zurücksetzen und Prüfungen: [POV_QUALIFYING.md](POV_QUALIFYING.md).
+Im Solo-Qualifying laufen alle 13 Fahrzeuge im festen Takt unabhängig voneinander:
+kein geteilter Verkehr oder Fahrzeugkontakt, aber dieselbe Einzelwagenphysik.
+`visibleEntries` begrenzt ausschließlich die Fahrzeugdarstellung auf den Spieler;
+Zeitwertung und Bestzeitentabelle enthalten weiterhin die realen Hintergrundfahrten.
 
 `race-gaps.js` hält eine begrenzte Passagehistorie für laufende Zeitabstände.
 `catchup.js` berechnet daraus das kleine KI-Motorbudget und übergibt es an den

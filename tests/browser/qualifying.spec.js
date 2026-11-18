@@ -27,17 +27,44 @@ for (const offline of [false, true]) test(`Qualifying: echte Bestzeiten und Star
   await page.addInitScript(() => {
     // Capture both renderers so the test driver keeps receiving live poses
     // after a real 3D-to-2D switch.
-    if (!Object.getOwnPropertyDescriptor(CGPArcade, "Renderer")) {
+    {
       let renderer;
       Object.defineProperty(CGPArcade, "Renderer", { configurable: true,
         get: () => renderer, set(value) { renderer = { ...value, create(...args) {
           const real = value.create(...args);
           return { ...real, draw(snapshot, ...rest) {
             globalThis.__driveSnapshot = snapshot;
-            return real.draw(snapshot, ...rest);
+            globalThis.__spriteFrame = [];
+            const result = real.draw(snapshot, ...rest), ids = __spriteFrame,
+              stats = (globalThis.__soloSprites ||= { qFrames: 0, qMax: 0, qWrongTeam: 0, raceMax: 0 });
+            if (snapshot.qualifying) {
+              stats.qFrames++;
+              stats.qMax = Math.max(stats.qMax, ids.length);
+              stats.qWrongTeam += ids.filter((id) => id !== snapshot.race.playerTeam).length;
+            } else stats.raceMax = Math.max(stats.raceMax, ids.length);
+            globalThis.__spriteFrame = null;
+            return result;
           } };
         } }; } });
     }
+    let sprites, fleet;
+    Object.defineProperty(globalThis, "CGPRaceSprites", { configurable: true,
+      get: () => sprites, set(value) { sprites = { ...value, draw(ctx, pose, id, ...rest) {
+        globalThis.__spriteFrame?.push(id);
+        return value.draw(ctx, pose, id, ...rest);
+      } }; } });
+    Object.defineProperty(CGPArcade, "Fleet3D", { configurable: true,
+      get: () => fleet, set(value) { fleet = { ...value, create(...args) {
+        const real = value.create(...args);
+        return { ...real, update(entries) {
+          real.update(entries);
+          if (globalThis.__driveSnapshot?.qualifying) {
+            const stats = (globalThis.__soloFleet ||= { frames: 0, maxOpponents: 0 });
+            stats.frames++;
+            stats.maxOpponents = Math.max(stats.maxOpponents, real.group.children.filter((node) => node.visible).length);
+          }
+        } };
+      } }; } });
     // Public race-length option only; qualifying still drives its real outlap
     // and two timed laps. No changed poses, sector state or generated times.
     let module;
@@ -64,21 +91,33 @@ for (const offline of [false, true]) test(`Qualifying: echte Bestzeiten und Star
     await page.clock.runFor(3000);
     expect(await page.evaluate(() => __driveSnapshot.qualifying)).toBeTruthy();
     expect(await page.evaluate(() => __driveSnapshot.race.elapsed)).toBeGreaterThan(0);
+    const fleet = await page.evaluate(() => __soloFleet);
+    expect(fleet.frames).toBeGreaterThan(0);
+    expect(fleet.maxOpponents).toBe(0);
+    await page.locator("#arcadeCanvas").screenshot({ path: test.info().outputPath("solo-qualifying.png") });
     await page.locator("#fallback").click();
     await page.locator("#pause").click();
   }
   await finishSession(page);
   const q = await page.evaluate(() => __driveSnapshot);
   expect(q.qualifying.finished).toBe(true);
+  expect(q.visibleEntries.map((e) => e.id)).toEqual([q.race.playerTeam]);
+  expect(q.contacts).toBe(0);
   expect(q.entries.every((e) => e.timing.completed === 3 && !e.slipstream && !e.catchup)).toBe(true);
   expect(q.qualifying.standings.every((e) => e.laps.length === 2 && e.bestLap === Math.min(...e.laps))).toBe(true);
   await expect(page.locator("#qualifyingResults")).toBeVisible();
   await expect(page.locator("#qualifyingRows tr")).toHaveCount(13);
   await expect(page.locator("#acceptQualifying")).toBeVisible();
+  const sprites = await page.evaluate(() => __soloSprites);
+  expect(sprites.qFrames).toBeGreaterThan(0);
+  expect(sprites.qMax).toBe(1);
+  expect(sprites.qWrongTeam).toBe(0);
   await page.locator("#acceptQualifying").click();
   await page.clock.runFor(32);
   const grid = await page.evaluate(() => __driveSnapshot);
   expect(grid.race.phase).toBe("grid");
+  expect(grid.visibleEntries).toBeUndefined();
+  expect(await page.evaluate(() => __soloSprites.raceMax)).toBe(13);
   expect(grid.entries.map((e) => e.id)).toEqual(q.qualifying.standings.map((e) => e.id));
   expect(grid.race.position).toBe(q.qualifying.player.position);
   expect(grid.entries.every((e) => e.car.speed === 0 && e.timing.completed === 0)).toBe(true);
