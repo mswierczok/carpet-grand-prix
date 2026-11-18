@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="theme-color" content="#192b33" />
     <title>Carpet Grand Prix · Bahrain-Rennen</title>
-    <link rel="stylesheet" href="./styles/arcade.css?v=pov-tracks-1" />
-    <link rel="stylesheet" href="./styles/arcade-race.css?v=qualifying-1" />
+    <link rel="stylesheet" href="./styles/arcade.css?v=mobile-settings-1" />
+    <link rel="stylesheet" href="./styles/arcade-race.css?v=mobile-settings-1" />
   </head>
   <body>
     <main id="arcadeApp" data-renderer="3d" data-mode="race">
@@ -29,14 +29,43 @@
         alt=""
         hidden
       />
-      <div class="graphics-options">
-        <p id="renderNote" role="status">3D-Verfolgungskamera · Bahrain</p>
-        <label for="quality">Grafik</label
-        ><select id="quality">
-          <option value="auto">Automatisch</option>
-          <option value="low">Sparsam</option></select
-        ><button id="fallback" type="button">Zur Draufsicht</button>
+      <div class="race-toolbar" aria-label="Schnellzugriff">
+        <button id="recover" type="button">Auto zurücksetzen <kbd>R</kbd></button>
+        <button id="openSettings" type="button" aria-haspopup="dialog" aria-controls="raceSettings">Einstellungen</button>
       </div>
+      <dialog id="raceSettings" aria-labelledby="settingsTitle" aria-describedby="settingsHelp">
+        <div class="settings-heading">
+          <h2 id="settingsTitle">Einstellungen</h2>
+          <button id="closeSettings" type="button" autofocus>Schließen</button>
+        </div>
+        <p id="settingsHelp" class="hint">Die Fahrt pausiert beim Öffnen. Danach mit „Fortsetzen“ weiterfahren.</p>
+        <div class="settings-field">
+          <label for="quality">Grafik</label>
+          <select id="quality">
+            <option value="auto">Automatisch</option>
+            <option value="low">Sparsam</option>
+          </select>
+          <button id="fallback" type="button">Zur Draufsicht</button>
+          <p id="renderNote" class="hint" role="status">3D-Verfolgungskamera · Bahrain</p>
+        </div>
+        <div class="settings-field">
+          <label for="difficulty">Schwierigkeit</label>
+          <select id="difficulty" aria-describedby="difficultyNote">
+            <option value="beginner">Anfänger</option>
+            <option value="normal" selected>Normal</option>
+            <option value="hard">Schwer</option>
+            <option value="expert">Experte</option>
+          </select>
+          <p class="hint" id="difficultyNote">Vor dem Start wählen. Für POV-Rennen gespeichert.</p>
+          <label for="catchup">KI-Aufholhilfe</label>
+          <select id="catchup" aria-describedby="catchupNote">
+            <option value="on">Dezent</option>
+            <option value="off">Aus</option>
+          </select>
+          <p class="hint" id="catchupNote">Kleine Hilfe für zurückliegende Gegner. Gilt für diese Fahrt.</p>
+        </div>
+        <p class="hint">Schwierigkeit und KI-Aufholhilfe kannst du vor dem Start ändern.</p>
+      </dialog>
       <section class="dashboard" aria-label="Fahrzeug und Rundenzeiten">
         <div class="metric">
           <span>Tempo</span
@@ -185,26 +214,8 @@
             Fahrphysik.
           </p>
         </div>
-        <div class="difficulty-choice">
-          <label for="difficulty">Schwierigkeit</label>
-          <select id="difficulty" aria-describedby="difficultyNote">
-            <option value="beginner">Anfänger</option>
-            <option value="normal" selected>Normal</option>
-            <option value="hard">Schwer</option>
-            <option value="expert">Experte</option>
-          </select>
-          <p class="hint" id="difficultyNote">Vor dem Start wählen. Für POV-Rennen gespeichert.</p>
-          <label for="catchup">KI-Aufholhilfe</label>
-          <select id="catchup" aria-describedby="catchupNote">
-            <option value="on">Dezent</option>
-            <option value="off">Aus</option>
-          </select>
-          <p class="hint" id="catchupNote">Kleine Hilfe für zurückliegende Gegner. Gilt für diese Fahrt.</p>
-        </div>
         <div class="recovery">
-          <button id="recover" type="button">
-            Auto zurücksetzen <kbd>R</kbd></button
-          ><button id="restart" type="button">Neues Rennen</button>
+          <button id="restart" type="button">Neues Rennen</button>
         </div>
       </section>
       <p class="instructions">
@@ -254,7 +265,7 @@
     <script src="./src/racing/race-weekend.js?v=qualifying-1"></script>
     <script src="./src/ui/arcade-race-ui.js?v=qualifying-1"></script>
     <script src="./src/ui/qualifying-ui.js?v=solo-qualifying-1"></script>
-    <script src="./src/racing/controls.js"></script>
+    <script src="./src/racing/controls.js?v=mobile-settings-1"></script>
     <script src="./src/rendering/wake-visuals.js?v=close-slipstream-5"></script>
     <script src="./src/rendering/arcade2d.js?v=solo-qualifying-1"></script>
     <script src="./src/vendor/three.js?v=full-grid-race-1"></script>
@@ -266,6 +277,7 @@
     <script src="./src/rendering/wake3d.js?v=slipstream-1"></script>
     <script src="./src/rendering/arcade3d.js?v=solo-qualifying-1"></script>
     <script src="./src/racing/track-catalog.js?v=pov-calendar-1"></script>
-    <script src="./src/arcade-main.js?v=qualifying-1"></script>
+    <script src="./src/ui/race-settings.js?v=mobile-settings-1"></script>
+    <script src="./src/arcade-main.js?v=mobile-settings-1"></script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { capture2D, capture3D } from "../helpers/arcade-browser.js";
+import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
 
 test("Rennlänge: zeigt alle 22 echten Standardformate auch offline und erhält Team, Grafik und Spielstand", async ({ page, context }) => {
@@ -9,7 +9,7 @@ test("Rennlänge: zeigt alle 22 echten Standardformate auch offline und erhält 
   await page.clock.runFor(64);
   await page.evaluate(() => localStorage.setItem("carpet_gp_v072", "duration-sentinel"));
   await page.locator("#team").selectOption("t05");
-  await page.locator("#quality").selectOption("low");
+  await selectDriveSetting(page, "quality", "low");
   await context.setOffline(true);
   const formats = await page.evaluate(() => CGPArcade.RaceFormats.settings.tracks);
   for (const [id, format] of Object.entries(formats)) {
@@ -46,7 +46,7 @@ for (const id of ["bahrain", "france", "russia"])
     if (id === "bahrain") {
       expect(laps).toBe(8);
       await expect(page.locator("#arcadeApp")).toHaveAttribute("data-rendering", "3d");
-      await page.locator("#quality").selectOption("low");
+      await selectDriveSetting(page, "quality", "low");
     }
     await page.locator("#pause").click();
     await page.evaluate(pilotRace);

@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { capture2D, capture3D } from "../helpers/arcade-browser.js";
+import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
 
 async function observeSupport(page) {
@@ -42,16 +42,16 @@ test("Aufholhilfe: Auswahl gilt über Track/Neustart, bleibt ab Countdown gesper
   test.setTimeout(180000);
   await capture3D(page, { renderEvery: 8 }); await observeSupport(page);
   await page.goto("race.html?balance=1"); await page.clock.runFor(32);
-  await page.locator("#difficulty").selectOption("hard");
+  await selectDriveSetting(page, "difficulty", "hard");
   const saved = await page.evaluate(() => ({ ...localStorage }));
   await page.locator("#team").selectOption("t05");
-  await page.locator("#catchup").selectOption("off"); await page.clock.runFor(32);
+  await selectDriveSetting(page, "catchup", "off"); await page.clock.runFor(32);
   expect(await page.evaluate(() => __driveSnapshot.entries.every((e) => !Object.hasOwn(e, "catchup")))).toBe(true);
   await page.locator("#track").selectOption("france"); await page.clock.runFor(32);
   await expect(page.locator("#catchup")).toHaveValue("off");
   await expect(page.locator("#team")).toHaveValue("t05");
   await expect(page.locator("#difficulty")).toHaveValue("hard");
-  await page.locator("#catchup").selectOption("on");
+  await selectDriveSetting(page, "catchup", "on");
   await page.locator("#pause").click(); await page.clock.runFor(1000);
   await expect(page.locator("#catchup")).toBeDisabled();
   await page.locator("#restart").click(); await page.clock.runFor(32);
@@ -72,7 +72,7 @@ for (const [url, enabled, threeD] of [["race.html?balance=1", true, true],
     else { await capture2D(page); await fallback(page); }
     await observeSupport(page);
     await page.goto(url); await page.clock.runFor(32);
-    if (threeD) await page.locator("#quality").selectOption("low");
+    if (threeD) await selectDriveSetting(page, "quality", "low");
     if (url.startsWith("__arcade")) await context.setOffline(true);
     const saved = await page.evaluate(() => ({ ...localStorage }));
     await page.locator("#balancePanel summary").click();

@@ -126,7 +126,7 @@ it("öffnet alle französischen Kurven deutlicher als die luxemburgischen und ve
   }
 });
 
-it("erhält Bahrain und Kanada samt Seilen sowie gemeinsame Physik, Steuerung und Sektorregel bytegenau", () => {
+it("erhält Bahrain und Kanada samt Seilen sowie gemeinsame Physik und Sektorregel bytegenau", () => {
   const { data } = loadArcade(),
     scope = {};
   for (const file of ["arcade-tracks", "arcade-boundaries", "arcade-roster"])
@@ -142,7 +142,6 @@ it("erhält Bahrain und Kanada samt Seilen sowie gemeinsame Physik, Steuerung un
   expect(plain(data.roster)).toEqual(plain(scope.CGPArcadeData.roster));
   for (const path of [
     "src/racing/physics.js",
-    "src/racing/controls.js",
     "src/racing/timing.js",
   ])
     expect(readFileSync(new URL(path, ROOT), "utf8")).toBe(published(path));

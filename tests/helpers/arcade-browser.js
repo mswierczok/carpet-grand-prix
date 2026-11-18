@@ -233,3 +233,17 @@ export function keyboardPilot({ laps = 1, tryShortcut = false } = {}) {
   }
   requestAnimationFrame(tick);
 }
+
+// Follow the actual menu flow in race.html; free driving keeps its inline options.
+export async function selectDriveSetting(page, id, value) {
+  const menu = page.locator("#openSettings");
+  if (await menu.count()) await menu.click();
+  await page.locator("#" + id).selectOption(value);
+  if (await menu.count()) await page.locator("#closeSettings").click();
+}
+export async function switchToTopDown(page) {
+  const menu = page.locator("#openSettings");
+  if (await menu.count()) await menu.click();
+  await page.locator("#fallback").click();
+  if (await menu.count()) await page.locator("#closeSettings").click();
+}

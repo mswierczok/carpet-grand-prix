@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { capture2D, capture3D } from "../helpers/arcade-browser.js";
+import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace, threeLapRegression } from "../helpers/arcade-race-browser.js";
 
 async function noWebGL(page) {
@@ -22,7 +22,7 @@ test("wechselt alle vier echten 3D-Strecken, erhält das Team und gibt alte WebG
   await page.goto("race.html?track=luxembourg");
   await page.clock.runFor(64);
   await expect(page.locator("#track option")).toHaveCount(22);
-  await page.locator("#quality").selectOption("low");
+  await selectDriveSetting(page, "quality", "low");
   await page.locator("#team").selectOption("t05");
   for (const id of ["canada", "france", "bahrain", "luxembourg"]) {
     await page.evaluate(
@@ -129,7 +129,7 @@ test("wechselt im freien POV-Fahren sicher die Strecke und löst gehaltene Einga
   await capture3D(page);
   await page.goto("arcade3d.html?track=canada");
   await page.clock.runFor(32);
-  await page.locator("#quality").selectOption("low");
+  await selectDriveSetting(page, "quality", "low");
   await page.locator("#team").selectOption("t10");
   await page.locator("#pause").click();
   await page.keyboard.down("w");
@@ -192,7 +192,7 @@ test("enthält alle vier POV-Strecken samt Auswahl und Seilen in der netzwerkfre
   page.on("request", (r) => {
     if (r.url().startsWith("http")) requests.push(r.url());
   });
-  await page.locator("#quality").selectOption("low");
+  await selectDriveSetting(page, "quality", "low");
   for (const id of ["luxembourg", "canada", "bahrain", "france"]) {
     await page.locator("#track").selectOption(id);
     await page.clock.runFor(64);

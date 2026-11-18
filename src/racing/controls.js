@@ -17,19 +17,24 @@
     };
     const editable = (target) =>
       target?.closest?.('input,textarea,select,[contenteditable="true"]');
-    function listen(target, type, handler) {
-      target.addEventListener(type, handler);
-      listeners.push(() => target.removeEventListener(type, handler));
+    const blocked = () => !!root.querySelector("dialog[open]");
+    function listen(target, type, handler, options) {
+      target.addEventListener(type, handler, options);
+      listeners.push(() => target.removeEventListener(type, handler, options));
     }
     function clear() {
       held.clear();
+      const captures = [...pointers];
       pointers.clear();
+      for (const [id, button] of captures)
+        if (button.hasPointerCapture(id)) button.releasePointerCapture(id);
       root
         .querySelectorAll("[data-drive]")
         .forEach((button) => button.classList.remove("is-held"));
     }
     listen(window, "keydown", (event) => {
       if (
+        blocked() ||
         editable(event.target) ||
         event.altKey ||
         event.ctrlKey ||
@@ -56,31 +61,50 @@
     });
     root.querySelectorAll("[data-drive]").forEach((button) => {
       listen(button, "pointerdown", (event) => {
+        if (
+          blocked() || button.disabled ||
+          (event.pointerType === "mouse" && event.button !== 0)
+        ) return;
         event.preventDefault();
-        button.setPointerCapture(event.pointerId);
-        pointers.set(event.pointerId, button.dataset.drive);
+        pointers.set(event.pointerId, button);
+        try {
+          button.setPointerCapture(event.pointerId);
+        } catch {
+          // Global release handlers still release input if capture is unavailable.
+        }
         button.classList.add("is-held");
       });
-      const release = (event) => {
-        pointers.delete(event.pointerId);
-        button.classList.remove("is-held");
-      };
-      listen(button, "pointerup", release);
-      listen(button, "pointercancel", release);
       listen(button, "lostpointercapture", release);
     });
+    function release(event) {
+      const button = pointers.get(event.pointerId);
+      pointers.delete(event.pointerId);
+      if (button && ![...pointers.values()].includes(button))
+        button.classList.remove("is-held");
+    }
+    listen(window, "pointerup", release);
+    listen(window, "pointercancel", release);
+    for (const area of root.querySelectorAll(".drive-view, .race-toolbar")) {
+      for (const type of ["contextmenu", "selectstart", "dragstart"])
+        listen(area, type, (event) => event.preventDefault());
+    }
+    for (const area of root.querySelectorAll(".drive-view")) {
+      for (const type of ["touchstart", "touchmove"])
+        listen(area, type, (event) => event.preventDefault(), { passive: false });
+    }
     const blur = () => {
       clear();
       onBlur();
     };
     listen(window, "blur", blur);
+    listen(window, "pagehide", blur);
     listen(document, "visibilitychange", () => {
       if (document.hidden) blur();
     });
     const active = (key) =>
       Object.entries(keys).some(
         ([code, action]) => action === key && held.has(code),
-      ) || [...pointers.values()].includes(key);
+      ) || [...pointers.values()].some((button) => button.dataset.drive === key);
     return Object.freeze({
       read: () => ({
         throttle: Number(active("throttle")),

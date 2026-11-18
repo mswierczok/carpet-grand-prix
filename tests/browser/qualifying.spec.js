@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { capture2D, capture3D } from "../helpers/arcade-browser.js";
+import { selectDriveSetting, switchToTopDown, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
 
 async function finishSession(page) {
@@ -78,7 +78,7 @@ for (const offline of [false, true]) test(`Qualifying: echte Bestzeiten und Star
   if (offline) {
     await context.setOffline(true);
     page.on("request", (r) => { if (r.url().startsWith("http")) requests.push(r.url()); });
-  } else await page.locator("#quality").selectOption("low");
+  } else await selectDriveSetting(page, "quality", "low");
   const storage = await page.evaluate(() => ({ ...localStorage }));
   await page.locator("#startQualifying").click();
   await page.clock.runFor(1100);
@@ -95,7 +95,7 @@ for (const offline of [false, true]) test(`Qualifying: echte Bestzeiten und Star
     expect(fleet.frames).toBeGreaterThan(0);
     expect(fleet.maxOpponents).toBe(0);
     await page.locator("#arcadeCanvas").screenshot({ path: test.info().outputPath("solo-qualifying.png") });
-    await page.locator("#fallback").click();
+    await switchToTopDown(page);
     await page.locator("#pause").click();
   }
   await finishSession(page);
