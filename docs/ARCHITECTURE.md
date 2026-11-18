@@ -141,6 +141,9 @@ dar. Die freien Fahrtests und das klassische Spiel bleiben getrennt.
 Parameter, Topologieschutz, A/B-Abschaltung und Prüfungen: [SLIPSTREAM.md](SLIPSTREAM.md).
 Die aktuelle nähere +5-km/h-Abstimmung dokumentiert
 [SLIPSTREAM_CLOSE.md](SLIPSTREAM_CLOSE.md).
+Die anschließende Korrektur der seitlichen Gewichtung und des zu langsamen
+Aufbaus mit echten Vorher-/Nachher-Fahrten steht in
+[slipstream-full/README.md](slipstream-full/README.md).
 
 `race-gaps.js` hält eine begrenzte Passagehistorie für laufende Zeitabstände.
 `catchup.js` berechnet daraus das kleine KI-Motorbudget und übergibt es an den

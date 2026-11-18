@@ -5,6 +5,12 @@ Freigegebene Anschlussabstimmung auf Basis des veröffentlichten `main`
 Der Nutzer wünscht die volle Wirkung im sichtbaren Nahbereich und keinen
 Windschatten mehr ab sechs Fahrzeuglängen.
 
+Aktualisierung nach dem Fahrfeedback zu PR #31: Der ganze seitliche
+Eintrittskorridor erhält jetzt die volle Wirkung; die bisherige zusätzliche
+Abschwächung zur Seite entfällt. Der Aufbau wird von 0,65 auf 0,15 Sekunden
+Zeitkonstante verkürzt. Reproduktion und Messergebnisse:
+[slipstream-full/README.md](slipstream-full/README.md).
+
 | Abstand zwischen den Fahrzeugmitten | Neue Wirkung |
 | --- | --- |
 | Unter einer Fahrzeuglänge | Kein Windschatten; kein Kontakt-/Überlappungsbonus |
@@ -20,16 +26,17 @@ Gleitkomma-Rundung im Nanometerbereich.
 Mindestgeschwindigkeit, seitlicher Korridor, Fahrtrichtung, Brücken-/Nachbararm-
 prüfung, Kontakt- und Zieleinlaufregeln bleiben erhalten: beide Autos mindestens
 80 km/h, volle Geschwindigkeitsgewichtung ab 90 km/h, passende Ausrichtung und
-keine Kontakte. Der Effekt baut sich mit der vorhandenen Zeitkonstante von
-0,65 Sekunden auf. Seitliches Ausscheren blendet innerhalb der erlaubten
+keine Kontakte. Innerhalb von weniger als vier Welteinheiten seitlichem
+Versatz gilt die volle seitliche Gewichtung. Der Effekt baut sich mit einer
+Zeitkonstante von 0,15 Sekunden auf. Seitliches Ausscheren blendet innerhalb der erlaubten
 Entfernung weiter sanft aus. Bei sechs Längen wird der aktive Zustand sofort
 null; er lebt nicht mehr wie zuvor bis neun Längen weiter.
 
 Auf freier Gerade und bei gehaltenem Gas ergibt voller Windschatten höchstens
 **123,8 statt 118,8 km/h**. Es bleibt ein physischer Vorteil aus reduziertem
 Luftwiderstand und dem vorhandenen Motorbegrenzer, keine unmittelbare Zuweisung
-eines Zieltempos. In Kurven, beim Bremsen oder in seitlich versetzter Position
-ist der Geschwindigkeitsgewinn entsprechend kleiner. Bereits vorhandenes
+eines Zieltempos. In Kurven, beim Bremsen oder außerhalb des seitlichen
+Eintrittskorridors ist der Geschwindigkeitsgewinn entsprechend kleiner. Bereits vorhandenes
 Zusatztempo klingt nach Verlassen des Bereichs durch normale Kräfte ab;
 die Geschwindigkeit springt nicht schlagartig zurück. Dabei sind die
 Widerstandsreduktion und die sichtbaren Wirbel schon ausgeschaltet.
@@ -72,6 +79,10 @@ Kontaktbereich mehr als 4,9 km/h Vorteil. Weitere Kraftprüfungen sichern
 den oberen Wert und den sanften Geschwindigkeitsabbau, auch gemeinsam mit
 maximaler Aufholhilfe. Die Brücken-/Nachbararmprüfungen aller 22 Strecken
 und die bisherigen abgeschalteten Replays bleiben erhalten.
+Zusätzliche dynamische Versuche beginnen ohne aktiven Effekt bei drei Längen
+Abstand, jeweils mit neun Versätzen zwischen −3,9 und +3,9 Welteinheiten.
+Sie erreichen mehr als 4,9 km/h nach 1,5 Sekunden und mehr als 4,98 km/h
+nach zwei Sekunden, ohne Kontaktbereich oder Geschwindigkeitszuweisung.
 
 Die Browserprüfung beobachtet die tatsächlich gezeichneten Quellen und prüft
 zusätzlich, dass kein aktiver Zustand außerhalb von einer bis unter sechs
@@ -79,7 +90,8 @@ Längen auftaucht. Pause, Neustart, Offlinefahrt und Aufholhilfe werden weiterhi
 im echten Browser geprüft. Funktionstests mit beschleunigter Browseruhr sind
 keine Geräte-FPS-Abnahme.
 
-Neue A/B-Fahrten für Bahrain, Frankreich und Russland stehen in
+Die aktuelle Korrektur dokumentiert [slipstream-full/README.md](slipstream-full/README.md).
+Die vorherige, noch seitlich abgeschwächte Abstimmung steht unverändert in
 [slipstream-close/README.md](slipstream-close/README.md). Die ursprünglichen
 3-km/h-Messprotokolle in `slipstream/` und `catchup/` bleiben als historische
 Referenzen mit ihren ursprünglichen Quellprüfsummen erhalten.

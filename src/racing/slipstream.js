@@ -6,7 +6,7 @@
       minKmh: 80, fullKmh: 90, minLengths: 1, fullLengths: 1,
       fadeLengths: 3, maxLengths: 6, releaseLengths: 6,
       lateralWidths: 0.8, releaseWidths: 1.2,
-      riseSeconds: 0.65, fallSeconds: 0.45,
+      riseSeconds: 0.15, fallSeconds: 0.45,
       maxGainKmh: 5, governorResponse: 3,
     });
   const clamp = (v) => Math.max(0, Math.min(1, v));
@@ -55,9 +55,12 @@
           ((a.elevation || 0) + ((b.elevation || 0) - (a.elevation || 0)) * f)) > 1))
         return null;
     }
+    // The whole eligible wake corridor has full lateral support. Multiplying
+    // by a centre-line falloff used to halve the actual gain at just 2 units
+    // of offset, although the follower was still clearly inside the wake.
+    // Leaving that corridor still uses the bounded, time-smoothed release.
     const strength = smooth((kmh - settings.minKmh) / (settings.fullKmh - settings.minKmh)) *
-      (1 - smooth((lengths - settings.fadeLengths) / (settings.maxLengths - settings.fadeLengths))) *
-      (1 - smooth(Math.abs(lateral) / (2 * p.halfWidth * settings.lateralWidths)));
+      (1 - smooth((lengths - settings.fadeLengths) / (settings.maxLengths - settings.fadeLengths)));
     return { strength, sourceId: leader.id, distanceLengths: lengths, lateral };
   }
   function update(entries, surface, p, dt) {

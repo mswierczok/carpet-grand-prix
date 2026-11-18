@@ -1,5 +1,9 @@
 # Naher Windschatten: neue A/B-Fahrten
 
+Historische Messung von PR #31 mit seitlicher Abschwächung und 0,65 Sekunden
+Aufbauzeitkonstante. Die anschließende Fehlerkorrektur und ihre getrennten
+Protokolle stehen in [../slipstream-full/README.md](../slipstream-full/README.md).
+
 Ausgangsstand `f40de2d3f45fc6697dac04f2e4a3a73e0148e3b9` (PR #30), ergänzt
 um die Arbeitsquellen mit den 19 SHA-256-Prüfsummen in [field-ab.json](field-ab.json).
 Messzeit: 2026-11-17T16:14:34.864Z. Die Prüfsummen wurden vor/nach den Fahrten geprüft.
