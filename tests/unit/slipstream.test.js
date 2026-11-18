@@ -20,6 +20,71 @@ export function entry(api, id, x, y = 0, speed = 110) {
   return { id, car, visual: car, finishTime: null, slipstream: api.Slipstream.empty() };
 }
 
+it("schaltet erst ab 100 km/h bei beiden Autos ein und beendet darunter auch einen bestehenden Effekt", () => {
+  const { api } = loadArcade({ race: true }), s = straight(), p = api.Physics.parameters,
+    kmh = p.metersPerUnit * 3.6, make = (id, x, speed) => entry(api, id, x, 0, speed / kmh);
+  for (const speed of [0, 80, 90, 99, 99.999]) for (const slowLeader of [false, true]) {
+    const a = make("a", 0, slowLeader ? 118.8 : speed),
+      b = make("b", 25, slowLeader ? speed : 118.8);
+    a.slipstream = { strength: 1, sourceId: "b" };
+    expect(api.Slipstream.pair(a, b, s, p)).toBeNull();
+    expect(api.Slipstream.pair(a, b, s, p, true)).toBeNull();
+    expect(api.Slipstream.update([a, b], s, p, 1 / 120)[0]).toEqual(api.Slipstream.empty());
+  }
+  for (const speed of [100, 100.001, 105, 118.8]) {
+    const a = make("a", 0, speed), b = make("b", 25, speed),
+      effect = api.Slipstream.pair(a, b, s, p);
+    expect(effect.strength).toBe(1);
+    expect(Number.isFinite(effect.strength)).toBe(true);
+  }
+});
+
+it("sperrt Windschatten sieben Rennsekunden ab Grün und zählt Countdown/Pausen nicht mit, auch nach Neustart", () => {
+  const { api } = loadArcade({ race: true }), real = api.Slipstream, calls = [];
+  let race;
+  // Read-only observation in the isolated test VM; no production hooks.
+  api.Slipstream = { ...real, update(...args) {
+    calls.push(race.snapshot().race.elapsed);
+    return real.update(...args);
+  } };
+  race = api.RaceSession.create(api.TrackCatalog.get("bahrain"), { catchup: false, laps: 1 });
+  const advance = (ticks) => { for (let i = 0; i < ticks; i++)
+    race.advance({ throttle: 1, brake: 0, steer: 0 }, 1 / 120); };
+  const off = () => expect(race.snapshot().entries.every((e) =>
+    e.slipstream.strength === 0 && e.slipstream.dragReduction === 0 && e.slipstream.sourceId === null)).toBe(true);
+  race.pause(false);
+  advance(360); // Three-second countdown.
+  expect(race.snapshot().race.elapsed).toBe(0);
+  advance(360);
+  off();
+  const paused = plain(race.snapshot());
+  race.pause(true);
+  advance(600);
+  expect(race.snapshot().race.elapsed).toBe(paused.race.elapsed);
+  off();
+  race.pause(false);
+  advance(480); // Seven actual racing seconds, independent of pause/countdown.
+  expect(race.snapshot().race.elapsed).toBeCloseTo(7, 10);
+  expect(calls).toHaveLength(0);
+  off();
+  advance(1);
+  expect(calls).toHaveLength(1);
+  expect(calls[0]).toBeCloseTo(7, 10);
+  advance(60);
+  expect(calls.every((time) => time >= 7 - 1e-9)).toBe(true);
+  race.restart();
+  expect(race.snapshot().race.elapsed).toBe(0);
+  off();
+  calls.length = 0;
+  race.pause(false);
+  advance(360 + 839);
+  off();
+  expect(calls).toHaveLength(0);
+  advance(2);
+  expect(calls).toHaveLength(1);
+  expect(calls[0]).toBeCloseTo(7, 10);
+});
+
 it("begrenzt Abstand, Tempo, Ausrichtung, Rand und Kontakte mit sanftem Aufbau/Ausscheren", () => {
   const { api } = loadArcade({ race: true }), s = straight(), p = api.Physics.parameters,
     a = entry(api, "a", 0), b = entry(api, "b", 25), pair = (aa = a, bb = b) => api.Slipstream.pair(aa, bb, s, p);

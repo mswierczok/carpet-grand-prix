@@ -14,8 +14,8 @@ Node.js 24 LTS verwenden. `npm ci`, anschließend einmalig
 | `npm run measure:ai-balance` | Vier Fahrkompetenzstufen, eingefrorene KI/Tastaturreferenz und räumliche Kurven-Telemetrie auf fünf unterschiedlichen Strecken |
 | `npm run measure:ai-balance -- --catalog` | Neue Normal-/Schwer-/Experten-KI auf allen 22 Strecken mit identischer Fahrzeugphysik |
 | `npm run measure:slipstream` | Windschatten an/aus im tatsächlichen 13er-Feld auf sechs unterschiedlichen Strecken, mit Quellprüfsummen |
-| `npm run measure:slipstream -- bahrain france russia --output=docs/slipstream-full/field-ab.json` | Aktuelle Korrektur des seitlichen 5-km/h-Korridors getrennt von historischen Protokollen vermessen |
-| `node scripts/measure-close-wake.js` | Gemeldete 2–3 km/h mit veröffentlichtem Windmodul und Korrektur bei seitlichem Versatz vergleichen |
+| `npm run measure:slipstream -- bahrain france russia --output=docs/slipstream-start/field-ab.json` | Aktuellen Windschattenstand getrennt von historischen Protokollen vermessen |
+| `node scripts/measure-close-wake.js` | Seitlichen Geschwindigkeitsvorteil mit PR #31 vergleichen; Ausgabe erneuert das Protokoll unter `docs/slipstream-full/` und ist kein Test der Renn-Startsperre |
 | `npm run measure:catchup` | Aufholhilfe an/aus mit unverändert aktivem Windschatten und 13 Fahrzeugen auf sechs unterschiedlichen Strecken |
 | `npm run check:race-formats` | Feste Rundentabelle gegen die dokumentierten Messungen prüfen |
 | `npm run serve:test` | Anwendung nur unter `/carpet-grand-prix/` |

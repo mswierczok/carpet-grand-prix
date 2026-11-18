@@ -11,6 +11,9 @@ Abschwächung zur Seite entfällt. Der Aufbau wird von 0,65 auf 0,15 Sekunden
 Zeitkonstante verkürzt. Reproduktion und Messergebnisse:
 [slipstream-full/README.md](slipstream-full/README.md).
 
+Die anschließende Startfreigabe ab 100 km/h und sieben Rennsekunden beschreibt
+[SLIPSTREAM_START.md](SLIPSTREAM_START.md).
+
 | Abstand zwischen den Fahrzeugmitten | Neue Wirkung |
 | --- | --- |
 | Unter einer Fahrzeuglänge | Kein Windschatten; kein Kontakt-/Überlappungsbonus |
@@ -23,10 +26,12 @@ Eine Fahrzeuglänge sind 10,8 Welteinheiten (3,24 Spielmeter). Sechs Längen sin
 64,8 Welteinheiten. Der Grenzvergleich berücksichtigt nur die unvermeidliche
 Gleitkomma-Rundung im Nanometerbereich.
 
-Mindestgeschwindigkeit, seitlicher Korridor, Fahrtrichtung, Brücken-/Nachbararm-
-prüfung, Kontakt- und Zieleinlaufregeln bleiben erhalten: beide Autos mindestens
-80 km/h, volle Geschwindigkeitsgewichtung ab 90 km/h, passende Ausrichtung und
-keine Kontakte. Innerhalb von weniger als vier Welteinheiten seitlichem
+Seitlicher Korridor, Fahrtrichtung, Brücken-/Nachbararmprüfung, Kontakt- und
+Zieleinlaufregeln bleiben erhalten. Die aktuelle Freigabe benötigt bei beiden
+Autos mindestens 100 km/h vorwärts und sieben Sekunden Rennzeit ab Grün.
+Countdown und Pause zählen nicht. Unter 100 km/h endet auch ein bereits
+aktiver Effekt. Ab der Freigabe gilt die volle Geschwindigkeitsgewichtung;
+die bisherige Rampe zwischen 80 und 90 km/h entfällt. Innerhalb von weniger als vier Welteinheiten seitlichem
 Versatz gilt die volle seitliche Gewichtung. Der Effekt baut sich mit einer
 Zeitkonstante von 0,15 Sekunden auf. Seitliches Ausscheren blendet innerhalb der erlaubten
 Entfernung weiter sanft aus. Bei sechs Längen wird der aktive Zustand sofort

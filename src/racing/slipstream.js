@@ -3,7 +3,8 @@
   const A = globalThis.CGPArcade,
     base = A.Physics,
     settings = Object.freeze({
-      minKmh: 80, fullKmh: 90, minLengths: 1, fullLengths: 1,
+      minKmh: 100, fullKmh: 100, startSeconds: 7,
+      minLengths: 1, fullLengths: 1,
       fadeLengths: 3, maxLengths: 6, releaseLengths: 6,
       lateralWidths: 0.8, releaseWidths: 1.2,
       riseSeconds: 0.15, fallSeconds: 0.45,
@@ -28,7 +29,7 @@
       forwardB = b.vx * Math.cos(b.heading) + b.vy * Math.sin(b.heading),
       kmh = Math.min(forwardA, forwardB) * p.metersPerUnit * 3.6;
     if (follower.id === leader.id || follower.finishTime !== null || leader.finishTime !== null ||
-      a.offroad || b.offroad || a.hitWall || b.hitWall || a.hitCar || b.hitCar || kmh < settings.minKmh)
+      a.offroad || b.offroad || a.hitWall || b.hitWall || a.hitCar || b.hitCar || kmh + 1e-9 < settings.minKmh)
       return null;
     const dx = b.x - a.x, dy = b.y - a.y,
       length = 2 * p.halfLength,
@@ -59,8 +60,9 @@
     // by a centre-line falloff used to halve the actual gain at just 2 units
     // of offset, although the follower was still clearly inside the wake.
     // Leaving that corridor still uses the bounded, time-smoothed release.
-    const strength = smooth((kmh - settings.minKmh) / (settings.fullKmh - settings.minKmh)) *
-      (1 - smooth((lengths - settings.fadeLengths) / (settings.maxLengths - settings.fadeLengths)));
+    // Speed eligibility is a hard 100-km/h gate for both cars. Once eligible,
+    // retain the full close-range bonus rather than adding another speed ramp.
+    const strength = 1 - smooth((lengths - settings.fadeLengths) / (settings.maxLengths - settings.fadeLengths));
     return { strength, sourceId: leader.id, distanceLengths: lengths, lateral };
   }
   function update(entries, surface, p, dt) {

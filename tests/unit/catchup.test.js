@@ -133,6 +133,13 @@ it("erhält ohne Aufholhilfe den veröffentlichten Rennkern unter identischer Wi
   const track = api.TrackCatalog.get("bahrain"),
     current = api.RaceSession.create(track, { catchup: false, laps: 3 }),
     prior = scope.CGPArcade.RaceSession.create(track, { laps: 3 });
+  // The historical session predates the separately authorized seven-second
+  // start gate. Apply that same wind rule in its temporary test context, so
+  // this replay continues to isolate catch-up integration with wind enabled.
+  scope.CGPArcade.Slipstream = { ...api.Slipstream, update(...args) {
+    return prior.snapshot().race.elapsed + 1e-9 < api.Slipstream.settings.startSeconds
+      ? args[0].map(() => api.Slipstream.empty()) : api.Slipstream.update(...args);
+  } };
   current.pause(false); prior.pause(false);
   for (let n = 0; n < 30 * 20; n++) {
     const input = { throttle: Number(n % 150 < 110), brake: Number(n % 150 >= 110), steer: Math.sin(n / 120) };

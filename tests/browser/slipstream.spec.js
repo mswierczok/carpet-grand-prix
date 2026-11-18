@@ -14,7 +14,7 @@ async function observeWake(page) {
             const expected = new Set(snapshot.entries.filter((e) => e.slipstream?.strength > 0)
               .map((e) => e.slipstream.sourceId)).size,
               stats = (globalThis.__wakeStats ||= { samples: 0, activeSamples: 0, mismatches: 0,
-                peakTriangles: 0, peakEmitters: 0, rangeViolations: 0 });
+                peakTriangles: 0, peakEmitters: 0, rangeViolations: 0, startViolations: 0 });
             stats.samples++;
             if (expected > 0) stats.activeSamples++;
             stats.mismatches += Number(real.diagnostics().emitters !== expected || real.mesh.visible !== (expected > 0));
@@ -22,6 +22,7 @@ async function observeWake(page) {
             stats.peakEmitters = Math.max(stats.peakEmitters, expected);
             stats.rangeViolations += snapshot.entries.filter((e) => e.slipstream?.strength > 0 &&
               (e.slipstream.distanceLengths < 1 || e.slipstream.distanceLengths >= 6)).length;
+            stats.startViolations += Number(expected > 0 && snapshot.race.elapsed < 7 - 1e-9);
           } };
         } };
       } });
@@ -48,6 +49,11 @@ test("Windschatten: echter 3D-Heckwirbel entspricht der Physik, Pause/Neustart b
   await page.locator("#balancePanel summary").click();
   await page.locator("#pause").click();
   await page.evaluate(pilotRace);
+  await page.clock.runFor(9000); // Three seconds red, then only six seconds racing.
+  expect(await page.evaluate(() => __driveSnapshot.race.elapsed)).toBeGreaterThan(5);
+  expect(await page.evaluate(() => __driveSnapshot.race.elapsed)).toBeLessThan(7);
+  expect(await page.evaluate(() => __wakeStats.activeSamples)).toBe(0);
+  expect(await page.evaluate(() => __driveSnapshot.entries.every((e) => e.slipstream.strength === 0))).toBe(true);
   for (let i = 0; i < 30; i++) {
     await page.clock.runFor(1000);
     if (await page.evaluate(() => (__wakeStats?.activeSamples || 0) > 4)) break;
@@ -56,11 +62,15 @@ test("Windschatten: echter 3D-Heckwirbel entspricht der Physik, Pause/Neustart b
   expect(stats.activeSamples).toBeGreaterThan(4);
   expect(stats.mismatches).toBe(0);
   expect(stats.rangeViolations).toBe(0);
+  expect(stats.startViolations).toBe(0);
   expect(stats.peakTriangles).toBeLessThanOrEqual(2496);
   await expect(page.locator("#balanceReadout")).toContainText("windschatten");
-  for (let i = 0; i < 100; i++) {
-    if (await page.evaluate(() => __driveSnapshot.entries.find((e) => e.player).slipstream.strength > 0.1)) break;
-    await page.clock.runFor(500);
+  // Rendering and the 80-ms HUD refresh need not run in the same frame.
+  // Advance the paused test clock until both observe the real active effect.
+  for (let i = 0; i < 400; i++) {
+    if (await page.evaluate(() => __driveSnapshot.entries.find((e) => e.player).slipstream.strength > 0.1 &&
+      !document.getElementById("viewDraft").hidden)) break;
+    await page.clock.runFor(125);
   }
   expect(await page.evaluate(() => __driveSnapshot.entries.find((e) => e.player).slipstream.strength)).toBeGreaterThan(0.1);
   await expect(page.locator("#viewDraft")).toBeVisible();

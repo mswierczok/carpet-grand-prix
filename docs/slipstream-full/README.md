@@ -1,5 +1,9 @@
 # Windschattenkorrektur nach dem Fahrfeedback
 
+Historischer Messstand von PR #32, noch ohne die spätere Startsperre und mit
+80/90-km/h-Freigabe. Die aktuellen Regeln stehen in
+[../SLIPSTREAM_START.md](../SLIPSTREAM_START.md). Die Messdaten bleiben unverändert.
+
 Basis: veröffentlichtes `main` nach PR #31,
 `a158c92f5f3d3cc8342da1bada9e2df5d7868fe5`.
 Der Spieler meldete trotz sichtbarem Nahbereich nur 2–3 km/h Zusatztempo.
