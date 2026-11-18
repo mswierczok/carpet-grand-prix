@@ -8,7 +8,8 @@ export const manifest = JSON.parse(readFileSync(new URL('assets/manifest.json', 
 // The editable website remains static. This optional developer command produces
 // a portable single file with no stylesheets, images or server needed alongside it.
 export function createOfflineHTML() {
-  let html = readFileSync(new URL('index.html', root), 'utf8');
+  let html = readFileSync(new URL('index.html', root), 'utf8')
+    .replace('<script src="./src/ui/main-entry.js?v=pov-menu-1"></script>\n', '');
   const links = manifest.styles.map(path => `<link rel="stylesheet" href="./${path}">`).join('\n');
   if (!html.includes(links)) throw Error('Reihenfolge der Stylesheets stimmt nicht mit dem Manifest überein.');
   const css = manifest.styles.map(path => readFileSync(new URL(path, root), 'utf8')).join('') + manifest.styleTail;

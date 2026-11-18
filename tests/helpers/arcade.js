@@ -25,6 +25,7 @@ export function loadArcade({ race = false, formats = true } = {}) {
           ...(formats ? ["data/race-formats"] : []),
           "racing/ai-difficulty",
           "persistence/pov-preferences",
+          "persistence/pov-selection",
           "racing/vehicle-contacts",
           "racing/opponent-line",
           "racing/opponents",

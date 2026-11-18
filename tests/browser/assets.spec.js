@@ -80,14 +80,14 @@ test('vergleicht Start, Teamauswahl und alle sechs Ansichten visuell mit dem Ori
   const original = await context.newPage(), current = await context.newPage();
   const errors = [];
   for (const page of [original, current]) page.on('pageerror', e => errors.push(e.message));
-  await original.goto('__reference__/index.html'); await current.goto('./');
+  await original.goto('__reference__/index.html'); await current.goto('./?legacy=1');
   await compare(original, current, 'startmenue', testInfo);
   for (const page of [original, current]) {
     await page.locator('[data-launch="new"]').click();
     await page.locator('[data-launch="new-manager"]').click();
   }
   await compare(original, current, 'teamauswahl', testInfo);
-  await original.goto('__reference__/index.html'); await current.goto('./');
+  await original.goto('__reference__/index.html'); await current.goto('./?legacy=1');
   for (const page of [original, current]) await resume(page);
   for (const tab of ['dashboard', 'workshop', 'market', 'chronicle', 'calendar', 'universe']) {
     for (const page of [original, current]) await page.locator(`#nav [data-value="${tab}"]`).click();
@@ -100,14 +100,14 @@ for (const [name, label] of [['activeRace', 'pausiertes-rennen'], ['activeQualif
   test(`vergleicht ${label} visuell mit dem Original`, async ({ context }, testInfo) => {
     await prepare(context, state(name), true);
     const original = await context.newPage(), current = await context.newPage();
-    await original.goto('__reference__/index.html'); await current.goto('./');
+    await original.goto('__reference__/index.html'); await current.goto('./?legacy=1');
     for (const page of [original, current]) await resume(page);
     await compare(original, current, label, testInfo);
   });
 }
 
 test('lädt und dekodiert alle 36 ausgelagerten Bilder unter dem Projektpfad', async ({ page }) => {
-  await page.goto('./');
+  await page.goto('./?legacy=1');
   const decoded = await page.evaluate(async paths => Promise.all(paths.map(async path => {
     const img = new Image(); img.src = path;
     await img.decode(); return img.naturalWidth > 0 && img.naturalHeight > 0;

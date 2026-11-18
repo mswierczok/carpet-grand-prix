@@ -5,19 +5,23 @@
   const racing = root.dataset.mode === "race",
     teams = CGPArcadeData.roster.teams,
     catalog = A.TrackCatalog,
-    requestedTrack = new URLSearchParams(location.search).get("track");
+    query = new URLSearchParams(location.search),
+    requestedTrack = query.get("track"),
+    preferences = racing ? A.POVPreferences.load() : null,
+    selection = racing ? A.POVSelection.load() : null;
   const el = (id) => document.getElementById(id),
     format = (seconds) => {
       const ms = Math.max(0, Math.round(seconds * 1000));
       return `${Math.floor(ms / 60000)}:${String(Math.floor(ms / 1000) % 60).padStart(2, "0")}.${String(ms % 1000).padStart(3, "0")}`;
     };
   let canvas = document.getElementById("arcadeCanvas"),
-    difficultyId = racing ? A.POVPreferences.load().difficulty : null,
-    catchupEnabled = new URLSearchParams(location.search).get("catchup") !== "0",
-    teamId = teams[0].id,
+    difficultyId = racing ? (A.AIDifficulty.profiles.some(p => p.id === query.get("difficulty"))
+      ? query.get("difficulty") : preferences.difficulty) : null,
+    catchupEnabled = query.has("catchup") ? query.get("catchup") !== "0" : (preferences?.catchup ?? true),
+    teamId = racing ? (teams.some(t => t.id === query.get("team")) ? query.get("team") : selection.teamId) : teams[0].id,
     trackId = catalog.tracks.some((t) => t.id === requestedTrack)
       ? requestedTrack
-      : catalog.defaultId,
+      : (selection?.trackId || catalog.defaultId),
     session = createSession(),
     overview = false,
     dirty = true,
@@ -117,6 +121,8 @@
       renderNote("Draufsicht · " + catalog.get(trackId).name);
     }
   }
+  if (racing) el("quality").value = ["auto", "low"].includes(query.get("quality"))
+    ? query.get("quality") : preferences.quality;
   createRenderer();
   const controls = A.Controls.attach(root, {
     pause: () => togglePause(),
@@ -142,6 +148,24 @@
     option.textContent = team.name;
     el("team").append(option);
   });
+  el("team").value = teamId;
+  function updateLaunchQuery(name, value) {
+    if (!query.has(name)) return;
+    const url = new URL(location.href);
+    url.searchParams.set(name, String(value));
+    try { history.replaceState(null, "", url.href); } catch { /* Standalone policy. */ }
+  }
+  function saveSelection() {
+    if (racing) el("selectionNote").textContent = A.POVSelection.save({ teamId, trackId })
+      ? "Team und Strecke für den nächsten Start gespeichert."
+      : "Für diese Fahrt aktiv. Team und Strecke konnten auf diesem Gerät nicht gespeichert werden.";
+  }
+  function savePreference(patch) {
+    for (const [name, value] of Object.entries(patch)) updateLaunchQuery(name, name === "catchup" ? Number(value) : value);
+    el("preferencesNote").textContent = A.POVPreferences.update(patch)
+      ? "Für deine nächsten POV-Rennen gespeichert."
+      : "Für diese Fahrt aktiv. Die Einstellung konnte auf diesem Gerät nicht gespeichert werden.";
+  }
   for (const track of catalog.tracks) {
     const option = document.createElement("option");
     option.value = track.id;
@@ -247,6 +271,8 @@
   el("team").onchange = (event) => {
     if (racing && !session.selectTeam(event.target.value)) return;
     teamId = event.target.value;
+    updateLaunchQuery("team", teamId);
+    saveSelection();
     if (racing) {
       renderer.resetCamera?.();
       controls.clear();
@@ -272,6 +298,7 @@
     el("catchup").onchange = (event) => {
       if (session.selectCatchup(event.target.value === "on")) {
         catchupEnabled = event.target.value === "on";
+        savePreference({ catchup: catchupEnabled });
         controls.clear();
         renderer.resetCamera?.();
         dirty = true;
@@ -285,6 +312,7 @@
         return;
       }
       difficultyId = event.target.value;
+      updateLaunchQuery("difficulty", difficultyId);
       el("difficultyNote").textContent = A.POVPreferences.save(difficultyId)
         ? "Für deine nächsten POV-Rennen gespeichert."
         : "Für dieses Rennen aktiv. Auf diesem Gerät konnte die Auswahl nicht gespeichert werden.";
@@ -309,6 +337,7 @@
     controls.clear();
     renderer.dispose?.();
     trackId = next;
+    saveSelection();
     session = createSession();
     freshCanvas();
     createRenderer(threeD);
@@ -336,6 +365,7 @@
   if (el("quality"))
     el("quality").onchange = (event) => {
       if (active3D) renderer.setQuality(event.target.value);
+      if (racing) savePreference({ quality: event.target.value });
       dirty = true;
     };
   const resize = () => {

@@ -18,7 +18,7 @@ test('bindet alle 13 Sprites im echten Renn-Canvas ein und verändert beim Neuze
     });
   }, save);
   const errors = []; page.on('pageerror', error => errors.push(error.message));
-  await page.goto('./');
+  await page.goto('./?legacy=1');
   await page.locator('[data-launch="load-view"]').click();
   await page.locator('#launchResume').click();
   const counts = await page.evaluate(() => globalThis.__spriteDraws);

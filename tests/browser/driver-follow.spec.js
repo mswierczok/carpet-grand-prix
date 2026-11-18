@@ -41,7 +41,7 @@ async function open(page, save) {
       } }; },
     });
   }, save);
-  await page.goto('./');
+  await page.goto('./?legacy=1');
   await page.locator('[data-launch="load-view"]').click();
   await page.locator('#launchResume').click();
 }

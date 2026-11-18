@@ -43,7 +43,7 @@ test("zeigt alle 13 echten Teamfahrzeuge mit gebündelter 3D-Geometrie und stabi
       id,
     );
   }
-  expect(await page.evaluate(() => ({ ...localStorage }))).toEqual(before);
+  expect(await page.evaluate(() => ({ ...localStorage }))).toEqual({ ...before, carpet_gp_pov_selection_v1: JSON.stringify({ version: 1, teamId: "t01", trackId: "bahrain" }) });
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,

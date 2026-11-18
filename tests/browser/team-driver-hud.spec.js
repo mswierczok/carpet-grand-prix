@@ -5,7 +5,7 @@ const state = name => JSON.parse(readFileSync(new URL(`../fixtures/${name}.json`
 const save = state('activeRace');
 async function open(page, data = save) {
   await page.addInitScript(data => localStorage.setItem('carpet_gp_v072', JSON.stringify(data)), data);
-  await page.goto('./');
+  await page.goto('./?legacy=1');
   await page.locator('[data-launch="load-view"]').click();
   await page.locator('#launchResume').click();
 }

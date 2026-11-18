@@ -8,7 +8,7 @@ names.set('t01', 'Vauclair Motorsport');
 test('zeigt alle dreizehn Teamfahrzeuge passend zu ihren Teams in einheitlicher Bildgröße', async ({ page }) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto('./');
+  await page.goto('./?legacy=1');
   await page.locator('[data-launch="new"]').click();
   await page.locator('[data-launch="new-manager"]').click();
   const sources = new Set();

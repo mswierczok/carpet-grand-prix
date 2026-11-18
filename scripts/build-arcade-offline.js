@@ -51,8 +51,21 @@ export function createArcadeOffline({ threeD = false, race = false } = {}) {
     );
   return html.replace(
     'href="./index.html"',
-    'href="./carpet-grand-prix-offline.html"',
+    'href="./carpet-grand-prix-menu-offline.html"',
   );
+}
+export function createPOVMenuOffline() {
+  let html = readFileSync(new URL("play.html", root), "utf8");
+  html = html.replace(/<link rel="stylesheet" href="\.\/(styles\/[^"?]+)(?:\?[^" ]*)?"\s*\/?>/g,
+    (_, path) => `<style>${readFileSync(new URL(path, root), "utf8")}</style>`);
+  for (const match of [...html.matchAll(/<script src="\.\/(src\/[^"?]+)(?:\?[^" ]*)?"><\/script>/g)])
+    html = html.replace(match[0], () => `<script>\n${readFileSync(new URL(match[1], root), "utf8").replace(/<\/script/gi, "<\\/script")}\n</script>`);
+  for (let i = 1; i <= 13; i++) {
+    const path = `assets/cars/team-t${String(i).padStart(2, "0")}.webp`;
+    html = html.replaceAll("./" + path, `data:image/webp;base64,${readFileSync(new URL(path, root)).toString("base64")}`);
+  }
+  return html.replaceAll("./race.html", "./carpet-grand-prix-race-offline.html")
+    .replaceAll("./index.html?legacy=1", "./carpet-grand-prix-offline.html");
 }
 if (
   process.argv[1] &&
@@ -71,5 +84,6 @@ if (
     new URL("dist/carpet-grand-prix-race-offline.html", root),
     createArcadeOffline({ race: true }),
   );
+  writeFileSync(new URL("dist/carpet-grand-prix-menu-offline.html", root), createPOVMenuOffline());
   console.log("Eigenständiger Arcade-Fahrtest exportiert.");
 }

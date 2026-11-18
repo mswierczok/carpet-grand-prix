@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 const save = JSON.parse(readFileSync(new URL('../fixtures/activeRace.json', import.meta.url)));
 
 test('hält Live-Schaltflächen beim Aktualisieren und Sortieren stabil und bedienbar', async ({ page }) => {
-  await page.goto('./');
+  await page.goto('./?legacy=1');
   const result = await page.evaluate(() => {
     const root = document.createElement('div'); document.body.append(root);
     const html = reverse => `<div>${(reverse?['b','a']:['a','b']).map(id=>`<button data-action="focus-driver" data-value="${id}" aria-pressed="${reverse}">${id}${reverse?' neu':''}</button>`).join('')}</div>`;
@@ -18,7 +18,7 @@ test('hält Live-Schaltflächen beim Aktualisieren und Sortieren stabil und bedi
 test('zeichnet alle 13 illustrierten Autos und aktualisiert aktive Rennsteuerung ohne ihre DOM-Knoten zu ersetzen', async ({ page }) => {
   const errors=[]; page.on('pageerror',e=>errors.push(e.message));
   await page.addInitScript(save=>localStorage.setItem('carpet_gp_v072',JSON.stringify(save)),save);
-  await page.goto('./'); await page.locator('[data-launch="load-view"]').click(); await page.locator('#launchResume').click();
+  await page.goto('./?legacy=1'); await page.locator('[data-launch="load-view"]').click(); await page.locator('#launchResume').click();
   const rendered = await page.evaluate(() => {
     const canvas = document.createElement('canvas'); canvas.width=280; canvas.height=120;
     const ctx=canvas.getContext('2d'); const results=[];

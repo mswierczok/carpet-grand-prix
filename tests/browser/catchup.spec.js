@@ -38,7 +38,7 @@ async function fallback(page) {
   });
 }
 
-test("Aufholhilfe: Auswahl gilt über Track/Neustart, bleibt ab Countdown gesperrt und schreibt keinen Spielstand", async ({ page }) => {
+test("Aufholhilfe: Auswahl wird als Einstellung gespeichert, bleibt ab Countdown gesperrt und erhält den klassischen Spielstand", async ({ page }) => {
   test.setTimeout(180000);
   await capture3D(page, { renderEvery: 8 }); await observeSupport(page);
   await page.goto("race.html?balance=1"); await page.clock.runFor(32);
@@ -58,7 +58,10 @@ test("Aufholhilfe: Auswahl gilt über Track/Neustart, bleibt ab Countdown gesper
   await expect(page.locator("#catchup")).toHaveValue("on");
   await expect(page.locator("#catchup")).toBeEnabled();
   expect(await page.evaluate(() => __driveSnapshot.entries.every((e) => e.catchup.pace === 0))).toBe(true);
-  expect(await page.evaluate(() => ({ ...localStorage }))).toEqual(saved);
+  expect(await page.evaluate(() => ({ ...localStorage }))).toEqual({ ...saved,
+    carpet_gp_pov_selection_v1: JSON.stringify({ version: 1, teamId: "t05", trackId: "france" }),
+    carpet_gp_pov_preferences_v1: JSON.stringify({ ...JSON.parse(saved.carpet_gp_pov_preferences_v1), catchup: true }),
+  });
 });
 
 for (const [url, enabled, threeD] of [["race.html?balance=1", true, true],

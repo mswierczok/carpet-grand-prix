@@ -1,3 +1,4 @@
+import { withoutMainEntry } from "../helpers/legacy-entry.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -71,7 +72,7 @@ it("enthält alle 22 Kalenderstrecken, unveränderte Originalzeichnungen und vie
     }
   }
   expect(plain(data.roster)).toEqual(plain(scope.CGPArcadeData.roster));
-  expect(readFileSync(new URL("index.html", ROOT), "utf8")).toBe(
+  expect(withoutMainEntry(readFileSync(new URL("index.html", ROOT), "utf8"))).toBe(
     published("index.html"),
   );
 });

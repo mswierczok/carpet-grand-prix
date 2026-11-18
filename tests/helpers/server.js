@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve, extname } from 'node:path';
 import { originalHTML } from './original-html.js';
 import { createOfflineHTML } from '../../scripts/build-offline.js';
-import { createArcadeOffline } from '../../scripts/build-arcade-offline.js';
+import { createArcadeOffline, createPOVMenuOffline } from '../../scripts/build-arcade-offline.js';
 
 const root = resolve('.');
 const prefix = '/carpet-grand-prix/';
@@ -14,6 +14,15 @@ const server = createServer(async (req, res) => {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     if (!pathname.startsWith(prefix)) { res.writeHead(404).end(); return; }
     const relative = pathname.slice(prefix.length) || 'index.html';
+    const offlineName = relative.split('/').at(-1);
+    const offlineOutput = relative === '__pov_menu_offline__/index.html' || offlineName === 'carpet-grand-prix-menu-offline.html'
+      ? () => createPOVMenuOffline()
+      : offlineName === 'carpet-grand-prix-race-offline.html' ? () => createArcadeOffline({ race: true })
+      : offlineName === 'carpet-grand-prix-offline.html' ? () => createOfflineHTML() : null;
+    if (offlineOutput) {
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
+      res.end(offlineOutput()); return;
+    }
     if (relative === '__arcade_race_offline__/index.html') {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
       res.end(createArcadeOffline({ race: true })); return;
