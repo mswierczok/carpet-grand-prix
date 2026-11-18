@@ -1,0 +1,566 @@
+{
+  "measuredAt": "2026-11-18T08:24:21.893Z",
+  "baseline": "a158c92f5f3d3cc8342da1bada9e2df5d7868fe5",
+  "priorWindSha256": "75e74a19f741daa95256cfaa0735ae960fc54ae08fe7d3509b9308a3dc0eed7a",
+  "hashes": {
+    "src/racing/slipstream.js": "01d717bc8f8f49737475b4044491ee6ef3655f39b6dc7e8373b562ea2bbcf7ae",
+    "src/racing/physics.js": "082782a78df28b280f7d38b23d41a5df03ba7e06153e737f22a055a3badd9764",
+    "src/racing/bridge-physics.js": "d85cc9dccf4677412371c964aa6e0f80287a07a3eaf5ba4f444fe7ae04bfe41d",
+    "src/racing/catchup.js": "de512d62d18328762223637b5895a16ae6625495d578b8f87aefa05a3f3c88b9",
+    "tests/helpers/arcade.js": "b826bd238d07be9d5dc7baa0b971a078486e323cc68f1f209d484b676813d7fa",
+    "scripts/measure-close-wake.js": "bb6ecf11768d4a09b1e49216164eb370eec1e9368c4dd3bfbcddae8c12f1cd9b"
+  },
+  "protocol": "Two actual cars, both initially 118.8 km/h, three centre-to-centre lengths apart, full throttle, 120 Hz. No held poses, no speed writes during integration, no catch-up. Legacy changes only the wind adapter. Straight road isolates lateral offset and rise time; not a lap-time or human-performance claim.",
+  "runs": [
+    {
+      "legacy": true,
+      "lateralOffset": -3.9,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.65,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "peakStepKmh": 0.00005649206684779529,
+      "peakGainKmh": 0.00780022797799802,
+      "samples": [
+        {
+          "seconds": 0.5,
+          "followerKmh": 118.80260985857643,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 0.0026098585764202653,
+          "strength": 0.0009894127254800385,
+          "distanceLengths": 2.9999534319973034
+        },
+        {
+          "seconds": 1,
+          "followerKmh": 118.80541340017028,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 0.005413400170266414,
+          "strength": 0.0014478762759950214,
+          "distanceLengths": 2.9997760544780125
+        },
+        {
+          "seconds": 1.5,
+          "followerKmh": 118.80700720685394,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 0.007007206853927529,
+          "strength": 0.001660314242212635,
+          "distanceLengths": 2.9995055274647417
+        },
+        {
+          "seconds": 2,
+          "followerKmh": 118.807800227978,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 0.00780022797799802,
+          "strength": 0.001758751488619644,
+          "distanceLengths": 2.9991858221335197
+        }
+      ]
+    },
+    {
+      "legacy": false,
+      "lateralOffset": -3.9,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.15,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "peakStepKmh": 0.06615162663604565,
+      "peakGainKmh": 4.9815180523162725,
+      "samples": [
+        {
+          "seconds": 0.5,
+          "followerKmh": 121.98679380758843,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 3.186793807588415,
+          "strength": 0.9643260066527478,
+          "distanceLengths": 2.9332819108568233
+        },
+        {
+          "seconds": 1,
+          "followerKmh": 123.38949852181649,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.589498521816488,
+          "strength": 0.9987273661986601,
+          "distanceLengths": 2.7593521735164104
+        },
+        {
+          "seconds": 1.5,
+          "followerKmh": 123.71246804157856,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.912468041578559,
+          "strength": 0.9999546000702373,
+          "distanceLengths": 2.5538764580894506
+        },
+        {
+          "seconds": 2,
+          "followerKmh": 123.78151805231629,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.9815180523162725,
+          "strength": 0.9999983804032078,
+          "distanceLengths": 2.3414209876205976
+        }
+      ]
+    },
+    {
+      "legacy": true,
+      "lateralOffset": -2,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.65,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "peakStepKmh": 0.015521112215652694,
+      "peakGainKmh": 2.1868918303606986,
+      "samples": [
+        {
+          "seconds": 0.5,
+          "followerKmh": 119.51322094453369,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 0.7132209445336725,
+          "strength": 0.26831531538441244,
+          "distanceLengths": 2.9873111910402614
+        },
+        {
+          "seconds": 1,
+          "followerKmh": 120.29668217094546,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 1.4966821709454456,
+          "strength": 0.39264441382915144,
+          "distanceLengths": 2.938512028584237
+        },
+        {
+          "seconds": 1.5,
+          "followerKmh": 120.75428377138749,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 1.95428377138749,
+          "strength": 0.45025470975257087,
+          "distanceLengths": 2.8633481346453835
+        },
+        {
+          "seconds": 2,
+          "followerKmh": 120.9868918303607,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 2.1868918303606986,
+          "strength": 0.47694955623582697,
+          "distanceLengths": 2.7739188850331526
+        }
+      ]
+    },
+    {
+      "legacy": false,
+      "lateralOffset": -2,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.15,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "peakStepKmh": 0.06615162663604565,
+      "peakGainKmh": 4.9815180523162725,
+      "samples": [
+        {
+          "seconds": 0.5,
+          "followerKmh": 121.98679380758843,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 3.186793807588415,
+          "strength": 0.9643260066527478,
+          "distanceLengths": 2.9332819108568233
+        },
+        {
+          "seconds": 1,
+          "followerKmh": 123.38949852181649,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.589498521816488,
+          "strength": 0.9987273661986601,
+          "distanceLengths": 2.7593521735164104
+        },
+        {
+          "seconds": 1.5,
+          "followerKmh": 123.71246804157856,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.912468041578559,
+          "strength": 0.9999546000702373,
+          "distanceLengths": 2.5538764580894506
+        },
+        {
+          "seconds": 2,
+          "followerKmh": 123.78151805231629,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.9815180523162725,
+          "strength": 0.9999983804032078,
+          "distanceLengths": 2.3414209876205976
+        }
+      ]
+    },
+    {
+      "legacy": true,
+      "lateralOffset": 0,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.65,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "peakStepKmh": 0.03147259209600577,
+      "peakGainKmh": 4.529344749130688,
+      "samples": [
+        {
+          "seconds": 0.5,
+          "followerKmh": 120.23758009454632,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 1.4375800945463073,
+          "strength": 0.5366306307688249,
+          "distanceLengths": 2.974500165028468
+        },
+        {
+          "seconds": 1,
+          "followerKmh": 121.85330081059624,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 3.053300810596236,
+          "strength": 0.7852888276583029,
+          "distanceLengths": 2.8754576420405624
+        },
+        {
+          "seconds": 1.5,
+          "followerKmh": 122.82417114907682,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.024171149076817,
+          "strength": 0.9005094195051417,
+          "distanceLengths": 2.721312403579016
+        },
+        {
+          "seconds": 2,
+          "followerKmh": 123.3293447491307,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.529344749130688,
+          "strength": 0.9538991124716539,
+          "distanceLengths": 2.5365614068511237
+        }
+      ]
+    },
+    {
+      "legacy": false,
+      "lateralOffset": 0,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.15,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "peakStepKmh": 0.06615162663604565,
+      "peakGainKmh": 4.9815180523162725,
+      "samples": [
+        {
+          "seconds": 0.5,
+          "followerKmh": 121.98679380758843,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 3.186793807588415,
+          "strength": 0.9643260066527478,
+          "distanceLengths": 2.9332819108568233
+        },
+        {
+          "seconds": 1,
+          "followerKmh": 123.38949852181649,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.589498521816488,
+          "strength": 0.9987273661986601,
+          "distanceLengths": 2.7593521735164104
+        },
+        {
+          "seconds": 1.5,
+          "followerKmh": 123.71246804157856,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.912468041578559,
+          "strength": 0.9999546000702373,
+          "distanceLengths": 2.5538764580894506
+        },
+        {
+          "seconds": 2,
+          "followerKmh": 123.78151805231629,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.9815180523162725,
+          "strength": 0.9999983804032078,
+          "distanceLengths": 2.3414209876205976
+        }
+      ]
+    },
+    {
+      "legacy": true,
+      "lateralOffset": 2,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.65,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "peakStepKmh": 0.015521112215652694,
+      "peakGainKmh": 2.1868918303606986,
+      "samples": [
+        {
+          "seconds": 0.5,
+          "followerKmh": 119.51322094453369,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 0.7132209445336725,
+          "strength": 0.26831531538441244,
+          "distanceLengths": 2.9873111910402614
+        },
+        {
+          "seconds": 1,
+          "followerKmh": 120.29668217094546,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 1.4966821709454456,
+          "strength": 0.39264441382915144,
+          "distanceLengths": 2.938512028584237
+        },
+        {
+          "seconds": 1.5,
+          "followerKmh": 120.75428377138749,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 1.95428377138749,
+          "strength": 0.45025470975257087,
+          "distanceLengths": 2.8633481346453835
+        },
+        {
+          "seconds": 2,
+          "followerKmh": 120.9868918303607,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 2.1868918303606986,
+          "strength": 0.47694955623582697,
+          "distanceLengths": 2.7739188850331526
+        }
+      ]
+    },
+    {
+      "legacy": false,
+      "lateralOffset": 2,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.15,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "peakStepKmh": 0.06615162663604565,
+      "peakGainKmh": 4.9815180523162725,
+      "samples": [
+        {
+          "seconds": 0.5,
+          "followerKmh": 121.98679380758843,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 3.186793807588415,
+          "strength": 0.9643260066527478,
+          "distanceLengths": 2.9332819108568233
+        },
+        {
+          "seconds": 1,
+          "followerKmh": 123.38949852181649,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.589498521816488,
+          "strength": 0.9987273661986601,
+          "distanceLengths": 2.7593521735164104
+        },
+        {
+          "seconds": 1.5,
+          "followerKmh": 123.71246804157856,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.912468041578559,
+          "strength": 0.9999546000702373,
+          "distanceLengths": 2.5538764580894506
+        },
+        {
+          "seconds": 2,
+          "followerKmh": 123.78151805231629,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.9815180523162725,
+          "strength": 0.9999983804032078,
+          "distanceLengths": 2.3414209876205976
+        }
+      ]
+    },
+    {
+      "legacy": true,
+      "lateralOffset": 3.9,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.65,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "peakStepKmh": 0.00005649206684779529,
+      "peakGainKmh": 0.00780022797799802,
+      "samples": [
+        {
+          "seconds": 0.5,
+          "followerKmh": 118.80260985857643,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 0.0026098585764202653,
+          "strength": 0.0009894127254800385,
+          "distanceLengths": 2.9999534319973034
+        },
+        {
+          "seconds": 1,
+          "followerKmh": 118.80541340017028,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 0.005413400170266414,
+          "strength": 0.0014478762759950214,
+          "distanceLengths": 2.9997760544780125
+        },
+        {
+          "seconds": 1.5,
+          "followerKmh": 118.80700720685394,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 0.007007206853927529,
+          "strength": 0.001660314242212635,
+          "distanceLengths": 2.9995055274647417
+        },
+        {
+          "seconds": 2,
+          "followerKmh": 118.807800227978,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 0.00780022797799802,
+          "strength": 0.001758751488619644,
+          "distanceLengths": 2.9991858221335197
+        }
+      ]
+    },
+    {
+      "legacy": false,
+      "lateralOffset": 3.9,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.15,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "peakStepKmh": 0.06615162663604565,
+      "peakGainKmh": 4.9815180523162725,
+      "samples": [
+        {
+          "seconds": 0.5,
+          "followerKmh": 121.98679380758843,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 3.186793807588415,
+          "strength": 0.9643260066527478,
+          "distanceLengths": 2.9332819108568233
+        },
+        {
+          "seconds": 1,
+          "followerKmh": 123.38949852181649,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.589498521816488,
+          "strength": 0.9987273661986601,
+          "distanceLengths": 2.7593521735164104
+        },
+        {
+          "seconds": 1.5,
+          "followerKmh": 123.71246804157856,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.912468041578559,
+          "strength": 0.9999546000702373,
+          "distanceLengths": 2.5538764580894506
+        },
+        {
+          "seconds": 2,
+          "followerKmh": 123.78151805231629,
+          "leaderKmh": 118.80000000000001,
+          "gainKmh": 4.9815180523162725,
+          "strength": 0.9999983804032078,
+          "distanceLengths": 2.3414209876205976
+        }
+      ]
+    }
+  ]
+}

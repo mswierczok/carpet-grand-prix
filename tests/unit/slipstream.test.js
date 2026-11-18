@@ -33,7 +33,7 @@ it("begrenzt Abstand, Tempo, Ausrichtung, Rand und Kontakte mit sanftem Aufbau/A
   expect(pair(a, { ...b, car: { ...b.car, heading: Math.PI } })).toBeNull();
   const initial = api.Slipstream.update([a, b], s, p, 1 / 120);
   expect(initial[0].strength).toBeGreaterThan(0);
-  expect(initial[0].strength).toBeLessThan(0.02);
+  expect(initial[0].strength).toBeLessThan(0.06);
   a.slipstream = { ...initial[0], strength: 1 };
   const shifted = { ...b, car: { ...b.car, y: 5 } },
     fading = api.Slipstream.update([a, shifted], s, p, 1 / 120)[0];
@@ -125,6 +125,48 @@ it("erreicht den spürbaren Fünf-km/h-Vorteil beim echten Heranfahren aus vier 
   }
   expect(peak).toBeGreaterThan(4.9);
   expect(peak).toBeLessThanOrEqual(5.000001);
+});
+
+it("erreicht auch seitlich versetzt im sichtbaren Korridor rund fünf km/h innerhalb von zwei Sekunden", () => {
+  const { api } = loadArcade({ race: true }), s = straight(), p = api.Physics.parameters,
+    gas = { throttle: 1, brake: 0, steer: 0 }, kmh = p.metersPerUnit * 3.6;
+  for (const offset of [-3.9, -3, -2, -1, 0, 1, 2, 3, 3.9]) {
+    const follower = entry(api, "a", 0, offset), leader = entry(api, "b", 3 * p.halfLength * 2);
+    expect(api.Slipstream.pair(follower, leader, s, p).strength).toBe(1);
+    for (let tick = 0; tick < 240; tick++) {
+      const effects = api.Slipstream.update([follower, leader], s, p, 1 / 120);
+      for (const [i, e] of [follower, leader].entries()) {
+        e.slipstream = effects[i];
+        const previous = e.car;
+        e.car = api.Physics.step(e.car, gas, s, p, 1 / 120, effects[i]);
+        expect((e.car.speed - previous.speed) * kmh).toBeLessThan(0.15);
+        expect(e.car.x).toBeCloseTo(previous.x + e.car.vx / 120, 8);
+      }
+      const advantage = (follower.car.speed - leader.car.speed) * kmh;
+      expect(advantage).toBeLessThanOrEqual(5.000001);
+      if (tick === 179) expect(advantage, `Versatz ${offset}, nach 1,5 s`).toBeGreaterThan(4.9);
+    }
+    expect((follower.car.speed - leader.car.speed) * kmh, `Versatz ${offset}, nach 2 s`).toBeGreaterThan(4.98);
+    expect(follower.slipstream.distanceLengths).toBeGreaterThan(1);
+    expect(follower.slipstream.distanceLengths).toBeLessThan(3);
+  }
+});
+
+it("begrenzt den vollen seitlichen Korridor und schaltet die normale Ausblendung spätestens bei sechs Längen ab", () => {
+  const { api } = loadArcade({ race: true }), s = straight(), p = api.Physics.parameters,
+    a = entry(api, "a", 0), length = p.halfLength * 2;
+  for (const offset of [-6, -5, -4, 4, 5, 6])
+    expect(api.Slipstream.pair(a, entry(api, "b", 2 * length, offset), s, p)).toBeNull();
+  a.slipstream = { strength: 1, sourceId: "b" };
+  const b = entry(api, "b", 2 * length, 5), faded = api.Slipstream.update([a, b], s, p, 0.05)[0];
+  expect(faded.strength).toBeGreaterThan(0);
+  expect(faded.strength).toBeLessThan(1);
+  a.slipstream = faded;
+  b.car.x = b.car.s = 6 * length;
+  expect(api.Slipstream.update([a, b], s, p, 1 / 120)[0].strength).toBe(0);
+  b.car.x = b.car.s = 2 * length;
+  b.car.y = 6;
+  expect(api.Slipstream.update([a, b], s, p, 1 / 120)[0].strength).toBe(0);
 });
 
 it("lässt die KI den gemeinsamen Windschatten auf freien Geraden nutzen und behält ihre Kurvenbremsung", () => {
