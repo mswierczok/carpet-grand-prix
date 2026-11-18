@@ -159,6 +159,10 @@ Im Solo-Qualifying laufen alle 13 Fahrzeuge im festen Takt unabhängig voneinand
 kein geteilter Verkehr oder Fahrzeugkontakt, aber dieselbe Einzelwagenphysik.
 `visibleEntries` begrenzt ausschließlich die Fahrzeugdarstellung auf den Spieler;
 Zeitwertung und Bestzeitentabelle enthalten weiterhin die realen Hintergrundfahrten.
+`qualifying-drivers.js` ergänzt feste Team-Fahrprofile sowie eine kontinuierliche
+Kurvenausführung nur für die Qualifying-KI. Der gemeinsame Regler erzeugt daraus
+normale Fahrbefehle; Physik, Geradeaus-Höchsttempo und Rennen bleiben unverändert.
+Ursache, Grenzen und echte Vergleichsläufe: [QUALIFYING_DRIVERS.md](QUALIFYING_DRIVERS.md).
 
 `race-gaps.js` hält eine begrenzte Passagehistorie für laufende Zeitabstände.
 `catchup.js` berechnet daraus das kleine KI-Motorbudget und übergibt es an den

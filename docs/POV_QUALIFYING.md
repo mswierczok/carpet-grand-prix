@@ -15,7 +15,10 @@ fahren gleichzeitig im Hintergrund mit der vorhandenen Physik und KI, jeder
 auf einer unabhängigen freien Strecke. Die erste volle Runde zählt nicht zur
 Bestzeit. Die schnellste der beiden folgenden Runden bestimmt den Startplatz;
 es zählen echte Sektor- und Ziellinienüberfahrten. Es gibt keine erzeugten
-KI-Zeitwerte und keinen zusätzlichen Leistungsfaktor. Im Qualifying sind
+KI-Zeitwerte. Individuelle Bremspunkte und Kurvenausführung sorgen für
+unterschiedliche Fahrten bei gleichen Fahrzeugparametern; die vollständige
+Begründung und Messungen stehen in [QUALIFYING_DRIVERS.md](QUALIFYING_DRIVERS.md).
+Im Qualifying sind
 Windschatten und Aufholhilfe für alle ausgeschaltet, um die Zeitwertung nicht
 mit diesen Rennhilfen zu vermischen. Es gibt keinen Fahrzeugverkehr und keine
 Fahrzeugkontakte im Qualifying, auch nicht zwischen Hintergrundgegnern. Seile,

@@ -105,6 +105,9 @@ for (const offline of [false, true]) test(`Qualifying: echte Bestzeiten und Star
   expect(q.contacts).toBe(0);
   expect(q.entries.every((e) => e.timing.completed === 3 && !e.slipstream && !e.catchup)).toBe(true);
   expect(q.qualifying.standings.every((e) => e.laps.length === 2 && e.bestLap === Math.min(...e.laps))).toBe(true);
+  const opponentTimes = q.qualifying.standings.filter((e) => !e.player).map((e) => e.bestLap);
+  expect(new Set(opponentTimes.map((t) => t.toFixed(3))).size).toBeGreaterThanOrEqual(10);
+  expect(Math.max(...opponentTimes) - Math.min(...opponentTimes)).toBeGreaterThan(0.3);
   await expect(page.locator("#qualifyingResults")).toBeVisible();
   await expect(page.locator("#qualifyingRows tr")).toHaveCount(13);
   await expect(page.locator("#acceptQualifying")).toBeVisible();

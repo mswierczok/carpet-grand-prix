@@ -2,8 +2,10 @@
   "use strict";
   const A = globalThis.CGPArcade, timedLaps = 2;
   function create(track, options = {}) {
+    const teams = options.teams || CGPArcadeData.roster.teams,
+      qualifyingDrivers = A.QualifyingDrivers.create(teams);
     const session = A.RaceSession.create(track, { ...options, gridOrder: undefined,
-      laps: timedLaps + 1, isolated: true, slipstream: false, catchup: false });
+      laps: timedLaps + 1, isolated: true, slipstream: false, catchup: false, qualifyingDrivers });
     let records;
     function clear() {
       records = new Map(session.snapshot().entries.map((e, i) => [e.id,

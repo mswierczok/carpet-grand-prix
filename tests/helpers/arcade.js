@@ -32,6 +32,7 @@ export function loadArcade({ race = false, formats = true } = {}) {
           "racing/race-gaps",
           "racing/catchup",
           "racing/race-session",
+          "racing/qualifying-drivers",
           "racing/qualifying-session",
           "racing/race-weekend",
         ]

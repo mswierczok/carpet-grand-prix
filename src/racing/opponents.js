@@ -43,8 +43,12 @@
     function motion(car, state) {
       const { route, speedTable, samples } = plan(state.lane),
         s = route.project(car),
+        variation = state.qualifying ? A.QualifyingDrivers.at(state.qualifying, car.s / surface.g.len) : null,
         precision = profile.inconsistency * (1 + Math.sin(car.s * 6 * Math.PI / surface.g.len + state.index)),
         index = Math.min(samples - 1, Math.floor(Math.max(0, s - precision) / stride)),
+        aheadIndex = variation ? Math.min(samples - 1,
+          Math.floor(Math.max(0, s - precision + variation.brakeLead) / stride)) : index,
+        planned = variation ? Math.min(speedTable[index], speedTable[aheadIndex]) : speedTable[index],
         point = route.at(s),
         road = surface.at(point.trackS),
         lane =
@@ -55,7 +59,7 @@
         s,
         lane,
         distance: Math.hypot(car.x - point.x, car.y - point.y),
-        pace: speedTable[index],
+        pace: planned,
       };
     }
     const memory = (index, lane = 0) => ({
@@ -310,6 +314,13 @@
           desiredSpeed: 0, freeTarget: path.pace, pathError: path.distance,
           headingError: error, lane: state.lane, blockerGap: blocker?.gap ?? null, ...command };
         return command;
+      }
+      // Retain each driver's execution after the shared recovery/settling
+      // limits, which otherwise made every free-lap driver converge to the
+      // same 65-unit corner target. A clear straight retains the shared cap.
+      if (state.qualifying && desired >= 40 && desired < p.maxSpeed && !blocker) {
+        const execution = A.QualifyingDrivers.at(state.qualifying, car.s / surface.g.len);
+        desired *= execution.cornerScale;
       }
       const aerodynamicHeadroom = desired >= p.maxSpeed && car.slipstream
         ? A.Slipstream.settings.maxGainKmh / (p.metersPerUnit * 3.6) : 0;
