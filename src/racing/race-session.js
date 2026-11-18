@@ -122,7 +122,13 @@
             e.command = controller.input(traffic[i], traffic, e.driver);
         });
       }
-      const wakes = slipstreamEnabled ? A.Slipstream.update(entries, surface, parameters, fixedStep) : null;
+      // elapsed starts at green and advances only in live simulation steps.
+      // Gate the shared state so both physics and visible wakes stay off.
+      const wakes = slipstreamEnabled
+        ? (elapsed + 1e-9 < A.Slipstream.settings.startSeconds
+          ? entries.map(() => A.Slipstream.empty())
+          : A.Slipstream.update(entries, surface, parameters, fixedStep))
+        : null;
       if (wakes) entries.forEach((entry, i) => { entry.slipstream = wakes[i]; });
       const previous = entries.map((e) => e.car),
         proposed = entries.map((e, i) =>

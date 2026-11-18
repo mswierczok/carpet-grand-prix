@@ -144,6 +144,10 @@ Die aktuelle nähere +5-km/h-Abstimmung dokumentiert
 Die anschließende Korrektur der seitlichen Gewichtung und des zu langsamen
 Aufbaus mit echten Vorher-/Nachher-Fahrten steht in
 [slipstream-full/README.md](slipstream-full/README.md).
+`RaceSession` sperrt den gemeinsamen Effektzustand für die ersten sieben
+Rennsekunden ab Grün; Countdown und Pause zählen nicht. Das Windmodul lässt
+danach nur Paare mit mindestens 100 km/h vorwärts zu. Grenzen und Prüfungen:
+[SLIPSTREAM_START.md](SLIPSTREAM_START.md).
 
 `race-gaps.js` hält eine begrenzte Passagehistorie für laufende Zeitabstände.
 `catchup.js` berechnet daraus das kleine KI-Motorbudget und übergibt es an den
