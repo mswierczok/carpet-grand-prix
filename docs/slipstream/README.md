@@ -1,5 +1,8 @@
 # Windschatten: Messprotokoll
 
+Historischer 3-km/h-Stand. Die aktuelle nähere +5-km/h-Abstimmung und neue
+Vergleiche stehen in [SLIPSTREAM_CLOSE.md](../SLIPSTREAM_CLOSE.md).
+
 Ausgangsstand `1bf76bb90b0b5e99e693cab1b24ba57336a9746e` (PR #28), anschließend
 Arbeitsquellen mit den 16 SHA-256-Prüfsummen in [field-ab.json](field-ab.json).
 Die Prüfsummen werden vor dem Lauf erfasst und vor dem Schreiben erneut geprüft.

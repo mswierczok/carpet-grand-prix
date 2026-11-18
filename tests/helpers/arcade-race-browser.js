@@ -54,7 +54,8 @@ export function pilotRace() {
       return;
     }
     const traffic = driver.prepare(
-        s.entries.map((e) => ({ ...e.car, id: e.id })),
+        s.entries.map((e) => ({ ...e.car, id: e.id,
+          ...(e.slipstream ? { slipstream: e.slipstream } : {}) })),
       ),
       car = traffic.find((e) => e.id === s.race.playerTeam),
       input = driver.input(car, traffic, memory),

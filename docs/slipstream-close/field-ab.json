@@ -1,0 +1,1667 @@
+{
+  "version": 1,
+  "measuredAt": "2026-11-17T16:14:34.864Z",
+  "baseCommit": "e47c4c869f1474bef8a8071da3044d05c387bb19",
+  "protocol": "Actual 120Hz physics and 30Hz ordinary inputs; observations at 30Hz. Deterministic binary player surrogate, no human or FPS claim. Two-lap A/B field probes do not replace full default-length regression tests. Contacts and shoulders are observed frames, not unique incidents. Outlaps are included in peak/contact observations, but finished cars neither emit nor receive wake. Position changes are rank transitions, not certified overtakes.",
+  "hashes": {
+    "src/racing/slipstream.js": "75e74a19f741daa95256cfaa0735ae960fc54ae08fe7d3509b9308a3dc0eed7a",
+    "src/racing/race-session.js": "5f223174fe26d72445a58c2570d40ed33a0ccf3cb21235b705bbba7553612fee",
+    "src/racing/opponents.js": "3c15a8552876c921152f6d01d389ebe5e03170d4988797ca998e966ec3a64825",
+    "src/racing/opponent-line.js": "5946ff84efc6ad562639de488d04f882028bd9ea7cb7c0d3844755236d8c6dd3",
+    "src/racing/ai-difficulty.js": "0e744f574eb96a73fd36e0cc03d405c6d1c768774c28698df4224295f7f1ca88",
+    "src/racing/physics.js": "082782a78df28b280f7d38b23d41a5df03ba7e06153e737f22a055a3badd9764",
+    "src/racing/bridge-physics.js": "d85cc9dccf4677412371c964aa6e0f80287a07a3eaf5ba4f444fe7ae04bfe41d",
+    "src/racing/vehicle-contacts.js": "96c012415ddf9d169a952d8226b78d0f242bb76e5466accb89ccfb6423fe9248",
+    "src/racing/track-surface.js": "88a759d87d9927a6275dee629029bb7279eeadacb330397b895acc9688a62c28",
+    "src/racing/bridge-surface.js": "b06a944a11c3b072df0a21c8f9caf826095d94c6f2b475cad33b7ca94565d89f",
+    "src/racing/timing.js": "481fe30b728721d983e47c7ab08ad2cc933881d8fec9c2ab9a2a63b692ca826c",
+    "src/data/arcade-tracks.js": "22a1ddf491f9a030ef1ecee9f3fac88deec0269ff17625c4096c3a53dc51f165",
+    "src/data/arcade-boundaries.js": "ddd8b5b4d97b122f9e993e2d06b4c0ae9d26c23cbf3d8d1e6aa323621eb5cb00",
+    "src/data/race-formats.js": "14a1df80a6442190b2cddd3e510aee3ab3a655ff71b13ac92819697d745e55b5",
+    "src/racing/track-shape.js": "6daa38097b708423268d41829df429b05238965ee7f9065dfdfde8511ac95d88",
+    "src/racing/catchup.js": "de512d62d18328762223637b5895a16ae6625495d578b8f87aefa05a3f3c88b9",
+    "src/racing/race-gaps.js": "79b41f1ecc444cb064f7b2256c031eaf3c4da6366e114b9e0b2d80f74ef3ffac",
+    "tests/helpers/arcade.js": "b826bd238d07be9d5dc7baa0b971a078486e323cc68f1f209d484b676813d7fa",
+    "scripts/measure-slipstream.js": "4b582dd2b28c3a3b73bdd5f10cf60b63a8882f48b42370fc128de69e92617512"
+  },
+  "runs": [
+    {
+      "id": "bahrain",
+      "enabled": false,
+      "difficulty": "normal",
+      "laps": 2,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.65,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "finished": 13,
+      "playerContacts": 17,
+      "maxObservedBridgeHeightDifference": 0,
+      "entries": [
+        {
+          "id": "t03",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000005525994,
+          "positionChanges": 1,
+          "observedWallFrames": 0,
+          "observedContactFrames": 8,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            26.55311854491932,
+            26.03454875322327
+          ],
+          "finishSeconds": 53.55662778700272,
+          "position": 1,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t02",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 1,
+          "observedWallFrames": 0,
+          "observedContactFrames": 8,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            27.58557934700857,
+            26.5554323756071
+          ],
+          "finishSeconds": 55.04768575054366,
+          "position": 2,
+          "gapToWinnerSeconds": 1.4910579635409391
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000018818717,
+          "positionChanges": 1,
+          "observedWallFrames": 0,
+          "observedContactFrames": 7,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            28.608728543406677,
+            26.910990961697532
+          ],
+          "finishSeconds": 56.766438797921495,
+          "position": 3,
+          "gapToWinnerSeconds": 3.209811010918777
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000001226168,
+          "positionChanges": 1,
+          "observedWallFrames": 0,
+          "observedContactFrames": 13,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            30.641078044472245,
+            26.14760123618991
+          ],
+          "finishSeconds": 57.986804378075725,
+          "position": 4,
+          "gapToWinnerSeconds": 4.430176591073007
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 3,
+          "observedWallFrames": 0,
+          "observedContactFrames": 6,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            31.27271519462616,
+            26.39171232175014
+          ],
+          "finishSeconds": 59.140883700422165,
+          "position": 5,
+          "gapToWinnerSeconds": 5.584255913419447
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 3,
+          "observedWallFrames": 0,
+          "observedContactFrames": 12,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            32.43995011265676,
+            27.29598829901004
+          ],
+          "finishSeconds": 61.170919592543775,
+          "position": 6,
+          "gapToWinnerSeconds": 7.614291805541058
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 1,
+          "observedWallFrames": 0,
+          "observedContactFrames": 25,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            33.049187620144096,
+            27.326179681261543
+          ],
+          "finishSeconds": 62.05335121886542,
+          "position": 7,
+          "gapToWinnerSeconds": 8.496723431862705
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 3,
+          "observedWallFrames": 0,
+          "observedContactFrames": 41,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            34.62889386497238,
+            27.022067548367765
+          ],
+          "finishSeconds": 63.29448791237656,
+          "position": 8,
+          "gapToWinnerSeconds": 9.737860125373842
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 4,
+          "observedWallFrames": 0,
+          "observedContactFrames": 62,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            33.718717031207085,
+            28.812571480515416
+          ],
+          "finishSeconds": 64.38351636704974,
+          "position": 9,
+          "gapToWinnerSeconds": 10.826888580047019
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 5,
+          "observedWallFrames": 0,
+          "observedContactFrames": 31,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            34.96579377896782,
+            28.20511441834885
+          ],
+          "finishSeconds": 65.24264483493974,
+          "position": 10,
+          "gapToWinnerSeconds": 11.686017047937021
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80001221881906,
+          "positionChanges": 5,
+          "observedWallFrames": 0,
+          "observedContactFrames": 50,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            35.84844794677268,
+            28.35019706152203
+          ],
+          "finishSeconds": 66.0628915735885,
+          "position": 11,
+          "gapToWinnerSeconds": 12.506263786585784
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 119.07659951347338,
+          "positionChanges": 6,
+          "observedWallFrames": 0,
+          "observedContactFrames": 22,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            36.63687359534045,
+            28.302727892953115
+          ],
+          "finishSeconds": 67.00169754637353,
+          "position": 12,
+          "gapToWinnerSeconds": 13.445069759370817
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 0,
+          "observedWallFrames": 0,
+          "observedContactFrames": 16,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            36.58051324146316,
+            28.885302871930534
+          ],
+          "finishSeconds": 67.78573540676621,
+          "position": 13,
+          "gapToWinnerSeconds": 14.22910761976349
+        }
+      ]
+    },
+    {
+      "id": "bahrain",
+      "enabled": true,
+      "difficulty": "normal",
+      "laps": 2,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.65,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "finished": 13,
+      "playerContacts": 19,
+      "maxObservedBridgeHeightDifference": 0,
+      "entries": [
+        {
+          "id": "t03",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.8000000000003,
+          "peakKmh": 118.80000005525994,
+          "positionChanges": 1,
+          "observedWallFrames": 0,
+          "observedContactFrames": 8,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            26.55311854491931,
+            26.03454875322323
+          ],
+          "finishSeconds": 53.55662778700267,
+          "position": 1,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t02",
+          "player": false,
+          "activeSeconds": 0.06666666666666667,
+          "peakStrength": 0.005971337472987469,
+          "peakLongitudinalKmh": 118.80000000000028,
+          "peakKmh": 118.8000000000003,
+          "positionChanges": 1,
+          "observedWallFrames": 0,
+          "observedContactFrames": 9,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            27.585065875068622,
+            26.555142247444397
+          ],
+          "finishSeconds": 55.04688215044101,
+          "position": 2,
+          "gapToWinnerSeconds": 1.4902543634383392
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "activeSeconds": 1.5000000000000013,
+          "peakStrength": 0.6725799374441249,
+          "peakLongitudinalKmh": 119.49453854001086,
+          "peakKmh": 119.49453854001088,
+          "positionChanges": 1,
+          "observedWallFrames": 0,
+          "observedContactFrames": 6,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            28.890714585420195,
+            26.09298251012443
+          ],
+          "finishSeconds": 56.23041638836191,
+          "position": 3,
+          "gapToWinnerSeconds": 2.6737886013592416
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "activeSeconds": 3.299999999999998,
+          "peakStrength": 0.2789372711920823,
+          "peakLongitudinalKmh": 118.88570571462505,
+          "peakKmh": 118.88570571462503,
+          "positionChanges": 4,
+          "observedWallFrames": 0,
+          "observedContactFrames": 16,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            29.777148252769376,
+            26.571479236586207
+          ],
+          "finishSeconds": 57.82508367308673,
+          "position": 4,
+          "gapToWinnerSeconds": 4.2684558860840625
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "activeSeconds": 4.966666666666659,
+          "peakStrength": 0.36253823096667603,
+          "peakLongitudinalKmh": 119.48265183176126,
+          "peakKmh": 119.48265183176126,
+          "positionChanges": 2,
+          "observedWallFrames": 0,
+          "observedContactFrames": 25,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            31.154721414086875,
+            27.298481970224138
+          ],
+          "finishSeconds": 59.65132848172458,
+          "position": 5,
+          "gapToWinnerSeconds": 6.094700694721915
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "activeSeconds": 1.2333333333333338,
+          "peakStrength": 0.09780701538120594,
+          "peakLongitudinalKmh": 118.82711213447838,
+          "peakKmh": 118.82711213447837,
+          "positionChanges": 3,
+          "observedWallFrames": 0,
+          "observedContactFrames": 29,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            31.8176057592923,
+            27.28674838550633
+          ],
+          "finishSeconds": 60.5393353256756,
+          "position": 6,
+          "gapToWinnerSeconds": 6.982707538672933
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "activeSeconds": 4.2999999999999945,
+          "peakStrength": 0.10789091941014241,
+          "peakLongitudinalKmh": 119.1947160453262,
+          "peakKmh": 119.19471604532622,
+          "positionChanges": 2,
+          "observedWallFrames": 0,
+          "observedContactFrames": 24,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            32.374521743306886,
+            28.04485078792063
+          ],
+          "finishSeconds": 62.062886292007164,
+          "position": 7,
+          "gapToWinnerSeconds": 8.506258505004496
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "activeSeconds": 6.699999999999986,
+          "peakStrength": 0.7562268659518814,
+          "peakLongitudinalKmh": 122.1712007947834,
+          "peakKmh": 122.17120079478339,
+          "positionChanges": 2,
+          "observedWallFrames": 0,
+          "observedContactFrames": 26,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            33.489654226945675,
+            28.453602545187508
+          ],
+          "finishSeconds": 63.62120496166413,
+          "position": 8,
+          "gapToWinnerSeconds": 10.064577174661459
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "activeSeconds": 7.299999999999984,
+          "peakStrength": 0.8941105576436827,
+          "peakLongitudinalKmh": 123.0843039125434,
+          "peakKmh": 123.0843039125434,
+          "positionChanges": 2,
+          "observedWallFrames": 0,
+          "observedContactFrames": 17,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            34.20557031793823,
+            27.820489392687904
+          ],
+          "finishSeconds": 63.87816443022894,
+          "position": 9,
+          "gapToWinnerSeconds": 10.321536643226274
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "activeSeconds": 10.233333333333308,
+          "peakStrength": 0.7988659640512226,
+          "peakLongitudinalKmh": 121.65448750119349,
+          "peakKmh": 121.65448750119349,
+          "positionChanges": 2,
+          "observedWallFrames": 0,
+          "observedContactFrames": 28,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            34.74218125010768,
+            28.32600103010119
+          ],
+          "finishSeconds": 64.93218048966885,
+          "position": 10,
+          "gapToWinnerSeconds": 11.375552702666184
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "activeSeconds": 6.199999999999988,
+          "peakStrength": 0.6210765542145884,
+          "peakLongitudinalKmh": 118.81844978144201,
+          "peakKmh": 118.81844978144201,
+          "positionChanges": 2,
+          "observedWallFrames": 0,
+          "observedContactFrames": 32,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            35.09912067493691,
+            28.088280841855827
+          ],
+          "finishSeconds": 65.50921856347931,
+          "position": 11,
+          "gapToWinnerSeconds": 11.95259077647664
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "activeSeconds": 3.9666666666666623,
+          "peakStrength": 0.3169030804621624,
+          "peakLongitudinalKmh": 119.22867509334037,
+          "peakKmh": 119.22867509334037,
+          "positionChanges": 2,
+          "observedWallFrames": 0,
+          "observedContactFrames": 41,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            36.129272691189186,
+            28.465244082166187
+          ],
+          "finishSeconds": 66.65962038296028,
+          "position": 12,
+          "gapToWinnerSeconds": 13.102992595957616
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "activeSeconds": 3.466666666666664,
+          "peakStrength": 0.4290831810034877,
+          "peakLongitudinalKmh": 119.82414751973089,
+          "peakKmh": 119.8241475197309,
+          "positionChanges": 2,
+          "observedWallFrames": 0,
+          "observedContactFrames": 32,
+          "observedShoulderFrames": 7,
+          "lapSeconds": [
+            36.888066372573235,
+            29.479207380254493
+          ],
+          "finishSeconds": 68.4385341014796,
+          "position": 13,
+          "gapToWinnerSeconds": 14.881906314476936
+        }
+      ]
+    },
+    {
+      "id": "france",
+      "enabled": false,
+      "difficulty": "normal",
+      "laps": 2,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.65,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "finished": 13,
+      "playerContacts": 7,
+      "maxObservedBridgeHeightDifference": 0,
+      "entries": [
+        {
+          "id": "t02",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 0,
+          "observedWallFrames": 0,
+          "observedContactFrames": 0,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            37.50710824890842,
+            37.10283399499667
+          ],
+          "finishSeconds": 75.49709241486593,
+          "position": 1,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t03",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 0,
+          "observedWallFrames": 0,
+          "observedContactFrames": 9,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            38.64581284107689,
+            37.0604888982597
+          ],
+          "finishSeconds": 76.69380033320103,
+          "position": 2,
+          "gapToWinnerSeconds": 1.1967079183350933
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 0,
+          "observedWallFrames": 0,
+          "observedContactFrames": 10,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            39.784080703020244,
+            37.06857596012103
+          ],
+          "finishSeconds": 78.03262427331826,
+          "position": 3,
+          "gapToWinnerSeconds": 2.5355318584523303
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 0,
+          "observedWallFrames": 0,
+          "observedContactFrames": 8,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            40.993724386073985,
+            37.139271939996775
+          ],
+          "finishSeconds": 79.40057505805561,
+          "position": 4,
+          "gapToWinnerSeconds": 3.903482643189676
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80703167796825,
+          "positionChanges": 2,
+          "observedWallFrames": 0,
+          "observedContactFrames": 23,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            41.86360902988725,
+            38.07525981056987
+          ],
+          "finishSeconds": 81.35575792589293,
+          "position": 5,
+          "gapToWinnerSeconds": 5.858665511026999
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 3,
+          "observedWallFrames": 0,
+          "observedContactFrames": 27,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            42.813764630458046,
+            38.29934669009476
+          ],
+          "finishSeconds": 82.73156402350979,
+          "position": 6,
+          "gapToWinnerSeconds": 7.234471608643858
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 7,
+          "observedWallFrames": 0,
+          "observedContactFrames": 18,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            44.03892162792639,
+            38.252623503151064
+          ],
+          "finishSeconds": 84.02781097929594,
+          "position": 7,
+          "gapToWinnerSeconds": 8.530718564430003
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 4,
+          "observedWallFrames": 0,
+          "observedContactFrames": 21,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            45.25807766114295,
+            38.225295109549634
+          ],
+          "finishSeconds": 84.9974706777278,
+          "position": 8,
+          "gapToWinnerSeconds": 9.500378262861872
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 3,
+          "observedWallFrames": 0,
+          "observedContactFrames": 25,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            45.77329983366233,
+            38.507217127236075
+          ],
+          "finishSeconds": 86.2265612730377,
+          "position": 9,
+          "gapToWinnerSeconds": 10.72946885817177
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.83783411741592,
+          "positionChanges": 7,
+          "observedWallFrames": 0,
+          "observedContactFrames": 38,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            46.95335014706878,
+            38.51472830661922
+          ],
+          "finishSeconds": 87.26651457841092,
+          "position": 10,
+          "gapToWinnerSeconds": 11.769422163544988
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000153149099,
+          "positionChanges": 11,
+          "observedWallFrames": 0,
+          "observedContactFrames": 50,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            47.61553887459612,
+            38.75428383007295
+          ],
+          "finishSeconds": 88.50356423488978,
+          "position": 11,
+          "gapToWinnerSeconds": 13.006471820023847
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80007341006926,
+          "positionChanges": 5,
+          "observedWallFrames": 0,
+          "observedContactFrames": 38,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            48.11511698901265,
+            39.64951726678921
+          ],
+          "finishSeconds": 89.73432358051991,
+          "position": 12,
+          "gapToWinnerSeconds": 14.23723116565398
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 6,
+          "observedWallFrames": 0,
+          "observedContactFrames": 27,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            48.131713931427456,
+            40.28291812547339
+          ],
+          "finishSeconds": 90.55058800215228,
+          "position": 13,
+          "gapToWinnerSeconds": 15.05349558728635
+        }
+      ]
+    },
+    {
+      "id": "france",
+      "enabled": true,
+      "difficulty": "normal",
+      "laps": 2,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.65,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "finished": 13,
+      "playerContacts": 33,
+      "maxObservedBridgeHeightDifference": 0,
+      "entries": [
+        {
+          "id": "t02",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.8000000000003,
+          "peakKmh": 118.80000000000031,
+          "positionChanges": 0,
+          "observedWallFrames": 0,
+          "observedContactFrames": 0,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            37.50710824890842,
+            37.10283399499668
+          ],
+          "finishSeconds": 75.49709241486593,
+          "position": 1,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t03",
+          "player": false,
+          "activeSeconds": 3.3666666666666645,
+          "peakStrength": 0.25776921506537664,
+          "peakLongitudinalKmh": 119.68981005967751,
+          "peakKmh": 119.68981005967753,
+          "positionChanges": 0,
+          "observedWallFrames": 0,
+          "observedContactFrames": 10,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            39.240342818686734,
+            37.10435727038076
+          ],
+          "finishSeconds": 77.33219868293193,
+          "position": 2,
+          "gapToWinnerSeconds": 1.8351062680659993
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "activeSeconds": 2.2666666666666684,
+          "peakStrength": 0.8550250465597438,
+          "peakLongitudinalKmh": 121.61399947641667,
+          "peakKmh": 121.61399947641667,
+          "positionChanges": 0,
+          "observedWallFrames": 0,
+          "observedContactFrames": 10,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            40.25948206846083,
+            37.15508766997115
+          ],
+          "finishSeconds": 78.59453734860897,
+          "position": 3,
+          "gapToWinnerSeconds": 3.0974449337430343
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "activeSeconds": 2.533333333333334,
+          "peakStrength": 0.8521514973369654,
+          "peakLongitudinalKmh": 121.72993133608082,
+          "peakKmh": 121.72993133608082,
+          "positionChanges": 0,
+          "observedWallFrames": 0,
+          "observedContactFrames": 9,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            41.36239618301268,
+            37.17123186393301
+          ],
+          "finishSeconds": 79.80120677893053,
+          "position": 4,
+          "gapToWinnerSeconds": 4.304114364064603
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "activeSeconds": 2.966666666666666,
+          "peakStrength": 0.43685884417659065,
+          "peakLongitudinalKmh": 119.31157628198584,
+          "peakKmh": 119.31157628198584,
+          "positionChanges": 2,
+          "observedWallFrames": 0,
+          "observedContactFrames": 24,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            42.6358541942688,
+            37.14287743350442
+          ],
+          "finishSeconds": 81.39717454917336,
+          "position": 5,
+          "gapToWinnerSeconds": 5.900082134307425
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "activeSeconds": 6.366666666666654,
+          "peakStrength": 0.8234137614836995,
+          "peakLongitudinalKmh": 121.7373424244289,
+          "peakKmh": 121.7373424244289,
+          "positionChanges": 2,
+          "observedWallFrames": 0,
+          "observedContactFrames": 16,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            43.51515618086171,
+            38.138988970452885
+          ],
+          "finishSeconds": 83.16824305834982,
+          "position": 6,
+          "gapToWinnerSeconds": 7.671150643483884
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "activeSeconds": 4.466666666666661,
+          "peakStrength": 0.8640210693229888,
+          "peakLongitudinalKmh": 122.04006779299256,
+          "peakKmh": 122.04006779299256,
+          "positionChanges": 3,
+          "observedWallFrames": 0,
+          "observedContactFrames": 13,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            44.23457501935697,
+            38.62174973497981
+          ],
+          "finishSeconds": 84.59258972167925,
+          "position": 7,
+          "gapToWinnerSeconds": 9.095497306813314
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "activeSeconds": 5.833333333333322,
+          "peakStrength": 0.6114606393719735,
+          "peakLongitudinalKmh": 120.47823501126875,
+          "peakKmh": 120.47823501126875,
+          "positionChanges": 3,
+          "observedWallFrames": 0,
+          "observedContactFrames": 31,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            45.58275193901623,
+            38.77097156506756
+          ],
+          "finishSeconds": 85.7706125895196,
+          "position": 8,
+          "gapToWinnerSeconds": 10.273520174653669
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "activeSeconds": 3.7999999999999963,
+          "peakStrength": 0.6996789861736351,
+          "peakLongitudinalKmh": 119.55466541775832,
+          "peakKmh": 119.55466541775833,
+          "positionChanges": 2,
+          "observedWallFrames": 0,
+          "observedContactFrames": 26,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            46.4625167266697,
+            38.819375917217585
+          ],
+          "finishSeconds": 87.0800720319764,
+          "position": 9,
+          "gapToWinnerSeconds": 11.582979617110468
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "activeSeconds": 3.9999999999999956,
+          "peakStrength": 0.754038501194945,
+          "peakLongitudinalKmh": 121.3433478728441,
+          "peakKmh": 121.34334787284412,
+          "positionChanges": 8,
+          "observedWallFrames": 0,
+          "observedContactFrames": 40,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            46.91378341398846,
+            39.12249715031744
+          ],
+          "finishSeconds": 87.98230424298389,
+          "position": 10,
+          "gapToWinnerSeconds": 12.485211828117954
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "activeSeconds": 5.866666666666656,
+          "peakStrength": 0.5544073390855595,
+          "peakLongitudinalKmh": 120.35731417843391,
+          "peakKmh": 120.35731417843391,
+          "positionChanges": 8,
+          "observedWallFrames": 0,
+          "observedContactFrames": 22,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            47.858194634048914,
+            39.54255232401825
+          ],
+          "finishSeconds": 89.36910924165423,
+          "position": 11,
+          "gapToWinnerSeconds": 13.872016826788297
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "activeSeconds": 5.266666666666658,
+          "peakStrength": 0.46108556498009734,
+          "peakLongitudinalKmh": 118.86089666324771,
+          "peakKmh": 118.86089666324773,
+          "positionChanges": 5,
+          "observedWallFrames": 0,
+          "observedContactFrames": 36,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            48.78711505013916,
+            39.79127290388345
+          ],
+          "finishSeconds": 90.71085121630102,
+          "position": 12,
+          "gapToWinnerSeconds": 15.213758801435091
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "activeSeconds": 3.9999999999999956,
+          "peakStrength": 0.7209685410993063,
+          "peakLongitudinalKmh": 121.03279955149627,
+          "peakKmh": 121.03279955149628,
+          "positionChanges": 5,
+          "observedWallFrames": 0,
+          "observedContactFrames": 50,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            49.85177719520167,
+            39.548997599425455
+          ],
+          "finishSeconds": 91.53420250686105,
+          "position": 13,
+          "gapToWinnerSeconds": 16.037110091995118
+        }
+      ]
+    },
+    {
+      "id": "russia",
+      "enabled": false,
+      "difficulty": "normal",
+      "laps": 2,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.65,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "finished": 13,
+      "playerContacts": 9,
+      "maxObservedBridgeHeightDifference": 0,
+      "entries": [
+        {
+          "id": "t02",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 0,
+          "observedWallFrames": 0,
+          "observedContactFrames": 5,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            38.13980750820269,
+            37.76454106882371
+          ],
+          "finishSeconds": 76.83448608951113,
+          "position": 1,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 1,
+          "observedWallFrames": 0,
+          "observedContactFrames": 0,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            38.35323128183769,
+            38.76057724051078
+          ],
+          "finishSeconds": 78.31626887899407,
+          "position": 2,
+          "gapToWinnerSeconds": 1.481782789482935
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 2,
+          "observedWallFrames": 0,
+          "observedContactFrames": 4,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            38.703165473613076,
+            39.28092676680776
+          ],
+          "finishSeconds": 79.42319105884991,
+          "position": 3,
+          "gapToWinnerSeconds": 2.588704969338778
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.88995885090222,
+          "positionChanges": 5,
+          "observedWallFrames": 0,
+          "observedContactFrames": 10,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            39.6941619743402,
+            39.382390281618
+          ],
+          "finishSeconds": 80.72727477341596,
+          "position": 4,
+          "gapToWinnerSeconds": 3.8927886839048256
+        },
+        {
+          "id": "t03",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000054492028,
+          "positionChanges": 3,
+          "observedWallFrames": 0,
+          "observedContactFrames": 19,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            39.679837942157114,
+            40.62522684972134
+          ],
+          "finishSeconds": 81.29668861506558,
+          "position": 5,
+          "gapToWinnerSeconds": 4.462202525554446
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 5,
+          "observedWallFrames": 0,
+          "observedContactFrames": 12,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            41.190473733099054,
+            39.24531958624898
+          ],
+          "finishSeconds": 82.28617198343655,
+          "position": 6,
+          "gapToWinnerSeconds": 5.451685893925415
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 5,
+          "observedWallFrames": 0,
+          "observedContactFrames": 12,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            41.048003085268206,
+            40.65559908443761
+          ],
+          "finishSeconds": 83.0461641164439,
+          "position": 7,
+          "gapToWinnerSeconds": 6.211678026932773
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 5,
+          "observedWallFrames": 0,
+          "observedContactFrames": 11,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            41.53732678848909,
+            40.28472844881918
+          ],
+          "finishSeconds": 83.86552552356554,
+          "position": 8,
+          "gapToWinnerSeconds": 7.0310394340544065
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 4,
+          "observedWallFrames": 0,
+          "observedContactFrames": 19,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            42.06004458601282,
+            40.08200005105922
+          ],
+          "finishSeconds": 84.37791689551636,
+          "position": 9,
+          "gapToWinnerSeconds": 7.543430806005233
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 6,
+          "observedWallFrames": 0,
+          "observedContactFrames": 44,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            43.52264619869363,
+            40.02762835079667
+          ],
+          "finishSeconds": 85.15817738617427,
+          "position": 10,
+          "gapToWinnerSeconds": 8.323691296663142
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80006513537982,
+          "positionChanges": 11,
+          "observedWallFrames": 0,
+          "observedContactFrames": 36,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            44.7069353769405,
+            39.47100990677761
+          ],
+          "finishSeconds": 86.22409015169318,
+          "position": 11,
+          "gapToWinnerSeconds": 9.389604062182045
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000076412631,
+          "positionChanges": 6,
+          "observedWallFrames": 0,
+          "observedContactFrames": 56,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            43.51786486456584,
+            41.2304310968369
+          ],
+          "finishSeconds": 86.99103073507845,
+          "position": 12,
+          "gapToWinnerSeconds": 10.156544645567323
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.80000000000001,
+          "peakKmh": 118.80000000000004,
+          "positionChanges": 11,
+          "observedWallFrames": 0,
+          "observedContactFrames": 52,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            45.81300345373721,
+            39.763345445764855
+          ],
+          "finishSeconds": 87.41065867986897,
+          "position": 13,
+          "gapToWinnerSeconds": 10.576172590357842
+        }
+      ]
+    },
+    {
+      "id": "russia",
+      "enabled": true,
+      "difficulty": "normal",
+      "laps": 2,
+      "settings": {
+        "minKmh": 80,
+        "fullKmh": 90,
+        "minLengths": 1,
+        "fullLengths": 1,
+        "fadeLengths": 3,
+        "maxLengths": 6,
+        "releaseLengths": 6,
+        "lateralWidths": 0.8,
+        "releaseWidths": 1.2,
+        "riseSeconds": 0.65,
+        "fallSeconds": 0.45,
+        "maxGainKmh": 5,
+        "governorResponse": 3
+      },
+      "finished": 13,
+      "playerContacts": 13,
+      "maxObservedBridgeHeightDifference": 2.00647474021899,
+      "entries": [
+        {
+          "id": "t02",
+          "player": false,
+          "activeSeconds": 0,
+          "peakStrength": 0,
+          "peakLongitudinalKmh": 118.8000000000003,
+          "peakKmh": 118.8000000000003,
+          "positionChanges": 0,
+          "observedWallFrames": 0,
+          "observedContactFrames": 5,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            38.139807508202644,
+            37.76454106882365
+          ],
+          "finishSeconds": 76.83448608951102,
+          "position": 1,
+          "gapToWinnerSeconds": 0
+        },
+        {
+          "id": "t04",
+          "player": false,
+          "activeSeconds": 20.766666666666858,
+          "peakStrength": 0.9559330393463498,
+          "peakLongitudinalKmh": 123.31963794231694,
+          "peakKmh": 123.31963794231694,
+          "positionChanges": 1,
+          "observedWallFrames": 0,
+          "observedContactFrames": 0,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            38.05501729897146,
+            38.94561553216433
+          ],
+          "finishSeconds": 78.20309318778139,
+          "position": 2,
+          "gapToWinnerSeconds": 1.368607098270374
+        },
+        {
+          "id": "t06",
+          "player": false,
+          "activeSeconds": 6.066666666666655,
+          "peakStrength": 0.943210702122842,
+          "peakLongitudinalKmh": 122.6000403912254,
+          "peakKmh": 122.6000403912254,
+          "positionChanges": 4,
+          "observedWallFrames": 0,
+          "observedContactFrames": 0,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            38.6967620479005,
+            39.30365185206903
+          ],
+          "finishSeconds": 79.4395127183986,
+          "position": 3,
+          "gapToWinnerSeconds": 2.605026628887586
+        },
+        {
+          "id": "t03",
+          "player": false,
+          "activeSeconds": 18.600000000000083,
+          "peakStrength": 0.5578251337235539,
+          "peakLongitudinalKmh": 120.6371713329401,
+          "peakKmh": 120.6371713329401,
+          "positionChanges": 4,
+          "observedWallFrames": 0,
+          "observedContactFrames": 16,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            39.701036433782825,
+            39.687985843572314
+          ],
+          "finishSeconds": 80.38064610054226,
+          "position": 4,
+          "gapToWinnerSeconds": 3.5461600110312474
+        },
+        {
+          "id": "t08",
+          "player": false,
+          "activeSeconds": 20.500000000000178,
+          "peakStrength": 0.9433518207637867,
+          "peakLongitudinalKmh": 122.62217234264448,
+          "peakKmh": 122.62217234264449,
+          "positionChanges": 4,
+          "observedWallFrames": 0,
+          "observedContactFrames": 11,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            39.92767178836657,
+            39.15388845242753
+          ],
+          "finishSeconds": 80.73227597559017,
+          "position": 5,
+          "gapToWinnerSeconds": 3.8977898860791527
+        },
+        {
+          "id": "t05",
+          "player": false,
+          "activeSeconds": 8.566666666666647,
+          "peakStrength": 0.9135298273522074,
+          "peakLongitudinalKmh": 122.68849476924309,
+          "peakKmh": 122.68849476924308,
+          "positionChanges": 4,
+          "observedWallFrames": 0,
+          "observedContactFrames": 11,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            40.89718644348574,
+            39.47565673641762
+          ],
+          "finishSeconds": 81.71540512664144,
+          "position": 6,
+          "gapToWinnerSeconds": 4.880919037130425
+        },
+        {
+          "id": "t10",
+          "player": false,
+          "activeSeconds": 19.766666666666808,
+          "peakStrength": 0.943274062443121,
+          "peakLongitudinalKmh": 123.24224213389893,
+          "peakKmh": 123.24224213389893,
+          "positionChanges": 4,
+          "observedWallFrames": 0,
+          "observedContactFrames": 13,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            40.993076281476284,
+            39.446200082601095
+          ],
+          "finishSeconds": 82.28954395269164,
+          "position": 7,
+          "gapToWinnerSeconds": 5.4550578631806275
+        },
+        {
+          "id": "t12",
+          "player": false,
+          "activeSeconds": 8.166666666666648,
+          "peakStrength": 0.9495899585480996,
+          "peakLongitudinalKmh": 123.23304341923767,
+          "peakKmh": 123.23304341923769,
+          "positionChanges": 5,
+          "observedWallFrames": 0,
+          "observedContactFrames": 21,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            41.613783135061,
+            39.72909226302788
+          ],
+          "finishSeconds": 83.38723540657668,
+          "position": 8,
+          "gapToWinnerSeconds": 6.552749317065661
+        },
+        {
+          "id": "t01",
+          "player": true,
+          "activeSeconds": 16.799999999999994,
+          "peakStrength": 0.853327389323022,
+          "peakLongitudinalKmh": 122.84587532431858,
+          "peakKmh": 122.84587532431857,
+          "positionChanges": 10,
+          "observedWallFrames": 0,
+          "observedContactFrames": 31,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            42.534794488635185,
+            39.20594279612197
+          ],
+          "finishSeconds": 83.97909434978519,
+          "position": 9,
+          "gapToWinnerSeconds": 7.144608260274168
+        },
+        {
+          "id": "t09",
+          "player": false,
+          "activeSeconds": 21.866666666666912,
+          "peakStrength": 0.9825999635784233,
+          "peakLongitudinalKmh": 123.00711403755966,
+          "peakKmh": 123.00711403755966,
+          "positionChanges": 8,
+          "observedWallFrames": 0,
+          "observedContactFrames": 18,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            43.76031968830795,
+            39.22223761062728
+          ],
+          "finishSeconds": 84.81686707930214,
+          "position": 10,
+          "gapToWinnerSeconds": 7.982380989791125
+        },
+        {
+          "id": "t07",
+          "player": false,
+          "activeSeconds": 25.06666666666707,
+          "peakStrength": 0.9437086547478282,
+          "peakLongitudinalKmh": 122.83761076010725,
+          "peakKmh": 122.83761076010725,
+          "positionChanges": 9,
+          "observedWallFrames": 0,
+          "observedContactFrames": 14,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            44.14060052317942,
+            39.337995255064165
+          ],
+          "finishSeconds": 85.08649861492756,
+          "position": 11,
+          "gapToWinnerSeconds": 8.252012525416546
+        },
+        {
+          "id": "t11",
+          "player": false,
+          "activeSeconds": 8.066666666666649,
+          "peakStrength": 0.9501148796135827,
+          "peakLongitudinalKmh": 122.9094504232391,
+          "peakKmh": 122.9094504232391,
+          "positionChanges": 4,
+          "observedWallFrames": 0,
+          "observedContactFrames": 6,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            45.15200725712233,
+            39.12524524659123
+          ],
+          "finishSeconds": 86.32339735198552,
+          "position": 12,
+          "gapToWinnerSeconds": 9.488911262474502
+        },
+        {
+          "id": "t13",
+          "player": false,
+          "activeSeconds": 9.066666666666645,
+          "peakStrength": 0.9287683431331775,
+          "peakLongitudinalKmh": 122.43443305297728,
+          "peakKmh": 122.43443305297728,
+          "positionChanges": 1,
+          "observedWallFrames": 0,
+          "observedContactFrames": 0,
+          "observedShoulderFrames": 0,
+          "lapSeconds": [
+            45.67759211970974,
+            39.2642043938734
+          ],
+          "finishSeconds": 87.18450776309567,
+          "position": 13,
+          "gapToWinnerSeconds": 10.35002167358465
+        }
+      ]
+    }
+  ]
+}

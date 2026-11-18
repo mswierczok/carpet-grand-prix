@@ -110,21 +110,23 @@ it("integriert maximal 1,2 Prozent Motorhilfe ohne neuen Grip oder Geschwindigke
       const prior = car;
       car = api.Physics.step(car, gas, s, p, 1 / 120, { strength, catchup: 0.012 });
       expect(car.x).toBeCloseTo(prior.x + car.vx / 120, 8);
-      expect(car.speed * kmh).toBeLessThanOrEqual(118.8 * 1.012 + strength * 3 + 0.000001);
+      expect(car.speed * kmh).toBeLessThanOrEqual(118.8 * 1.012 + strength * 5 + 0.000001);
     }
-    expect(car.speed * kmh).toBeCloseTo(118.8 * 1.012 + strength * 3, 4);
+    expect(car.speed * kmh).toBeCloseTo(118.8 * 1.012 + strength * 5, 4);
     const prior = car.speed;
     car = api.Physics.step(car, gas, s, p, 1 / 120, { strength, catchup: 0 });
-    expect(car.speed).toBeGreaterThan(p.maxSpeed + strength * 3 / kmh + 1);
+    expect(car.speed).toBeGreaterThan(p.maxSpeed + strength * 5 / kmh + 1);
     expect((prior - car.speed) * kmh).toBeLessThan(0.1);
     for (let n = 0; n < 120 * 5; n++) car = api.Physics.step(car, gas, s, p, 1 / 120, { strength, catchup: 0 });
-    expect(car.speed * kmh).toBeCloseTo(118.8 + strength * 3, 3);
+    expect(car.speed * kmh).toBeCloseTo(118.8 + strength * 5, 3);
   }
   expect(api.Physics.parameters.maxLateralAcceleration).toBe(210);
   expect(api.Physics.parameters.braking).toBe(145);
 });
 
-it("reproduziert ausgeschaltet das veröffentlichte Rennen mit Windschatten exakt", () => {
+it("erhält ohne Aufholhilfe den veröffentlichten Rennkern unter identischer Windschattenabstimmung", () => {
+  // Both replay kernels intentionally use the same current wind profile.
+  // This isolates catch-up integration from the separately authorized wind tuning.
   const { api, data } = loadArcade({ race: true }), scope = { CGPArcade: { ...api }, CGPArcadeData: data };
   for (const name of ["opponents", "race-session"])
     runInNewContext(execFileSync("git", ["show", `2bc124a11c274c0f52eb516bd9a0f1ea9e0d377f:src/racing/${name}.js`], { cwd: ROOT, encoding: "utf8" }), scope);

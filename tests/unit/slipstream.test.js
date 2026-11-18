@@ -22,9 +22,9 @@ export function entry(api, id, x, y = 0, speed = 110) {
 
 it("begrenzt Abstand, Tempo, Ausrichtung, Rand und Kontakte mit sanftem Aufbau/Ausscheren", () => {
   const { api } = loadArcade({ race: true }), s = straight(), p = api.Physics.parameters,
-    a = entry(api, "a", 0), b = entry(api, "b", 40), pair = (aa = a, bb = b) => api.Slipstream.pair(aa, bb, s, p);
+    a = entry(api, "a", 0), b = entry(api, "b", 25), pair = (aa = a, bb = b) => api.Slipstream.pair(aa, bb, s, p);
   expect(pair().strength).toBe(1);
-  for (const distance of [0, 10, 21, 87, 110]) expect(pair(a, entry(api, "b", distance))).toBeNull();
+  for (const distance of [0, 10, 64.8, 65, 87, 110]) expect(pair(a, entry(api, "b", distance))).toBeNull();
   for (const speed of [0, -100, 70]) expect(pair(entry(api, "a", 0, 0, speed))).toBeNull();
   expect(pair(a, entry(api, "b", 40, 5))).toBeNull();
   for (const property of ["offroad", "hitWall", "hitCar"])
@@ -43,7 +43,7 @@ it("begrenzt Abstand, Tempo, Ausrichtung, Rand und Kontakte mit sanftem Aufbau/A
   expect(api.Slipstream.update([a, { ...b, car: { ...b.car, s: 1000 } }], s, p, 1 / 120)[0].strength).toBe(0);
 });
 
-it("erzeugt aus Luftwiderstand und Gas maximal drei zusätzliche km/h und baut sie ohne Geschwindigkeitszuweisung ab", () => {
+it("erzeugt aus Luftwiderstand und Gas maximal fünf zusätzliche km/h und baut sie ohne Geschwindigkeitszuweisung ab", () => {
   const { api } = loadArcade({ race: true }), s = straight(), p = api.Physics.parameters,
     gas = { throttle: 1, brake: 0, steer: 0 }, kmh = p.metersPerUnit * 3.6;
   let base = entry(api, "base", 0).car, wake = { ...base }, peakDelta = 0;
@@ -53,13 +53,13 @@ it("erzeugt aus Luftwiderstand und Gas maximal drei zusätzliche km/h und baut s
     wake = api.Physics.step(wake, gas, s, p, 1 / 120, { strength: 1 });
     expect(wake.x).toBeCloseTo(previous.x + wake.vx / 120, 8);
     // Even an instantaneous test input of full strength produces an ordinary
-    // force step (<0.1 km/h), never an instantaneous +3 km/h velocity jump.
-    expect((wake.speed - previous.speed) * kmh).toBeLessThan(0.1);
+    // force step (<0.15 km/h), never an instantaneous +5 km/h velocity jump.
+    expect((wake.speed - previous.speed) * kmh).toBeLessThan(0.15);
     peakDelta = Math.max(peakDelta, (wake.speed - base.speed) * kmh);
   }
   expect(base.speed * kmh).toBeCloseTo(118.8, 8);
-  expect(peakDelta).toBeGreaterThan(2.99);
-  expect(peakDelta).toBeLessThanOrEqual(3.000001);
+  expect(peakDelta).toBeGreaterThan(4.99);
+  expect(peakDelta).toBeLessThanOrEqual(5.000001);
   const before = wake.speed;
   wake = api.Physics.step(wake, gas, s, p, 1 / 120, { strength: 0 });
   expect(wake.speed).toBeLessThan(before);
@@ -75,15 +75,56 @@ it("erzeugt aus Luftwiderstand und Gas maximal drei zusätzliche km/h und baut s
 
 it("behandelt Spieler und KI identisch, stapelt Quellen nicht und behält die längste erlaubte Runde korrekt", () => {
   const { api } = loadArcade({ race: true }), s = straight(), p = api.Physics.parameters,
-    a = entry(api, "a", 0), b = entry(api, "b", 40), c = entry(api, "c", 50);
+    a = entry(api, "a", 0), b = entry(api, "b", 25), c = entry(api, "c", 30);
   a.slipstream = { strength: 1, sourceId: "b" };
   const player = api.Slipstream.update([{ ...a, player: true }, b, c], s, p, 1 / 120),
     opponent = api.Slipstream.update([{ ...a, player: false }, b, c], s, p, 1 / 120);
   expect(plain(player)).toEqual(plain(opponent));
   expect(player[0].strength).toBe(1);
-  expect(player[0].dragReduction).toBeLessThan(0.5);
-  const overLine = { ...b, car: { ...b.car, s: 100040 } };
+  expect(player[0].dragReduction).toBeLessThan(0.8);
+  const overLine = { ...b, car: { ...b.car, s: 100025 } };
   expect(api.Slipstream.pair(a, overLine, s, p).strength).toBe(1);
+});
+
+it("gibt volle Wirkung bei ein bis drei Längen, blendet bis sechs ab und beendet dort auch einen bestehenden Effekt", () => {
+  const { api } = loadArcade({ race: true }), s = straight(), p = api.Physics.parameters,
+    a = entry(api, "a", 0), length = p.halfLength * 2;
+  for (const gap of [1, 1.5, 2, 2.5, 3]) {
+    const b = entry(api, "b", gap * length);
+    expect(api.Slipstream.pair(a, b, s, p).strength).toBe(1);
+  }
+  let previous = 1;
+  for (const gap of [3.1, 4, 5, 5.9, 5.999]) {
+    const effect = api.Slipstream.pair(a, entry(api, "b", gap * length), s, p);
+    expect(effect.strength).toBeGreaterThan(0);
+    expect(effect.strength).toBeLessThan(previous);
+    previous = effect.strength;
+  }
+  a.slipstream = { strength: 1, sourceId: "b" };
+  for (const gap of [6, 6.001, 7, 8, 9]) {
+    const b = entry(api, "b", gap * length);
+    expect(api.Slipstream.pair(a, b, s, p)).toBeNull();
+    expect(api.Slipstream.pair(a, b, s, p, true)).toBeNull();
+    expect(api.Slipstream.update([a, b], s, p, 1 / 120)[0].strength).toBe(0);
+    expect(api.Slipstream.update([a, b], s, p, 1 / 120)[0].dragReduction).toBe(0);
+  }
+});
+
+it("erreicht den spürbaren Fünf-km/h-Vorteil beim echten Heranfahren aus vier Fahrzeuglängen", () => {
+  const { api } = loadArcade({ race: true }), s = straight(), p = api.Physics.parameters,
+    follower = entry(api, "a", 0), leader = entry(api, "b", 4 * p.halfLength * 2),
+    gas = { throttle: 1, brake: 0, steer: 0 };
+  let peak = 0;
+  for (let i = 0; i < 120 * 12; i++) {
+    const effects = api.Slipstream.update([follower, leader], s, p, 1 / 120);
+    follower.slipstream = effects[0]; leader.slipstream = effects[1];
+    follower.car = api.Physics.step(follower.car, gas, s, p, 1 / 120, effects[0]);
+    leader.car = api.Physics.step(leader.car, gas, s, p, 1 / 120, effects[1]);
+    peak = Math.max(peak, (follower.car.speed - leader.car.speed) * p.metersPerUnit * 3.6);
+    if (leader.car.x - follower.car.x < p.halfLength * 2 * 1.1) break;
+  }
+  expect(peak).toBeGreaterThan(4.9);
+  expect(peak).toBeLessThanOrEqual(5.000001);
 });
 
 it("lässt die KI den gemeinsamen Windschatten auf freien Geraden nutzen und behält ihre Kurvenbremsung", () => {
@@ -107,6 +148,24 @@ it("lässt die KI den gemeinsamen Windschatten auf freien Geraden nutzen und beh
   }
   expect(straightCases).toBeGreaterThan(0);
   expect(brakingCases).toBeGreaterThan(0);
+});
+
+it("rangiert bei zu engem Stillstand vor einem Hindernis rückwärts, aber nicht in ein dahinter stehendes Auto", () => {
+  const { api } = loadArcade({ race: true }), surface = api.Surface.create(api.TrackCatalog.get("bahrain")),
+    driver = api.Opponents.create(surface, api.Physics.parameters),
+    placed = (id, s, lane) => {
+      const at = surface.at(s, lane);
+      return { ...api.Physics.spawn(surface, s), id, x: at.x, y: at.y, heading: at.ang };
+    },
+    car = placed("ego", -200, -8.8), obstacle = placed("parked", -188, -6),
+    rear = placed("rear", -212, -8.8);
+  function commands(others) {
+    const memory = driver.memory(0, 8), traffic = driver.prepare([car, ...others]), result = [];
+    for (let frame = 0; frame < 55; frame++) result.push(driver.input(traffic[0], traffic, memory));
+    return result;
+  }
+  expect(commands([obstacle]).some((c) => c.brake === 1 && c.throttle === 0)).toBe(true);
+  expect(commands([obstacle, rear]).every((c) => c.brake === 0)).toBe(true);
 });
 
 it("schließt reale Brückenebenen und nahe Nachbararme auf allen 22 Strecken aus", () => {
@@ -171,6 +230,8 @@ it("zeichnet ausschließlich den aktiven gemeinsamen Effektzustand in einem fest
   const positions = renderer.mesh.geometry.attributes.position, copy = Array.from(positions.array);
   expect(copy.every(Number.isFinite)).toBe(true);
   expect(Math.max(...copy.filter((_, i) => i % 3 === 0))).toBeLessThan(b.car.x - 4);
+  expect(Math.min(...copy.filter((_, i) => i % 3 === 0 && i < renderer.mesh.geometry.drawRange.count * 3)))
+    .toBeCloseTo(b.car.x - 3 * api.Physics.parameters.halfLength * 2, 1);
   renderer.update(snapshot);
   expect(renderer.mesh.geometry.attributes.position).toBe(positions);
   expect(Array.from(positions.array)).toEqual(copy);

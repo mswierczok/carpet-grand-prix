@@ -77,7 +77,9 @@ Vollgasziel; ihre Kurven- und Verkehrsziele werden nicht angehoben.
 Die Prozentwerte sind ein maximales zusätzliches Motor-/Geradentempobudget,
 keine garantierte prozentuale Rundenzeitverkürzung. Bei den bestehenden Einheiten
 entspricht 1,2 % höchstens 1,4256 km/h zusätzlich zur Basis von 118,8 km/h.
-Mit vollem Windschatten bleibt der kombinierte obere Bereich bei 123,2256 km/h.
+Mit der neuen [5-km/h-Windschattenabstimmung](SLIPSTREAM_CLOSE.md) liegt der
+kombinierte obere Bereich bei 125,2256 km/h. Die ursprünglichen A/B-Protokolle
+dieses Schritts verwenden weiterhin ihren damaligen 3-km/h-Windschattenstand.
 Es gibt keine Positions-, Zeit- oder direkte Geschwindigkeitszuweisung und keine
 erzwungenen Überholmanöver.
 
@@ -102,8 +104,9 @@ Ohne Aufhol-Kontext läuft weiterhin exakt der bisherige Windschattenpfad.
   ein während dieses Schritts erfolgter Positionswechsel kann in der Ergebnis-
   anzeige bereits eine Position weiter sein.
 - `RaceSession.create(track, { catchup: false })` deaktiviert das System auch
-  für automatisierte Vergleiche. Das deaktivierte Rennen wird exakt gegen den
-  veröffentlichten Stand mit Windschatten verglichen.
+  für automatisierte Vergleiche. Der deaktivierte Rennkern wird exakt gegen den
+  veröffentlichten Kern verglichen, mit derselben aktuellen Windabstimmung auf
+  beiden Vergleichsseiten.
 - Die freien Fahrtests, klassische Meisterschaft, Speicherkennungen, Fahrer,
   Teams, Grafik und Rundenzahlen bleiben erhalten. Keine Migration notwendig.
 
