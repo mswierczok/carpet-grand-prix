@@ -174,3 +174,11 @@ Dialog. `arcade-main.js` pausiert beim Öffnen und leert die Eingaben. Die gemei
 Steuerung schützt die Fahrfläche vor Auswahl/Gesten und verwaltet mehrere Pointer
 mit expliziter Freigabe. Oberfläche, Speicherregeln und Geräte-Testgrenzen:
 [POV_SETTINGS_TOUCH.md](POV_SETTINGS_TOUCH.md).
+
+`main-entry.js` ersetzt den normalen Simulationseinstieg durch `play.html`.
+`pov-launch.js` führt über die bisherige Teamfahrzeugkunst und den Kalender zum
+POV-Rennwochenende. `pov-selection.js` speichert Team/Strecke getrennt von alten
+Spielständen; die erweiterten POV-Präferenzen gelten in Menü und Rennen gemeinsam.
+Der frühere Einstieg bleibt ausschließlich als Altspielstand-Zugang erhalten.
+Umfang, Datenkompatibilität, Offline-Navigation und nächste Schritte:
+[POV_MAIN_MENU.md](POV_MAIN_MENU.md).

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10312c">
+  <link rel="icon" href="data:,">
+  <title>Carpet Grand Prix · Hauptmenü</title>
+  <link rel="stylesheet" href="./styles/arcade.css?v=mobile-settings-1">
+  <link rel="stylesheet" href="./styles/arcade-race.css?v=mobile-settings-1">
+  <link rel="stylesheet" href="./styles/pov-launch.css?v=pov-menu-1">
+</head>
+<body>
+  <main id="povMenu">
+    <header class="menu-brand">
+      <span class="eyebrow">DEIN RENNWAGEN. DEINE LINIE.</span>
+      <h1>CARPET<br>GRAND PRIX</h1>
+      <p>13 Teams · 22 Strecken · Du am Steuer</p>
+    </header>
+    <section id="menuHome" class="menu-panel" aria-label="Hauptmenü">
+      <h2>Dein nächster Grand Prix.</h2>
+      <div class="menu-actions">
+        <button id="newDrive" class="primary" type="button">Rennen fahren</button>
+        <button id="loadSelection" type="button" disabled>Letzte Auswahl laden</button>
+        <button id="openSettings" type="button" aria-haspopup="dialog" aria-controls="raceSettings">Einstellungen</button>
+      </div>
+      <p id="selectionSummary" class="hint">Wähle dein Team und deine nächste Strecke.</p>
+      <p class="hint">Starte mit einem Qualifying oder direkt ins Rennen.</p>
+    </section>
+    <section id="menuSetup" class="menu-panel" aria-labelledby="setupTitle" hidden>
+      <div class="setup-heading"><h2 id="setupTitle" tabindex="-1">Dein Team. Deine Strecke.</h2><span id="teamCounter"></span></div>
+      <div class="menu-car-stage" tabindex="0" role="group" aria-label="Teamfahrzeuge. Mit Pfeiltasten oder Wischgeste wechseln."><img id="teamCar" alt="" width="960" height="540" draggable="false"></div>
+      <h3 id="teamName"></h3><p id="teamCountry" class="hint"></p>
+      <div class="team-navigation">
+        <button id="previousTeam" type="button" aria-label="Vorheriges Team">←</button>
+        <label class="sr-only" for="menuTeam">Dein Team</label><select id="menuTeam"></select>
+        <button id="nextTeam" type="button" aria-label="Nächstes Team">→</button>
+      </div>
+      <div class="menu-track"><label for="menuTrack">Strecke</label><select id="menuTrack"></select></div>
+      <p class="hint">Ein Fahrzeug pro Team · Qualifying und Rennen wählst du im Rennwochenende.</p>
+      <div class="menu-actions"><button id="startDrive" class="primary" type="button">Zum Rennwochenende</button><button id="menuBack" type="button">Zurück zum Hauptmenü</button></div>
+    </section>
+    <template id="menuCarImages">
+      <img data-team-image="t01" src="./assets/cars/team-t01.webp" alt="">
+      <img data-team-image="t02" src="./assets/cars/team-t02.webp" alt="">
+      <img data-team-image="t03" src="./assets/cars/team-t03.webp" alt="">
+      <img data-team-image="t04" src="./assets/cars/team-t04.webp" alt="">
+      <img data-team-image="t05" src="./assets/cars/team-t05.webp" alt="">
+      <img data-team-image="t06" src="./assets/cars/team-t06.webp" alt="">
+      <img data-team-image="t07" src="./assets/cars/team-t07.webp" alt="">
+      <img data-team-image="t08" src="./assets/cars/team-t08.webp" alt="">
+      <img data-team-image="t09" src="./assets/cars/team-t09.webp" alt="">
+      <img data-team-image="t10" src="./assets/cars/team-t10.webp" alt="">
+      <img data-team-image="t11" src="./assets/cars/team-t11.webp" alt="">
+      <img data-team-image="t12" src="./assets/cars/team-t12.webp" alt="">
+      <img data-team-image="t13" src="./assets/cars/team-t13.webp" alt="">
+    </template>
+    <p id="menuMessage" class="hint" role="status" aria-live="polite"></p>
+    <p class="menu-archive"><a href="./index.html?legacy=1">Bisherigen Spielstand öffnen</a><br><small>Separater Zugang für vorhandene Meisterschaften.</small></p>
+    <dialog id="raceSettings" aria-labelledby="settingsTitle">
+      <div class="settings-heading"><h2 id="settingsTitle">Einstellungen</h2><button id="closeSettings" type="button" autofocus>Schließen</button></div>
+      <div class="settings-field"><label for="quality">Grafik</label><select id="quality"><option value="auto">Automatisch</option><option value="low">Sparsam</option></select></div>
+      <div class="settings-field"><label for="difficulty">Schwierigkeit</label><select id="difficulty"><option value="beginner">Anfänger</option><option value="normal">Normal</option><option value="hard">Schwer</option><option value="expert">Experte</option></select></div>
+      <div class="settings-field"><label for="catchup">KI-Aufholhilfe</label><select id="catchup"><option value="on">Dezent</option><option value="off">Aus</option></select></div>
+      <p id="menuPreferenceNote" class="hint" role="status">Gilt für deine nächsten POV-Rennen. Auch im Rennen unter Einstellungen erreichbar.</p>
+    </dialog>
+  </main>
+  <script src="./src/data/arcade-roster.js"></script>
+  <script src="./src/data/arcade-tracks.js?v=south-extension-1"></script>
+  <script src="./src/persistence/pov-preferences.js?v=pov-menu-1"></script>
+  <script src="./src/racing/ai-difficulty.js?v=ai-competence-1"></script>
+  <script src="./src/persistence/pov-selection.js?v=pov-menu-1"></script>
+  <script src="./src/ui/race-settings.js?v=mobile-settings-1"></script>
+  <script src="./src/ui/pov-launch.js?v=pov-menu-1"></script>
+</body>
+</html>

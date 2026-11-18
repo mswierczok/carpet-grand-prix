@@ -41,13 +41,13 @@ for (const id of ["bahrain", "france", "russia"])
     }
     await page.goto(`race.html?track=${id}`);
     await page.clock.runFor(64);
-    const storage = await page.evaluate(() => ({ ...localStorage })),
-      laps = await page.evaluate(() => __driveSnapshot.race.laps);
+    const laps = await page.evaluate(() => __driveSnapshot.race.laps);
     if (id === "bahrain") {
       expect(laps).toBe(8);
       await expect(page.locator("#arcadeApp")).toHaveAttribute("data-rendering", "3d");
       await selectDriveSetting(page, "quality", "low");
     }
+    const storage = await page.evaluate(() => ({ ...localStorage }));
     await page.locator("#pause").click();
     await page.evaluate(pilotRace);
     for (let step = 0; step < 20; step++) {

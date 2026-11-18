@@ -23,7 +23,7 @@ test('zeigt für alle 13 Werkstatt-Teams exakt die gemeinsamen Rennsprite-Fläch
   test.setTimeout(120_000);
   const errors = []; page.on('pageerror', error => errors.push(error.message));
   await prepare(page);
-  await page.goto('./');
+  await page.goto('./?legacy=1');
   for (const team of save.teams) {
     await page.evaluate(save => localStorage.setItem('carpet_gp_v072', JSON.stringify(save)), { ...save, team: team.id });
     await page.reload();
@@ -41,7 +41,7 @@ test('zeigt für alle 13 Werkstatt-Teams exakt die gemeinsamen Rennsprite-Fläch
 
 test('erhält Bereichsfokus, Logo-Upload, Neuladen, Entfernen und Paketentwicklung', async ({ page }) => {
   await prepare(page);
-  await page.goto('./'); await openWorkshop(page);
+  await page.goto('./?legacy=1'); await openWorkshop(page);
   const before = await page.evaluate(() => localStorage.getItem('carpet_gp_v072'));
   await page.locator('.cg-hotspot-power').click();
   await expect(page.locator('.cg-hotspot-power')).toHaveAttribute('aria-pressed', 'true');

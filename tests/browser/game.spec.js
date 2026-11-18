@@ -6,7 +6,7 @@ const fixture = name => readFileSync(new URL(`../fixtures/${name}.json`, import.
 const state = page => page.evaluate(k => JSON.parse(localStorage.getItem(k)), key);
 
 async function start(page, mode = 'manager') {
-  await page.goto('./');
+  await page.goto('./?legacy=1');
   await page.locator('[data-launch="new"]').click();
   await page.locator(`[data-launch="new-${mode}"]`).click();
   if (mode === 'manager') {
@@ -19,7 +19,7 @@ async function start(page, mode = 'manager') {
 }
 
 async function resume(page, name) {
-  await page.goto('./');
+  await page.goto('./?legacy=1');
   await page.evaluate(({ key, data }) => localStorage.setItem(key, data), { key, data: fixture(name) });
   await page.reload();
   await page.locator('[data-launch="load-view"]').click();
@@ -120,7 +120,7 @@ test('stellt laufendes Qualifying und getrennte Einstellungen wieder her', async
 });
 
 test('schützt beschädigten lokalen Spielstand beim Start vor Überschreiben', async ({ page }) => {
-  await page.goto('./');
+  await page.goto('./?legacy=1');
   const broken = '{invalid-json';
   await page.evaluate(({ key, broken }) => localStorage.setItem(key, broken), { key, broken });
   await page.reload();

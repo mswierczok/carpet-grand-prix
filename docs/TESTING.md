@@ -160,6 +160,13 @@ Die bestehende Pages-Veröffentlichung wird nicht umgestellt.
 
 ## Grenzen
 
+`pov-menu.spec.js` prüft den neuen normalen Einstieg, die Teamfahrzeugbilder,
+gespeicherte Auswahl, gemeinsame Einstellungen, 3D-Übergabe, Storagefehler und
+Offline-Navigation. Die früheren Browserfälle öffnen ausdrücklich `?legacy=1`.
+Quellschutz normalisiert nur den einzelnen genehmigten Weiterleitungs-Tag;
+der übrige alte Spielcode bleibt bytegenau geschützt. Details:
+[POV_MAIN_MENU.md](POV_MAIN_MENU.md).
+
 Die kompakten POV-Einstellungen und Mehrfinger-Eingaben haben eigene Desktop-/
 Mobilprüfungen in `race-settings.spec.js`: nativer Dialog, Fokus/Escape, Pause,
 Reset oben, Offlinebetrieb und echte CDP-Touchfolgen mit Abbruch und erneuter

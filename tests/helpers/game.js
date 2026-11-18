@@ -1,9 +1,10 @@
 // Test-only adapter for the original closed IIFE. index.html is never rewritten.
+import { withoutMainEntry } from './legacy-entry.js';
 import { readFileSync } from 'node:fs';
 import { Script, createContext } from 'node:vm';
 
 export const ROOT = new URL('../../', import.meta.url);
-export const html = readFileSync(new URL('index.html', ROOT), 'utf8');
+export const html = withoutMainEntry(readFileSync(new URL('index.html', ROOT), 'utf8'));
 
 export function createGame(seed = 12345) {
   const storage = new Map();

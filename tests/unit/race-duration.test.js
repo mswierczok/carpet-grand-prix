@@ -1,3 +1,4 @@
+import { withoutMainEntry } from "../helpers/legacy-entry.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -55,7 +56,7 @@ it("schützt Physik, Grafik, Daten und Originalspiel trotz freigegebener KI-Änd
   for (const file of files) {
     const current = read(file),
       original = execFileSync("git", ["show", `${baseline}:${file}`], { cwd: ROOT, encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
-    expect(current).toBe(original);
+    expect(file === "index.html" ? withoutMainEntry(current) : current).toBe(original);
   }
 });
 

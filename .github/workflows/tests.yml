@@ -34,6 +34,7 @@ jobs:
             dist/carpet-grand-prix-arcade-offline.html
             dist/carpet-grand-prix-arcade3d-offline.html
             dist/carpet-grand-prix-race-offline.html
+            dist/carpet-grand-prix-menu-offline.html
             dist/carpet-grand-prix-offline.html
           if-no-files-found: error
           retention-days: 30

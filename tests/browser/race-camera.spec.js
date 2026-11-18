@@ -20,7 +20,7 @@ for (const name of ['initial', 'activeQualifying', 'activeRace']) {
         } }; },
       });
     }, save);
-    await page.goto('./');
+    await page.goto('./?legacy=1');
     await page.locator('[data-launch="load-view"]').click();
     await page.locator('#launchResume').click();
     const c = await page.evaluate(() => globalThis.__cameraFrame);
