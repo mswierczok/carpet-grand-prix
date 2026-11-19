@@ -1,0 +1,45 @@
+{
+  "frames": 22,
+  "activeSeconds": 2.3666000000000005,
+  "frameIntervalP50ms": 100,
+  "frameIntervalP95ms": 133.39999999999964,
+  "cpuSubmitP95ms": 1.8999999985098839,
+  "activeWakeFrames": 0,
+  "peakWakeEmitters": 0,
+  "peakWakeTriangles": 0,
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "graphics": {
+    "drawCalls": 132,
+    "triangles": 63592,
+    "geometries": 127,
+    "textures": 23,
+    "pixelRatio": 0.65,
+    "quality": "low",
+    "lost": false,
+    "world": {
+      "theme": "carpet-desert",
+      "assets": 14,
+      "ropeTriangles": 7164,
+      "tunnelClearHeight": 22,
+      "tunnelHalfWidth": 31.5,
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  "vehicles": 13,
+  "difficulty": "normal",
+  "slipstreamEnabled": true,
+  "recordedAt": "2026-11-19T13:06:01.136Z",
+  "browser": "155.0.8059.79",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "softwareRequested": true,
+  "raceMode": true,
+  "waitedForActiveWake": false,
+  "limits": "Short headless straight-line sample, no physical-device or 60-FPS acceptance. CPU submit is not GPU frame time."
+}

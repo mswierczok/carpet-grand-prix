@@ -1,0 +1,993 @@
+{
+  "recordedAt": "2026-11-19T13:12:18.439Z",
+  "browser": "Chromium software WebGL; mobile viewport, not a physical iPhone",
+  "hashes": {
+    "src/racing/physics.js": "082782a78df28b280f7d38b23d41a5df03ba7e06153e737f22a055a3badd9764",
+    "src/racing/opponents.js": "ca6db01c6a2a1f88ff1a98385cad533151b432db673b3c39346c59f2922213dc",
+    "src/racing/race-session.js": "772631b8e12e1ce900928398f7bf05a78545f7cde91277ea09090cd4d9a76a94",
+    "src/data/arcade-tracks.js": "22a1ddf491f9a030ef1ecee9f3fac88deec0269ff17625c4096c3a53dc51f165",
+    "src/data/arcade-boundaries.js": "ddd8b5b4d97b122f9e993e2d06b4c0ae9d26c23cbf3d8d1e6aa323621eb5cb00",
+    "src/persistence/pov-checkpoint.js": "e2bbb57bafd5d1e5cba7acba4c0a6e71da361827fc276d4cc297b84b7a63678f"
+  },
+  "artHashes": {
+    "src/rendering/arcade3d.js": "91133376d146fee1ac2526b71049cdfc4445e6be4f16704a5949f2896fb86fb6",
+    "src/rendering/tracks3d.js": "0a931c44b5a71365cea4d11408210da42d70a84fb9145dbcb421718e4ee3d35a",
+    "src/rendering/bahrain3d.js": "4dc482bf8bb972d9163c057e64c97800277dc0986c70eb185729946e89d24fbb",
+    "src/rendering/bahrain-layout.js": "5fd683c7f16f5b05b963ef9901e170ac7ec36c888447961a2705ae9e92428c8b",
+    "src/rendering/bahrain-materials3d.js": "fdb20d1a369266318b86db1e75ad34205b8f0e53c4ca06aa2cd5c08d12af15df",
+    "src/rendering/illustrated-kit3d.js": "7a4adcacb8fe96e0a8ac02db5468e102086727e72f6de31abfd57a8acba940e6",
+    "race.html": "6a512482c406c0a341366ef480bbaf4e76b5bc3a04676907c37ca06a1a348fce",
+    "arcade3d.html": "d5905091163fbc45e2ce9656efbc6770eefb67361e276d4bbccae27a8968563e",
+    "src/rendering/camera3d.js": "61d7b9fc63708a486a6aa6e0373949b00965485aa457db4649a84bde20473059",
+    "src/rendering/vehicles3d.js": "fad1b68b8377aa8065fa01ecbcbbc079d99115b81f1066cd71f16fa35808a5b5",
+    "src/rendering/fleet3d.js": "7cf2ea703b54079d2067caea4b65b3123db5528312213281e28f13776d3cb0a8",
+    "src/vendor/three.js": "17603458db511414cf3d066806171c90b8fc8eb43b2f7cacb0480d85f0b852bb",
+    "assets/drivers/portraits/d001.png": "57524546b9acf3d8f5aac1f6209abe0e2e2faf2a25482cf233aaec26eab96be9",
+    "assets/drivers/portraits/d002.png": "cef4f7c06891788bd1db4702103c4418d90a91553f945b20edfab2a46de2fffb",
+    "assets/drivers/portraits/d003.png": "1500a52fb7fec5fc5f74dcf6496720cff5f37230853971f65d0e843b2dff2dc1",
+    "assets/drivers/portraits/d004.png": "97f34ae0494413d877c48d86e71badbcfa6f99b33357515c19574e319b0b4fcd",
+    "assets/drivers/portraits/d005.png": "b6e6f49591b23b07ff3efbe6135becfc396238422d0c1a0d286ca2da31b254aa",
+    "assets/drivers/portraits/d006.png": "a3293e7d15f49b7773a215dedd19ea604984a9eeb5b1595b8ca755f6116f315e",
+    "assets/drivers/portraits/d007.png": "03eae3b6563f76ebf945dc171532bf0e1dfa871176a804376e6a54ffeb023651",
+    "assets/drivers/portraits/d008.png": "edac35cb2dfeee21685032dc1c43a10116cf8792f87d0857a8e6f34910ab7ccc",
+    "assets/drivers/portraits/d009.png": "0d75f921365ca002c0b3ec5cd2c54c7c0437a0007bd7ecebd58c170cea8a095f",
+    "assets/drivers/portraits/d010.png": "5c3762f5044adec39dd34b9cc4f2bb10c4cf3646f2515da651c0b4f85170f8bc",
+    "assets/drivers/portraits/d011.png": "7152a6c47c05bcd6b8384b36689725e7275d576d4ac9d0e221c99d2b79bd0761",
+    "assets/drivers/portraits/d012.png": "ba32ccdcbe73b52a0d4109ce6032fccec557a2653aebf292d23b688a78fab295",
+    "assets/drivers/portraits/d013.png": "af616fe64866a60410b0d4edae299dba0c81296227baf464b867020fcf876305",
+    "assets/drivers/portraits/d014.png": "662589426d738d10fd8dfd0ce30913b91505645c3660acc843aac61630af02f5",
+    "assets/drivers/portraits/d015.png": "58d797fa34480cc0da3a7b21ae079ac80b63f40172fad641495431f6e342ede9",
+    "assets/drivers/portraits/d016.png": "c22c3f24193479a7d13dc4ddb3a6476d0e3ea710fcba93b50dd4671636d5cb30",
+    "assets/drivers/portraits/d017.png": "6c8f2ebf716d185da728162446c5c01de980fe1270058163e12061d6c6eae985",
+    "assets/drivers/portraits/d018.png": "43b04f3c4b9340bfeebdd60a815c8feb771d64c0e71f2b92a57d915bf221abaa",
+    "assets/drivers/portraits/d019.png": "28bbaceb7d52b9ad2ee7fc4b74fa63d752f6046d4de3c542c6088c7a349ccf47",
+    "assets/drivers/portraits/d020.png": "6f5ceb057f235bebbae3e334c1362f0f23120d7dcfedcbebc6924b89aaf71a7c",
+    "assets/drivers/portraits/d021.png": "67d956b8bdc324a03623730e7ce42f0fa742f16b0a6eb84cdc1f02b96e3762e8",
+    "assets/drivers/portraits/d022.png": "5b62da0e5925dcb87ef25cabdf17f43ee01f67a31c410bc637b3237d2242b9c6",
+    "assets/drivers/portraits/d023.png": "e0281889d860c0c17c86b2655ede556d72391b2125cecef0266e058b71728c10",
+    "assets/drivers/portraits/d024.png": "5dc3db346beb45bd3e8d682de4568c5250bb5e17a0c49412585763ef5a2353bb",
+    "assets/drivers/portraits/d025.png": "c3e341752c0776d65eb12f9fe15048403623f29ff7fb0434c168eb5e8da615d2",
+    "assets/drivers/portraits/d026.png": "0bdbc2cd79cfb4adc834e7ce24eae5038249a2896db0429087ccab7ce21397ef",
+    "assets/drivers/portraits/d027.png": "be8adf172a93bcf7d1e72d3a5eee15c42b409b5736c540c640038700fd46da8d",
+    "assets/drivers/portraits/d028.png": "eef445cf3d9348b95d2f44e194a7c0070262027b9c417faf91e68565143a4a8d",
+    "assets/drivers/portraits/d029.png": "c42a55602e656e29628a85f57ad6ed8a11d9353902d845e6b84a9b469291d822",
+    "assets/drivers/portraits/d030.png": "033a6582c1c1196fa09cc51f251860cc4acfff4eb5a5ed8ac951f72befabc0be",
+    "assets/drivers/portraits/d031.png": "5565c124edae9dbfd93de319a1f102e84ec28a59dd6bbcf884e01dc82c1a9009",
+    "assets/drivers/portraits/d032.png": "853fb1e5928b2f2cdc9930d03ecb1e8ae10462cde6cfc5a4bb8675ccec98087e",
+    "assets/drivers/portraits/d033.png": "0685af74d3911a96233d3a65f1fc0e48d116b228a0876bce10b86d31f70d902f",
+    "assets/drivers/portraits/d034.png": "441c723b43ff3844ec379dee123913aa25560dfa576a2a490fcc16f3ff7cb65e",
+    "assets/drivers/portraits/d035.png": "9a8c4ab1dd24b69337024af915c7cb6c17df80618fbf0ec13919ba4b88666e1c"
+  },
+  "reports": [
+    {
+      "viewport": "desktop",
+      "shot": "01-grid",
+      "s": -118,
+      "car": {
+        "x": 611.0565635501987,
+        "y": 192.67142008169654,
+        "heading": 0,
+        "vx": 0,
+        "vy": 0,
+        "s": -118,
+        "steering": 0,
+        "speed": 0,
+        "longitudinalSpeed": 0,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0
+      },
+      "graphics": {
+        "drawCalls": 155,
+        "triangles": 69214,
+        "geometries": 133,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "assets": 14,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 31.5,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "02-camel",
+      "s": 73.87719907512016,
+      "car": {
+        "x": 802.6033853736834,
+        "y": 202.86723921156812,
+        "heading": 0.6369703114762586,
+        "steering": 0.056913443392567487,
+        "vx": 33.02781229397148,
+        "vy": 24.435469181843327,
+        "speed": 41.08440749314305,
+        "longitudinalSpeed": 41.08440749314305,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 73.87719907512016,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 141,
+        "triangles": 65896,
+        "geometries": 138,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "assets": 14,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 31.5,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "03-corner",
+      "s": 706.8372272223337,
+      "car": {
+        "x": 759.6595277275708,
+        "y": 539.3115705843829,
+        "heading": 4.601374942289711,
+        "steering": 0.0679819755323171,
+        "vx": 5.292328578129999,
+        "vy": -49.562031236494235,
+        "speed": 49.84379281381105,
+        "longitudinalSpeed": 48.670623906785295,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 706.8372272223337,
+        "hitCar": true
+      },
+      "graphics": {
+        "drawCalls": 158,
+        "triangles": 70202,
+        "geometries": 166,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "assets": 14,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 31.5,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 1,
+          "triangles": 192
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "04-tunnel-entry",
+      "s": 2349.2764468616156,
+      "car": {
+        "x": 323.13940135023574,
+        "y": 199.89820343953008,
+        "heading": 6.362465192162063,
+        "steering": 0.08350490508147645,
+        "vx": 61.070582760208694,
+        "vy": 4.851838125287668,
+        "speed": 61.263010143686984,
+        "longitudinalSpeed": 61.263010143686984,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 2349.2764468616156,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 170,
+        "triangles": 71364,
+        "geometries": 166,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "assets": 14,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 31.5,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "05-tunnel-inside",
+      "s": 2457.055870299245,
+      "car": {
+        "x": 430.7710263191384,
+        "y": 206.17772118143432,
+        "heading": 6.3152272768537845,
+        "steering": 0.02593003911318151,
+        "vx": 108.96824961116575,
+        "vy": 3.4927527535517475,
+        "speed": 109.0242117381216,
+        "longitudinalSpeed": 109.02421173812158,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 2457.055870299245,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 162,
+        "triangles": 70936,
+        "geometries": 166,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "assets": 14,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 31.5,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "06-pits",
+      "s": 2702.582534612651,
+      "car": {
+        "x": 676.3443331437501,
+        "y": 206.639220700857,
+        "heading": 6.280507391092191,
+        "steering": 0.027336261777284345,
+        "vx": 109.99960558233454,
+        "vy": -0.29457041754098184,
+        "speed": 110.00000000000024,
+        "longitudinalSpeed": 110.00000000000024,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 2702.582534612651,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 108,
+        "triangles": 43732,
+        "geometries": 166,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "assets": 14,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 31.5,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 1,
+          "triangles": 192
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "07-finish",
+      "s": 2783.945859732836,
+      "car": {
+        "x": 757.7072341798745,
+        "y": 206.47974526137943,
+        "heading": 6.288375803529022,
+        "steering": 0.00230886331674226,
+        "vx": 103.24890580421983,
+        "vy": 0.5359178814349808,
+        "speed": 103.250296647246,
+        "longitudinalSpeed": 103.25029664724602,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 2783.945859732836,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 85,
+        "triangles": 33590,
+        "geometries": 166,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "assets": 14,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 31.5,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 1,
+          "triangles": 192
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "complete": true,
+      "errors": [],
+      "final": {
+        "race": {
+          "difficulty": "normal",
+          "catchup": true,
+          "phase": "finished",
+          "countdown": 0,
+          "elapsed": 228.2999999999567,
+          "laps": 8,
+          "playerTeam": "t01",
+          "position": 13,
+          "finished": 13,
+          "standings": [
+            {
+              "id": "t03",
+              "name": "Falkenheim GP",
+              "player": false,
+              "position": 1,
+              "completed": 8,
+              "progress": 22753.015645457224,
+              "finishTime": 209.69326734142078
+            },
+            {
+              "id": "t02",
+              "name": "Alderwick Racing",
+              "player": false,
+              "position": 2,
+              "completed": 8,
+              "progress": 22753.015645457224,
+              "finishTime": 211.62621202075675
+            },
+            {
+              "id": "t05",
+              "name": "Eisenbach Motorsport",
+              "player": false,
+              "position": 3,
+              "completed": 8,
+              "progress": 22753.015645457224,
+              "finishTime": 213.23322735994378
+            },
+            {
+              "id": "t07",
+              "name": "Ragos Racing",
+              "player": false,
+              "position": 4,
+              "completed": 8,
+              "progress": 22753.015645457224,
+              "finishTime": 214.50441395886372
+            },
+            {
+              "id": "t04",
+              "name": "Scuderia Bellarossa",
+              "player": false,
+              "position": 5,
+              "completed": 8,
+              "progress": 22753.015645457224,
+              "finishTime": 216.5730229995039
+            },
+            {
+              "id": "t06",
+              "name": "Orange",
+              "player": false,
+              "position": 6,
+              "completed": 8,
+              "progress": 22753.015645457224,
+              "finishTime": 217.64504198836957
+            },
+            {
+              "id": "t09",
+              "name": "Lincoln",
+              "player": false,
+              "position": 7,
+              "completed": 8,
+              "progress": 22753.015645457224,
+              "finishTime": 218.81862652818063
+            },
+            {
+              "id": "t08",
+              "name": "Mugan",
+              "player": false,
+              "position": 8,
+              "completed": 8,
+              "progress": 22753.015645457224,
+              "finishTime": 221.21479433234796
+            },
+            {
+              "id": "t10",
+              "name": "Panther Racing",
+              "player": false,
+              "position": 9,
+              "completed": 8,
+              "progress": 22632.332423352374,
+              "finishTime": 223.03012315824517
+            },
+            {
+              "id": "t11",
+              "name": "Rivage Racing",
+              "player": false,
+              "position": 10,
+              "completed": 8,
+              "progress": 22375.38084332772,
+              "finishTime": 225.34048760805183
+            },
+            {
+              "id": "t12",
+              "name": "Scuderia Vespera",
+              "player": false,
+              "position": 11,
+              "completed": 8,
+              "progress": 22256.049374572864,
+              "finishTime": 226.42314545359392
+            },
+            {
+              "id": "t13",
+              "name": "Redwood GP",
+              "player": false,
+              "position": 12,
+              "completed": 8,
+              "progress": 22154.38286484174,
+              "finishTime": 227.34204534825403
+            },
+            {
+              "id": "t01",
+              "name": "Vauclair Motorsport",
+              "player": true,
+              "position": 13,
+              "completed": 8,
+              "progress": 22042.443914282998,
+              "finishTime": 228.29937249731768
+            }
+          ]
+        },
+        "contacts": 40,
+        "timing": {
+          "elapsed": 228.2999999999567,
+          "nextGate": 1,
+          "started": true,
+          "lapStart": 228.29937249731768,
+          "completed": 8,
+          "lastLap": {
+            "seconds": 26.778041801474217,
+            "valid": true
+          },
+          "bestLap": 25.735886898548586,
+          "invalid": false
+        },
+        "graphics": {
+          "drawCalls": 84,
+          "triangles": 32126,
+          "geometries": 166,
+          "textures": 23,
+          "pixelRatio": 0.65,
+          "quality": "low",
+          "lost": false,
+          "world": {
+            "theme": "carpet-desert",
+            "assets": 14,
+            "ropeTriangles": 7164,
+            "tunnelClearHeight": 22,
+            "tunnelHalfWidth": 31.5,
+            "hiddenForCamera": 0
+          },
+          "wake": {
+            "emitters": 0,
+            "triangles": 0
+          }
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "01-grid",
+      "s": -118,
+      "car": {
+        "x": 611.0565635501987,
+        "y": 192.67142008169654,
+        "heading": 0,
+        "vx": 0,
+        "vy": 0,
+        "s": -118,
+        "steering": 0,
+        "speed": 0,
+        "longitudinalSpeed": 0,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0
+      },
+      "graphics": {
+        "drawCalls": 144,
+        "triangles": 66666,
+        "geometries": 122,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "assets": 14,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 31.5,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "02-camel",
+      "s": 75.09881559997449,
+      "car": {
+        "x": 803.7423169878437,
+        "y": 203.72229451439298,
+        "heading": 0.6433124261868024,
+        "steering": 0.033768963401913016,
+        "vx": 34.21021531585033,
+        "vy": 25.647577175390417,
+        "speed": 42.756719319008184,
+        "longitudinalSpeed": 42.756719319008184,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 75.09881559997449,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 108,
+        "triangles": 46912,
+        "geometries": 131,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "assets": 14,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 31.5,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "03-corner",
+      "s": 693.9680044509713,
+      "car": {
+        "x": 760.5946178915367,
+        "y": 551.733995066974,
+        "heading": 4.2596735335396705,
+        "steering": -0.11650657841741582,
+        "vx": -8.890214637261682,
+        "vy": -50.79662249457659,
+        "speed": 51.568718940391626,
+        "longitudinalSpeed": 49.56816605629144,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 693.9680044509713,
+        "hitCar": true
+      },
+      "graphics": {
+        "drawCalls": 146,
+        "triangles": 63630,
+        "geometries": 162,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "assets": 14,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 31.5,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "04-tunnel-entry",
+      "s": 2348.6612162172655,
+      "car": {
+        "x": 322.6882296104714,
+        "y": 203.9710851615663,
+        "heading": 6.2312395605374995,
+        "steering": 0.05704388034058547,
+        "vx": 107.36155465140881,
+        "vy": -5.581997768045401,
+        "speed": 107.50656778192626,
+        "longitudinalSpeed": 107.50656778192625,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 2348.6612162172655,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 135,
+        "triangles": 56068,
+        "geometries": 165,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "assets": 14,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 31.5,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "05-tunnel-inside",
+      "s": 2457.0023593487954,
+      "car": {
+        "x": 430.7189270228677,
+        "y": 205.9446360890573,
+        "heading": 6.283535486093825,
+        "steering": -0.0026549989614253347,
+        "vx": 110.05243695543513,
+        "vy": 0.038538044457635125,
+        "speed": 110.05244370304048,
+        "longitudinalSpeed": 110.05244370304048,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 2457.0023593487954,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 130,
+        "triangles": 52334,
+        "geometries": 166,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "assets": 14,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 31.5,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 1,
+          "triangles": 192
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "06-pits",
+      "s": 2702.7584370340583,
+      "car": {
+        "x": 676.5202355651576,
+        "y": 206.6771221969533,
+        "heading": 6.284678435922568,
+        "steering": 0.02412758385530076,
+        "vx": 110.07767884519706,
+        "vy": 0.16436026838787618,
+        "speed": 110.07780155074032,
+        "longitudinalSpeed": 110.07780155074032,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 2702.7584370340583,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 87,
+        "triangles": 34942,
+        "geometries": 166,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "assets": 14,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 31.5,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 1,
+          "triangles": 192
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "07-finish",
+      "s": 2784.0530483411558,
+      "car": {
+        "x": 757.8144227881943,
+        "y": 206.70500966142026,
+        "heading": 6.296711415736596,
+        "steering": -0.009551151223137957,
+        "vx": 101.18206980483829,
+        "vy": 1.3686831306415501,
+        "speed": 101.19132642427053,
+        "longitudinalSpeed": 101.19132642427053,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 2784.0530483411558,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 75,
+        "triangles": 30778,
+        "geometries": 166,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "assets": 14,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 31.5,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "complete": false,
+      "errors": [],
+      "final": {
+        "race": {
+          "difficulty": "normal",
+          "catchup": true,
+          "phase": "racing",
+          "countdown": 0,
+          "elapsed": 37.674999999998505,
+          "laps": 8,
+          "playerTeam": "t01",
+          "position": 11,
+          "finished": 0,
+          "standings": [
+            {
+              "id": "t03",
+              "name": "Falkenheim GP",
+              "player": false,
+              "position": 1,
+              "completed": 1,
+              "progress": 3871.648231752748,
+              "finishTime": null
+            },
+            {
+              "id": "t02",
+              "name": "Alderwick Racing",
+              "player": false,
+              "position": 2,
+              "completed": 1,
+              "progress": 3780.528633574709,
+              "finishTime": null
+            },
+            {
+              "id": "t05",
+              "name": "Eisenbach Motorsport",
+              "player": false,
+              "position": 3,
+              "completed": 1,
+              "progress": 3628.190196854732,
+              "finishTime": null
+            },
+            {
+              "id": "t07",
+              "name": "Ragos Racing",
+              "player": false,
+              "position": 4,
+              "completed": 1,
+              "progress": 3400.34322972406,
+              "finishTime": null
+            },
+            {
+              "id": "t04",
+              "name": "Scuderia Bellarossa",
+              "player": false,
+              "position": 5,
+              "completed": 1,
+              "progress": 3294.685638713955,
+              "finishTime": null
+            },
+            {
+              "id": "t06",
+              "name": "Orange",
+              "player": false,
+              "position": 6,
+              "completed": 1,
+              "progress": 3162.2112425016353,
+              "finishTime": null
+            },
+            {
+              "id": "t09",
+              "name": "Lincoln",
+              "player": false,
+              "position": 7,
+              "completed": 1,
+              "progress": 3079.5702694061456,
+              "finishTime": null
+            },
+            {
+              "id": "t08",
+              "name": "Mugan",
+              "player": false,
+              "position": 8,
+              "completed": 1,
+              "progress": 2975.1437196842653,
+              "finishTime": null
+            },
+            {
+              "id": "t11",
+              "name": "Rivage Racing",
+              "player": false,
+              "position": 9,
+              "completed": 1,
+              "progress": 2868.980853109095,
+              "finishTime": null
+            },
+            {
+              "id": "t10",
+              "name": "Panther Racing",
+              "player": false,
+              "position": 10,
+              "completed": 1,
+              "progress": 2827.0036325465594,
+              "finishTime": null
+            },
+            {
+              "id": "t01",
+              "name": "Vauclair Motorsport",
+              "player": true,
+              "position": 11,
+              "completed": 1,
+              "progress": 2784.0530483411558,
+              "finishTime": null
+            },
+            {
+              "id": "t13",
+              "name": "Redwood GP",
+              "player": false,
+              "position": 12,
+              "completed": 1,
+              "progress": 2776.4988478730147,
+              "finishTime": null
+            },
+            {
+              "id": "t12",
+              "name": "Scuderia Vespera",
+              "player": false,
+              "position": 13,
+              "completed": 0,
+              "progress": 2693.1637617150764,
+              "finishTime": null
+            }
+          ]
+        },
+        "contacts": 12,
+        "timing": {
+          "elapsed": 37.674999999998505,
+          "nextGate": 1,
+          "started": true,
+          "lapStart": 37.411412940986054,
+          "completed": 1,
+          "lastLap": {
+            "seconds": 35.08666653539693,
+            "valid": true
+          },
+          "bestLap": 35.08666653539693,
+          "invalid": false
+        },
+        "graphics": {
+          "drawCalls": 75,
+          "triangles": 30778,
+          "geometries": 166,
+          "textures": 23,
+          "pixelRatio": 0.65,
+          "quality": "low",
+          "lost": false,
+          "world": {
+            "theme": "carpet-desert",
+            "assets": 14,
+            "ropeTriangles": 7164,
+            "tunnelClearHeight": 22,
+            "tunnelHalfWidth": 31.5,
+            "hiddenForCamera": 0
+          },
+          "wake": {
+            "emitters": 0,
+            "triangles": 0
+          }
+        }
+      }
+    }
+  ]
+}

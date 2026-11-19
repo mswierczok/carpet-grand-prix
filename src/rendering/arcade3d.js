@@ -20,8 +20,17 @@
     const desert = surface.id === "bahrain" && !!A.Bahrain3D;
     scene.background = new T.Color(desert ? "#e3d9c7" : "#b8beb5");
     scene.fog = new T.Fog(desert ? "#e3d9c7" : "#b8beb5", 180, 480);
-    scene.add(new T.HemisphereLight(desert ? "#fff3d8" : "#ffedce", desert ? "#735f50" : "#627384", desert ? 1 : 1.5));
-    const light = new T.DirectionalLight(desert ? "#ffecd1" : "#fff1d6", desert ? 1.2 : 1.6);
+    scene.add(
+      new T.HemisphereLight(
+        desert ? "#fff3d8" : "#ffedce",
+        desert ? "#735f50" : "#627384",
+        desert ? 1 : 1.5,
+      ),
+    );
+    const light = new T.DirectionalLight(
+      desert ? "#ffecd1" : "#fff1d6",
+      desert ? 1.2 : 1.6,
+    );
     light.position.set(-150, 200, -80);
     scene.add(light);
     const camera = new T.PerspectiveCamera(55, 1, 0.3, 2400),
@@ -44,7 +53,7 @@
     function resize() {
       const rect = canvas.getBoundingClientRect(),
         dpr = Math.min(
-          quality === "low" ? 0.75 : 1.5,
+          quality === "low" ? (desert ? 0.65 : 0.75) : 1.5,
           window.devicePixelRatio || 1,
           Math.sqrt(1000000 / Math.max(1, rect.width * rect.height)),
         ),

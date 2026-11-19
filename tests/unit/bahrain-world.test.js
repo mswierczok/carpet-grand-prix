@@ -79,6 +79,11 @@ it("übernimmt dieselben Fahrbahndreiecke und hält reale Requisitenflächen au�
       .position.array,
   ]);
   world.group.updateMatrixWorld(true);
+  world.group.traverse((node) => {
+    if (!node.isMesh) return;
+    for (const attribute of Object.values(node.geometry.attributes))
+      expect(attribute.array.every(Number.isFinite), node.name).toBe(true);
+  });
   for (const spec of world.layout.objects) {
     if (spec.id !== "block-tunnel")
       expect(spec.clearance, spec.id).toBeGreaterThan(4);

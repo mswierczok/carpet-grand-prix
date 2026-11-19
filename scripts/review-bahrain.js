@@ -150,6 +150,14 @@ writeFileSync(
           "illustrated-kit3d",
         ]
           .map((n) => `src/rendering/${n}.js`)
+          .concat([
+            "race.html",
+            "arcade3d.html",
+            "src/rendering/camera3d.js",
+            "src/rendering/vehicles3d.js",
+            "src/rendering/fleet3d.js",
+            "src/vendor/three.js",
+          ])
           .concat(
             Array.from(
               { length: 35 },

@@ -1,5 +1,25 @@
 # Tests
 
+Der Bahrain-Grafikumbau hat zusätzlich `bahrain-world.test.js` (bytegleiche
+Rennsysteme/Originalporträts, tatsächliche Fahrbahndreiecke, Requisitenabstände
+und Kamera-Sichtstrahlen) und `bahrain-world.spec.js` (echte Desktop-/Mobilrennen
+über acht Runden mit 13 Autos, Offlinebetrieb, Streckenwechsel und unveränderliche
+Rendereingaben). Eigene Grafik-CI-Jobs halten diese Fahrten vom übrigen Browserjob
+getrennt. Auch Bahrain hält im freien Fahrtest die ursprüngliche Grenze von
+30.000 Dreiecken ein. Für die komplette Startaufstellung gilt ein zusätzliches
+Budget von 80.000 Dreiecken und 170 Draw Calls. Shaderfehler und WebGL-Fehler
+werden ausdrücklich geprüft. Die Offline-Kameraprüfung fährt zwei echte Runden,
+zeichnet im Software-Renderer jeden dritten Zwischenframe und prüft weiterhin
+über 600 tatsächliche Kamerabilder bei unveränderten Physik-/Eingabeschritten.
+Ungebremste Rendering-Messungen erfolgen separat. Messwerte und Grenzen:
+[BAHRAIN_VISUAL.md](BAHRAIN_VISUAL.md).
+
+Nach beiden Offline-Builds erzeugt `node scripts/build-bahrain-review.js` ein
+eigenständig öffnungsfähiges Abnahmepaket unter `dist/bahrain-review/` mit Galerie,
+Original-Spielaufnahmen und spielbarem Rennen. CI stellt es als
+`carpet-grand-prix-bahrain-review` bereit. Es wird keine Vorschau auf `main`
+veröffentlicht; der Merge bleibt freigabepflichtig.
+
 Node.js 24 LTS verwenden. `npm ci`, anschließend einmalig
 `npx playwright install --with-deps chromium` ausführen.
 

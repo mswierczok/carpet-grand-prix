@@ -8,9 +8,12 @@
       geometries = [],
       shadows = [];
     const finishes = {
-      wood: materials.toon("#ffffff", maps.wood, { vertexColors: true }),
-      cloth: materials.toon("#ffffff", maps.cloth, { vertexColors: true }),
-      plain: materials.toon("#ffffff", null, { vertexColors: true }),
+      wood: materials.basic("#ffffff", { map: maps.wood, vertexColors: true }),
+      cloth: materials.basic("#ffffff", {
+        map: maps.cloth,
+        vertexColors: true,
+      }),
+      plain: materials.basic("#ffffff", { vertexColors: true }),
       ink: materials.basic("#39332e", { side: T.BackSide }),
       label: materials.basic("#ffffff", {
         map: maps.labels,
@@ -30,7 +33,8 @@
     }
     function roundedBox(w, h, d) {
       return source(`box:${w}:${h}:${d}`, () => {
-        const g = new T.BoxGeometry(w, h, d, 2, 2, 2),
+        const segments = Math.min(w, h, d) <= 2 ? 1 : 2;
+        const g = new T.BoxGeometry(w, h, d, segments, segments, segments),
           p = g.attributes.position,
           r = Math.min(0.38, w * 0.12, h * 0.12, d * 0.12),
           core = [w / 2 - r, h / 2 - r, d / 2 - r];
@@ -66,11 +70,22 @@
           p = g.attributes.position,
           n = g.attributes.normal,
           u = g.attributes.uv;
+        const baked = ["wood", "cloth", "plain"].includes(kind),
+          cosine = Math.cos(at.ang || 0),
+          sine = Math.sin(at.ang || 0);
         for (let i = 0; i < p.count; i++) {
           b.position.push(p.getX(i), p.getY(i), p.getZ(i));
           b.normal.push(n.getX(i), n.getY(i), n.getZ(i));
           b.uv.push(u?.getX(i) || 0, u?.getY(i) || 0);
-          b.color.push(c.r, c.g, c.b);
+          if (baked) {
+            // Fixed golden-hour light, baked once into the static toy geometry.
+            // Vehicles retain the existing dynamic toon materials.
+            const nx = n.getX(i) * cosine - n.getZ(i) * sine,
+              nz = n.getX(i) * sine + n.getZ(i) * cosine,
+              dot = (-150 * nx + 200 * n.getY(i) - 80 * nz) / 262.49,
+              band = dot > 0.4 ? 1.03 : dot > -0.15 ? 0.76 : 0.48;
+            b.color.push(c.r * band * 1.025, c.g * band, c.b * band * 0.94);
+          } else b.color.push(c.r, c.g, c.b);
         }
       }
       function part(
@@ -130,8 +145,12 @@
         rotation = [0, 0, 0],
         stroke = 0.16,
       ) {
+        const small = Math.min(...size) < 2;
         part(
-          source("sphere", () => new T.SphereGeometry(1, 12, 8)),
+          source(
+            small ? "small-sphere" : "sphere",
+            () => new T.SphereGeometry(1, small ? 8 : 12, small ? 6 : 8),
+          ),
           color,
           position,
           size,
@@ -149,10 +168,12 @@
         kind = "wood",
         stroke = 0.1,
       ) {
+        const segments = Math.max(...radii) < 2.5 ? 8 : 16;
         part(
           source(
             `cylinder:${radii}:${length}`,
-            () => new T.CylinderGeometry(radii[0], radii[1], length, 16, 1),
+            () =>
+              new T.CylinderGeometry(radii[0], radii[1], length, segments, 1),
           ),
           color,
           position,
@@ -197,6 +218,17 @@
           0,
         );
       }
+      function decal(position, size, color, rotation = [0, 0, 0]) {
+        part(
+          source("plane", () => new T.PlaneGeometry(1, 1)),
+          color,
+          position,
+          [size[0], size[1], 1],
+          rotation,
+          "plain",
+          0,
+        );
+      }
       function finish() {
         for (const [kind, b] of batches) {
           const g = new T.BufferGeometry();
@@ -220,7 +252,18 @@
         batches.clear();
         return group;
       }
-      return { group, part, box, ball, cylinder, label, shadow, flat, finish };
+      return {
+        group,
+        part,
+        box,
+        ball,
+        cylinder,
+        label,
+        shadow,
+        flat,
+        decal,
+        finish,
+      };
     }
     function finishShadows() {
       const g = new T.BufferGeometry();

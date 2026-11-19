@@ -17,7 +17,7 @@
     function texture(c, repeat = false) {
       const t = materials.canvasTexture(c);
       if (repeat) t.wrapS = t.wrapT = T.RepeatWrapping;
-      t.anisotropy = 2;
+      t.anisotropy = 1;
       return t;
     }
     const [carpet, c] = canvas();

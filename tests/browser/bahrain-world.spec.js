@@ -6,6 +6,13 @@ test("Bahrain-Welt: echter Renderer, unveränderliche Eingabe und sicherer Wechs
 }) => {
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
+  page.on("console", (message) => {
+    if (
+      message.type() === "error" &&
+      /THREE.WebGLProgram|Shader Error|VALIDATE_STATUS/.test(message.text())
+    )
+      errors.push(message.text());
+  });
   await capture3D(page);
   await page.goto("race.html?track=bahrain");
   await expect(page.locator("#arcadeApp")).toHaveAttribute(
@@ -28,14 +35,19 @@ test("Bahrain-Welt: echter Renderer, unveränderliche Eingabe und sicherer Wechs
     return {
       same: before === JSON.stringify(s),
       diag: __inspect3D.diagnostics(),
+      glError: document
+        .getElementById("arcadeCanvas")
+        .getContext("webgl2")
+        .getError(),
     };
   });
   expect(result.same).toBe(true);
+  expect(result.glError).toBe(0);
   expect(result.diag.world.assets).toBe(14);
   expect(result.diag.world.tunnelClearHeight).toBe(22);
   expect(result.diag.world.tunnelHalfWidth).toBe(31.5);
   expect(result.diag.drawCalls).toBeLessThan(170);
-  expect(result.diag.triangles).toBeLessThan(95000);
+  expect(result.diag.triangles).toBeLessThan(80000);
   await page.locator("#track").selectOption("luxembourg");
   await page.clock.runFor(32);
   expect(

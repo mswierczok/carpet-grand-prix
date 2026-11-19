@@ -8,8 +8,12 @@
       radius = surface.outerRadius;
     function clearance(at, w, d) {
       let min = Infinity;
-      for (let x = -w / 2; x <= w / 2 + 0.01; x += Math.min(3, w / 4))
-        for (let z = -d / 2; z <= d / 2 + 0.01; z += Math.min(3, d / 4)) {
+      const columns = Math.max(4, Math.ceil(w / 3)),
+        rows = Math.max(4, Math.ceil(d / 3));
+      for (let ix = 0; ix <= columns; ix++)
+        for (let iz = 0; iz <= rows; iz++) {
+          const x = -w / 2 + (w * ix) / columns,
+            z = -d / 2 + (d * iz) / rows;
           const p = {
             x: at.x + Math.cos(at.ang) * x - Math.sin(at.ang) * z,
             y: at.y + Math.sin(at.ang) * x + Math.cos(at.ang) * z,
@@ -53,7 +57,7 @@
     find("plush-camel", 0.065, -78, 50, 30, 33, 2.2);
     find("thread-towers", 0.3, 78, 42, 32, 38);
     find("cloth-dunes", 0.54, -88, 48, 34, 8);
-    find("carpet-club", 0.952, 72, 56, 25, 17);
+    find("carpet-club", 0.98, 64, 56, 25, 17, Math.PI);
     find("floodlight-east", 0.13, -74, 24, 18, 43);
     find("floodlight-hairpin", 0.21, -85, 24, 18, 43);
     find("floodlight-west", 0.81, -80, 24, 18, 43);

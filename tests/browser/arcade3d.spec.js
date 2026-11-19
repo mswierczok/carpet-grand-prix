@@ -53,11 +53,7 @@ test("zeichnet echte 3D-Geometrie, folgt dem Auto und erhält alle 13 Lackierung
   const diag = await page.evaluate(() => __inspect3D.diagnostics());
   expect(diag.drawCalls).toBeLessThan(150);
   expect(diag.triangles).toBeGreaterThan(1000);
-  // The approved Bahrain art adds outlined landmark geometry. Other worlds
-  // retain the original budget; full-field Bahrain has its own separate check.
-  expect(diag.triangles).toBeLessThan(
-    diag.world?.theme === "carpet-desert" ? 45000 : 30000,
-  );
+  expect(diag.triangles).toBeLessThan(30000);
   expect(await page.evaluate(() => __driveSnapshot.car)).toEqual(moving);
   expect(
     await page.evaluate(() => localStorage.getItem("carpet_gp_v072")),
@@ -125,7 +121,7 @@ test("bleibt ohne WebGL 2 als Fahrtest bedienbar", async ({ page }) => {
   expect(Number(await page.locator("#speed").innerText())).toBeGreaterThan(10);
 });
 
-test("fährt offline eine vollständige gültige Bahrain-Runde durch die 3D-Welt ausschließlich per Tastatur", async ({
+test("fährt offline zwei vollständige gültige Bahrain-Runden durch die 3D-Welt ausschließlich per Tastatur", async ({
   page,
   context,
 }, testInfo) => {
@@ -133,7 +129,7 @@ test("fährt offline eine vollständige gültige Bahrain-Runde durch die 3D-Welt
   if (testInfo.project.name === "chromium")
     await page.setViewportSize({ width: 600, height: 750 });
   // Software WebGL: keep every physics/input step and >600 actual camera
-  // samples, without rasterizing all 2,400 frames of this offline lap.
+  // samples over TWO laps, without rasterizing every intermediate frame.
   // Unthrottled rendering is measured separately by measure-arcade3d.js.
   await capture3D(page, { renderEvery: 3 });
   const requests = [];
@@ -153,11 +149,11 @@ test("fährt offline eine vollständige gültige Bahrain-Runde durch die 3D-Welt
   expect(await page.evaluate(() => __driveSnapshot.car.offroad)).toBe(true);
   expect(await page.evaluate(() => __driveSnapshot.timing.invalid)).toBe(false);
   await expect(page.locator("#arcadeApp")).not.toContainText("ungültig");
-  await page.evaluate(keyboardPilot, { laps: 1 });
-  await page.clock.runFor(40000);
+  await page.evaluate(keyboardPilot, { laps: 2 });
+  await page.clock.runFor(90000);
   expect(
     Number(await page.locator("#laps").innerText()),
-  ).toBeGreaterThanOrEqual(1);
+  ).toBeGreaterThanOrEqual(2);
   await expect(page.locator("#bestLap")).not.toHaveText("—");
   expect(await page.evaluate(() => __driveSnapshot.contacts)).toBe(0);
   expect(requests).toHaveLength(1);

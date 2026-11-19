@@ -79,12 +79,24 @@
 
     // Continuous physical polylines; texture U follows real distance, not vertex count.
     const ropeFill = materials.toon("#ffffff", maps.rope),
-      ropeInk = materials.basic("#756044", { side: T.BackSide }),
       contact = materials.basic("#8b7556", {
         transparent: true,
         opacity: 0.25,
         depthWrite: false,
       });
+    // A view-dependent ink rim in the existing toon pass replaces a second
+    // complete rope mesh. The pinned Three.js shader exposes view-space normal.
+    ropeFill.onBeforeCompile = (shader) => {
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <opaque_fragment>",
+        `
+        float yarnEdge = smoothstep(0.08, 0.40, abs(dot(normal, normalize(vViewPosition))));
+        outgoingLight = mix(vec3(0.17789, 0.11697, 0.05781), outgoingLight, yarnEdge);
+        #include <opaque_fragment>
+      `,
+      );
+    };
+    ropeFill.customProgramCacheKey = () => "cgp-bahrain-yarn-ink-1";
     const rails = [
       ...surface.boundary.loops.map((points) => ({ points, closed: true })),
       ...surface.boundary.dividers.map((d) => ({ ...d, closed: false })),
@@ -140,17 +152,6 @@
       }
       batchRope(g, ropeFill, "continuous-yarn");
       ropeTriangles += g.index.count / 3;
-      const outline = g.clone(),
-        p = outline.attributes.position,
-        n = outline.attributes.normal;
-      for (let i = 0; i < p.count; i++)
-        p.setXYZ(
-          i,
-          p.getX(i) + n.getX(i) * 0.09,
-          p.getY(i) + n.getY(i) * 0.09,
-          p.getZ(i) + n.getZ(i) * 0.09,
-        );
-      batchRope(outline, ropeInk, "yarn-outline");
       const shadePositions = [];
       for (let i = 0; i < points.length - 1; i++) {
         const a = points[i],
@@ -182,7 +183,6 @@
       shade.computeVertexNormals();
       batchRope(shade, contact, "yarn-contact");
       g.dispose();
-      outline.dispose();
       shade.dispose();
       if (!closed) {
         for (const p of [points[0], points.at(-1)])
@@ -259,7 +259,7 @@
         }
     group.add(markings.finish());
     const posts = kit.object("small-wooden-yarn-holders");
-    for (let s = 50; s < surface.g.len; s += 140)
+    for (let s = 50; s < surface.g.len; s += 280)
       for (const side of [-1, 1]) {
         const p = surface.at(s, side * (surface.outerRadius + 2.8));
         if (surface.project(p).distance < surface.outerRadius + 1.4) continue;
@@ -366,34 +366,25 @@
         );
       }
       o.ball([11.8, 30.3, 0], [1.7, 1.5, 1.4], fur);
-      for (let z = -2; z <= 2; z += 0.5)
-        o.ball(
-          [23.65, 22.7 + 0.1 * z * z, z],
-          [0.12, 0.12, 0.12],
-          seam,
-          "plain",
-          [0, 0, 0],
-          0,
-        );
+      for (let z = -2; z <= 2; z += 0.5) {
+        const y = 22.7 + 0.1 * z * z;
+        const x =
+          19 + 5 * Math.sqrt(1 - ((y - 24) / 2.7) ** 2 - (z / 3.6) ** 2) + 0.09;
+        o.decal([x, y, z], [0.24, 0.24], seam, [0, Math.PI / 2, 0]);
+      }
       o.ball([-13, 12, 0], [0.8, 3.2, 0.85], fur, "cloth", [0, 0, -0.7]);
-      for (let i = 0; i < 13; i++)
-        o.box(
-          [-10 + i * 1.65, 10.1, -6.18],
-          [0.18, 0.8, 0.1],
-          seam,
-          [0, 0, 0.4],
-          "plain",
-          0,
-        );
+      for (let i = 0; i < 13; i++) {
+        const x = -10 + i * 1.65;
+        const z =
+          -6.2 * Math.sqrt(1 - (x / 12.6) ** 2 - (0.9 / 6.6) ** 2) - 0.09;
+        o.decal([x, 10.1, z], [0.18, 0.8], seam, [0, Math.PI, 0.4]);
+      }
       for (let i = 0; i < 4; i++)
-        o.box(
-          [16 + i * 1.5, 22.9, -3.05],
-          [0.7, 0.11, 0.1],
-          seam,
-          [0, 0, 0],
-          "plain",
+        o.decal([16 + i * 1.5, 22.9, -3.05], [0.7, 0.11], seam, [
           0,
-        );
+          Math.PI,
+          0,
+        ]);
       o.box(
         [-2, 14.3, -5.7],
         [10, 5, 0.35],
@@ -490,11 +481,13 @@
         );
         for (let j = 0; j < 8; j++) {
           const x = -23 + j * 6.4;
-          o.cylinder(
+          o.box(
             [x, 5.5 + i * 3.3, 8 - i * 7],
-            [1.5, 1.7],
-            1.4,
+            [3, 0.8, 2],
             palette.paper,
+            [0, 0, 0],
+            "plain",
+            0.08,
           );
         }
       }
@@ -591,9 +584,9 @@
       o.shadow([0, 0], [135, 105]);
       o.box([0, 24, 0], [98, 45, 65], palette.red);
       o.box([0, 46, -21], [103, 6, 68], palette.honey, [-0.18, 0, 0]);
-      o.box([0, 23, 33], [28, 10, 2], palette.paper);
-      o.label(4, [0, 23, 34.1], [27, 10]);
-      for (const x of [-40, 40]) o.box([x, 23, 33], [5, 39, 2], palette.wood);
+      o.box([0, 23, -33], [28, 10, 2], palette.paper);
+      o.label(4, [0, 23, -34.1], [27, 10], [0, Math.PI, 0]);
+      for (const x of [-40, 40]) o.box([x, 23, -33], [5, 39, 2], palette.wood);
       o.box([28, 54, -14], [19, 14, 19], palette.green, [0, 0.25, 0.06]);
       o.box([-27, 53, -11], [25, 13, 21], palette.blue, [0, -0.13, 0]);
     }
@@ -660,11 +653,18 @@
         else {
           o.shadow([0, 0], [29, 16]);
           o.box([0, 4, 0], [23, 8, 2], palette.honey);
+          const road = surface.project(spec.at);
+          const facing =
+            (road.x - spec.at.x) * -Math.sin(spec.at.ang) +
+              (road.y - spec.at.y) * Math.cos(spec.at.ang) >
+            0
+              ? 1
+              : -1;
           o.label(
             spec.id === "loop-board" ? 4 : 3,
-            [0, 4, -1.1],
+            [0, 4, facing * 1.1],
             [22, 7],
-            [0, Math.PI, 0],
+            [0, facing > 0 ? 0 : Math.PI, 0],
           );
         }
       });
