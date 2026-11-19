@@ -43,7 +43,7 @@ test("Bahrain-Welt: echter Renderer, unveränderliche Eingabe und sicherer Wechs
   });
   expect(result.same).toBe(true);
   expect(result.glError).toBe(0);
-  expect(result.diag.world.assets).toBe(23);
+  expect(result.diag.world.assets).toBe(22);
   expect(result.diag.world.room.id).toBe("motorsport-bedroom");
   expect(result.diag.world.room.furniture).toBe(6);
   expect(result.diag.world.passage.clearHeight).toBe(26);
@@ -81,7 +81,7 @@ test("Bahrain-Welt: vollständiges Standardrennen mit 13 echten Fahrzeugen und a
   await selectDriveSetting(page, "quality", "low");
   await page.locator("#pause").click();
   await page.evaluate(pilotRace);
-  for (let i = 0; i < 330; i++) {
+  for (let i = 0; i < 550; i++) {
     await page.clock.runFor(1000);
     if (await page.evaluate(() => __driveSnapshot.race.phase === "finished"))
       break;

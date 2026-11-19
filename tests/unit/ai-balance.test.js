@@ -2,8 +2,8 @@ import { it, expect } from "vitest";
 import { measureDriver } from "../../scripts/measure-ai-balance.js";
 
 it("kalibriert die vier Bahrain-Stufen anhand einer eingefrorenen Tastaturreferenz ohne andere Fahrzeuggrenzen", () => {
-  const reference = measureDriver("bahrain", "keyboard-reference", { bins: false }),
-    runs = ["beginner", "normal", "hard", "expert"].map((id) => measureDriver("bahrain", id, { bins: false })),
+  const reference = measureDriver("bahrain", "keyboard-reference", { bins: false, historicalBahrain: true }),
+    runs = ["beginner", "normal", "hard", "expert"].map((id) => measureDriver("bahrain", id, { bins: false, historicalBahrain: true })),
     change = (run) => (run.referenceSeconds / reference.referenceSeconds - 1) * 100;
   // Targets are approximate. Three laps with 30Hz binary commands have a
   // finite time resolution; allow 0.2 percentage points around the bands.

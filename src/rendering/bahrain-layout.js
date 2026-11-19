@@ -5,7 +5,21 @@
     if (surface.id !== "bahrain")
       throw Error("Bahrain-Dekoration auf falscher Strecke.");
     const objects = [],
-      radius = surface.outerRadius;
+      radius = surface.outerRadius,
+      profile = surface.g.layout,
+      originalU = (u) => {
+        const [a, b] = profile.sourceSection;
+        if (u <= a) return (u * profile.originalLength) / surface.g.len;
+        if (u >= b)
+          return 1 - ((1 - u) * profile.originalLength) / surface.g.len;
+        const { startIndex, endIndex } = profile.underbed;
+        return (
+          (surface.g.cum[startIndex] +
+            ((u - a) / (b - a)) *
+              (surface.g.cum[endIndex] - surface.g.cum[startIndex])) /
+          surface.g.len
+        );
+      };
     function clearance(at, w, d) {
       let min = Infinity;
       const columns = Math.max(4, Math.ceil(w / 3)),
@@ -19,11 +33,39 @@
             y: at.y + Math.sin(at.ang) * x + Math.cos(at.ang) * z,
           };
           min = Math.min(min, surface.project(p).distance - radius);
+          for (let i = 0; i < surface.g.pit.length - 1; i++) {
+            const a = surface.g.pit[i],
+              b = surface.g.pit[i + 1],
+              dx = b.x - a.x,
+              dy = b.y - a.y,
+              t = Math.max(
+                0,
+                Math.min(
+                  1,
+                  ((p.x - a.x) * dx + (p.y - a.y) * dy) /
+                    (dx * dx + dy * dy || 1),
+                ),
+              );
+            min = Math.min(
+              min,
+              Math.hypot(p.x - a.x - t * dx, p.y - a.y - t * dy) -
+                surface.g.pitRadius,
+            );
+          }
         }
       return min;
     }
     function add(id, at, w, d, h, extra = {}) {
-      const c = clearance(at, w, d);
+      const c =
+        extra.asset === "bed"
+          ? Math.min(
+              ...[-72, 72].flatMap((x) =>
+                [-168, 168].map((y) =>
+                  clearance({ x: at.x + x, y: at.y + y, ang: 0 }, 17, 18),
+                ),
+              ),
+            )
+          : clearance(at, w, d);
       if (c < 4)
         throw Error(`Dekoration ${id} liegt zu nah an der Fahrbahn (${c}).`);
       const entry = { id, at, w, d, h, clearance: c, ...extra };
@@ -34,7 +76,7 @@
       for (const shift of [0, 15, -15, 30, -30, 55, -55])
         for (const extra of [0, 12, 24, 40, 65]) {
           const point = surface.at(
-              u * surface.g.len + shift,
+              originalU(u) * surface.g.len + shift,
               lane + Math.sign(lane) * extra,
             ),
             at = { ...point, ang: point.ang + yaw };
@@ -46,24 +88,36 @@
     add(
       "wooden-pits",
       {
-        x: (pit[1].x + pit[2].x) / 2,
-        y: Math.min(...pit.map((p) => p.y)) - 35,
+        x: 718,
+        y: 105,
         ang: 0,
       },
       104,
       34,
       25,
     );
+    add("pit-entry-sign", { x: 586, y: 150, ang: Math.PI / 2 }, 20, 2, 9, {
+      asset: "paperSign",
+      label: 8,
+      width: 20,
+      height: 9,
+    });
+    add("pit-exit-sign", { x: 859, y: 168, ang: Math.PI / 2 }, 20, 2, 9, {
+      asset: "paperSign",
+      label: 9,
+      width: 20,
+      height: 9,
+    });
     find("plush-camel", 0.065, -78, 50, 30, 33, 2.2);
     find("thread-towers", 0.3, 78, 42, 32, 38);
-    find("cloth-dunes", 0.54, -88, 48, 34, 8);
+    add("cloth-dunes", { x: 350, y: 735, ang: 0.2 }, 48, 34, 8);
     find("floodlight-east", 0.13, -74, 24, 18, 43);
     find("floodlight-hairpin", 0.21, -85, 24, 18, 43);
     find("floodlight-west", 0.81, -80, 24, 18, 43);
     find("sunstitched-board", 0.42, -65, 24, 8, 9);
     find("loop-board", 0.71, 67, 24, 8, 9);
     // Midway along the straight after turn one; decoration never changes collisions.
-    const tunnelAt = surface.at(0.12 * surface.g.len),
+    const tunnelAt = surface.at(originalU(0.12) * surface.g.len),
       tunnel = {
         id: "block-tunnel",
         at: tunnelAt,
@@ -89,11 +143,10 @@
         throw Error("Tunnelstütze berührt den Fahrkorridor.");
     }
     objects.push(tunnel);
-    // Parked playroom cars, entirely beyond the ropes on both sides.
-    find("parked-car-red", 0.098, -43, 16, 9, 7, -0.12);
-    find("parked-car-blue", 0.145, 44, 16, 9, 7, 0.18);
-    find("parked-car-green", 0.46, -45, 16, 9, 7, -0.3);
-    find("parked-car-yellow", 0.94, -44, 16, 9, 7, 0.22);
+    // Parked cars and support trailers now share one deliberate team area.
+    add("paddock-team-area", { x: 710, y: 54, ang: 0 }, 190, 62, 18, {
+      asset: "paddock",
+    });
     const xs = surface.g.pts.map((p) => p.x),
       ys = surface.g.pts.map((p) => p.y);
     const bounds = {
@@ -104,16 +157,21 @@
     };
     const scene = A.EnvironmentScenes.get(surface.id);
     for (const spec of [
-      ...scene.room.furniture.map((f) => ({ ...f, roomFurniture: true })),
+      ...scene.room.furniture.map((f) => ({
+        ...f,
+        roomFurniture: true,
+        ...(f.asset === "bed" ? { underpass: true } : {}),
+      })),
       ...scene.landmarks,
     ]) {
       const { id, at, w, d, h, ...options } = spec;
       add(id, at, w, d, h, options);
     }
     const passage = scene.passage,
-      at = surface.at(passage.u * surface.g.len),
+      at = surface.at(originalU(passage.u) * surface.g.len),
       passageSpec = {
         ...passage,
+        u: originalU(passage.u),
         at,
         solids: [
           [-32, 32, -44, -32, 0, 26],

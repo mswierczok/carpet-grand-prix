@@ -21,7 +21,7 @@ export function publishedOpponents(api) {
 // The same published feedback driver controls the player in both comparisons.
 // It reads traffic and sends normal inputs; this is not a human skill estimate.
 export function measureField(published = false) {
-  const { api, data } = loadArcade({ race: true });
+  const { api, data } = loadArcade({ race: true, historicalBahrain: true });
   const reference = publishedOpponents(api);
   if (published) api.Opponents = reference;
   // This historical test isolates the AI competence improvement against a

@@ -297,7 +297,13 @@ export function boundaryData(track = arcadeData().track) {
       ...content,
     };
   }
-  const polygonsUnion = corridorPolygons(pts, r, track);
+  const mainPolygons = corridorPolygons(pts, r, track);
+  const polygonsUnion = surface.g.pitRadius
+    ? clipping.union(
+        ...mainPolygons,
+        ...corridorPolygons(surface.g.pit, surface.g.pitRadius, track, false),
+      )
+    : mainPolygons;
   runInNewContext(
     readFileSync(new URL("src/racing/boundary-field.js", root), "utf8"),
     scope,

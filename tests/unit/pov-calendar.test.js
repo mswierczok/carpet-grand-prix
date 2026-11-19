@@ -51,8 +51,8 @@ it.each(newPovIds.filter((id) => id === "korea" || id === "russia"))(
   },
 );
 
-it("enthält alle 22 Kalenderstrecken, unveränderte Originalzeichnungen und vier exakt abgenommene Geometrien", () => {
-  const { api, data } = loadArcade(),
+it("enthält alle 22 Kalenderstrecken, unveränderte Originalzeichnungen und die vier historischen Geometriereferenzen", () => {
+  const { api, data } = loadArcade({historicalBahrain:true}),
     { game } = createGame(),
     scope = {};
   for (const name of ["arcade-tracks", "arcade-boundaries", "arcade-roster"])
@@ -78,7 +78,7 @@ it("enthält alle 22 Kalenderstrecken, unveränderte Originalzeichnungen und vie
 });
 
 it("liefert auf den vier abgenommenen Strecken dieselben Rennen trotz optionaler Brückenunterstützung", () => {
-  const after = loadArcade({ race: true }),
+  const after = loadArcade({ race: true, historicalBahrain:true }),
     scope = {};
   for (const path of [
     "data/arcade-tracks",

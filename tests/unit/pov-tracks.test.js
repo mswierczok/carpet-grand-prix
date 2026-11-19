@@ -37,7 +37,7 @@ it("lädt veränderte Laufzeitmodule unter neuen URLs statt alte Bahrain-Module 
 });
 
 it("erhält Originalzeichnungen, Kalender und Sektoren; entzerrt nur die freigegebenen POV-Geometrien", () => {
-  const { api, data } = loadArcade(),
+  const { api, data } = loadArcade({historicalBahrain:true}),
     { game } = createGame();
   expect(api.TrackCatalog.tracks.slice(0, 4).map((t) => t.id)).toEqual(ids);
   for (const [index, id] of ids.entries()) {
@@ -126,8 +126,8 @@ it("öffnet alle französischen Kurven deutlicher als die luxemburgischen und ve
   }
 });
 
-it("erhält Bahrain und Kanada samt Seilen sowie gemeinsame Physik und Sektorregel bytegenau", () => {
-  const { data } = loadArcade(),
+it("erhält die historische Bahrain-Referenz und Kanada samt gemeinsamer Physik und Sektorregel bytegenau", () => {
+  const { data } = loadArcade({historicalBahrain:true}),
     scope = {};
   for (const file of ["arcade-tracks", "arcade-boundaries", "arcade-roster"])
     runInNewContext(published(`src/data/${file}.js`), scope);
@@ -147,8 +147,8 @@ it("erhält Bahrain und Kanada samt Seilen sowie gemeinsame Physik und Sektorreg
     expect(readFileSync(new URL(path, ROOT), "utf8")).toBe(published(path));
 });
 
-it("behält die abgenommene Bahrain-Geometrie für denselben eingefrorenen KI-Regler exakt bei", () => {
-  const { api, data } = loadArcade({ race: true }),
+it("behält die historische Bahrain-Referenz für denselben eingefrorenen KI-Regler exakt bei", () => {
+  const { api, data } = loadArcade({ race: true, historicalBahrain:true }),
     scope = {
       CGPArcade: {
         BoundaryField: api.BoundaryField,

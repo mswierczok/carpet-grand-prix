@@ -37,7 +37,9 @@
             model.pov.southExtension,
           )
         : null,
-      pts = shape?.points || originalPoints,
+      pts = model.pov?.routePoints
+        ? model.pov.routePoints.map(([x, y]) => Object.freeze({ x, y }))
+        : shape?.points || originalPoints,
       cum = [0];
     let len = 0;
     pts.forEach((p, i) => {
@@ -57,8 +59,11 @@
                 (cum[index] + fraction * (cum[index + 1] - cum[index])) / len,
             ),
           )
-        : model.sectorU,
-      pit: shape?.pit || Object.freeze(model.pit.map(convert)),
+        : model.pov?.sectorU || model.sectorU,
+      pit: model.pov?.pitPoints
+        ? Object.freeze(model.pov.pitPoints.map(([x, y]) => Object.freeze({ x, y })))
+        : shape?.pit || Object.freeze(model.pit.map(convert)),
+      ...(model.pov?.layoutVersion ? {pitRadius:model.pov.pitRadius, layout:model.pov} : {}),
       bridges: model.bridgeU,
       scale,
     });
@@ -208,6 +213,21 @@
             "Sektorlinie erreicht keine geschlossene Seilbegrenzung.",
           );
       }
+      // BEGIN BAHRAIN PIT FINISH
+      if (index === 0 && g.pitRadius) {
+        for (let i = 0; i < g.pit.length - 1; i++) {
+          const a = g.pit[i], b = g.pit[i + 1],
+            before = (a.x - point.x) * Math.cos(point.ang) + (a.y - point.y) * Math.sin(point.ang),
+            after = (b.x - point.x) * Math.cos(point.ang) + (b.y - point.y) * Math.sin(point.ang);
+          if (before <= 0 && after > 0) {
+            const f = -before / (after - before),
+              lane = -(a.x + (b.x-a.x)*f - point.x)*Math.sin(point.ang) + (a.y + (b.y-a.y)*f - point.y)*Math.cos(point.ang);
+            minLane = Math.min(minLane, lane - g.pitRadius);
+            maxLane = Math.max(maxLane, lane + g.pitRadius);
+          }
+        }
+      }
+      // END BAHRAIN PIT FINISH
       return Object.freeze({ ...point, index, minLane, maxLane });
     }
     // Lap validation uses only the actual finish and sector lines. The 32

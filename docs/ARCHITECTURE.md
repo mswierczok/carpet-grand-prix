@@ -211,3 +211,12 @@ Die Szene schreibt nicht in Physik, KI oder Spielstände. Nur Bahrain verwendet
 diesen Ausbau; die anderen Strecken bleiben im vorhandenen Renderer-Zweig.
 Maßstab, Platzierung, Kamera, Tests und tatsächliche Aufnahmen:
 [MASTER_BEDROOM.md](MASTER_BEDROOM.md).
+
+## Bahrain-Unterbett und Boxeninfrastruktur
+
+Ein optionales, beim Export erzeugtes POV-Profil begrenzt die beauftragte
+Layoutänderung auf einen Bahrain-Abschnitt. Haupt- und Nebenfahrfläche teilen
+weiterhin dieselben erzeugten Seilkonturen; der Ziel-Checkpoint schließt den
+parallelen Boxenweg ein. Bett und Kamera behalten ihre Zimmeranker und Höhe.
+Paddock und Support-Transporter sind zusätzliche wiederverwendbare Asset-Typen.
+Umfang, historische Prüfungen und Grenzen: [BAHRAIN_ITERATION2.md](BAHRAIN_ITERATION2.md).

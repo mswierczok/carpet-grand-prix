@@ -256,3 +256,11 @@ Kameraoptionen. Die ursprünglichen Standardwerte und der restliche Quelltext
 werden weiterhin bytegenau verglichen; die neue Zimmerprüfung vergleicht
 zusätzlich tatsächliche Standardkameraposen mit dem veröffentlichten Original.
 Der Cache-Test verlangt für die veränderte Kamera eine neue Script-URL.
+
+Die zweite Bahrain-Iteration hat eigene Prüfungen für lokal veränderte Geometrie,
+21 unveränderte Strecken, zwei echte Runden, eine physische Boxendurchfahrt mit
+Zielwertung und sichtbares Bett mit freien Kamerastrahlen. Historische
+KI-Kalibrierungen verwenden ausdrücklich die alte Bahrain-Referenz; normale
+Spiel-/Browserprüfungen verwenden das neue Layout. Die Schutz-Normalisierung
+ist auf das freigegebene Profil und den optionalen Geometrieadapter begrenzt.
+Keine Referenz-Fixtures und keine KI- oder Physikwerte werden angepasst.

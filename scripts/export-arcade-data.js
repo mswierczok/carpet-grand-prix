@@ -2,6 +2,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
+import { bahrainIteration2 } from "./lib/bahrain-iteration2.js";
 const root = new URL("../", import.meta.url);
 // Original calendar indices stay intact for the later championship adapter.
 // Flat and separately layered bridge tracks share one POV calendar.
@@ -72,7 +73,8 @@ export function arcadeData() {
         if (!track) throw Error("POV-Strecke fehlt.");
         // POV-only room around the fixed-size cars. Keep the source drawing,
         // calendar and sector fractions intact; never edit the classic data.
-        return [id, { id, index, ...track, ...(pov ? { pov } : {}) }];
+        const exported = { id, index, ...track, ...(pov ? { pov } : {}) };
+        return [id, id === "bahrain" ? bahrainIteration2(exported) : exported];
       }),
     );
   return {

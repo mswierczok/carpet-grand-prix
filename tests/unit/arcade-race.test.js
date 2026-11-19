@@ -19,7 +19,7 @@ function advance(race, seconds, input = zero) {
 }
 
 it("liefert mit räumlichem Index exakt die Projektion des veröffentlichten Fahrtests, einschließlich ferner Punkte", () => {
-  const { api, data } = loadArcade(),
+  const { api, data } = loadArcade({historicalBahrain:true}),
     scope = {
       CGPArcade: { BoundaryField: api.BoundaryField },
       CGPArcadeData: data,
