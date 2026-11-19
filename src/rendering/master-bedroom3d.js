@@ -12,6 +12,47 @@
       depth = b.maxY - b.minY,
       cx = (b.minX + b.maxX) / 2,
       cz = (b.minY + b.maxY) / 2;
+    const furniture = [];
+    for (const spec of config.room.furniture) {
+      const object = kit.object(spec.id, spec.at);
+      if (spec.scale)
+        object.withTransform([0, 0, 0], spec.scale, [0, 0, 0], () =>
+          assets.build(spec.asset, object, spec),
+        );
+      else assets.build(spec.asset, object, spec);
+      const node = object.finish();
+      group.add(node);
+      furniture.push({ spec, node });
+    }
+    const carpet = config.room.rug,
+      carpetObject = kit.object("master-rug"),
+      rugGeo = new T.PlaneGeometry(carpet.w, carpet.d, 16, 16);
+    rugGeo.rotateX(-Math.PI / 2);
+    rugGeo.translate(carpet.x, 0, carpet.y);
+    const cp = rugGeo.attributes.position,
+      cu = rugGeo.attributes.uv,
+      colors = [];
+    for (let i = 0; i < cp.count; i++) {
+      cu.setXY(i, cp.getX(i) / 32, cp.getZ(i) / 32);
+      const shade =
+        0.965 +
+        0.03 * Math.sin(cp.getX(i) * 0.017) * Math.cos(cp.getZ(i) * 0.014);
+      colors.push(shade, shade, shade);
+    }
+    rugGeo.setAttribute("color", new T.Float32BufferAttribute(colors, 3));
+    carpetObject.part(
+      rugGeo,
+      "#ffffff",
+      [0, 0, 0],
+      [1, 1, 1],
+      [0, 0, 0],
+      "carpet",
+      0,
+    );
+    rugGeo.dispose();
+    const rugGroup = carpetObject.finish();
+    rugGroup.children[0].name = "looped-carpet";
+    group.add(rugGroup);
     const floor = kit.object("master-laminate-floor");
     const g = new T.PlaneGeometry(width, depth);
     g.rotateX(-Math.PI / 2);
@@ -125,7 +166,7 @@
       paletteWood(),
     );
     for (const side of [-1, 1]) {
-      const x = w.x + side * (w.w / 2 + 4);
+      const x = w.x + side * (w.w / 2 - 12);
       for (let i = 0; i < 4; i++)
         north.block(
           [x + side * i * 10, w.bottom + w.h / 2, b.minY + 12 + (i % 2) * 5],
@@ -147,7 +188,7 @@
     north.cylinder(
       [w.x, w.bottom + w.h + 19, b.minY + 16],
       [2, 2],
-      w.w + 125,
+      w.w + 40,
       f.trim,
       [0, 0, Math.PI / 2],
       "wood",
@@ -250,7 +291,8 @@
     }
     return Object.freeze({
       group,
-      update(overview) {
+      update(camera, overview) {
+        A.IllustratedKit3D.updateVisibility(furniture, camera, overview);
         roof.visible = !overview;
         cutaways.forEach((n) => (n.visible = !overview));
       },
@@ -270,6 +312,7 @@
           unitMillimetres: config.room.unitMillimetres,
           bounds: b,
           furniture: config.room.furniture.length,
+          hiddenForCamera: furniture.filter((f) => !f.node.visible).length,
         };
       },
     });

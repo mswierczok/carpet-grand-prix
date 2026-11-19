@@ -66,7 +66,7 @@ Tiefe lässt mindestens 6,29 Einheiten Abstand zum äußeren Fahrkorridor.
 | --- | --- |
 | `src/rendering/environment-scenes.js` | Unveränderlicher Master-Grundriss und Bahrain-Konfiguration: Möbel, Teppichbereich, Farben, Bettwäsche, Licht, Sichtweite, Kamera und Landmarken |
 | `src/rendering/environment-assets3d.js` | Wiederverwendbare Möbel, Bauklötze, Figuren, Bücher, Modellautos, Plüschobjekte, Tribünen, Papierdächer, Boxen, Tunnel, Lampen und Beschilderung |
-| `src/rendering/master-bedroom3d.js` | Vier Wände, echte Fensteröffnung, Sockelleisten, Decke, Fußboden, Teppichsaum und vollständige Zimmerübersicht |
+| `src/rendering/master-bedroom3d.js` | Vollständige eigenständig baubare Zimmerinstanz mit sechs Möbeln, Teppich, Boden, vier Wänden, echter Fensteröffnung, Decke und Übersicht |
 | `src/rendering/illustrated-materials3d.js` | Gemeinsam erzeugte Teppich-, Holz-, Stoff-, Laminat-, Seil- und Beschriftungskarten; Teppichfarben und Texte konfigurierbar |
 | `src/rendering/illustrated-kit3d.js` | Gemeinsame Geometriequellen, örtliche Transformationen, Materialbatches, Konturen, kleine Detailgruppen und gebündelte Kontaktschatten |
 | `src/rendering/bahrain-layout.js` | Geprüfte Platzierung der Bahrain-Landmarken und Möbel anhand der tatsächlichen, unveränderten `Surface` |
@@ -74,7 +74,10 @@ Tiefe lässt mindestens 6,29 Einheiten Abstand zum äußeren Fahrkorridor.
 
 `bahrain-materials3d.js` ist nur noch ein kleiner Kompatibilitätsadapter zur
 allgemeinen Materialfabrik. Die Bibliothek kann ohne Bahrain-Simulation einzelne
-Objekte bauen. Eine Asset-Instanz hat einen Typ, ihre Position und Drehung,
+Objekte bauen. `MasterBedroom3D.create(kit, assets, config)` baut außerdem das
+gesamte Zimmer einschließlich Möbeln und Teppich ohne den Bahrain-Assembler.
+Die gemeinsame Sichtbarkeitsfunktion im Kit behandelt Nahsicht und kleine
+Detailgruppen für Zimmer und Rennkulisse nach denselben Regeln. Eine Asset-Instanz hat einen Typ, ihre Position und Drehung,
 eine geprüfte Grundfläche und optionale Varianten, z.B. die Zahl der Tribünenmodule.
 
 Beispiel für ein zusätzliches rein dekoratives Modul:

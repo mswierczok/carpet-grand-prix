@@ -42,6 +42,10 @@
     surfaceMaterial.customProgramCacheKey = () => "cgp-static-surfaces-1";
     const finishes = {
       surface: surfaceMaterial,
+      carpet: materials.basic("#ffffff", {
+        map: maps.carpet,
+        vertexColors: true,
+      }),
       laminate: materials.basic("#ffffff", {
         map: maps.laminate,
         vertexColors: true,
@@ -108,7 +112,8 @@
         const c = new T.Color(color),
           p = g.attributes.position,
           n = g.attributes.normal,
-          u = g.attributes.uv;
+          u = g.attributes.uv,
+          sourceColor = g.attributes.color;
         const baked = ["wood", "cloth", "plain", "laminate"].includes(kind),
           cosine = Math.cos(at.ang || 0),
           sine = Math.sin(at.ang || 0);
@@ -125,7 +130,12 @@
               dot = (-150 * nx + 200 * n.getY(i) - 80 * nz) / 262.49,
               band = dot > 0.4 ? 1.03 : dot > -0.15 ? 0.76 : 0.48;
             b.color.push(c.r * band * 1.025, c.g * band, c.b * band * 0.94);
-          } else b.color.push(c.r, c.g, c.b);
+          } else
+            b.color.push(
+              c.r * (sourceColor?.getX(i) ?? 1),
+              c.g * (sourceColor?.getY(i) ?? 1),
+              c.b * (sourceColor?.getZ(i) ?? 1),
+            );
         }
       }
       function part(
@@ -379,5 +389,32 @@
       },
     });
   }
-  A.IllustratedKit3D = Object.freeze({ create });
+  function updateVisibility(instances, camera, overview) {
+    for (const { spec, node } of instances) {
+      const dx = camera.position.x - spec.at.x,
+        dz = camera.position.z - spec.at.y,
+        x = dx * Math.cos(spec.at.ang) + dz * Math.sin(spec.at.ang),
+        z = -dx * Math.sin(spec.at.ang) + dz * Math.cos(spec.at.ang),
+        y = camera.position.y;
+      for (const child of node.children)
+        if (child.userData.environmentDetail)
+          child.visible =
+            overview || Math.hypot(dx, dz) < (spec.detailDistance || 380);
+      const solids = spec.solids || [
+        [-spec.w / 2, spec.w / 2, -spec.d / 2, spec.d / 2, 0, spec.h],
+      ];
+      node.visible =
+        overview ||
+        !solids.some(
+          (b) =>
+            x > b[0] - 2 &&
+            x < b[1] + 2 &&
+            z > b[2] - 2 &&
+            z < b[3] + 2 &&
+            y > b[4] - 2 &&
+            y < b[5] + 2,
+        );
+    }
+  }
+  A.IllustratedKit3D = Object.freeze({ create, updateVisibility });
 })();

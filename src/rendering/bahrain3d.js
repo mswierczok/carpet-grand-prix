@@ -43,26 +43,6 @@
       return g;
     }
     // Same triangle coverage, same heights, same physical definitions as Tracks3D.
-    const rug = A.EnvironmentScenes.get(surface.id).room.rug;
-    const groundGeo = new T.PlaneGeometry(rug.w, rug.d, 16, 16);
-    groundGeo.rotateX(-Math.PI / 2);
-    groundGeo.translate(rug.x, 0, rug.y);
-    const gp = groundGeo.attributes.position,
-      gu = groundGeo.attributes.uv,
-      colors = [];
-    for (let i = 0; i < gp.count; i++) {
-      gu.setXY(i, gp.getX(i) / 32, gp.getZ(i) / 32);
-      const shade =
-        0.965 +
-        0.03 * Math.sin(gp.getX(i) * 0.017) * Math.cos(gp.getZ(i) * 0.014);
-      colors.push(shade, shade, shade);
-    }
-    groundGeo.setAttribute("color", new T.Float32BufferAttribute(colors, 3));
-    mesh(
-      groundGeo,
-      materials.basic("#ffffff", { map: maps.carpet, vertexColors: true }),
-      "looped-carpet",
-    );
     mesh(
       uvScale(A.Tracks3D.boundaryGeometry(surface), 9 / 32),
       materials.basic(sceneConfig.materials.shoulderTint, { map: maps.carpet }),
@@ -294,7 +274,7 @@
       palette,
       A.EnvironmentScenes.get(surface.id).finishes,
     );
-    for (const spec of layout.objects)
+    for (const spec of layout.objects.filter((o) => !o.roomFurniture))
       assemble(spec, (o) => {
         if (spec.asset) assets.build(spec.asset, o, spec);
         else if (spec.id === "wooden-pits") assets.pit(o);
@@ -381,32 +361,8 @@
     group.add(greens);
     group.add(kit.finishShadows());
     function update(camera, pose, overview, snapshot) {
-      room.update(overview);
-      for (const { spec, node } of guards) {
-        const dx = camera.position.x - spec.at.x,
-          dz = camera.position.z - spec.at.y,
-          x = dx * Math.cos(spec.at.ang) + dz * Math.sin(spec.at.ang),
-          z = -dx * Math.sin(spec.at.ang) + dz * Math.cos(spec.at.ang),
-          y = camera.position.y;
-        const solids = spec.solids || [
-          [-spec.w / 2, spec.w / 2, -spec.d / 2, spec.d / 2, 0, spec.h],
-        ];
-        for (const child of node.children)
-          if (child.userData.environmentDetail)
-            child.visible =
-              overview || Math.hypot(dx, dz) < (spec.detailDistance || 380);
-        node.visible =
-          overview ||
-          !solids.some(
-            (b) =>
-              x > b[0] - 2 &&
-              x < b[1] + 2 &&
-              z > b[2] - 2 &&
-              z < b[3] + 2 &&
-              y > b[4] - 2 &&
-              y < b[5] + 2,
-          );
-      }
+      room.update(camera, overview);
+      A.IllustratedKit3D.updateVisibility(guards, camera, overview);
       const race = snapshot.race,
         lit =
           race?.phase === "countdown"
@@ -432,7 +388,9 @@
           ropeTriangles,
           tunnelClearHeight: layout.tunnel.clearHeight,
           tunnelHalfWidth: layout.tunnel.clearHalfWidth,
-          hiddenForCamera: guards.filter((g) => !g.node.visible).length,
+          hiddenForCamera:
+            guards.filter((g) => !g.node.visible).length +
+            room.diagnostics().hiddenForCamera,
         };
       },
       dispose() {

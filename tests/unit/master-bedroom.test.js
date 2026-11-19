@@ -226,3 +226,41 @@ it("baut alle Bibliothekstypen mit gültigen Optionen und gibt sämtliche Szenen
   assets.dispose();
   materials.dispose();
 });
+
+it("hält Fensterrahmen und Vorhangstange innerhalb der Zimmerbreite", () => {
+  const { api, materials, world } = createWorld(),
+    bounds = api.EnvironmentScenes.get("bahrain").room.bounds;
+  const root = world.group.getObjectByName("master-window-wall");
+  root.traverse((n) => {
+    if (n.isMesh) {
+      n.geometry.computeBoundingBox();
+      // Half a unit allows the illustrative wall contour, not a protruding rod.
+      expect(n.geometry.boundingBox.max.x).toBeLessThanOrEqual(
+        bounds.maxX + 0.5,
+      );
+      expect(n.geometry.boundingBox.min.x).toBeGreaterThan(bounds.minX - 1);
+    }
+  });
+  world.dispose();
+  materials.dispose();
+});
+
+it("baut das vollständige Master-Zimmer samt Möbeln und Teppich ohne Bahrain-Assembler", () => {
+  const { api, materials, world } = createWorld(),
+    cfg = api.EnvironmentScenes.get("bahrain"),
+    maps = api.IllustratedMaterials3D.create(materials, cfg.materials),
+    kit = api.IllustratedKit3D.create(materials, maps),
+    assets = api.EnvironmentAssets3D.create(
+      api.Bahrain3D.palette,
+      cfg.finishes,
+    ),
+    room = api.MasterBedroom3D.create(kit, assets, cfg);
+  for (const spec of cfg.room.furniture)
+    expect(room.group.getObjectByName(spec.id), spec.id).toBeTruthy();
+  expect(room.group.getObjectByName("looped-carpet").isMesh).toBe(true);
+  expect(room.diagnostics().furniture).toBe(6);
+  kit.dispose();
+  assets.dispose();
+  world.dispose();
+  materials.dispose();
+});

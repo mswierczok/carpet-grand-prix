@@ -103,7 +103,10 @@
       maxY: Math.max(...ys),
     };
     const scene = A.EnvironmentScenes.get(surface.id);
-    for (const spec of [...scene.room.furniture, ...scene.landmarks]) {
+    for (const spec of [
+      ...scene.room.furniture.map((f) => ({ ...f, roomFurniture: true })),
+      ...scene.landmarks,
+    ]) {
       const { id, at, w, d, h, ...options } = spec;
       add(id, at, w, d, h, options);
     }
