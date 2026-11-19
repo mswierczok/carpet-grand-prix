@@ -53,7 +53,11 @@ test("zeichnet echte 3D-Geometrie, folgt dem Auto und erhält alle 13 Lackierung
   const diag = await page.evaluate(() => __inspect3D.diagnostics());
   expect(diag.drawCalls).toBeLessThan(150);
   expect(diag.triangles).toBeGreaterThan(1000);
-  expect(diag.triangles).toBeLessThan(30000);
+  // The approved Bahrain art adds outlined landmark geometry. Other worlds
+  // retain the original budget; full-field Bahrain has its own separate check.
+  expect(diag.triangles).toBeLessThan(
+    diag.world?.theme === "carpet-desert" ? 45000 : 30000,
+  );
   expect(await page.evaluate(() => __driveSnapshot.car)).toEqual(moving);
   expect(
     await page.evaluate(() => localStorage.getItem("carpet_gp_v072")),
@@ -128,7 +132,10 @@ test("fährt offline eine vollständige gültige Bahrain-Runde durch die 3D-Welt
   test.setTimeout(180000);
   if (testInfo.project.name === "chromium")
     await page.setViewportSize({ width: 600, height: 750 });
-  await capture3D(page);
+  // Software WebGL: keep every physics/input step and >600 actual camera
+  // samples, without rasterizing all 2,400 frames of this offline lap.
+  // Unthrottled rendering is measured separately by measure-arcade3d.js.
+  await capture3D(page, { renderEvery: 3 });
   const requests = [];
   page.on("request", (r) => {
     if (r.url().startsWith("http")) requests.push(r.url());

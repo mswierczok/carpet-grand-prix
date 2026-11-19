@@ -17,10 +17,11 @@
     });
     renderer.outputColorSpace = T.SRGBColorSpace;
     const scene = new T.Scene();
-    scene.background = new T.Color("#b8beb5");
-    scene.fog = new T.Fog("#b8beb5", 180, 480);
-    scene.add(new T.HemisphereLight("#ffedce", "#627384", 1.5));
-    const light = new T.DirectionalLight("#fff1d6", 1.6);
+    const desert = surface.id === "bahrain" && !!A.Bahrain3D;
+    scene.background = new T.Color(desert ? "#e3d9c7" : "#b8beb5");
+    scene.fog = new T.Fog(desert ? "#e3d9c7" : "#b8beb5", 180, 480);
+    scene.add(new T.HemisphereLight(desert ? "#fff3d8" : "#ffedce", desert ? "#735f50" : "#627384", desert ? 1 : 1.5));
+    const light = new T.DirectionalLight(desert ? "#ffecd1" : "#fff1d6", desert ? 1.2 : 1.6);
     light.position.set(-150, 200, -80);
     scene.add(light);
     const camera = new T.PerspectiveCamera(55, 1, 0.3, 2400),
@@ -85,8 +86,9 @@
       camera.near = overview ? 50 : 0.3;
       camera.far = overview ? 6000 : 800;
       camera.updateProjectionMatrix();
-      scene.fog.far = overview ? 5000 : 480;
-      scene.fog.near = overview ? 1800 : 180;
+      track.update?.(camera, snapshot.visual, overview, snapshot);
+      scene.fog.far = overview ? 5000 : desert ? 680 : 480;
+      scene.fog.near = overview ? 1800 : desert ? 240 : 180;
       renderer.render(scene, camera);
       // Conservative automatic quality reduction; this measures delivered frame intervals, not GPU time.
       if (!snapshot.paused && quality === "auto") {
@@ -134,6 +136,7 @@
           pixelRatio: renderer.getPixelRatio(),
           quality,
           lost,
+          ...(track.diagnostics ? { world: track.diagnostics() } : {}),
           ...(wakes ? { wake: wakes.diagnostics() } : {}),
         };
       },
