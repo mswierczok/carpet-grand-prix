@@ -1,0 +1,1624 @@
+{
+  "recordedAt": "2026-11-19T20:00:42.070Z",
+  "reference": null,
+  "browser": "Chromium software WebGL; mobile viewport, not a physical iPhone",
+  "hashes": {
+    "src/racing/physics.js": "082782a78df28b280f7d38b23d41a5df03ba7e06153e737f22a055a3badd9764",
+    "src/racing/opponents.js": "ca6db01c6a2a1f88ff1a98385cad533151b432db673b3c39346c59f2922213dc",
+    "src/racing/race-session.js": "772631b8e12e1ce900928398f7bf05a78545f7cde91277ea09090cd4d9a76a94",
+    "src/data/arcade-tracks.js": "af32cf5939d3dc1b1c7cd0a93a01e3e782db8eb7e7be66203cfe2fbd8414677b",
+    "src/data/arcade-boundaries.js": "6813865323000a4b0293b8a6f3f65c5e0f496dda65fb901dc74073fd6632d4a0",
+    "src/persistence/pov-checkpoint.js": "e2bbb57bafd5d1e5cba7acba4c0a6e71da361827fc276d4cc297b84b7a63678f"
+  },
+  "artHashes": {
+    "src/rendering/arcade3d.js": "4758182dffb31b1193611cb6e35b98ccd8fa3b229d864d36c3d0db2970939c10",
+    "src/rendering/tracks3d.js": "0a931c44b5a71365cea4d11408210da42d70a84fb9145dbcb421718e4ee3d35a",
+    "src/rendering/bahrain3d.js": "e40589bad2a73fac01e4f8c6eab04a90a6cf0ee95dc32e32147291b781fbc550",
+    "src/rendering/bahrain-layout.js": "27981998ff37fd695b639c2f693ba81a827297c772c65a82d1d58d365e6a82a9",
+    "src/rendering/bahrain-materials3d.js": "7c71170ceadb6299b3f2519c8bb707361eded830b52d04517ba71882413cd20c",
+    "src/rendering/illustrated-materials3d.js": "9a5a87f327bc2443db077b1725dfa188e904020e6c3f1e3d1745b251eacf3ead",
+    "src/rendering/illustrated-kit3d.js": "d175724fc6a2dfc187738122917a605ab050cc28aad4883c213811e309cfb909",
+    "src/rendering/environment-scenes.js": "e949bc2db45841d2535c5730f6e4473184343dfd4cc9126a3295a9e1bf4340f0",
+    "src/rendering/environment-assets3d.js": "1960be9e13c7cd354259e6f78ee58a872dd0bef06dd50458478d77ec561bd263",
+    "src/rendering/master-bedroom3d.js": "020ce41aa480f15396f52f8285a28340b11583e3255dd4eb595d48ffb51afac8",
+    "race.html": "8baef680e8e8531c831aa85347779a671fb4b0a855adc1d59752fdfa3575a4bb",
+    "arcade3d.html": "0d88ac38e2afead03a67efbdac425b381705fd24aeb1d7ee089ec54d373b62a3",
+    "src/rendering/camera3d.js": "3b7401a2ea3da9bea45b7f01dc84899ae882a1f63824d9684db6916f5fff409e",
+    "src/rendering/vehicles3d.js": "fad1b68b8377aa8065fa01ecbcbbc079d99115b81f1066cd71f16fa35808a5b5",
+    "src/rendering/fleet3d.js": "7cf2ea703b54079d2067caea4b65b3123db5528312213281e28f13776d3cb0a8",
+    "src/vendor/three.js": "17603458db511414cf3d066806171c90b8fc8eb43b2f7cacb0480d85f0b852bb",
+    "assets/drivers/portraits/d001.png": "57524546b9acf3d8f5aac1f6209abe0e2e2faf2a25482cf233aaec26eab96be9",
+    "assets/drivers/portraits/d002.png": "cef4f7c06891788bd1db4702103c4418d90a91553f945b20edfab2a46de2fffb",
+    "assets/drivers/portraits/d003.png": "1500a52fb7fec5fc5f74dcf6496720cff5f37230853971f65d0e843b2dff2dc1",
+    "assets/drivers/portraits/d004.png": "97f34ae0494413d877c48d86e71badbcfa6f99b33357515c19574e319b0b4fcd",
+    "assets/drivers/portraits/d005.png": "b6e6f49591b23b07ff3efbe6135becfc396238422d0c1a0d286ca2da31b254aa",
+    "assets/drivers/portraits/d006.png": "a3293e7d15f49b7773a215dedd19ea604984a9eeb5b1595b8ca755f6116f315e",
+    "assets/drivers/portraits/d007.png": "03eae3b6563f76ebf945dc171532bf0e1dfa871176a804376e6a54ffeb023651",
+    "assets/drivers/portraits/d008.png": "edac35cb2dfeee21685032dc1c43a10116cf8792f87d0857a8e6f34910ab7ccc",
+    "assets/drivers/portraits/d009.png": "0d75f921365ca002c0b3ec5cd2c54c7c0437a0007bd7ecebd58c170cea8a095f",
+    "assets/drivers/portraits/d010.png": "5c3762f5044adec39dd34b9cc4f2bb10c4cf3646f2515da651c0b4f85170f8bc",
+    "assets/drivers/portraits/d011.png": "7152a6c47c05bcd6b8384b36689725e7275d576d4ac9d0e221c99d2b79bd0761",
+    "assets/drivers/portraits/d012.png": "ba32ccdcbe73b52a0d4109ce6032fccec557a2653aebf292d23b688a78fab295",
+    "assets/drivers/portraits/d013.png": "af616fe64866a60410b0d4edae299dba0c81296227baf464b867020fcf876305",
+    "assets/drivers/portraits/d014.png": "662589426d738d10fd8dfd0ce30913b91505645c3660acc843aac61630af02f5",
+    "assets/drivers/portraits/d015.png": "58d797fa34480cc0da3a7b21ae079ac80b63f40172fad641495431f6e342ede9",
+    "assets/drivers/portraits/d016.png": "c22c3f24193479a7d13dc4ddb3a6476d0e3ea710fcba93b50dd4671636d5cb30",
+    "assets/drivers/portraits/d017.png": "6c8f2ebf716d185da728162446c5c01de980fe1270058163e12061d6c6eae985",
+    "assets/drivers/portraits/d018.png": "43b04f3c4b9340bfeebdd60a815c8feb771d64c0e71f2b92a57d915bf221abaa",
+    "assets/drivers/portraits/d019.png": "28bbaceb7d52b9ad2ee7fc4b74fa63d752f6046d4de3c542c6088c7a349ccf47",
+    "assets/drivers/portraits/d020.png": "6f5ceb057f235bebbae3e334c1362f0f23120d7dcfedcbebc6924b89aaf71a7c",
+    "assets/drivers/portraits/d021.png": "67d956b8bdc324a03623730e7ce42f0fa742f16b0a6eb84cdc1f02b96e3762e8",
+    "assets/drivers/portraits/d022.png": "5b62da0e5925dcb87ef25cabdf17f43ee01f67a31c410bc637b3237d2242b9c6",
+    "assets/drivers/portraits/d023.png": "e0281889d860c0c17c86b2655ede556d72391b2125cecef0266e058b71728c10",
+    "assets/drivers/portraits/d024.png": "5dc3db346beb45bd3e8d682de4568c5250bb5e17a0c49412585763ef5a2353bb",
+    "assets/drivers/portraits/d025.png": "c3e341752c0776d65eb12f9fe15048403623f29ff7fb0434c168eb5e8da615d2",
+    "assets/drivers/portraits/d026.png": "0bdbc2cd79cfb4adc834e7ce24eae5038249a2896db0429087ccab7ce21397ef",
+    "assets/drivers/portraits/d027.png": "be8adf172a93bcf7d1e72d3a5eee15c42b409b5736c540c640038700fd46da8d",
+    "assets/drivers/portraits/d028.png": "eef445cf3d9348b95d2f44e194a7c0070262027b9c417faf91e68565143a4a8d",
+    "assets/drivers/portraits/d029.png": "c42a55602e656e29628a85f57ad6ed8a11d9353902d845e6b84a9b469291d822",
+    "assets/drivers/portraits/d030.png": "033a6582c1c1196fa09cc51f251860cc4acfff4eb5a5ed8ac951f72befabc0be",
+    "assets/drivers/portraits/d031.png": "5565c124edae9dbfd93de319a1f102e84ec28a59dd6bbcf884e01dc82c1a9009",
+    "assets/drivers/portraits/d032.png": "853fb1e5928b2f2cdc9930d03ecb1e8ae10462cde6cfc5a4bb8675ccec98087e",
+    "assets/drivers/portraits/d033.png": "0685af74d3911a96233d3a65f1fc0e48d116b228a0876bce10b86d31f70d902f",
+    "assets/drivers/portraits/d034.png": "441c723b43ff3844ec379dee123913aa25560dfa576a2a490fcc16f3ff7cb65e",
+    "assets/drivers/portraits/d035.png": "9a8c4ab1dd24b69337024af915c7cb6c17df80618fbf0ec13919ba4b88666e1c"
+  },
+  "reports": [
+    {
+      "viewport": "desktop",
+      "shot": "01-grid",
+      "s": -118,
+      "car": {
+        "x": 611.0565635501987,
+        "y": 192.67142008169654,
+        "heading": 0,
+        "vx": 0,
+        "vy": 0,
+        "s": -118,
+        "steering": 0,
+        "speed": 0,
+        "longitudinalSpeed": 0,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0
+      },
+      "graphics": {
+        "drawCalls": 174,
+        "triangles": 87809,
+        "geometries": 152,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "02-underbed-entry",
+      "s": 1860.2026521317289,
+      "car": {
+        "x": 144.37493383807896,
+        "y": 681.9526963298163,
+        "heading": 3.399927618779091,
+        "steering": 0.05786908314597134,
+        "vx": -106.34983550662416,
+        "vy": -28.10182356563408,
+        "speed": 110.00000000000021,
+        "longitudinalSpeed": 110.0000000000002,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 1860.2026521317289,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 79,
+        "triangles": 30799,
+        "geometries": 198,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 1,
+          "triangles": 192
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "03-bedpost-bend",
+      "s": 1961.7584529520732,
+      "car": {
+        "x": 82.08932707953616,
+        "y": 610.2363996068511,
+        "heading": 4.959295404207996,
+        "steering": 0.14918481416142304,
+        "vx": 21.851653835621317,
+        "vy": -86.69597334295669,
+        "speed": 89.40741898318328,
+        "longitudinalSpeed": 89.40741898318328,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 1961.7584529520732,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 158,
+        "triangles": 65797,
+        "geometries": 198,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "04-underbed-exit",
+      "s": 2028.0058957717963,
+      "car": {
+        "x": 130.44985252322965,
+        "y": 562.4843326055218,
+        "heading": 5.975954439196222,
+        "steering": 0.11457482793148516,
+        "vx": 91.11593575340044,
+        "vy": -28.9089844953948,
+        "speed": 95.59206626479404,
+        "longitudinalSpeed": 95.59206626479403,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 2028.0058957717963,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 199,
+        "triangles": 83549,
+        "geometries": 198,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 3,
+          "triangles": 576
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "05-bedroom-signature",
+      "s": 3329.2188249515393,
+      "car": {
+        "x": 532.786471699555,
+        "y": 206.53817074057525,
+        "heading": 6.274423723486848,
+        "steering": -0.0004613640798476974,
+        "vx": 109.99577793282494,
+        "vy": -0.9637618755047268,
+        "speed": 110.00000000000006,
+        "longitudinalSpeed": 110.00000000000006,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 3329.2188249515393,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 169,
+        "triangles": 78807,
+        "geometries": 198,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "06-pit-entry-main",
+      "s": 3386.8967031738202,
+      "car": {
+        "x": 590.4643499218361,
+        "y": 195.36100347986516,
+        "heading": 5.933407510827559,
+        "steering": 0.06719205017356822,
+        "vx": 73.91097869389701,
+        "vy": -26.778993678734906,
+        "speed": 78.61264067524651,
+        "longitudinalSpeed": 78.61245471821368,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 3386.8967031738202,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 127,
+        "triangles": 60847,
+        "geometries": 198,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "07-paddock-and-pits",
+      "s": 3481.7024679909255,
+      "car": {
+        "x": 685.2701147389419,
+        "y": 190.60813575325565,
+        "heading": 6.311372944976421,
+        "steering": -0.012549221664924302,
+        "vx": 109.95630303252355,
+        "vy": 3.10022957534693,
+        "speed": 110.00000000000001,
+        "longitudinalSpeed": 110.00000000000001,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 3481.7024679909255,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 128,
+        "triangles": 61961,
+        "geometries": 198,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "08-grandstand",
+      "s": 3535.810940843155,
+      "car": {
+        "x": 739.3781635071106,
+        "y": 190.73144073810943,
+        "heading": 6.271063334356902,
+        "steering": -0.010914318389582763,
+        "vx": 105.95615432371469,
+        "vy": -1.2844605375543736,
+        "speed": 105.96393951691006,
+        "longitudinalSpeed": 105.96393951691007,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 3535.810940843155,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 113,
+        "triangles": 54213,
+        "geometries": 198,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 1,
+          "triangles": 192
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "09-pit-exit-main",
+      "s": 3649.22270838932,
+      "car": {
+        "x": 831.7270766489818,
+        "y": 230.8571508577244,
+        "heading": 7.23812207178936,
+        "steering": 0.09535023451666318,
+        "vx": 63.542641428820986,
+        "vy": 89.79049348482438,
+        "speed": 110.00000000000004,
+        "longitudinalSpeed": 110.00000000000003,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 3649.22270838932,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 127,
+        "triangles": 54157,
+        "geometries": 198,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "shot": "10-room-overview",
+      "s": 28481.07848809131,
+      "car": {
+        "x": 886.858554841041,
+        "y": 373.0910137219465,
+        "heading": 51.36665653186409,
+        "steering": 0.0016039371569710418,
+        "vx": 49.780441179159716,
+        "vy": 98.09132314332525,
+        "speed": 110.00000000000018,
+        "longitudinalSpeed": 110.00000000000017,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 28481.07848809131,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 211,
+        "triangles": 102179,
+        "geometries": 200,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "desktop",
+      "complete": true,
+      "errors": [],
+      "final": {
+        "race": {
+          "difficulty": "normal",
+          "catchup": true,
+          "phase": "finished",
+          "countdown": 0,
+          "elapsed": 287.3916666665696,
+          "laps": 8,
+          "playerTeam": "t01",
+          "position": 11,
+          "finished": 13,
+          "standings": [
+            {
+              "id": "t03",
+              "name": "Falkenheim GP",
+              "player": false,
+              "position": 1,
+              "completed": 8,
+              "progress": 28914.568859721887,
+              "finishTime": 267.1685283212306
+            },
+            {
+              "id": "t02",
+              "name": "Alderwick Racing",
+              "player": false,
+              "position": 2,
+              "completed": 8,
+              "progress": 28914.568859721887,
+              "finishTime": 269.4932603274533
+            },
+            {
+              "id": "t05",
+              "name": "Eisenbach Motorsport",
+              "player": false,
+              "position": 3,
+              "completed": 8,
+              "progress": 28914.568859721887,
+              "finishTime": 271.9312807392693
+            },
+            {
+              "id": "t04",
+              "name": "Scuderia Bellarossa",
+              "player": false,
+              "position": 4,
+              "completed": 8,
+              "progress": 28914.568859721887,
+              "finishTime": 273.32802726287616
+            },
+            {
+              "id": "t07",
+              "name": "Ragos Racing",
+              "player": false,
+              "position": 5,
+              "completed": 8,
+              "progress": 28914.568859721887,
+              "finishTime": 275.2807253319949
+            },
+            {
+              "id": "t09",
+              "name": "Lincoln",
+              "player": false,
+              "position": 6,
+              "completed": 8,
+              "progress": 28914.568859721887,
+              "finishTime": 277.1705295804522
+            },
+            {
+              "id": "t06",
+              "name": "Orange",
+              "player": false,
+              "position": 7,
+              "completed": 8,
+              "progress": 28914.568859721887,
+              "finishTime": 278.2089027656996
+            },
+            {
+              "id": "t10",
+              "name": "Panther Racing",
+              "player": false,
+              "position": 8,
+              "completed": 8,
+              "progress": 28914.568859721887,
+              "finishTime": 279.55821551937447
+            },
+            {
+              "id": "t12",
+              "name": "Scuderia Vespera",
+              "player": false,
+              "position": 9,
+              "completed": 8,
+              "progress": 28902.49487046562,
+              "finishTime": 281.1638507684782
+            },
+            {
+              "id": "t11",
+              "name": "Rivage Racing",
+              "player": false,
+              "position": 10,
+              "completed": 8,
+              "progress": 28654.496129379728,
+              "finishTime": 283.35679543782385
+            },
+            {
+              "id": "t01",
+              "name": "Vauclair Motorsport",
+              "player": true,
+              "position": 11,
+              "completed": 8,
+              "progress": 28481.07848809131,
+              "finishTime": 284.9357451794063
+            },
+            {
+              "id": "t13",
+              "name": "Redwood GP",
+              "player": false,
+              "position": 12,
+              "completed": 8,
+              "progress": 28329.629268374778,
+              "finishTime": 286.309672605229
+            },
+            {
+              "id": "t08",
+              "name": "Mugan",
+              "player": false,
+              "position": 13,
+              "completed": 8,
+              "progress": 28204.818903289368,
+              "finishTime": 287.3835821824403
+            }
+          ]
+        },
+        "contacts": 34,
+        "timing": {
+          "elapsed": 284.94166666657185,
+          "nextGate": 1,
+          "started": true,
+          "lapStart": 284.9357451794063,
+          "completed": 8,
+          "lastLap": {
+            "seconds": 33.05977060608103,
+            "valid": true
+          },
+          "bestLap": 33.01521200841469,
+          "invalid": false
+        },
+        "graphics": {
+          "drawCalls": 211,
+          "triangles": 102179,
+          "geometries": 200,
+          "textures": 23,
+          "pixelRatio": 1,
+          "quality": "low",
+          "lost": false,
+          "world": {
+            "theme": "carpet-desert",
+            "room": {
+              "id": "motorsport-bedroom",
+              "unitMillimetres": 5,
+              "bounds": {
+                "minX": -60,
+                "maxX": 1190,
+                "minY": -140,
+                "maxY": 930,
+                "height": 550
+              },
+              "furniture": 6,
+              "hiddenForCamera": 0
+            },
+            "passage": {
+              "clearHeight": 26,
+              "clearHalfWidth": 32
+            },
+            "assets": 22,
+            "ropeTriangles": 8200,
+            "tunnelClearHeight": 22,
+            "tunnelHalfWidth": 32,
+            "hiddenForCamera": 0
+          },
+          "wake": {
+            "emitters": 0,
+            "triangles": 0
+          }
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "01-grid",
+      "s": -118,
+      "car": {
+        "x": 611.0565635501987,
+        "y": 192.67142008169654,
+        "heading": 0,
+        "vx": 0,
+        "vy": 0,
+        "s": -118,
+        "steering": 0,
+        "speed": 0,
+        "longitudinalSpeed": 0,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0
+      },
+      "graphics": {
+        "drawCalls": 161,
+        "triangles": 84585,
+        "geometries": 139,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "02-underbed-entry",
+      "s": 1844.5217400175532,
+      "car": {
+        "x": 161.62726752196951,
+        "y": 675.6435973428556,
+        "heading": 3.3889929032670056,
+        "steering": 0.038268589818437705,
+        "vx": -92.09443023966453,
+        "vy": -23.260704609357216,
+        "speed": 94.986548837676,
+        "longitudinalSpeed": 94.98654883767601,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 1844.5217400175532,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 83,
+        "triangles": 33841,
+        "geometries": 195,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "03-bedpost-bend",
+      "s": 1945.859290715326,
+      "car": {
+        "x": 91.60082192556882,
+        "y": 625.1005892349401,
+        "heading": 4.49528402699636,
+        "steering": 0.19615655998336468,
+        "vx": -16.49438036916179,
+        "vy": -74.77678568742805,
+        "speed": 76.57435772832922,
+        "longitudinalSpeed": 76.57435772832922,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 1945.859290715326,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 81,
+        "triangles": 28551,
+        "geometries": 195,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 1,
+          "triangles": 192
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "04-underbed-exit",
+      "s": 2036.801909173335,
+      "car": {
+        "x": 139.84896359326214,
+        "y": 559.4429422760254,
+        "heading": 6.000445727513869,
+        "steering": 0.14152937922206432,
+        "vx": 94.12867139522409,
+        "vy": -27.346523318190386,
+        "speed": 98.02060556955567,
+        "longitudinalSpeed": 98.02060556955567,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 2036.801909173335,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 175,
+        "triangles": 77249,
+        "geometries": 198,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 1,
+          "triangles": 192
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "05-bedroom-signature",
+      "s": 3323.144851521555,
+      "car": {
+        "x": 526.7124982695713,
+        "y": 206.55534624850367,
+        "heading": 6.292842595282408,
+        "steering": 0.0034176071474966807,
+        "vx": 109.99487056312348,
+        "vy": 1.0622851791090888,
+        "speed": 110.00000000000021,
+        "longitudinalSpeed": 110.0000000000002,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 3323.144851521555,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 135,
+        "triangles": 62797,
+        "geometries": 198,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 1,
+          "triangles": 192
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "06-pit-entry-main",
+      "s": 3398.6990460086968,
+      "car": {
+        "x": 602.2666927567128,
+        "y": 199.55762944869056,
+        "heading": 6.251009959124181,
+        "steering": 0.027045619862863763,
+        "vx": 110.12906199467814,
+        "vy": -3.5446641932310183,
+        "speed": 110.1860923169092,
+        "longitudinalSpeed": 110.1860923169092,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 3398.6990460086968,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 116,
+        "triangles": 58425,
+        "geometries": 198,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 3,
+          "triangles": 576
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "07-paddock-and-pits",
+      "s": 3480.528124097827,
+      "car": {
+        "x": 684.0957708458434,
+        "y": 197.9334804687104,
+        "heading": 6.235536431699379,
+        "steering": -0.005375751560876215,
+        "vx": 110.44033790205812,
+        "vy": -5.266344108221643,
+        "speed": 110.56582933342007,
+        "longitudinalSpeed": 110.56582933342007,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 3480.528124097827,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 96,
+        "triangles": 45059,
+        "geometries": 198,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 2,
+          "triangles": 384
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "08-grandstand",
+      "s": 3534.774959544946,
+      "car": {
+        "x": 738.3421822089016,
+        "y": 195.46112912495414,
+        "heading": 6.274680219678386,
+        "steering": 0.012370715003111135,
+        "vx": 110.28258190169163,
+        "vy": -0.9379856259112266,
+        "speed": 110.28657075064824,
+        "longitudinalSpeed": 110.28657075064822,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 3534.774959544946,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 88,
+        "triangles": 42563,
+        "geometries": 198,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 2,
+          "triangles": 384
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "09-pit-exit-main",
+      "s": 3654.3612802132475,
+      "car": {
+        "x": 834.6634057148732,
+        "y": 235.55414649064758,
+        "heading": 7.312005638969938,
+        "steering": 0.08757562657798697,
+        "vx": 56.7572983135837,
+        "vy": 94.26262235903268,
+        "speed": 110.03105418861867,
+        "longitudinalSpeed": 110.03105418861867,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 3654.3612802132475,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 110,
+        "triangles": 47453,
+        "geometries": 198,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 2,
+          "triangles": 384
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "shot": "10-room-overview",
+      "s": 3654.3612802132475,
+      "car": {
+        "x": 834.6634057148732,
+        "y": 235.55414649064758,
+        "heading": 7.312005638969938,
+        "steering": 0.08757562657798697,
+        "vx": 56.7572983135837,
+        "vy": 94.26262235903268,
+        "speed": 110.03105418861867,
+        "longitudinalSpeed": 110.03105418861867,
+        "reverseHold": 0,
+        "offroad": false,
+        "hitWall": false,
+        "understeer": 0,
+        "s": 3654.3612802132475,
+        "hitCar": false
+      },
+      "graphics": {
+        "drawCalls": 213,
+        "triangles": 102947,
+        "geometries": 200,
+        "textures": 23,
+        "pixelRatio": 1,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 2,
+          "triangles": 384
+        }
+      }
+    },
+    {
+      "viewport": "mobile",
+      "complete": false,
+      "errors": [],
+      "final": {
+        "race": {
+          "difficulty": "normal",
+          "catchup": true,
+          "phase": "racing",
+          "countdown": 0,
+          "elapsed": 47.1833333333313,
+          "laps": 8,
+          "playerTeam": "t01",
+          "position": 13,
+          "finished": 0,
+          "standings": [
+            {
+              "id": "t03",
+              "name": "Falkenheim GP",
+              "player": false,
+              "position": 1,
+              "completed": 1,
+              "progress": 4862.487012041461,
+              "finishTime": null
+            },
+            {
+              "id": "t02",
+              "name": "Alderwick Racing",
+              "player": false,
+              "position": 2,
+              "completed": 1,
+              "progress": 4641.566500187801,
+              "finishTime": null
+            },
+            {
+              "id": "t05",
+              "name": "Eisenbach Motorsport",
+              "player": false,
+              "position": 3,
+              "completed": 1,
+              "progress": 4563.823220039138,
+              "finishTime": null
+            },
+            {
+              "id": "t04",
+              "name": "Scuderia Bellarossa",
+              "player": false,
+              "position": 4,
+              "completed": 1,
+              "progress": 4480.850615888876,
+              "finishTime": null
+            },
+            {
+              "id": "t06",
+              "name": "Orange",
+              "player": false,
+              "position": 5,
+              "completed": 1,
+              "progress": 4344.646958744018,
+              "finishTime": null
+            },
+            {
+              "id": "t07",
+              "name": "Ragos Racing",
+              "player": false,
+              "position": 6,
+              "completed": 1,
+              "progress": 4231.253986150481,
+              "finishTime": null
+            },
+            {
+              "id": "t09",
+              "name": "Lincoln",
+              "player": false,
+              "position": 7,
+              "completed": 1,
+              "progress": 4203.1857890495,
+              "finishTime": null
+            },
+            {
+              "id": "t11",
+              "name": "Rivage Racing",
+              "player": false,
+              "position": 8,
+              "completed": 1,
+              "progress": 4053.703206189576,
+              "finishTime": null
+            },
+            {
+              "id": "t08",
+              "name": "Mugan",
+              "player": false,
+              "position": 9,
+              "completed": 1,
+              "progress": 3969.939137412351,
+              "finishTime": null
+            },
+            {
+              "id": "t13",
+              "name": "Redwood GP",
+              "player": false,
+              "position": 10,
+              "completed": 1,
+              "progress": 3944.334461949994,
+              "finishTime": null
+            },
+            {
+              "id": "t12",
+              "name": "Scuderia Vespera",
+              "player": false,
+              "position": 11,
+              "completed": 1,
+              "progress": 3823.4764366319705,
+              "finishTime": null
+            },
+            {
+              "id": "t10",
+              "name": "Panther Racing",
+              "player": false,
+              "position": 12,
+              "completed": 1,
+              "progress": 3708.5648758540437,
+              "finishTime": null
+            },
+            {
+              "id": "t01",
+              "name": "Vauclair Motorsport",
+              "player": true,
+              "position": 13,
+              "completed": 1,
+              "progress": 3654.3612802132475,
+              "finishTime": null
+            }
+          ]
+        },
+        "contacts": 22,
+        "timing": {
+          "elapsed": 47.1833333333313,
+          "nextGate": 1,
+          "started": true,
+          "lapStart": 46.09899815950158,
+          "completed": 1,
+          "lastLap": {
+            "seconds": 43.77418342645342,
+            "valid": true
+          },
+          "bestLap": 43.77418342645342,
+          "invalid": false
+        },
+        "graphics": {
+          "drawCalls": 213,
+          "triangles": 102947,
+          "geometries": 200,
+          "textures": 23,
+          "pixelRatio": 1,
+          "quality": "low",
+          "lost": false,
+          "world": {
+            "theme": "carpet-desert",
+            "room": {
+              "id": "motorsport-bedroom",
+              "unitMillimetres": 5,
+              "bounds": {
+                "minX": -60,
+                "maxX": 1190,
+                "minY": -140,
+                "maxY": 930,
+                "height": 550
+              },
+              "furniture": 6,
+              "hiddenForCamera": 0
+            },
+            "passage": {
+              "clearHeight": 26,
+              "clearHalfWidth": 32
+            },
+            "assets": 22,
+            "ropeTriangles": 8200,
+            "tunnelClearHeight": 22,
+            "tunnelHalfWidth": 32,
+            "hiddenForCamera": 0
+          },
+          "wake": {
+            "emitters": 2,
+            "triangles": 384
+          }
+        }
+      }
+    }
+  ]
+}

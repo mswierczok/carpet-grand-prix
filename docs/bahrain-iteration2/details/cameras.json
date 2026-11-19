@@ -1,0 +1,64 @@
+{
+  "method": "Actual running game scene, unchanged paused grid; inspection camera explicitly distinct from normal POV",
+  "reports": [
+    {
+      "name": "01-paddock",
+      "position": [
+        650,
+        64,
+        -25
+      ],
+      "target": [
+        710,
+        7,
+        54
+      ]
+    },
+    {
+      "name": "02-grandstand-figures",
+      "position": [
+        680,
+        68,
+        178
+      ],
+      "target": [
+        735,
+        19,
+        258
+      ]
+    },
+    {
+      "name": "03-underbed-layout",
+      "position": [
+        295,
+        130,
+        735
+      ],
+      "target": [
+        105,
+        18,
+        620
+      ]
+    },
+    {
+      "name": "04-start-pitlane",
+      "position": [
+        630,
+        160,
+        325
+      ],
+      "target": [
+        715,
+        0,
+        170
+      ]
+    }
+  ],
+  "hashes": {
+    "src/rendering/bahrain3d.js": "e40589bad2a73fac01e4f8c6eab04a90a6cf0ee95dc32e32147291b781fbc550",
+    "src/rendering/environment-assets3d.js": "1960be9e13c7cd354259e6f78ee58a872dd0bef06dd50458478d77ec561bd263",
+    "src/rendering/environment-scenes.js": "e949bc2db45841d2535c5730f6e4473184343dfd4cc9126a3295a9e1bf4340f0",
+    "src/data/arcade-tracks.js": "af32cf5939d3dc1b1c7cd0a93a01e3e782db8eb7e7be66203cfe2fbd8414677b",
+    "src/data/arcade-boundaries.js": "6813865323000a4b0293b8a6f3f65c5e0f496dda65fb901dc74073fd6632d4a0"
+  }
+}

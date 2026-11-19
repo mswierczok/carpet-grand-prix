@@ -115,3 +115,67 @@ wird mit frisch gestarteten Rennen abgenommen. Kein stilles Zurücksetzen oder
 Manipulieren laufender alter Spielstände.
 
 Diese Iteration ändert nicht die Hauptmenüs, Teamfahrer oder die übrigen Strecken.
+
+
+## Abschließende Verifikation
+
+- 200 Modul-/Integrationsprüfungen bestanden, darunter die fünf gezielten
+  Iterationsprüfungen. Zwei historische Kalender-/Brückenregressionen wurden
+  zusätzlich separat ausgeführt.
+- Alle acht Bahrain-Browserfälle auf Desktop und Mobilformat bestanden:
+  Standardrennen mit 13 Zieleinläufen und acht gültigen Runden, echte
+  Unterbett-/Boxenfahrt mit gezählter Runde, unveränderliche Rendereingabe,
+  Streckenwechsel, Offlinebetrieb und sicherer 2D-Rückfall.
+- Die freien 3D-Fahrtests halten weiterhin 45.000 Dreiecke / 150 Draw Calls ein;
+  das volle Startfeld bleibt unter 90.000 Dreiecken / 190 Draw Calls.
+- Tatsächlicher Aufnahmelauf: Desktop acht Runden, alle 13 im Ziel; zusätzlich
+  eine Mobilrunde und getrennte tatsächliche Boxendurchfahrten beider Formate.
+- Die optimierte Dekorations-Abstandsprüfung überspringt anhand exakter unterer
+  Schranken weit entfernte Boxensegmente. `clearance-equivalence.json` belegt
+  identische Platzierungen, alle Abstandswerte und denselben Geometrie-Hash.
+  Die ältere Quellprüfsumme dieser einzigen Aufnahmedatei bleibt im ursprünglichen
+  Aufnahmeprotokoll erhalten; es wurden keine Screenshots als neu ausgegeben.
+
+### Performancevergleich mit demselben Pixelbudget
+
+Pausiertes reales 13er-Startfeld; DPR 0,75, zehn Aufwärm- und 30 Messbilder,
+GPU-Abschluss per Readback. Die Startpositionen sind zwischen beiden Versionen
+identisch und werden während der Messung nicht verändert. Keine weiteren
+Testjobs laufen während der Stichprobe. Rohdaten: `bahrain-iteration2/paired-performance.json`.
+
+| Messwert | Desktop vorher → jetzt | Mobilformat vorher → jetzt |
+| --- | --- | --- |
+| Draw Calls | 166 → 173 | 153 → 161 |
+| Dreiecke | 77.998 → 87.807 | 74.160 → 84.585 |
+| Szenengeometrie-Arrays | 12,44 → 13,43 MB | 12,44 → 13,43 MB |
+| Browser-Heap, Schätzung | 31,95 → 33,33 MB | 31,77 → 33,33 MB |
+| Ladezeit | 5,01 → 3,61 s | 4,51 → 3,22 s |
+| Szenenaufbau | 1,63 → 1,09 s | 1,28 → 1,00 s |
+| Synchronisierte Renderzeit, Median | 180,0 → 198,4 ms | 129,1 → 147,0 ms |
+| Synchronisierte Renderzeit, P95 | 228,5 → 350,7 ms | 192,8 → 294,3 ms |
+
+Der Aufbau ist in dieser Stichprobe schneller; die reichere Szene benötigt
+rund 10 % bzw. 14 % mehr mediane Renderzeit und etwa 1 MB mehr Geometriearrays.
+Die höheren P95-Werte werden ausdrücklich mitgeführt. Das sind Software-WebGL-
+Messwerte und keine Behauptung über iPhone-FPS oder garantierte Ladezeiten.
+Die vorhandene sparsame Pixelratio 0,65 bleibt erhalten.
+
+### Bilder und Testpaket
+
+`previews/bahrain-iteration2/index.html` enthält die Galerie mit tatsächlichen
+POV-, Übersichts- und ausdrücklich bezeichneten Detailkamera-Aufnahmen.
+Die Detailkamera ändert ausschließlich den Blick auf die echte Spielszene,
+keine Fahrzeugpositionen. Die Vergleichsbilder stammen aus der vorhandenen
+Galerie des veröffentlichten Zimmerstands und werden als solche bezeichnet.
+
+Nach beiden Offline-Builds erzeugt `node scripts/build-bahrain-review.js` unter
+`dist/bahrain-review/` eine eingebettete Galerie und alle eigenständigen Spiele.
+Entpacken und `index.html` im Browser öffnen. Die CI-Ausgabe heißt weiterhin
+`carpet-grand-prix-bahrain-review`.
+
+`node scripts/check-bahrain-review.js` prüft die identischen Paketdateien bei
+abgeschaltetem Browsernetzwerk über lokale Testrouten. Direkte `file://`-
+Navigation ist in der verwalteten Testumgebung gesperrt; die Prüfung umgeht
+diese Sperre nicht. Sie prüft Bilderdekodierung und Übergang in das echte
+3D-Rennen ohne externe Anforderungen. `package-check.json` enthält Datei-
+Prüfsummen und das tatsächliche Ergebnis.

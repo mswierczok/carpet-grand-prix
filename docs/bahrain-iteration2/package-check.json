@@ -1,0 +1,34 @@
+{
+  "checkedAt": "2026-11-19T20:18:35.293Z",
+  "method": "Identical package bytes over local routes; browser network disabled; file protocol is administratively blocked in this environment",
+  "images": 21,
+  "actual3DGame": true,
+  "errors": [],
+  "unexpected": [],
+  "files": {
+    "carpet-grand-prix-arcade-offline.html": {
+      "bytes": 973000,
+      "sha256": "90967a1f8e86486d910e04436d75fcf367544479ce234560c83753abd1e1cdff"
+    },
+    "carpet-grand-prix-arcade3d-offline.html": {
+      "bytes": 5205499,
+      "sha256": "542a92365dc45f8e6ab62377d7723de07457c49a00bb90137bb4fd77b0c558f4"
+    },
+    "carpet-grand-prix-menu-offline.html": {
+      "bytes": 2907165,
+      "sha256": "998781a7649cfbd7264ce375dc2c21479acf370011d3fb5ef76d114870819a73"
+    },
+    "carpet-grand-prix-offline.html": {
+      "bytes": 9780773,
+      "sha256": "00a567ad9e4022a58c6250d0a6bf519299f44a5faeb3b06f503d4d82b2bc8508"
+    },
+    "carpet-grand-prix-race-offline.html": {
+      "bytes": 5345933,
+      "sha256": "bbfd04f60f181d67aa3de7f80660a9acb831acd87f708943d20fc8b8ac52095f"
+    },
+    "index.html": {
+      "bytes": 7213425,
+      "sha256": "48723e664506afaaafa87a80ec213989c21785415c481d3e02c830949941fe4a"
+    }
+  }
+}

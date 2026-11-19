@@ -192,3 +192,32 @@ it("Iteration 2: Bett bleibt sichtbar; Kamera und Sichtstrahl passen unter Rahme
   world.dispose();
   materials.dispose();
 });
+
+it("Iteration 2: beschleunigte Dekorationsprüfung liefert dieselben Abstände wie der vollständige frühere Scan", () => {
+  const { api, surface, world, materials } = createWorld(),
+    old = { ...api };
+  runInNewContext(
+    execFileSync("git", [
+      "show",
+      "2891e85003168e05895f5b6a1b48be96fc18364a:src/rendering/bahrain-layout.js",
+    ]).toString(),
+    { CGPArcade: old },
+  );
+  const original = old.BahrainLayout.create(surface);
+  expect(JSON.stringify(world.layout.objects)).toBe(
+    JSON.stringify(original.objects),
+  );
+  for (const [x, y, w, d] of [
+    [710, 110, 40, 15],
+    [580, 170, 15, 12],
+    [100, 620, 18, 20],
+    [1000, 600, 60, 30],
+    [500, 300, 22, 15],
+    [700, 145, 20, 10],
+  ])
+    expect(world.layout.clearance({ x, y, ang: 0.17 }, w, d)).toBe(
+      original.clearance({ x, y, ang: 0.17 }, w, d),
+    );
+  world.dispose();
+  materials.dispose();
+});

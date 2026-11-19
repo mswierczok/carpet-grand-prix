@@ -1,0 +1,9 @@
+{
+  "checkedAt": "2026-11-19T20:12:00.113318+00:00",
+  "capturedSourceCommit": "2891e85",
+  "change": "Exact broad-phase bounds in decoration preflight only; no change to placements, distances or mesh buffers",
+  "geometrySHA256": "c38bd6a17c37df1c61fc8b34a6274adcc5fda949cdc1b855ae8502dd40843c6b",
+  "allLayoutValuesIdentical": true,
+  "beforeSourceSHA256": "27981998ff37fd695b639c2f693ba81a827297c772c65a82d1d58d365e6a82a9",
+  "afterSourceSHA256": "ae2e1f011b8210f1a1542eb81b15229c4df86b364b0cddabe42f6d96ea18cb9a"
+}

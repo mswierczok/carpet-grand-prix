@@ -14,6 +14,7 @@ const output =
 const quick = process.argv.includes("--quick");
 const gate = process.argv.includes("--gate");
 const room = process.argv.includes("--room");
+const iteration = process.argv.includes("--iteration2");
 const reference = process.argv
   .find((a) => a.startsWith("--reference="))
   ?.slice(12);
@@ -104,39 +105,60 @@ try {
       () =>
         CGPArcade.Surface.create(CGPArcade.TrackCatalog.get("bahrain")).g.len,
     );
-    const checkpoints = room
+    const moments = await page.evaluate(() => {
+      const surface = CGPArcade.Surface.create(
+        CGPArcade.TrackCatalog.get("bahrain"),
+      );
+      return {
+        underbedApproach: surface.project({ x: 170, y: 685 }).s / surface.g.len,
+        bedpost: surface.project({ x: 85, y: 630 }).s / surface.g.len,
+        underbedExit: surface.project({ x: 130, y: 572 }).s / surface.g.len,
+      };
+    });
+    const checkpoints = iteration
       ? [
-          ["02-first-corner", 0.04],
-          ["03-bed-and-rope", 0.36],
-          ["04-window-and-desk", 0.58],
-          ["05-tunnel-entry", 0.85],
-          ["06-tunnel-through", 0.887],
-          ["07-grandstand", 0.94],
-          ["08-pits", 0.977],
-          ["09a-finish-approach", 0.993],
-          ["09-finish", 1.006],
+          ["02-underbed-entry", moments.underbedApproach],
+          ["03-bedpost-bend", moments.bedpost],
+          ["04-underbed-exit", moments.underbedExit],
+          ["05-bedroom-signature", 0.94],
+          ["06-pit-entry-main", 0.96],
+          ["07-paddock-and-pits", 0.98],
+          ["08-grandstand", 0.995],
+          ["09-pit-exit-main", 1.035],
         ]
-      : gate
+      : room
         ? [
-            ["02-gate-approach", 0.04],
-            ["02b-gate-near", 0.075],
-            ["03-gate-entry", 0.115],
-            ["04-gate-through", 0.128],
-            ["05-parked-cars", 0.143],
-            ["06-corner", 0.25],
-            ["07-pits", 0.977],
+            ["02-first-corner", 0.04],
+            ["03-bed-and-rope", 0.36],
+            ["04-window-and-desk", 0.58],
+            ["05-tunnel-entry", 0.85],
+            ["06-tunnel-through", 0.887],
+            ["07-grandstand", 0.94],
+            ["08-pits", 0.977],
+            ["09a-finish-approach", 0.993],
+            ["09-finish", 1.006],
           ]
-        : [
-            ["02-camel", 0.025],
-            ["03-corner", 0.25],
-            ["04-tunnel-entry", 0.85],
-            ["05-tunnel-inside", 0.883],
-            ["06-pits", 0.977],
-            ["07-finish", 1.006],
-          ];
+        : gate
+          ? [
+              ["02-gate-approach", 0.04],
+              ["02b-gate-near", 0.075],
+              ["03-gate-entry", 0.115],
+              ["04-gate-through", 0.128],
+              ["05-parked-cars", 0.143],
+              ["06-corner", 0.25],
+              ["07-pits", 0.977],
+            ]
+          : [
+              ["02-camel", 0.025],
+              ["03-corner", 0.25],
+              ["04-tunnel-entry", 0.85],
+              ["05-tunnel-inside", 0.883],
+              ["06-pits", 0.977],
+              ["07-finish", 1.006],
+            ];
     let next = 0,
       finished = false;
-    for (let i = 0; i < 1400; i++) {
+    for (let i = 0; i < (iteration ? 2400 : 1400); i++) {
       await page.clock.runFor(250);
       const s = await page.evaluate(() => ({
         s: __driveSnapshot.car.s,
@@ -160,9 +182,9 @@ try {
       throw Error(`${prefix}: incomplete actual drive (${next} images)`);
     await page.keyboard.press("p");
     await page.clock.runFor(32);
-    if (gate || room) {
+    if (gate || room || iteration) {
       await page.locator("#overview").click();
-      await shot(room ? "10-room-overview" : "08-overview", true);
+      await shot(room || iteration ? "10-room-overview" : "08-overview", true);
       await page.locator("#overview").click();
     }
     reports.push({
