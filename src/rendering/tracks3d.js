@@ -134,6 +134,8 @@
     return new PolygonCurve();
   }
   function create(surface, materials) {
+    if (surface.id === "bahrain" && A.Bahrain3D)
+      return A.Bahrain3D.create(surface, materials);
     const group = new T.Group(),
       geometries = [],
       disposables = [],

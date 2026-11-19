@@ -1,8 +1,10 @@
 // Developer measurement only. The app contains no benchmark or test hooks.
 import { chromium } from "@playwright/test";
 import { writeFileSync } from "node:fs";
+import { selectDriveSetting } from "../tests/helpers/arcade-browser.js";
 const software = process.argv.includes("--software-webgl");
 const raceMode = process.argv.includes("--race");
+const mobile = process.argv.includes("--mobile");
 const slipstreamDisabled = process.argv.includes("--slipstream=0");
 const waitForWake = raceMode && !slipstreamDisabled && process.argv.includes("--wait-for-wake");
 const browser = await chromium.launch({
@@ -13,7 +15,8 @@ const browser = await chromium.launch({
 });
 try {
   const page = await browser.newPage({
-    viewport: { width: 1000, height: 800 },
+    viewport: mobile ? { width: 390, height: 844 } : { width: 1000, height: 800 },
+    isMobile: mobile, hasTouch: mobile,
   });
   await page.addInitScript(() => {
     globalThis.CGPArcade = {};
@@ -59,8 +62,8 @@ try {
   )
     throw Error("3D nicht verfügbar; kein gültiger 3D-Messwert.");
   const difficulty = process.argv.find((a) => a.startsWith("--difficulty="))?.slice(13);
-  if (raceMode && difficulty) await page.locator("#difficulty").selectOption(difficulty);
-  await page.locator("#quality").selectOption("low");
+  if (raceMode && difficulty) await selectDriveSetting(page, "difficulty", difficulty);
+  await selectDriveSetting(page, "quality", "low");
   await page.waitForTimeout(1500);
   await page.locator("#pause").click();
   await page.keyboard.down("w");
@@ -115,7 +118,7 @@ try {
   Object.assign(report, {
     recordedAt: new Date().toISOString(),
     browser: browser.version(),
-    viewport: { width: 1000, height: 800 },
+    viewport: mobile ? { width: 390, height: 844 } : { width: 1000, height: 800 },
     softwareRequested: software,
     raceMode,
     waitedForActiveWake: waitForWake,

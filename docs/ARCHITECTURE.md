@@ -190,3 +190,11 @@ Teamresultate und Saisonfortschritt; `pov-workshop.js` verwaltet Fahrzeugentwick
 mit vorhandenen Kosten und Grenzen. `pov-game-ui.js` verbindet diese Module mit
 Menü, Autosave und der bestehenden Rennansicht. Fahrerzuordnung und Fahrwirkung
 der Entwicklungen bleiben offen. Format, Abnahme und Grenzen: [POV_CAREER.md](POV_CAREER.md).
+
+`Tracks3D` verwendet für Bahrain die isolierte Gestaltung aus `bahrain3d.js`.
+`bahrain-layout.js` prüft Requisitenflächen anhand derselben unveränderten
+`Surface`; `bahrain-materials3d.js` zeichnet die Materialkarten. Das gemeinsame
+`illustrated-kit3d.js` bündelt statische Modellteile und Kontaktschatten.
+Die Darstellung besitzt keine Kollisions- oder Spielstanddaten. Alle anderen
+Strecken behalten ihren bisherigen Renderer-Zweig. Echte Spielaufnahmen,
+Abnahmegalerie und technische Grenzen: [BAHRAIN_VISUAL.md](BAHRAIN_VISUAL.md).

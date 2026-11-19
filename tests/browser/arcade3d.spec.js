@@ -121,14 +121,17 @@ test("bleibt ohne WebGL 2 als Fahrtest bedienbar", async ({ page }) => {
   expect(Number(await page.locator("#speed").innerText())).toBeGreaterThan(10);
 });
 
-test("fährt offline eine vollständige gültige Bahrain-Runde durch die 3D-Welt ausschließlich per Tastatur", async ({
+test("fährt offline zwei vollständige gültige Bahrain-Runden durch die 3D-Welt ausschließlich per Tastatur", async ({
   page,
   context,
 }, testInfo) => {
   test.setTimeout(180000);
   if (testInfo.project.name === "chromium")
     await page.setViewportSize({ width: 600, height: 750 });
-  await capture3D(page);
+  // Software WebGL: keep every physics/input step and >600 actual camera
+  // samples over TWO laps, without rasterizing every intermediate frame.
+  // Unthrottled rendering is measured separately by measure-arcade3d.js.
+  await capture3D(page, { renderEvery: 3 });
   const requests = [];
   page.on("request", (r) => {
     if (r.url().startsWith("http")) requests.push(r.url());
@@ -146,11 +149,11 @@ test("fährt offline eine vollständige gültige Bahrain-Runde durch die 3D-Welt
   expect(await page.evaluate(() => __driveSnapshot.car.offroad)).toBe(true);
   expect(await page.evaluate(() => __driveSnapshot.timing.invalid)).toBe(false);
   await expect(page.locator("#arcadeApp")).not.toContainText("ungültig");
-  await page.evaluate(keyboardPilot, { laps: 1 });
-  await page.clock.runFor(40000);
+  await page.evaluate(keyboardPilot, { laps: 2 });
+  await page.clock.runFor(90000);
   expect(
     Number(await page.locator("#laps").innerText()),
-  ).toBeGreaterThanOrEqual(1);
+  ).toBeGreaterThanOrEqual(2);
   await expect(page.locator("#bestLap")).not.toHaveText("—");
   expect(await page.evaluate(() => __driveSnapshot.contacts)).toBe(0);
   expect(requests).toHaveLength(1);
