@@ -2,7 +2,7 @@
   "use strict";
   const A = globalThis.CGPArcade,
     settings = Object.freeze({ sampleSeconds: 0.05, historySeconds: 90 });
-  function create() {
+  function create(saved = null) {
     const cars = new Map();
     function observe(id, distance, time) {
       if (!Number.isFinite(distance) || !Number.isFinite(time)) return;
@@ -44,7 +44,18 @@
       if (!start || end.distance <= start.distance) return null;
       return start.time + (distance - start.distance) / (end.distance - start.distance) * (end.time - start.time);
     }
-    return Object.freeze({ observe, crossing });
+    if (saved) for (const r of saved) cars.set(r.id, {
+      points: r.points.map(p => ({ distance: p[0], time: p[1] })), head: 0,
+      expiredThrough: r.expiredThrough, distance: r.distance, lastSample: r.lastSample,
+      current: { distance: r.current[0], time: r.current[1] },
+    });
+    function exportState() {
+      return [...cars].map(([id, r]) => ({ id, points: r.points.slice(r.head).map(p => [p.distance, p.time]),
+        expiredThrough: r.expiredThrough === -Infinity ? "~negative-infinity" : r.expiredThrough,
+        distance: r.distance, lastSample: r.lastSample,
+        current: [r.current.distance, r.current.time] }));
+    }
+    return Object.freeze({ observe, crossing, exportState });
   }
   A.RaceGaps = Object.freeze({ settings, create });
 })();

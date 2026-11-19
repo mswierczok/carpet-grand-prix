@@ -160,6 +160,13 @@ Die bestehende Pages-Veröffentlichung wird nicht umgestellt.
 
 ## Grenzen
 
+`pov-checkpoint.test.js` und `pov-career.test.js` prüfen Fortsetzung, KI-Zustand,
+Speichervalidierung, die 22-Rennen-Teamwertung und Entwicklungskonten. Die sechs
+Browserfälle in `pov-career.spec.js` haben eigene Desktop-/Mobil-CI-Jobs und werden
+aus den allgemeinen Browserjobs ausgenommen. Sie prüfen echte Runden und
+Rückkehr, Qualifying/Grid, Ergebnisse, Werkstatt und Offlinebetrieb. Details und
+Speicher-Messprotokoll: [POV_CAREER.md](POV_CAREER.md).
+
 `pov-menu.spec.js` prüft den neuen normalen Einstieg, die Teamfahrzeugbilder,
 gespeicherte Auswahl, gemeinsame Einstellungen, 3D-Übergabe, Storagefehler und
 Offline-Navigation. Die früheren Browserfälle öffnen ausdrücklich `?legacy=1`.

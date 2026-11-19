@@ -183,3 +183,16 @@ select:disabled {
   .race-toolbar kbd { display: none; }
   #raceSettings { padding: 14px; }
 }
+
+#povWorkshop { width: min(680px, calc(100% - 24px)); max-height: 90dvh; overflow-y: auto; padding: 20px; border: 1px solid #77908f; border-radius: 14px; background: #263b44; color: var(--paper); }
+#povWorkshop::backdrop { background: #081419bb; }
+.pov-workshop-car { padding: 15px; background: #c4af8b; border-radius: 12px; }
+.pov-workshop-car svg { display: block; width: 100%; height: 160px; }
+.pov-workshop-part { border-top: 1px solid #77908f; padding: 10px 0; }
+.pov-workshop-part h3 { margin: 4px 0; font-size: 16px; }
+.pov-workshop-part p { margin: 6px 0; font-size: 13px; }
+#povWorkshop button { min-height: 44px; }
+#povTeamStandings { font-size: 13px; line-height: 1.8; }
+.pov-load-error .race-layout { display: none; }
+#povLoadProblem { padding: 16px; border: 1px solid var(--accent); }
+.settings-field input[type=file] { width: 100%; min-width: 0; font-size: 13px; }

@@ -26,6 +26,7 @@ export function loadArcade({ race = false, formats = true } = {}) {
           "racing/ai-difficulty",
           "persistence/pov-preferences",
           "persistence/pov-selection",
+          "persistence/pov-checkpoint",
           "racing/vehicle-contacts",
           "racing/opponent-line",
           "racing/opponents",
@@ -36,6 +37,9 @@ export function loadArcade({ race = false, formats = true } = {}) {
           "racing/qualifying-drivers",
           "racing/qualifying-session",
           "racing/race-weekend",
+          "championship/pov-career",
+          "management/pov-workshop",
+          "persistence/pov-game-store",
         ]
       : []),
   ])

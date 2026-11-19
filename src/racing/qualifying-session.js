@@ -4,7 +4,7 @@
   function create(track, options = {}) {
     const teams = options.teams || CGPArcadeData.roster.teams,
       qualifyingDrivers = A.QualifyingDrivers.create(teams);
-    const session = A.RaceSession.create(track, { ...options, gridOrder: undefined,
+    const session = options.restore ? A.RaceSession.restore(options.restore.race) : A.RaceSession.create(track, { ...options, gridOrder: undefined,
       laps: timedLaps + 1, isolated: true, slipstream: false, catchup: false, qualifyingDrivers });
     let records;
     function clear() {
@@ -36,9 +36,18 @@
     }
     function restart() { session.restart(); clear(); }
     clear();
-    return Object.freeze({ surface: session.surface, parameters: session.parameters,
+    if (options.restore) records = new Map(A.POVCheckpoint.qualifying(options.restore).records.map(r => [r.id, r]));
+    function exportState() {
+      return { kind: "qualifying", version: 1,
+        race: session.exportState(), records: [...records.values()].map(r => ({ ...r, laps: [...r.laps] })) };
+    }
+    return Object.freeze({ exportState, surface: session.surface, parameters: session.parameters,
       pause: (...args) => session.pause(...args), recover: () => session.recover(),
       advance, snapshot, restart });
   }
-  A.QualifyingSession = Object.freeze({ create, timedLaps });
+  function restore(value) {
+    const saved = A.POVCheckpoint.qualifying(value);
+    return create(A.TrackCatalog.get(saved.race.trackId), { ...saved.race.config, restore: saved });
+  }
+  A.QualifyingSession = Object.freeze({ create, restore, timedLaps });
 })();

@@ -332,8 +332,32 @@
         },
       };
     }
+    function exportState() {
+      return A.POVCheckpoint.copy({ kind: "race", version: 1, trackId: track.id,
+        signature: A.POVCheckpoint.signature(track.id),
+        config: { playerTeam, difficulty: difficulty.id, catchup: catchupEnabled, slipstream: slipstreamEnabled,
+          isolated, qualifying: !!options.qualifyingDrivers, laps, gridOrder: grid, diagnostics: !!options.diagnostics },
+        state: { phase, countdown, elapsed, accumulator, paused, tick, pairs: [...pairs], playerContacts,
+          gaps: gapHistory ? gapHistory.exportState() : null,
+          entries: entries.map(e => ({ id: e.id, car: e.car, previous: e.previous, timing: e.timing,
+            finishTime: e.finishTime, lastSafe: e.lastSafe, driver: e.driver, command: e.command,
+            ...(slipstreamEnabled ? { slipstream: e.slipstream } : {}),
+            ...(catchupEnabled ? { catchup: { ...e.catchup,
+              recoveryUntil: e.catchup.recoveryUntil === -Infinity ? "~negative-infinity" : e.catchup.recoveryUntil,
+              contactUntil: e.catchup.contactUntil === -Infinity ? "~negative-infinity" : e.catchup.contactUntil } } : {}) })) } });
+    }
     restart();
+    if (options.restore) {
+      const saved = A.POVCheckpoint.decode(A.POVCheckpoint.race(options.restore)), state = saved.state;
+      if (saved.trackId !== track.id) throw Error("Falsche Strecke im POV-Spielstand.");
+      phase = state.phase; countdown = state.countdown; elapsed = state.elapsed;
+      accumulator = state.accumulator; paused = true; tick = state.tick; playerContacts = state.playerContacts;
+      pairs = new Set(state.pairs);
+      gapHistory = catchupEnabled ? A.RaceGaps.create(state.gaps) : null;
+      entries = state.entries.map(e => ({ ...e, team: teams.find(t => t.id === e.id), player: e.id === playerTeam }));
+    }
     return Object.freeze({
+      exportState,
       surface,
       parameters,
       advance,
@@ -346,5 +370,12 @@
       selectCatchup,
     });
   }
-  A.RaceSession = Object.freeze({ create, fixedStep });
+  function restore(value) {
+    const saved = A.POVCheckpoint.race(value), config = saved.config;
+    return create(A.TrackCatalog.get(saved.trackId), { ...config,
+      gridOrder: config.gridOrder === null ? undefined : config.gridOrder,
+      ...(config.qualifying ? { qualifyingDrivers: A.QualifyingDrivers.create(CGPArcadeData.roster.teams) } : {}),
+      restore: saved });
+  }
+  A.RaceSession = Object.freeze({ create, restore, fixedStep });
 })();
