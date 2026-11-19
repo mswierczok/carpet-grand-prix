@@ -264,3 +264,27 @@ KI-Kalibrierungen verwenden ausdrücklich die alte Bahrain-Referenz; normale
 Spiel-/Browserprüfungen verwenden das neue Layout. Die Schutz-Normalisierung
 ist auf das freigegebene Profil und den optionalen Geometrieadapter begrenzt.
 Keine Referenz-Fixtures und keine KI- oder Physikwerte werden angepasst.
+
+Die verbleibenden historischen Browser-Zeitgrenzen werden für das ausdrücklich
+verlängerte Bahrain proportional zur dokumentierten Streckenlänge skaliert:
+125 Sekunden Fahrbudget für drei Runden sowie das bisherige 180–240-Sekunden-
+Fenster für das Standardrennen. Rundenzahlen und die Prüfungen aller 13
+gültigen Zieleinläufe bleiben streng erhalten. Andere Strecken behalten ihre
+bisherigen Grenzen. Auch das reale Test-Zeitlimit skaliert mit dem längeren
+Fahrbudget. Dies ändert ausschließlich Tests, keine Spielparameter.
+
+Die Geometriepuffer-Grenze der Teamwechsel-Prüfung wird von weniger als 160
+(höchstens 159) auf höchstens 160 angehoben. Die zusätzlichen Bahrain-Bauteile
+erreichen auf Desktop exakt 160. Das erlaubt genau einen weiteren Puffer;
+Dreiecks- und Draw-Call-Grenzen werden nicht erhöht.
+
+Der lange Standardformat-Test rendert jedes 40. Bild statt jedes 8. Bild.
+Snapshots, Physikschritte und echte Tastatureingaben laufen weiterhin in
+jedem normalen Spielschritt; die separaten Grafik- und Performanceprüfungen
+werden dadurch nicht ausgedünnt.
+
+Die langen Browserfahrten prüfen den natürlichen Abschluss in Ein-Sekunden-
+Schritten. Das maximale simulierte Fahrbudget bleibt gleich; bereits beendete
+Rennen werden nicht mehr bis zum nächsten 20-Sekunden-Block als pausierte
+Szene erneut gezeichnet. Auch die Dreirundenfahrt beendet den Prüflauf erst
+nach den drei tatsächlichen Runden, statt anschließend weiter zu zeichnen.

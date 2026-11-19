@@ -179,3 +179,19 @@ Navigation ist in der verwalteten Testumgebung gesperrt; die Prüfung umgeht
 diese Sperre nicht. Sie prüft Bilderdekodierung und Übergang in das echte
 3D-Rennen ohne externe Anforderungen. `package-check.json` enthält Datei-
 Prüfsummen und das tatsächliche Ergebnis.
+
+### Ergänzung aus der vollständigen GitHub-Browserprüfung
+
+Die zusätzlichen Legacy-Browserfälle enthielten noch zwei Annahmen zur alten
+Bahrain-Länge: 125 Sekunden für drei Runden und höchstens 240 Sekunden für
+das Acht-Runden-Rennen. Beide Zeitfenster und das reale Canvas-Testzeitlimit
+skalieren jetzt mit dem Verhältnis der neuen zur ursprünglichen Streckenlänge.
+Die acht Runden, alle 13 Zieleinläufe und deren Gültigkeit bleiben vorgeschrieben.
+Frankreich und Russland behalten ihr bisheriges 180–240-Sekunden-Fenster.
+
+Der Teamwechseltest erlaubt höchstens 160 statt höchstens 159 Geometriepuffer,
+da die freigegebenen zusätzlichen Bauteile auf Desktop genau 160 erreichen.
+Dreiecks- und Draw-Call-Grenzen bleiben erhalten. Lange Fahrtests prüfen den
+natürlichen Abschluss jede Sekunde und rendern nicht mehr unnötig lange eine
+bereits beendete, pausierte Szene. Sämtliche Spiel-, Asset- und Stil-Dateien
+bleiben bei dieser Korrektur bytegenau zur geprüften Fassung `6bf40bc` erhalten.
