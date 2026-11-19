@@ -10,9 +10,7 @@ it("erhält sämtliche Rennsysteme, Stammdaten, Speicherformate und 35 Original-
   const files = [
     "physics",
     "opponents",
-    "opponent-line",
     "vehicle-contacts",
-    "ai-difficulty",
     "slipstream",
     "catchup",
     "timing",

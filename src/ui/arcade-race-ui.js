@@ -97,7 +97,7 @@
           : r.phase === "countdown"
             ? snapshot.paused
               ? "Start pausiert"
-              : "Start in " + r.countdown
+              : "Startampel · bei Grün losfahren"
             : r.phase === "finished"
               ? "Rennen beendet · Dein Ergebnis: Platz " + r.position
               : r.phase === "finishing"
@@ -123,16 +123,12 @@
           ? "Letzte Runde " + format(t.lastLap.seconds)
           : "Noch keine vollständige Runde",
       );
-      const signal = el("raceSignal"),
-        label =
-          r.phase === "countdown"
-            ? String(r.countdown)
-            : r.phase === "racing" && r.elapsed < 1
-              ? "LOS!"
-              : "";
-      signal.hidden = !label;
-      signal.textContent = label;
-      signal.classList.toggle("is-green", label === "LOS!");
+      const signal = el("raceSignal"), lights = r.startLights;
+      signal.hidden = !(lights.red || lights.green);
+      for (const [i, lamp] of [...signal.children].entries()) {
+        lamp.classList.toggle("is-red", i < lights.red);
+        lamp.classList.toggle("is-green", lights.green);
+      }
       for (const entry of r.standings) {
         if (!rows.has(entry.id)) rows.set(entry.id, row(entry));
         const item = rows.get(entry.id);

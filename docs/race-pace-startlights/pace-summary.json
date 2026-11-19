@@ -1,0 +1,518 @@
+{
+  "baseline": "1d94d8f8c8433e891b4f38686d046ae6af2a80e5",
+  "protocol": "Current Bahrain layout; four isolated laps at 120Hz physics and 30Hz commands; mean of three flying laps. Qualifying: one outlap and two real timed laps for each of twelve independent opponents; player idle. Identical vehicle parameters, no slipstream/catch-up.",
+  "difficulties": [
+    {
+      "mode": "beginner",
+      "beforeSeconds": 34.266822,
+      "afterSeconds": 33.607028,
+      "afterWallSteps": 0,
+      "afterShoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "mode": "normal",
+      "beforeSeconds": 33.225194,
+      "afterSeconds": 33.053364,
+      "afterWallSteps": 0,
+      "afterShoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "mode": "hard",
+      "beforeSeconds": 32.471472,
+      "afterSeconds": 32.2,
+      "afterWallSteps": 0,
+      "afterShoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "mode": "expert",
+      "beforeSeconds": 32.765811,
+      "afterSeconds": 31.832731,
+      "afterWallSteps": 0,
+      "afterShoulderSteps": 0,
+      "peakKmh": 118.8
+    }
+  ],
+  "qualifying": [
+    {
+      "version": "before",
+      "rows": [
+        {
+          "id": "t02",
+          "name": "Alderwick Racing",
+          "player": false,
+          "seed": 0,
+          "completed": 3,
+          "laps": [
+            32.792699995764416,
+            32.72841994102495
+          ],
+          "bestLap": 32.72841994102495,
+          "position": 1
+        },
+        {
+          "id": "t04",
+          "name": "Scuderia Bellarossa",
+          "player": false,
+          "seed": 2,
+          "completed": 3,
+          "laps": [
+            32.769294867450064,
+            32.7551070334807
+          ],
+          "bestLap": 32.7551070334807,
+          "position": 2
+        },
+        {
+          "id": "t03",
+          "name": "Falkenheim GP",
+          "player": false,
+          "seed": 1,
+          "completed": 3,
+          "laps": [
+            32.839632442643,
+            32.78846898788548
+          ],
+          "bestLap": 32.78846898788548,
+          "position": 3
+        },
+        {
+          "id": "t08",
+          "name": "Mugan",
+          "player": false,
+          "seed": 6,
+          "completed": 3,
+          "laps": [
+            32.88129284156366,
+            32.97529984846007
+          ],
+          "bestLap": 32.88129284156366,
+          "position": 4
+        },
+        {
+          "id": "t05",
+          "name": "Eisenbach Motorsport",
+          "player": false,
+          "seed": 3,
+          "completed": 3,
+          "laps": [
+            32.93435253043045,
+            32.96070502481146
+          ],
+          "bestLap": 32.93435253043045,
+          "position": 5
+        },
+        {
+          "id": "t11",
+          "name": "Rivage Racing",
+          "player": false,
+          "seed": 9,
+          "completed": 3,
+          "laps": [
+            33.01993631520843,
+            32.98031291493156
+          ],
+          "bestLap": 32.98031291493156,
+          "position": 6
+        },
+        {
+          "id": "t13",
+          "name": "Redwood GP",
+          "player": false,
+          "seed": 11,
+          "completed": 3,
+          "laps": [
+            33.03530963210142,
+            33.02773051028802
+          ],
+          "bestLap": 33.02773051028802,
+          "position": 7
+        },
+        {
+          "id": "t10",
+          "name": "Panther Racing",
+          "player": false,
+          "seed": 8,
+          "completed": 3,
+          "laps": [
+            33.11772600897689,
+            33.03418111559388
+          ],
+          "bestLap": 33.03418111559388,
+          "position": 8
+        },
+        {
+          "id": "t06",
+          "name": "Orange",
+          "player": false,
+          "seed": 4,
+          "completed": 3,
+          "laps": [
+            33.060408320844296,
+            33.12979102383274
+          ],
+          "bestLap": 33.060408320844296,
+          "position": 9
+        },
+        {
+          "id": "t07",
+          "name": "Ragos Racing",
+          "player": false,
+          "seed": 5,
+          "completed": 3,
+          "laps": [
+            33.066375050743495,
+            33.072199883711974
+          ],
+          "bestLap": 33.066375050743495,
+          "position": 10
+        },
+        {
+          "id": "t09",
+          "name": "Lincoln",
+          "player": false,
+          "seed": 7,
+          "completed": 3,
+          "laps": [
+            33.12959029880105,
+            33.13300734692383
+          ],
+          "bestLap": 33.12959029880105,
+          "position": 11
+        },
+        {
+          "id": "t12",
+          "name": "Scuderia Vespera",
+          "player": false,
+          "seed": 10,
+          "completed": 3,
+          "laps": [
+            33.1346029424393,
+            33.14237890773238
+          ],
+          "bestLap": 33.1346029424393,
+          "position": 12
+        }
+      ]
+    },
+    {
+      "version": "after",
+      "rows": [
+        {
+          "id": "t03",
+          "name": "Falkenheim GP",
+          "player": false,
+          "seed": 1,
+          "completed": 3,
+          "laps": [
+            31.84464491223025,
+            31.889061047013286
+          ],
+          "bestLap": 31.84464491223025,
+          "position": 1
+        },
+        {
+          "id": "t04",
+          "name": "Scuderia Bellarossa",
+          "player": false,
+          "seed": 2,
+          "completed": 3,
+          "laps": [
+            31.88606476444211,
+            31.845955519067644
+          ],
+          "bestLap": 31.845955519067644,
+          "position": 2
+        },
+        {
+          "id": "t02",
+          "name": "Alderwick Racing",
+          "player": false,
+          "seed": 0,
+          "completed": 3,
+          "laps": [
+            31.852267761208168,
+            31.868401618708887
+          ],
+          "bestLap": 31.852267761208168,
+          "position": 3
+        },
+        {
+          "id": "t08",
+          "name": "Mugan",
+          "player": false,
+          "seed": 6,
+          "completed": 3,
+          "laps": [
+            31.99090610357066,
+            32.04599520491098
+          ],
+          "bestLap": 31.99090610357066,
+          "position": 4
+        },
+        {
+          "id": "t05",
+          "name": "Eisenbach Motorsport",
+          "player": false,
+          "seed": 3,
+          "completed": 3,
+          "laps": [
+            32.05250144449747,
+            32.04939773213901
+          ],
+          "bestLap": 32.04939773213901,
+          "position": 5
+        },
+        {
+          "id": "t11",
+          "name": "Rivage Racing",
+          "player": false,
+          "seed": 9,
+          "completed": 3,
+          "laps": [
+            32.13076594624401,
+            32.08673048705485
+          ],
+          "bestLap": 32.08673048705485,
+          "position": 6
+        },
+        {
+          "id": "t13",
+          "name": "Redwood GP",
+          "player": false,
+          "seed": 11,
+          "completed": 3,
+          "laps": [
+            32.11958379553558,
+            32.12969841955508
+          ],
+          "bestLap": 32.11958379553558,
+          "position": 7
+        },
+        {
+          "id": "t10",
+          "name": "Panther Racing",
+          "player": false,
+          "seed": 8,
+          "completed": 3,
+          "laps": [
+            32.17711706903318,
+            32.189592498061415
+          ],
+          "bestLap": 32.17711706903318,
+          "position": 8
+        },
+        {
+          "id": "t07",
+          "name": "Ragos Racing",
+          "player": false,
+          "seed": 5,
+          "completed": 3,
+          "laps": [
+            32.23178244617904,
+            32.22982150616666
+          ],
+          "bestLap": 32.22982150616666,
+          "position": 9
+        },
+        {
+          "id": "t06",
+          "name": "Orange",
+          "player": false,
+          "seed": 4,
+          "completed": 3,
+          "laps": [
+            32.27109154366713,
+            32.31246627790611
+          ],
+          "bestLap": 32.27109154366713,
+          "position": 10
+        },
+        {
+          "id": "t12",
+          "name": "Scuderia Vespera",
+          "player": false,
+          "seed": 10,
+          "completed": 3,
+          "laps": [
+            32.34762327367964,
+            32.43382984768509
+          ],
+          "bestLap": 32.34762327367964,
+          "position": 11
+        },
+        {
+          "id": "t09",
+          "name": "Lincoln",
+          "player": false,
+          "seed": 7,
+          "completed": 3,
+          "laps": [
+            32.37622304400805,
+            32.408308128493104
+          ],
+          "bestLap": 32.37622304400805,
+          "position": 12
+        }
+      ]
+    }
+  ],
+  "expertCatalog": [
+    {
+      "id": "bahrain",
+      "seconds": 31.832731,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "luxembourg",
+      "seconds": 42.702543,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "canada",
+      "seconds": 29.63256,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "france",
+      "seconds": 35.610794,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "switzerland",
+      "seconds": 35.679275,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "portugal",
+      "seconds": 24.733191,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "india",
+      "seconds": 41.810921,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "brazil",
+      "seconds": 29.220836,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "south-africa",
+      "seconds": 33.611153,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "korea",
+      "seconds": 33.836768,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "usa",
+      "seconds": 33.033301,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "belgium",
+      "seconds": 24.466412,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "sweden",
+      "seconds": 23.400079,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "germany",
+      "seconds": 29.954252,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "japan",
+      "seconds": 39.079258,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "china",
+      "seconds": 28.422282,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "russia",
+      "seconds": 37.488945,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "australia",
+      "seconds": 34.903724,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "england",
+      "seconds": 27.403232,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "italy",
+      "seconds": 30.265764,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "hungary",
+      "seconds": 30.766593,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    },
+    {
+      "id": "abu-dhabi",
+      "seconds": 32.349048,
+      "wallSteps": 0,
+      "shoulderSteps": 0,
+      "peakKmh": 118.8
+    }
+  ]
+}

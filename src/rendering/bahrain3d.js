@@ -439,10 +439,10 @@
       const race = snapshot.race,
         lit =
           race?.phase === "countdown"
-            ? Math.min(5, Math.floor((3 - race.countdown) / 0.6) + 1)
+            ? race.startLights.red
             : 0;
       signal.forEach((node, i) => (node.visible = i < lit));
-      greens.visible = race?.phase === "racing" && race.elapsed < 2;
+      greens.visible = !!race?.startLights?.green;
     }
     return Object.freeze({
       group,

@@ -1,5 +1,5 @@
 // Read-only test driver: real keyboard commands, no game state writes.
-export function pilotPit() {
+export function pilotPit({ fast = false } = {}) {
   const A = CGPArcade,
     surface = A.Surface.create(A.TrackCatalog.get("bahrain")),
     pit = surface.g.pit,
@@ -26,7 +26,7 @@ export function pilotPit() {
       b = pit[i + 1];
     return { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f };
   };
-  let mode = "main";
+  let mode = "main", peakKmh = 0;
   globalThis.__pitDrive = {
     mode,
     progress: 0,
@@ -41,6 +41,7 @@ export function pilotPit() {
       return;
     }
     const car = snapshot.car;
+    if (mode === "pit" && A.PitLane.contains(surface, car)) peakKmh = Math.max(peakKmh, car.speed * A.Physics.parameters.metersPerUnit * 3.6);
     if (mode === "main" && car.s > surface.g.len - 225) mode = "pit";
     let input;
     if (mode === "pit") {
@@ -66,6 +67,7 @@ export function pilotPit() {
       }
       globalThis.__pitDrive = {
         mode,
+        peakKmh,
         progress,
         length: cum.at(-1),
         done: false,
@@ -83,9 +85,10 @@ export function pilotPit() {
           2 * A.Physics.parameters.wheelbase * Math.sin(angle),
           10,
         );
+      const targetSpeed = fast && car.x > 650 && car.x < 740 && Math.abs(car.y - 145) < 4 ? 75 : 24;
       input = {
-        throttle: Number(car.speed < 24),
-        brake: Number(car.speed > 26),
+        throttle: Number(car.speed < targetSpeed),
+        brake: Number(car.speed > targetSpeed + 2),
         steer:
           Math.abs(desired) > 0.003 &&
           car.steering * Math.sign(desired) < Math.abs(desired) - 0.002

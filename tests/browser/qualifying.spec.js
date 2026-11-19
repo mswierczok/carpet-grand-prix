@@ -82,10 +82,10 @@ for (const offline of [false, true]) test(`Qualifying: echte Bestzeiten und Star
   const storage = await page.evaluate(() => ({ ...localStorage }));
   await page.locator("#startQualifying").click();
   await page.clock.runFor(1100);
-  await expect(page.locator("#raceSignal")).toHaveText("2");
+  await expect(page.locator("#raceSignal .is-red")).toHaveCount(2);
   await page.keyboard.press("p");
   await page.clock.runFor(600);
-  await expect(page.locator("#raceSignal")).toHaveText("2");
+  await expect(page.locator("#raceSignal .is-red")).toHaveCount(2);
   await page.locator("#pause").click();
   if (!offline) {
     await page.clock.runFor(3000);

@@ -1,3 +1,4 @@
+import { withoutStartLightsSource } from "./start-lights.js";
 import { runInNewContext } from "node:vm";
 import { execFileSync } from "node:child_process";
 // Only the explicitly authorized Bahrain data and optional geometry adapter
@@ -38,5 +39,5 @@ export function withoutBahrainIteration2(path, source, baseline) {
         /      \/\/ BEGIN BAHRAIN PIT FINISH\n[\s\S]*?      \/\/ END BAHRAIN PIT FINISH\n/,
         "",
       );
-  return source;
+  return path === "src/racing/race-session.js" ? withoutStartLightsSource(source) : source;
 }

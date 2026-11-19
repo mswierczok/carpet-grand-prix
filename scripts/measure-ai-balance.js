@@ -14,9 +14,10 @@ export function installBaseline(api) {
     runInNewContext(execFileSync("git", ["show", `${baseline}:src/racing/${name}.js`],
       { encoding: "utf8" }), { CGPArcade: api });
 }
-export function measureDriver(id, mode = "normal", { bins = true, historicalBahrain = false } = {}) {
-  const { api } = loadArcade({ race: true, historicalBahrain }),
-    track = api.TrackCatalog.get(id), surface = api.Surface.create(track),
+export function measureDriver(id, mode = "normal", { bins = true, historicalBahrain = false, configure = () => {} } = {}) {
+  const { api } = loadArcade({ race: true, historicalBahrain });
+  configure(api);
+  const track = api.TrackCatalog.get(id), surface = api.Surface.create(track),
     p = api.Physics.parameters, keyboard = mode === "keyboard-reference";
   if (keyboard || mode === "published-ai") installBaseline(api);
   const driver = api.Opponents.create(surface, p, { difficulty: mode, diagnostics: true }),

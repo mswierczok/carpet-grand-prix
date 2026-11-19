@@ -1,3 +1,4 @@
+import { withoutStartLights } from "../helpers/start-lights.js";
 import { it, expect } from "vitest";
 import { execFileSync } from "node:child_process";
 import { runInNewContext } from "node:vm";
@@ -144,7 +145,7 @@ it("erhält ohne Aufholhilfe den veröffentlichten Rennkern unter identischer Wi
   for (let n = 0; n < 30 * 20; n++) {
     const input = { throttle: Number(n % 150 < 110), brake: Number(n % 150 >= 110), steer: Math.sin(n / 120) };
     current.advance(input, 1 / 30); prior.advance(input, 1 / 30);
-    if (n % 30 === 0) expect(plain(current.snapshot())).toEqual(plain(prior.snapshot()));
+    if (n % 30 === 0) expect(withoutStartLights(current.snapshot())).toEqual(withoutStartLights(prior.snapshot()));
   }
 }, 120000);
 
