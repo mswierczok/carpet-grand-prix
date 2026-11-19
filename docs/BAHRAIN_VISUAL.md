@@ -172,3 +172,9 @@ CI bietet dasselbe Paket als `carpet-grand-prix-bahrain-review` an.
 
 Die Abnahme findet auf dem Entwicklungsbranch statt. Ein Merge in `main` und die
 damit verbundene GitHub-Pages-Veröffentlichung benötigen die ausdrückliche Freigabe.
+
+## Folgeanpassung: Teppich und Rundbogentor
+
+Die anschließende Nutzeranpassung mit Teppichfahrbahn, versetztem Rundbogentor
+und geparkten Spielzeugautos ist in [bahrain-gate/README.md](bahrain-gate/README.md)
+beschrieben. Die Abnahmegalerie zeigt diese neueste Fassung.

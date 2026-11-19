@@ -63,33 +63,38 @@
     find("floodlight-west", 0.81, -80, 24, 18, 43);
     find("sunstitched-board", 0.42, -65, 24, 8, 9);
     find("loop-board", 0.71, 67, 24, 8, 9);
-    // A straight section well before all 13 original grid positions.
-    const tunnelAt = surface.at(0.882 * surface.g.len),
+    // Midway along the straight after turn one; decoration never changes collisions.
+    const tunnelAt = surface.at(0.12 * surface.g.len),
       tunnel = {
         id: "block-tunnel",
         at: tunnelAt,
-        w: 88,
-        d: 88,
-        h: 28,
+        w: 20,
+        d: 82,
+        h: 51,
         clearHeight: 22,
-        clearHalfWidth: 31.5,
+        clearHalfWidth: 32,
         solids: [
-          [-44, 44, -44, -31.5, 0, 22],
-          [-44, 44, 31.5, 44, 0, 22],
-          [-46, 46, -46, 46, 22, 28],
+          [-10, 10, -41, -32, 0, 22],
+          [-10, 10, 32, 41, 0, 22],
+          [-10, 10, -41, 41, 22, 51],
         ],
       };
     // Validate uprights against every arm, rather than just this section's centre.
     for (const side of [-1, 1]) {
       const p = {
-        x: tunnelAt.x - Math.sin(tunnelAt.ang) * side * 37.75,
-        y: tunnelAt.y + Math.cos(tunnelAt.ang) * side * 37.75,
+        x: tunnelAt.x - Math.sin(tunnelAt.ang) * side * 36.5,
+        y: tunnelAt.y + Math.cos(tunnelAt.ang) * side * 36.5,
         ang: tunnelAt.ang,
       };
-      if (clearance(p, 88, 12.5) < 3)
+      if (clearance(p, 20, 9) < 3)
         throw Error("Tunnelstütze berührt den Fahrkorridor.");
     }
     objects.push(tunnel);
+    // Parked playroom cars, entirely beyond the ropes on both sides.
+    find("parked-car-red", 0.098, -43, 16, 9, 7, -0.12);
+    find("parked-car-blue", 0.145, 44, 16, 9, 7, 0.18);
+    find("parked-car-green", 0.46, -45, 16, 9, 7, -0.3);
+    find("parked-car-yellow", 0.94, -44, 16, 9, 7, 0.22);
     const xs = surface.g.pts.map((p) => p.x),
       ys = surface.g.pts.map((p) => p.y);
     const bounds = {
