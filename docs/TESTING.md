@@ -249,3 +249,10 @@ Original- und Export-Prüfsummen, Dateibudget, unveränderte Quelle bei Transfer
 Rückfall auf 57 Vektorfiguren sowie Dekodierung aller WebPs online und offline.
 `build:uploaded-portraits` ist ein optionaler Entwicklerexport mit ImageMagick;
 CI und das veröffentlichte Spiel benötigen nur die versionierten WebP-Dateien.
+
+Die historischen Quelltextvergleiche für Rennlänge und südliche Verlängerungen
+normalisieren in `camera3d.js` ausschließlich die freigegebene Erweiterung um
+Kameraoptionen. Die ursprünglichen Standardwerte und der restliche Quelltext
+werden weiterhin bytegenau verglichen; die neue Zimmerprüfung vergleicht
+zusätzlich tatsächliche Standardkameraposen mit dem veröffentlichten Original.
+Der Cache-Test verlangt für die veränderte Kamera eine neue Script-URL.

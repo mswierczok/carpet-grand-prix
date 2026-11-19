@@ -241,3 +241,11 @@ Testrouten bei vollständig abgeschaltetem Netzwerk ergänzt.
 Das Offline-Abnahmepaket wurde mit abgeschaltetem Netzwerk geprüft: Alle 15
 Galeriebilder dekodieren, der Spielknopf öffnet das tatsächliche 3D-Rennen,
 keine unerwarteten Ressourcenanforderungen und keine JavaScript-Fehler.
+
+Zur Merge-Prüfung wurde ausschließlich die Cache-Kennung der erweiterten Kamera
+in beiden HTML-Einstiegen aktualisiert. Die ursprünglichen Aufnahmeprotokolle
+bleiben unverändert. `cache-delivery-check.json` belegt die exakte Ersetzung,
+unveränderte Laufzeit-Quellprüfsummen und byteidentische Offline-Spieldateien
+vor und nach dieser Korrektur. Die historischen Schutztests erlauben gezielt
+die freigegebenen Kameraoptionen; Standardwerte und übriger Quelltext bleiben
+weiterhin geschützt.

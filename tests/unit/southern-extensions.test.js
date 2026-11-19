@@ -1,3 +1,4 @@
+import { withoutEnvironmentCameraOptions } from "../helpers/environment-camera.js";
 import { withoutMainEntry } from "../helpers/legacy-entry.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
@@ -47,8 +48,16 @@ it("südliche Verlängerungen erhalten die anderen 20 Strecken samt Seilen sowie
     "src/racing/timing.js",
     "src/rendering/camera3d.js",
     "src/rendering/vehicles3d.js",
-  ])
-    expect(path === "index.html" ? withoutMainEntry(readFileSync(new URL(path, ROOT), "utf8")) : readFileSync(new URL(path, ROOT), "utf8")).toBe(published(path));
+  ]) {
+    const current = readFileSync(new URL(path, ROOT), "utf8");
+    expect(
+      path === "index.html"
+        ? withoutMainEntry(current)
+        : path === "src/rendering/camera3d.js"
+          ? withoutEnvironmentCameraOptions(current)
+          : current,
+    ).toBe(published(path));
+  }
 });
 
 it.each(["england", "portugal"])(
