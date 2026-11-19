@@ -20,6 +20,30 @@
           surface.g.len
         );
       };
+    const pitSegments = surface.g.pit.slice(1).map((b, i) => {
+      const a = surface.g.pit[i];
+      return {
+        a,
+        b,
+        dx: b.x - a.x,
+        dy: b.y - a.y,
+        minX: Math.min(a.x, b.x),
+        maxX: Math.max(a.x, b.x),
+        minY: Math.min(a.y, b.y),
+        maxY: Math.max(a.y, b.y),
+      };
+    });
+    const pitBounds = {
+      minX: Math.min(...surface.g.pit.map((p) => p.x)),
+      maxX: Math.max(...surface.g.pit.map((p) => p.x)),
+      minY: Math.min(...surface.g.pit.map((p) => p.y)),
+      maxY: Math.max(...surface.g.pit.map((p) => p.y)),
+    };
+    function boxDistanceSquared(p, b) {
+      const x = Math.max(b.minX - p.x, 0, p.x - b.maxX),
+        y = Math.max(b.minY - p.y, 0, p.y - b.maxY);
+      return x * x + y * y;
+    }
     function clearance(at, w, d) {
       let min = Infinity;
       const columns = Math.max(4, Math.ceil(w / 3)),
@@ -33,11 +57,16 @@
             y: at.y + Math.sin(at.ang) * x + Math.cos(at.ang) * z,
           };
           min = Math.min(min, surface.project(p).distance - radius);
-          for (let i = 0; i < surface.g.pit.length - 1; i++) {
-            const a = surface.g.pit[i],
-              b = surface.g.pit[i + 1],
-              dx = b.x - a.x,
-              dy = b.y - a.y,
+          // Exact lower bounds: distant furniture never scans the entire lane.
+          // This changes no distances, placements, geometry or collision data.
+          const reach = min + surface.g.pitRadius;
+          if (reach <= 0 || boxDistanceSquared(p, pitBounds) >= reach * reach)
+            continue;
+          for (const segment of pitSegments) {
+            const reach = min + surface.g.pitRadius;
+            if (reach <= 0 || boxDistanceSquared(p, segment) >= reach * reach)
+              continue;
+            const { a, dx, dy } = segment,
               t = Math.max(
                 0,
                 Math.min(
