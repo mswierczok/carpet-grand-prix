@@ -182,3 +182,11 @@ Spielständen; die erweiterten POV-Präferenzen gelten in Menü und Rennen gemei
 Der frühere Einstieg bleibt ausschließlich als Altspielstand-Zugang erhalten.
 Umfang, Datenkompatibilität, Offline-Navigation und nächste Schritte:
 [POV_MAIN_MENU.md](POV_MAIN_MENU.md).
+
+`pov-checkpoint.js` prüft die natürlichen Export-/Restore-Schnittstellen von
+Rennen, Qualifying und Wochenende einschließlich KI-/Effekthistorie.
+`pov-game-store.js` speichert einen getrennten POV-Slot. `pov-career.js` verbucht
+Teamresultate und Saisonfortschritt; `pov-workshop.js` verwaltet Fahrzeugentwicklung
+mit vorhandenen Kosten und Grenzen. `pov-game-ui.js` verbindet diese Module mit
+Menü, Autosave und der bestehenden Rennansicht. Fahrerzuordnung und Fahrwirkung
+der Entwicklungen bleiben offen. Format, Abnahme und Grenzen: [POV_CAREER.md](POV_CAREER.md).
