@@ -4,7 +4,9 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { selectDriveSetting } from "../tests/helpers/arcade-browser.js";
-const reference = "34a7c07ac683ababd4e5f130b3a75e9029448560",
+const reference =
+    process.argv.find((a) => a.startsWith("--reference="))?.slice(12) ||
+    "34a7c07ac683ababd4e5f130b3a75e9029448560",
   base = "http://127.0.0.1:4173/carpet-grand-prix/";
 const old = (path) =>
   execFileSync("git", ["show", `${reference}:${path}`], {
@@ -168,7 +170,8 @@ const result = {
   reports,
 };
 writeFileSync(
-  "docs/bahrain-world/paired-performance.json",
+  process.argv.find((a) => a.startsWith("--output="))?.slice(9) ||
+    "docs/bahrain-world/paired-performance.json",
   JSON.stringify(result, null, 2) + "\n",
 );
 console.log(

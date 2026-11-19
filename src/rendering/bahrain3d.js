@@ -66,15 +66,15 @@
     mesh(
       A.Tracks3D.roadGeometry(surface, surface.roadRadius + 0.24, 0.058),
       materials.basic("#9c8c70"),
-      "painted-edge-ink",
+      "carpet-edge-ink",
     );
     mesh(
       uvScale(
         A.Tracks3D.roadGeometry(surface, surface.roadRadius, 0.07),
-        9 / 40,
+        9 / 32,
       ),
-      materials.basic("#ffffff", { map: maps.road }),
-      "unchanged-cream-road",
+      materials.basic("#ffffff", { map: maps.carpet }),
+      "unchanged-carpet-road",
     );
 
     // Continuous physical polylines; texture U follows real distance, not vertex count.
@@ -239,7 +239,7 @@
           finish.ang,
         );
       }
-    // Unequal braking traces; every point stays inside the unchanged cream strip.
+    // Unequal braking traces; every point stays inside the unchanged carpet driving strip.
     for (const [u, length, bend] of [
       [0.025, 24, 1.3],
       [0.18, 32, -1.6],
@@ -544,27 +544,177 @@
           0.05,
         );
     }
+    // Closed extruded wood profiles in the cross-track (z/y) plane. Static
+    // triangles join the existing material batches; no new renderer dependency.
+    function woodProfile(o, points, depth, color) {
+      const contour = points.map(([z, y]) => new T.Vector2(y, z)),
+        triangles = T.ShapeUtils.triangulateShape(contour, []),
+        positions = [],
+        uv = [];
+      function face(a, b, c) {
+        for (const [x, y, z] of [a, b, c]) {
+          positions.push(x, y, z);
+          uv.push(z / 24, y / 24);
+        }
+      }
+      const at = (i, x) => [x, points[i][1], points[i][0]];
+      for (const triangle of triangles) {
+        let [a, b, c] = triangle;
+        const pa = contour[a],
+          pb = contour[b],
+          pc = contour[c];
+        if ((pb.x - pa.x) * (pc.y - pa.y) - (pb.y - pa.y) * (pc.x - pa.x) < 0)
+          [b, c] = [c, b];
+        face(at(a, depth / 2), at(b, depth / 2), at(c, depth / 2));
+        face(at(c, -depth / 2), at(b, -depth / 2), at(a, -depth / 2));
+      }
+      let area = 0;
+      for (let i = 0; i < contour.length; i++) {
+        const a = contour[i],
+          b = contour[(i + 1) % contour.length];
+        area += a.x * b.y - b.x * a.y;
+      }
+      for (let i = 0; i < points.length; i++) {
+        const j = (i + 1) % points.length;
+        const a = at(i, -depth / 2),
+          b = at(j, -depth / 2),
+          c = at(j, depth / 2),
+          d = at(i, depth / 2);
+        if (area > 0) {
+          face(a, b, c);
+          face(a, c, d);
+        } else {
+          face(c, b, a);
+          face(d, c, a);
+        }
+      }
+      const g = new T.BufferGeometry();
+      g.setAttribute("position", new T.Float32BufferAttribute(positions, 3));
+      g.setAttribute("uv", new T.Float32BufferAttribute(uv, 2));
+      g.computeVertexNormals();
+      o.part(g, color, [0, 0, 0], [1, 1, 1], [0, 0, 0], "wood", 0.1);
+      g.dispose();
+    }
     function tunnel(o) {
+      // Short upside-down U, assembled from two block stacks and curved voussoirs.
+      // 22 units clear even at the edges; the chase camera is only 17 units high.
       for (const side of [-1, 1])
         for (let i = 0; i < 2; i++)
-          for (const end of [-1, 1])
-            o.box(
-              [end * 22, 5.4 + i * 10.8, side * 37.75],
-              [43.8, 10.6, 12.5],
-              [palette.honey, palette.red, palette.wood][
-                (i + (side > 0 ? 1 : 0) + (end > 0 ? 1 : 0)) % 3
-              ],
-            );
-      for (const end of [-1, 1])
-        o.box(
-          [end * 23, 23.7, 0],
-          [45.5, 3.4, 90],
-          end < 0 ? palette.honey : palette.wood,
+          o.box(
+            [0, 5.5 + i * 11, side * 36.5],
+            [18, 10.8, 9],
+            [palette.honey, palette.wood, palette.red][
+              (i + (side > 0 ? 1 : 0)) % 3
+            ],
+          );
+      for (let i = 0; i < 12; i++) {
+        const a = (i * Math.PI) / 12 + 0.001,
+          b = ((i + 1) * Math.PI) / 12 - 0.001;
+        woodProfile(
+          o,
+          [
+            [32 * Math.cos(a), 22 + 12 * Math.sin(a)],
+            [41 * Math.cos(a), 22 + 20 * Math.sin(a)],
+            [41 * Math.cos(b), 22 + 20 * Math.sin(b)],
+            [32 * Math.cos(b), 22 + 12 * Math.sin(b)],
+          ],
+          18,
+          [palette.honey, palette.wood, "#e2bd80"][i % 3],
         );
-      o.box([0, 27, 0], [85, 3, 86], palette.red);
-      o.label(1, [-46, 25, 0], [69, 6], [0, -Math.PI / 2, 0]);
-      // Interior contact shade is low contrast; it never affects traction.
-      o.shadow([0, 0], [104, 81], 0, 0.078);
+      }
+      const crown = (z) => 22 + 20 * Math.sqrt(1 - (z / 41) ** 2);
+      for (const [i, z] of [-32, -16, 0, 16, 32].entries())
+        woodProfile(
+          o,
+          [
+            [z - 7.9, crown(z - 7.9) - 0.7],
+            [z + 7.9, crown(z + 7.9) - 0.7],
+            [z, crown(z) + 8],
+          ],
+          19.5,
+          i % 2 ? palette.honey : palette.red,
+        );
+      o.label(1, [-9.15, 38, 0], [26, 4.5], [0, -Math.PI / 2, 0]);
+      o.shadow([0, 0], [32, 87], 0, 0.078);
+    }
+    function parkedCar(o, id) {
+      const color = {
+        red: palette.red,
+        blue: palette.blue,
+        green: palette.green,
+        yellow: "#d9b458",
+      }[id.split("-").at(-1)];
+      o.shadow([0, 0], [17, 10]);
+      o.box([0, 2.2, 0], [13, 2.2, 5.6], color, [0, 0, 0], "plain", 0.12);
+      o.box([-0.8, 4.3, 0], [6.5, 2.7, 4.8], color, [0, 0, 0], "plain", 0.1);
+      for (const side of [-1, 1]) {
+        // Dark windows, cream pillars and real protruding toy wheels.
+        for (const x of [-2.3, 0.8])
+          o.box(
+            [x, 4.5, side * 2.42],
+            [2.45, 1.5, 0.08],
+            "#304753",
+            [0, 0, 0],
+            "plain",
+            0,
+          );
+        for (const x of [-4.1, 4.1]) {
+          o.cylinder(
+            [x, 1.5, side * 2.9],
+            [1.45, 1.45],
+            0.9,
+            "#293036",
+            [Math.PI / 2, 0, 0],
+            "plain",
+            0.07,
+          );
+          o.cylinder(
+            [x, 1.5, side * 3.4],
+            [0.65, 0.65],
+            0.12,
+            palette.paper,
+            [Math.PI / 2, 0, 0],
+            "plain",
+            0,
+          );
+        }
+      }
+      o.box([2.53, 4.4, 0], [0.09, 1.6, 3.7], "#304753", [0, 0, 0], "plain", 0);
+      o.box([-4.1, 4.4, 0], [0.09, 1.5, 3.7], "#304753", [0, 0, 0], "plain", 0);
+      o.box(
+        [4.7, 3.36, 0],
+        [3.1, 0.06, 0.7],
+        palette.paper,
+        [0, 0, 0],
+        "plain",
+        0,
+      );
+      for (const z of [-1.8, 1.8]) {
+        o.box(
+          [6.51, 2.5, z],
+          [0.08, 0.65, 1],
+          "#fff1bf",
+          [0, 0, 0],
+          "light",
+          0,
+        );
+        o.box(
+          [-6.51, 2.5, z],
+          [0.08, 0.5, 0.8],
+          "#e36d4e",
+          [0, 0, 0],
+          "plain",
+          0,
+        );
+      }
+      o.box(
+        [6.55, 1.8, 0],
+        [0.15, 0.3, 4.6],
+        palette.paper,
+        [0, 0, 0],
+        "plain",
+        0,
+      );
     }
     function wardrobe(o) {
       o.shadow([15, 15], [140, 290]);
@@ -647,6 +797,7 @@
         else if (spec.id === "carpet-club") stand(o);
         else if (spec.id.startsWith("floodlight")) flood(o);
         else if (spec.id === "block-tunnel") tunnel(o);
+        else if (spec.id.startsWith("parked-car-")) parkedCar(o, spec.id);
         else if (spec.id === "wardrobe") wardrobe(o);
         else if (spec.id === "toy-chest") chest(o);
         else if (spec.id === "pencils") pencils(o);

@@ -11,6 +11,7 @@ const output =
   process.argv.find((a) => a.startsWith("--output="))?.slice(9) ||
   "docs/bahrain-world/after";
 const quick = process.argv.includes("--quick");
+const gate = process.argv.includes("--gate");
 mkdirSync(output, { recursive: true });
 const browser = await chromium.launch({
   executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || undefined,
@@ -40,17 +41,17 @@ try {
       throw Error("No genuine WebGL renderer");
     await selectDriveSetting(page, "quality", "low");
     const prefix = mobile ? "mobile" : "desktop";
-    async function shot(name) {
+    async function shot(name, overview = false) {
       await page.clock.runFor(32);
-      await page.evaluate(() => {
+      await page.evaluate((overview) => {
         __inspect3D.setQuality("auto");
         __inspect3D.draw(
           __driveSnapshot,
           __driveSnapshot.race.playerTeam,
-          false,
+          overview,
           0,
         );
-      });
+      }, overview);
       await page
         .locator("#arcadeCanvas")
         .screenshot({ path: `${output}/${prefix}-${name}.png` });
@@ -69,14 +70,24 @@ try {
       () =>
         CGPArcade.Surface.create(CGPArcade.TrackCatalog.get("bahrain")).g.len,
     );
-    const checkpoints = [
-      ["02-camel", 0.025],
-      ["03-corner", 0.25],
-      ["04-tunnel-entry", 0.85],
-      ["05-tunnel-inside", 0.883],
-      ["06-pits", 0.977],
-      ["07-finish", 1.006],
-    ];
+    const checkpoints = gate
+      ? [
+          ["02-gate-approach", 0.04],
+          ["02b-gate-near", 0.075],
+          ["03-gate-entry", 0.115],
+          ["04-gate-through", 0.128],
+          ["05-parked-cars", 0.143],
+          ["06-corner", 0.25],
+          ["07-pits", 0.977],
+        ]
+      : [
+          ["02-camel", 0.025],
+          ["03-corner", 0.25],
+          ["04-tunnel-entry", 0.85],
+          ["05-tunnel-inside", 0.883],
+          ["06-pits", 0.977],
+          ["07-finish", 1.006],
+        ];
     let next = 0,
       finished = false;
     for (let i = 0; i < 1400; i++) {
@@ -103,6 +114,11 @@ try {
       throw Error(`${prefix}: incomplete actual drive (${next} images)`);
     await page.keyboard.press("p");
     await page.clock.runFor(32);
+    if (gate) {
+      await page.locator("#overview").click();
+      await shot("08-overview", true);
+      await page.locator("#overview").click();
+    }
     reports.push({
       viewport: prefix,
       complete: !mobile && !quick,
@@ -178,5 +194,5 @@ writeFileSync(
   ) + "\n",
 );
 console.log(
-  `Actual Bahrain captures and full desktop race written to ${output}`,
+  `Actual Bahrain captures${quick ? " (one lap per viewport)" : " and full desktop race"} written to ${output}`,
 );
