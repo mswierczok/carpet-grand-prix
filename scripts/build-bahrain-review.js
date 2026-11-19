@@ -10,7 +10,7 @@ mkdirSync(target, { recursive: true });
 let html = readFileSync("previews/bahrain-world/index.html", "utf8");
 html = html
   .replace(
-    /src="\.\.\/\.\.\/(docs\/bahrain-(?:world|gate)\/[^" ]+\.png)"/g,
+    /src="\.\.\/\.\.\/(docs\/(?:bahrain-(?:world|gate)|master-bedroom)\/[^" ]+\.png)"/g,
     (_, path) =>
       `src="data:image/png;base64,${readFileSync(path).toString("base64")}"`,
   )

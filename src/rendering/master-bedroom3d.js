@@ -296,14 +296,36 @@
         roof.visible = !overview;
         cutaways.forEach((n) => (n.visible = !overview));
       },
-      overview(aspect) {
-        const span = Math.max(
-          width / Math.max(0.3, aspect),
-          depth + b.height * 0.8,
-        );
+      overview(aspect, fov = 55) {
+        // Fit all eight room corners, including the high back wall, without
+        // the excessive empty border of a guessed camera distance.
+        const aim = b.height * 0.55,
+          rise = 1 / Math.hypot(1, 0.28),
+          offset = 0.28 * rise,
+          tanV = Math.tan((fov * Math.PI) / 360),
+          tanH = tanV * Math.max(0.3, aspect),
+          margin = 0.92;
+        let distance = 0;
+        for (const x of [b.minX, b.maxX])
+          for (const z of [b.minY, b.maxY])
+            for (const y of [0, b.height]) {
+              const dy = y - aim,
+                dz = z - cz,
+                along = dy * rise + dz * offset,
+                vertical = dy * offset - dz * rise;
+              distance = Math.max(
+                distance,
+                along + Math.abs(x - cx) / (tanH * margin),
+                along + Math.abs(vertical) / (tanV * margin),
+              );
+            }
         return {
-          position: { x: cx, y: span * 1.4, z: cz + span * 0.24 },
-          target: { x: cx, y: 140, z: cz },
+          position: {
+            x: cx,
+            y: aim + rise * distance,
+            z: cz + offset * distance,
+          },
+          target: { x: cx, y: aim, z: cz },
         };
       },
       diagnostics() {

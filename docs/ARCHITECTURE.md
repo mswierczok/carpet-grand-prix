@@ -198,3 +198,16 @@ der Entwicklungen bleiben offen. Format, Abnahme und Grenzen: [POV_CAREER.md](PO
 Die Darstellung besitzt keine Kollisions- oder Spielstanddaten. Alle anderen
 Strecken behalten ihren bisherigen Renderer-Zweig. Echte Spielaufnahmen,
 Abnahmegalerie und technische Grenzen: [BAHRAIN_VISUAL.md](BAHRAIN_VISUAL.md).
+
+## Konfigurierbares Master-Kinderzimmer
+
+`environment-scenes.js` trennt den festen Zimmergrundriss von den Bahrain-
+Farben, Materialien, Kamerawerten und Landmarken. `environment-assets3d.js`
+bietet 26 tatsächlich baubare Möbel-, Spielzeug- und Motorsportmodule.
+`MasterBedroom3D.create` erzeugt das ganze Zimmer mit Möbeln und Teppich
+unabhängig vom Bahrain-Assembler. `illustrated-materials3d.js` und der gemeinsame
+Kit bündeln Texturen, statisch beleuchtete Farbflächen und Geometriequellen.
+Die Szene schreibt nicht in Physik, KI oder Spielstände. Nur Bahrain verwendet
+diesen Ausbau; die anderen Strecken bleiben im vorhandenen Renderer-Zweig.
+Maßstab, Platzierung, Kamera, Tests und tatsächliche Aufnahmen:
+[MASTER_BEDROOM.md](MASTER_BEDROOM.md).

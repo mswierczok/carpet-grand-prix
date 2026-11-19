@@ -97,7 +97,8 @@
         reset: snapshot.paused || overview !== lastOverview,
         aspect: camera.aspect,
       });
-      if (overview && track.overview) pose = track.overview(camera.aspect);
+      if (overview && track.overview)
+        pose = track.overview(camera.aspect, camera.fov);
       lastOverview = overview;
       camera.position.set(pose.position.x, pose.position.y, pose.position.z);
       camera.lookAt(pose.target.x, pose.target.y, pose.target.z);

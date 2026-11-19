@@ -115,7 +115,8 @@ Bedienoberfläche und Fahrzeugsteuerung bleiben gleich. `Camera3D.create()` ohne
 Optionen liefert weiterhin dieselben Werte wie die veröffentlichte Version;
 die Kamera der übrigen Strecken ist unverändert. Die Variante ist rein visuell.
 
-Die Gesamtansicht passt das ganze Zimmer ein. Decke, Ost- und Südwand werden
+Die Gesamtansicht passt das ganze Zimmer anhand aller acht Raumecken mit
+einem festen Bildrand ein. In dieser Ansicht wird der Dunst entfernt. Decke, Ost- und Südwand werden
 nur in dieser Ansicht für einen üblichen Architektur-Aufklappblick ausgeblendet.
 Die normale Rennansicht zeigt das geschlossene Zimmer. Die übliche Nahsicht-
 Ausblendung verhindert weiterhin, dass eine frei gedrehte Kamera in einem
@@ -182,3 +183,61 @@ Szenen, simuliert aber keine befahrbaren Möbelflächen.
 stellt `node scripts/build-bahrain-review.js` Galerie und spielbare Dateien unter
 `dist/bahrain-review/` zusammen. Die entsprechende GitHub-Actions-Ausgabe heißt
 weiterhin `carpet-grand-prix-bahrain-review`.
+
+## Abschließende Prüfungen
+
+- Zehn Modulprüfungen bestanden: unveränderte Rennsysteme, Daten und Porträts,
+  echte Geometrieabstände, beide Kameradurchfahrten, Standardkamera der übrigen
+  Strecken, vollständiger eigenständiger Zimmeraufbau, alle Bibliothekstypen,
+  Fenstergrenzen, Übersichtseinpassung und Freigabe der Szenengeometrien.
+- Echte Acht-Runden-Standardrennen mit 13 Fahrzeugen bestanden auf Desktop und
+  im Mobilformat. Zusätzlich zwei gültige Offline-Fahrrunden, alle 13 Lackierungen,
+  WebGL-Verlust/Wiederherstellung, 2D-Rückfall, unveränderliche Rendereingaben
+  und vier echte Streckenwechsel geprüft.
+- Der abschließende Aufnahmelauf dokumentiert nochmals ein ganzes Desktoprennen
+  bis zum Abschluss aller 13 Fahrzeuge und eine Mobilrunde: 22 tatsächliche
+  Nachher-Bilder plus 22 Vergleichsbilder der festgelegten Vorher-Version.
+  Die JSON-Dateien enthalten Quellprüfsummen, Posen und Ergebnisse.
+- Keine Änderungen in `src/racing/`, `src/data/`, `src/persistence/` oder an den
+  Original-Porträts. `tracks3d.js` und die bisherigen Fahrzeugmodelle bleiben
+  bytegenau erhalten. Die erlaubte Bahrain-Kameravariante ist oben beschrieben.
+
+| Vergleich im gleichen Pixelbudget | Desktop vorher → jetzt | Mobilformat vorher → jetzt |
+| --- | --- | --- |
+| Draw Calls | 156 → 166 | 144 → 153 |
+| Dreiecke | 68838 → 77998 | 66674 → 74160 |
+| Szenengeometrie-Arrays | 9,40 MB → 12,44 MB | 9,40 MB → 12,44 MB |
+| Browser-Heap | 28,33 MB → 31,88 MB | 28,15 MB → 31,76 MB |
+| Ladezeit | 3,70 s → 4,05 s | 2,78 s → 3,38 s |
+| Weltaufbau | 0,51 s → 1,30 s | 0,45 s → 1,12 s |
+| Synchronisierte Renderzeit, Median | 163,9 ms → 183,4 ms | 109,2 ms → 130,0 ms |
+
+Der größere Raum benötigt in dieser Stichprobe rund 12 % mehr synchronisierte
+Renderzeit auf Desktop und 19 % im Mobilformat. Das ist zusätzlicher Aufwand,
+keine behauptete Beschleunigung. Die Szenengeometrie steigt um etwa 3 MB; der
+gemessene Heap um rund 3,5 MB. Der einmalige Aufbau ist aufwendiger. Die bereits
+bestehende Auflösungsanpassung und die Entfernungsausblendung begrenzen die Last.
+Die Akzeptanz auf einem physischen iPhone bleibt bis zu einer Gerätefahrt offen.
+
+Die Übergabe enthält außerdem eine vollständig eingebettete Galerie und alle
+spielbaren Offline-Dateien. Die verwaltete Umgebung hat keinen HTTP-Vorschauportal;
+das Testpaket ist deshalb die unabhängige Browser-Testfassung. Die hier gesperrte
+`file://`-Navigation wird durch Prüfung der identischen Dateien über lokale
+Testrouten bei vollständig abgeschaltetem Netzwerk ergänzt.
+
+### Zuordnung der Abnahmekriterien
+
+| Kriterium | Stand |
+| --- | --- |
+| 1–4: zusammenhängendes Zimmer, erkennbare Möbel, verbesserter Horizont, integriertes Bahrain | Implementiert und mit tatsächlichen POV-/Übersichtsaufnahmen belegt |
+| 5: Seilabsperrungen | Erhalten; Konturen und Kollisionsdaten unverändert |
+| 6–9: überdachte Tribüne, Boxen, befahrbarer Tunnel, Bahrain-Dekoration | Implementiert; beide Durchfahrten geometrisch und im Rennen geprüft |
+| 10: Bezug zu d001–d035 | Originale visuell geprüft, Konturen/Farbflächen/Materiallinien übernommen; visuelle Abnahme durch den Nutzer ausstehend |
+| 11: vollständiges Feld | Desktop und Mobilformat: acht gültige Runden, alle 13 Fahrzeuge im Ergebnis |
+| 12: wiederverwendbare Module | 26 Asset-Typen und vollständiger unabhängiger Master-Zimmer-Aufbau geprüft |
+| 13: unveränderte Rennmechanik | Geschützte Quelltexte/Daten/Porträts bytegenau, keine neuen Spielstandfelder |
+| 14: Performance | Vergleichbare Messung und Mobilformat geprüft; tatsächliche iPhone-/Safari-Bildrate ausdrücklich offen |
+
+Das Offline-Abnahmepaket wurde mit abgeschaltetem Netzwerk geprüft: Alle 15
+Galeriebilder dekodieren, der Spielknopf öffnet das tatsächliche 3D-Rennen,
+keine unerwarteten Ressourcenanforderungen und keine JavaScript-Fehler.
