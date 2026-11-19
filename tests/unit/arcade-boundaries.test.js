@@ -13,6 +13,24 @@ function setup() {
   );
   return { api, data, surface: api.Surface.create(data.tracks.bahrain) };
 }
+function pitDistance(surface, p) {
+  let min = Infinity;
+  for (let i = 0; i < surface.g.pit.length - 1; i++) {
+    const a = surface.g.pit[i],
+      b = surface.g.pit[i + 1],
+      dx = b.x - a.x,
+      dy = b.y - a.y,
+      t = Math.max(
+        0,
+        Math.min(
+          1,
+          ((p.x - a.x) * dx + (p.y - a.y) * dy) / (dx * dx + dy * dy),
+        ),
+      );
+    min = Math.min(min, Math.hypot(p.x - a.x - t * dx, p.y - a.y - t * dy));
+  }
+  return min;
+}
 const cross = (a, b, c) =>
   (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
 function edges(loops) {
@@ -40,7 +58,10 @@ it("erzeugt die geschlossenen Seilränder reproduzierbar aus den unveränderten 
   ).toBe(boundaryScript());
   expect(Object.isFrozen(data.boundaries.bahrain.polygons[0][0][0])).toBe(true);
   expect(surface.boundary).not.toBe(null);
-  expect(surface.g.pts).toHaveLength(470);
+  expect(data.tracks.bahrain.points).toHaveLength(470);
+  expect(surface.g.pts).toHaveLength(
+    data.tracks.bahrain.pov.routePoints.length,
+  );
 });
 
 it("ersetzt die früheren Kreuzungen durch geschlossene, endliche und kreuzungsfreie Ringe", () => {
@@ -77,12 +98,11 @@ it("hält das tatsächliche 3D-Seil außerhalb der hellen Fahrbahn, auch an den 
     triangles += tube.index.count / 3;
     for (let i = 0; i <= n; i++) {
       const p = curve.getPointAt(i / n);
-      expect(surface.project({ x: p.x, y: p.z }).distance).toBeGreaterThan(
-        surface.outerRadius - 0.12,
-      );
-      expect(surface.project({ x: p.x, y: p.z }).distance).toBeLessThan(
-        surface.outerRadius + 0.12,
-      );
+      const mainGap =
+          surface.project({ x: p.x, y: p.z }).distance - surface.outerRadius,
+        pitGap = pitDistance(surface, { x: p.x, y: p.z }) - surface.g.pitRadius;
+      expect(Math.min(mainGap, pitGap)).toBeGreaterThan(-0.12);
+      expect(Math.min(mainGap, pitGap)).toBeLessThan(0.12);
     }
     const a = tube.attributes.position;
     for (let i = 0; i < a.count; i++) {

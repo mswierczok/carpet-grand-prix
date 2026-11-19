@@ -14,7 +14,7 @@
     id: "motorsport-bedroom",
     unitMillimetres: 5,
     bounds: { minX: -60, maxX: 1190, minY: -140, maxY: 930, height: 550 },
-    rug: { x: 590, y: 385, w: 840, d: 620 },
+    rug: { x: 520, y: 405, w: 980, d: 660 },
     window: { x: 995, y: -132, w: 330, bottom: 150, h: 230 },
     furniture: [
       {
@@ -24,6 +24,12 @@
         w: 174,
         d: 382,
         h: 120,
+        solids: [
+          [-87, 87, -191, 191, 44.5, 120],
+          ...[-72, 72].flatMap((x) =>
+            [-168, 168].map((z) => [x - 8.5, x + 8.5, z - 9, z + 9, 0, 54]),
+          ),
+        ],
       },
       {
         id: "desk",
@@ -93,9 +99,9 @@
       },
       lighting: {
         background: "#e7dcc4",
-        sky: "#fff3d8",
+        sky: "#fff0d1",
         ground: "#735f50",
-        sun: "#ffecd1",
+        sun: "#ffe5be",
         skyIntensity: 1,
         sunIntensity: 1.2,
         far: 2100,

@@ -1,7 +1,12 @@
+import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { createContext, Script } from "node:vm";
 import { ROOT } from "./game.js";
-export function loadArcade({ race = false, formats = true } = {}) {
+export function loadArcade({
+  race = false,
+  formats = true,
+  historicalBahrain = false,
+} = {}) {
   const math = Object.create(Math);
   math.random = () => {
     throw Error("Der Fahrtest darf keine Zufallssteuerung verwenden.");
@@ -46,6 +51,27 @@ export function loadArcade({ race = false, formats = true } = {}) {
     new Script(
       readFileSync(new URL(`src/${file}.js`, ROOT), "utf8"),
     ).runInContext(scope);
+  if (historicalBahrain) {
+    // A named, immutable regression track for old pace/projection comparisons.
+    // The normal helper and every gameplay/browser test use the new layout.
+    const old = createContext({});
+    for (const name of ["arcade-tracks", "arcade-boundaries"])
+      new Script(
+        execFileSync(
+          "git",
+          [
+            "show",
+            `721022f238e85002d8f285c4015a8f02257c3b50:src/data/${name}.js`,
+          ],
+          { maxBuffer: 8 * 1024 * 1024 },
+        ).toString(),
+      ).runInContext(old);
+    for (const key of ["tracks", "boundaries"])
+      scope.CGPArcadeData[key] = {
+        ...scope.CGPArcadeData[key],
+        bahrain: old.CGPArcadeData[key].bahrain,
+      };
+  }
   return { api: scope.CGPArcade, data: scope.CGPArcadeData };
 }
 // Test-only feedback driver. Produces the same binary commands as keyboard buttons;

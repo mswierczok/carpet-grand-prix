@@ -24,6 +24,10 @@
       group.add(node);
       furniture.push({ spec, node });
     }
+    const bed = config.room.furniture.find((f) => f.asset === "bed"),
+      underbed = kit.object("underbed-soft-shade", bed.at);
+    underbed.shadow([0, 0], [181, 390], 0, 0.105);
+    group.add(underbed.finish());
     const carpet = config.room.rug,
       carpetObject = kit.object("master-rug"),
       rugGeo = new T.PlaneGeometry(carpet.w, carpet.d, 16, 16);

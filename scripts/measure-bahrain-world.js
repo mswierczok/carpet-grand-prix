@@ -201,13 +201,18 @@ const files = [
   "src/rendering/environment-assets3d.js",
   "src/rendering/master-bedroom3d.js",
   "src/rendering/camera3d.js",
+  "src/rendering/bahrain-layout.js",
+  "src/racing/track-surface.js",
+  "src/data/arcade-tracks.js",
+  "src/data/arcade-boundaries.js",
+
 ];
 const result = {
   recordedAt: new Date().toISOString(),
   reference,
   browser: browser.version(),
   methodology:
-    "Same real paused 13-car grid, auto quality and fixed deviceScaleFactor 0.75: identical render pixel budget before/after, independent of adaptive low-mode changes. One draw per actual animation frame: 10 warm-up then 30 measured draws. gl.finish and one-pixel readback synchronize GPU. Both versions use identical test-only response routing; reference scripts are pinned to a commit. Geometry bytes count unique scene BufferGeometry attributes and indices; heap is a Chromium estimate. Camera changes are part of the actual new presentation. No clock or pose edits.",
+    "Same real paused 13-car grid, auto quality and fixed deviceScaleFactor 0.75: identical render pixel budget before/after, independent of adaptive low-mode changes. One draw per actual animation frame: 10 warm-up then 30 measured draws. gl.finish and one-pixel readback synchronize GPU. Both versions use identical test-only response routing; reference scripts are pinned to a commit. Geometry bytes count unique scene BufferGeometry attributes and indices; heap is a Chromium estimate. The actual scene camera is used in both versions. No clock or pose edits.",
   limits:
     "Synchronized submission is not delivered game FPS. SwiftShader is not an iPhone GPU; no physical Safari acceptance.",
   hashes: Object.fromEntries(

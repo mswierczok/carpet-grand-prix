@@ -6,7 +6,7 @@ import { arcadeScripts } from "../../scripts/export-arcade-data.js";
 it("exportiert Bahrain und die 13/92 Identitäten exakt, ohne Testadapter im Fahrspiel", () => {
   const { api, data } = loadArcade(),
     { game } = createGame(),
-    surface = api.Surface.create(data.tracks.bahrain),
+    surface = api.Surface.create({...data.tracks.bahrain, pov:undefined}),
     classic = game.makeGeometry(game.trackDefs[0]);
   expect(plain(surface.g.pts)).toEqual(plain(classic.pts));
   expect([...surface.g.cum]).toEqual([...classic.cum]);

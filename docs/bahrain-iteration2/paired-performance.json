@@ -1,0 +1,1188 @@
+{
+  "recordedAt": "2026-11-19T20:17:18.761Z",
+  "reference": "721022f238e85002d8f285c4015a8f02257c3b50",
+  "browser": "155.0.8059.79",
+  "methodology": "Same real paused 13-car grid, auto quality and fixed deviceScaleFactor 0.75: identical render pixel budget before/after, independent of adaptive low-mode changes. One draw per actual animation frame: 10 warm-up then 30 measured draws. gl.finish and one-pixel readback synchronize GPU. Both versions use identical test-only response routing; reference scripts are pinned to a commit. Geometry bytes count unique scene BufferGeometry attributes and indices; heap is a Chromium estimate. The actual scene camera is used in both versions. No clock or pose edits.",
+  "limits": "Synchronized submission is not delivered game FPS. SwiftShader is not an iPhone GPU; no physical Safari acceptance.",
+  "hashes": {
+    "src/rendering/arcade3d.js": "4758182dffb31b1193611cb6e35b98ccd8fa3b229d864d36c3d0db2970939c10",
+    "src/rendering/bahrain3d.js": "e40589bad2a73fac01e4f8c6eab04a90a6cf0ee95dc32e32147291b781fbc550",
+    "src/rendering/illustrated-kit3d.js": "d175724fc6a2dfc187738122917a605ab050cc28aad4883c213811e309cfb909",
+    "src/rendering/bahrain-materials3d.js": "7c71170ceadb6299b3f2519c8bb707361eded830b52d04517ba71882413cd20c",
+    "src/rendering/illustrated-materials3d.js": "9a5a87f327bc2443db077b1725dfa188e904020e6c3f1e3d1745b251eacf3ead",
+    "src/rendering/environment-scenes.js": "e949bc2db45841d2535c5730f6e4473184343dfd4cc9126a3295a9e1bf4340f0",
+    "src/rendering/environment-assets3d.js": "1960be9e13c7cd354259e6f78ee58a872dd0bef06dd50458478d77ec561bd263",
+    "src/rendering/master-bedroom3d.js": "020ce41aa480f15396f52f8285a28340b11583e3255dd4eb595d48ffb51afac8",
+    "src/rendering/camera3d.js": "3b7401a2ea3da9bea45b7f01dc84899ae882a1f63824d9684db6916f5fff409e",
+    "src/rendering/bahrain-layout.js": "ae2e1f011b8210f1a1542eb81b15229c4df86b364b0cddabe42f6d96ea18cb9a",
+    "src/racing/track-surface.js": "3a873e127a08d9e0a0584589c1430b34aa7a03a0245ea4545c7a116199643cfd",
+    "src/data/arcade-tracks.js": "af32cf5939d3dc1b1c7cd0a93a01e3e782db8eb7e7be66203cfe2fbd8414677b",
+    "src/data/arcade-boundaries.js": "6813865323000a4b0293b8a6f3f65c5e0f496dda65fb901dc74073fd6632d4a0"
+  },
+  "reports": [
+    {
+      "viewport": "desktop",
+      "version": "before",
+      "samples": 30,
+      "loadMs": 5007,
+      "worldCreateMs": 1627.3999999985099,
+      "geometryAttributeBytes": 12437436,
+      "heapUsedBytes": 31947228,
+      "cpuSubmitP50ms": 2.600000001490116,
+      "cpuSubmitP95ms": 29.80000000447035,
+      "synchronizedP50ms": 180,
+      "synchronizedP95ms": 228.5,
+      "frameIntervalP50ms": 183.39999999999964,
+      "frameIntervalP95ms": 250,
+      "graphics": {
+        "drawCalls": 166,
+        "triangles": 77998,
+        "geometries": 144,
+        "textures": 23,
+        "pixelRatio": 0.75,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 23,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      },
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "posesUnchanged": true,
+      "poses": [
+        {
+          "id": "t02",
+          "car": {
+            "x": 707.0565635501991,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -22,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t03",
+          "car": {
+            "x": 704.0565635501991,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -25,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t04",
+          "car": {
+            "x": 691.056563550199,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -38,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t05",
+          "car": {
+            "x": 688.0565635501989,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -41,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t06",
+          "car": {
+            "x": 675.056563550199,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -54,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t07",
+          "car": {
+            "x": 672.056563550199,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -57,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t08",
+          "car": {
+            "x": 659.056563550199,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -70,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t09",
+          "car": {
+            "x": 656.0565635501989,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -73,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t10",
+          "car": {
+            "x": 643.0565635501988,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -86,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t11",
+          "car": {
+            "x": 640.0565635501988,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -89,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t12",
+          "car": {
+            "x": 627.0565635501987,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -102,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t13",
+          "car": {
+            "x": 624.0565635501987,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -105,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t01",
+          "car": {
+            "x": 611.0565635501987,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -118,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        }
+      ]
+    },
+    {
+      "viewport": "desktop",
+      "version": "after",
+      "samples": 30,
+      "loadMs": 3607.2999999970198,
+      "worldCreateMs": 1086.2999999970198,
+      "geometryAttributeBytes": 13430172,
+      "heapUsedBytes": 33328885,
+      "cpuSubmitP50ms": 2.2999999970197678,
+      "cpuSubmitP95ms": 5.799999997019768,
+      "synchronizedP50ms": 198.39999999850988,
+      "synchronizedP95ms": 350.70000000298023,
+      "frameIntervalP50ms": 200,
+      "frameIntervalP95ms": 350,
+      "graphics": {
+        "drawCalls": 173,
+        "triangles": 87807,
+        "geometries": 151,
+        "textures": 23,
+        "pixelRatio": 0.75,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      },
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "posesUnchanged": true,
+      "poses": [
+        {
+          "id": "t02",
+          "car": {
+            "x": 707.0565635501991,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -22,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t03",
+          "car": {
+            "x": 704.0565635501991,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -25,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t04",
+          "car": {
+            "x": 691.056563550199,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -38,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t05",
+          "car": {
+            "x": 688.0565635501989,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -41,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t06",
+          "car": {
+            "x": 675.056563550199,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -54,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t07",
+          "car": {
+            "x": 672.056563550199,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -57,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t08",
+          "car": {
+            "x": 659.056563550199,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -70,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t09",
+          "car": {
+            "x": 656.0565635501989,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -73,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t10",
+          "car": {
+            "x": 643.0565635501988,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -86,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t11",
+          "car": {
+            "x": 640.0565635501988,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -89,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t12",
+          "car": {
+            "x": 627.0565635501987,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -102,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t13",
+          "car": {
+            "x": 624.0565635501987,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -105,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t01",
+          "car": {
+            "x": 611.0565635501987,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -118,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        }
+      ]
+    },
+    {
+      "viewport": "mobile",
+      "version": "before",
+      "samples": 30,
+      "loadMs": 4507.89999999851,
+      "worldCreateMs": 1283.8999999985099,
+      "geometryAttributeBytes": 12437436,
+      "heapUsedBytes": 31766284,
+      "cpuSubmitP50ms": 2.399999998509884,
+      "cpuSubmitP95ms": 4.600000001490116,
+      "synchronizedP50ms": 129.09999999403954,
+      "synchronizedP95ms": 192.79999999701977,
+      "frameIntervalP50ms": 133.40000000000055,
+      "frameIntervalP95ms": 183.30000000000018,
+      "graphics": {
+        "drawCalls": 153,
+        "triangles": 74160,
+        "geometries": 131,
+        "textures": 23,
+        "pixelRatio": 0.75,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 23,
+          "ropeTriangles": 7164,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      },
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "posesUnchanged": true,
+      "poses": [
+        {
+          "id": "t02",
+          "car": {
+            "x": 707.0565635501991,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -22,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t03",
+          "car": {
+            "x": 704.0565635501991,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -25,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t04",
+          "car": {
+            "x": 691.056563550199,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -38,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t05",
+          "car": {
+            "x": 688.0565635501989,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -41,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t06",
+          "car": {
+            "x": 675.056563550199,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -54,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t07",
+          "car": {
+            "x": 672.056563550199,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -57,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t08",
+          "car": {
+            "x": 659.056563550199,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -70,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t09",
+          "car": {
+            "x": 656.0565635501989,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -73,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t10",
+          "car": {
+            "x": 643.0565635501988,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -86,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t11",
+          "car": {
+            "x": 640.0565635501988,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -89,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t12",
+          "car": {
+            "x": 627.0565635501987,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -102,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t13",
+          "car": {
+            "x": 624.0565635501987,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -105,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t01",
+          "car": {
+            "x": 611.0565635501987,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -118,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        }
+      ]
+    },
+    {
+      "viewport": "mobile",
+      "version": "after",
+      "samples": 30,
+      "loadMs": 3217.10000000149,
+      "worldCreateMs": 1004.2000000029802,
+      "geometryAttributeBytes": 13430172,
+      "heapUsedBytes": 33328239,
+      "cpuSubmitP50ms": 2.2999999970197678,
+      "cpuSubmitP95ms": 11.299999997019768,
+      "synchronizedP50ms": 147,
+      "synchronizedP95ms": 294.29999999701977,
+      "frameIntervalP50ms": 150,
+      "frameIntervalP95ms": 316.7000000000007,
+      "graphics": {
+        "drawCalls": 161,
+        "triangles": 84585,
+        "geometries": 139,
+        "textures": 23,
+        "pixelRatio": 0.75,
+        "quality": "auto",
+        "lost": false,
+        "world": {
+          "theme": "carpet-desert",
+          "room": {
+            "id": "motorsport-bedroom",
+            "unitMillimetres": 5,
+            "bounds": {
+              "minX": -60,
+              "maxX": 1190,
+              "minY": -140,
+              "maxY": 930,
+              "height": 550
+            },
+            "furniture": 6,
+            "hiddenForCamera": 0
+          },
+          "passage": {
+            "clearHeight": 26,
+            "clearHalfWidth": 32
+          },
+          "assets": 22,
+          "ropeTriangles": 8200,
+          "tunnelClearHeight": 22,
+          "tunnelHalfWidth": 32,
+          "hiddenForCamera": 0
+        },
+        "wake": {
+          "emitters": 0,
+          "triangles": 0
+        }
+      },
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "posesUnchanged": true,
+      "poses": [
+        {
+          "id": "t02",
+          "car": {
+            "x": 707.0565635501991,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -22,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t03",
+          "car": {
+            "x": 704.0565635501991,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -25,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t04",
+          "car": {
+            "x": 691.056563550199,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -38,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t05",
+          "car": {
+            "x": 688.0565635501989,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -41,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t06",
+          "car": {
+            "x": 675.056563550199,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -54,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t07",
+          "car": {
+            "x": 672.056563550199,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -57,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t08",
+          "car": {
+            "x": 659.056563550199,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -70,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t09",
+          "car": {
+            "x": 656.0565635501989,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -73,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t10",
+          "car": {
+            "x": 643.0565635501988,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -86,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t11",
+          "car": {
+            "x": 640.0565635501988,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -89,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t12",
+          "car": {
+            "x": 627.0565635501987,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -102,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t13",
+          "car": {
+            "x": 624.0565635501987,
+            "y": 204.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -105,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        },
+        {
+          "id": "t01",
+          "car": {
+            "x": 611.0565635501987,
+            "y": 192.67142008169654,
+            "heading": 0,
+            "vx": 0,
+            "vy": 0,
+            "s": -118,
+            "steering": 0,
+            "speed": 0,
+            "longitudinalSpeed": 0,
+            "reverseHold": 0,
+            "offroad": false,
+            "hitWall": false,
+            "understeer": 0
+          }
+        }
+      ]
+    }
+  ]
+}

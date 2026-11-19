@@ -62,6 +62,45 @@
       "unchanged-carpet-road",
     );
 
+    // Open service-lane ribbon. Same generated boundary used by vehicle contacts;
+    // no visual-only gap in the ropes and no new physics or pit-stop rules.
+    const pitPositions = [],
+      pitUV = [];
+    const pit = surface.g.pit,
+      pitRoad = 9.8;
+    for (let i = 0; i < pit.length - 1; i++) {
+      const a = pit[i],
+        b = pit[i + 1],
+        dx = b.x - a.x,
+        dz = b.y - a.y,
+        l = Math.hypot(dx, dz),
+        nx = (-dz / l) * pitRoad,
+        nz = (dx / l) * pitRoad;
+      for (const [p, side] of [
+        [a, -1],
+        [b, 1],
+        [b, -1],
+        [a, -1],
+        [a, 1],
+        [b, 1],
+      ]) {
+        pitPositions.push(p.x + nx * side, 0.075, p.y + nz * side);
+        pitUV.push((p.x + nx * side) / 32, (p.y + nz * side) / 32);
+      }
+    }
+    const pitGeometry = new T.BufferGeometry();
+    pitGeometry.setAttribute(
+      "position",
+      new T.Float32BufferAttribute(pitPositions, 3),
+    );
+    pitGeometry.setAttribute("uv", new T.Float32BufferAttribute(pitUV, 2));
+    pitGeometry.computeVertexNormals();
+    mesh(
+      pitGeometry,
+      materials.basic("#f8efda", { map: maps.carpet }),
+      "parallel-pitlane-carpet",
+    );
+
     // Continuous physical polylines; texture U follows real distance, not vertex count.
     const ropeFill = materials.toon("#ffffff", maps.rope),
       contact = materials.basic("#8b7556", {
@@ -106,6 +145,7 @@
       }
       if (source !== g) source.dispose();
     }
+    const ropeSides = 5; // Visual tube only; physical contours and radius stay exact.
     let ropeTriangles = 0;
     for (const { points, closed } of rails) {
       const curve = A.Tracks3D.boundaryCurve(points, 0.77, closed),
@@ -113,7 +153,7 @@
           curve,
           points.length - 1,
           surface.boundary.railRadius,
-          6,
+          ropeSides,
           closed,
         );
       const uv = g.attributes.uv;
@@ -133,7 +173,8 @@
             points[i][0] - points[i - 1][0],
             points[i][1] - points[i - 1][1],
           );
-        for (let j = 0; j <= 6; j++) uv.setX(i * 7 + j, distance / coilLength);
+        for (let j = 0; j <= ropeSides; j++)
+          uv.setX(i * (ropeSides + 1) + j, distance / coilLength);
       }
       batchRope(g, ropeFill, "continuous-yarn");
       ropeTriangles += g.index.count / 3;
@@ -177,7 +218,7 @@
             "#d8bf8d",
             "plain",
             [0, 0, 0],
-            0.05,
+            0,
           );
       }
     }
@@ -212,6 +253,39 @@
         "#8a816f",
         p.ang,
       );
+    }
+    // Hand-painted broken lane edges leave both junctions visibly open.
+    for (let i = 10; i < pit.length - 12; i += 3) {
+      const p = pit[i],
+        q = pit[i + 1],
+        ang = Math.atan2(q.y - p.y, q.x - p.x);
+      for (const side of [-1, 1])
+        markings.flat(
+          [
+            p.x - Math.sin(ang) * side * 8.7,
+            0.087,
+            p.y + Math.cos(ang) * side * 8.7,
+          ],
+          [3, 0.38],
+          palette.paper,
+          ang,
+        );
+    }
+    for (const i of [12, pit.length - 14]) {
+      const p = pit[i],
+        q = pit[i + 1],
+        ang = Math.atan2(q.y - p.y, q.x - p.x);
+      for (const side of [-1, 1])
+        markings.flat(
+          [
+            p.x - Math.cos(ang) * 2 - Math.sin(ang) * side * 1,
+            0.09,
+            p.y - Math.sin(ang) * 2 + Math.cos(ang) * side * 1,
+          ],
+          [5, 0.7],
+          palette.paper,
+          ang + side * 0.38,
+        );
     }
     const finish = surface.at(0);
     for (let row = 0; row < 2; row++)
@@ -248,10 +322,9 @@
       for (const side of [-1, 1]) {
         const p = surface.at(s, side * (surface.outerRadius + 2.8));
         if (surface.project(p).distance < surface.outerRadius + 1.4) continue;
-        posts.cylinder(
+        posts.block(
           [p.x, 1.2, p.y],
-          [0.6, 0.8],
-          2.4,
+          [1.2, 2.4, 1.2],
           palette.wood,
           [0, 0, 0.08],
           "wood",

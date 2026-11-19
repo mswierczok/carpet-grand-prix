@@ -149,7 +149,7 @@ it("zeigt Tribünendach und Fenster aus der Rennkamera sowie das ganze Zimmer in
     { cfg, rig, camera } = cameras(THREE, api, surface, world);
   for (const [s, target] of [
     [-118, [735, 49.8, 235.5]],
-    [0.58 * surface.g.len, [995, 175, -132]],
+    [surface.project({x:467.84,y:382.36}).s, [995, 175, -132]],
   ]) {
     const p = surface.at(s),
       view = rig.update(

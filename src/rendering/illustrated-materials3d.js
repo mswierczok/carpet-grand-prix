@@ -113,6 +113,7 @@
       y.stroke();
     }
     const [labels, l] = canvas(1024);
+    labels.height = 1536;
     const texts = settings.labels || [
       ["CARPET DESERT", "BAHRAIN  ·  GRAND PRIX"],
       ["BLOCKWORKS", "BUILT FOR THE SMALL THINGS"],
@@ -122,6 +123,10 @@
       ["DUNE THREAD", "SPOOL POWER"],
       ["01", "BAHRAIN · HANDMADE"],
       ["CARPET CLUB", "FRONT ROW · EVERY ROW"],
+      ["PIT ENTRY", "KEEP RIGHT · SERVICE LANE"],
+      ["PIT EXIT", "REJOIN WITH CARE"],
+      ["TEAM PADDOCK", "TRAILERS · SUPPORT · TOYS"],
+      ["BEDPOST BEND", "BAHRAIN · UNDER THE BED"],
     ];
     texts.forEach(([title, sub], i) => {
       const cy = i * 128;
@@ -187,6 +192,7 @@
       cloth: texture(cloth, true),
       rope: texture(rope, true),
       labels: texture(labels),
+      labelRows: 12,
       shadow: texture(shadow),
     });
   }

@@ -256,7 +256,11 @@
         const g = new T.PlaneGeometry(...size),
           uv = g.attributes.uv;
         for (let i = 0; i < uv.count; i++)
-          uv.setY(i, (7 - index + uv.getY(i)) / 8);
+          uv.setY(
+            i,
+            ((maps.labelRows || 8) - 1 - index + uv.getY(i)) /
+              (maps.labelRows || 8),
+          );
         part(g, "#ffffff", position, [1, 1, 1], rotation, "label", 0);
         g.dispose();
       }

@@ -49,11 +49,16 @@ export async function capture2D(page) {
 
 export async function capture3D(
   page,
-  { observeFleet = false, renderEvery = 1, observeElevation = false } = {},
+  {
+    observeFleet = false,
+    renderEvery = 1,
+    observeElevation = false,
+    reviewCamera = false,
+  } = {},
 ) {
   await installPausedClock(page);
   await page.addInitScript(
-    ({ observeFleet, renderEvery, observeElevation }) => {
+    ({ observeFleet, renderEvery, observeElevation, reviewCamera }) => {
       let three;
       Object.defineProperty(globalThis, "CGPThree", {
         configurable: true,
@@ -64,7 +69,20 @@ export async function capture3D(
               super(...args);
               const original = this.render;
               this.render = (scene, camera) => {
-                const rendered = original.call(this, scene, camera);
+                let visibleCamera = camera;
+                if (reviewCamera && globalThis.__reviewDetail) {
+                  const view = globalThis.__reviewDetail;
+                  visibleCamera = new library.PerspectiveCamera(
+                    55,
+                    camera.aspect,
+                    0.3,
+                    2100,
+                  );
+                  visibleCamera.position.set(...view.position);
+                  visibleCamera.lookAt(...view.target);
+                  visibleCamera.updateMatrixWorld(true);
+                }
+                const rendered = original.call(this, scene, visibleCamera);
                 const pose = globalThis.__driveSnapshot?.visual;
                 if (pose && observeElevation) {
                   const model = scene.children.find(
@@ -174,7 +192,7 @@ export async function capture3D(
         },
       });
     },
-    { observeFleet, renderEvery, observeElevation },
+    { observeFleet, renderEvery, observeElevation, reviewCamera },
   );
 }
 

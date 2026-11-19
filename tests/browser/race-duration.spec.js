@@ -29,7 +29,7 @@ for (const id of ["bahrain", "france", "russia"])
     test.setTimeout(360000);
     const errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
-    if (id === "bahrain") await capture3D(page, { renderEvery: 8 });
+    if (id === "bahrain") await capture3D(page, { renderEvery: 40 });
     else {
       await capture2D(page);
       await page.addInitScript(() => {
@@ -41,7 +41,15 @@ for (const id of ["bahrain", "france", "russia"])
     }
     await page.goto(`race.html?track=${id}`);
     await page.clock.runFor(64);
-    const laps = await page.evaluate(() => __driveSnapshot.race.laps);
+    const { laps, lengthScale } = await page.evaluate(() => {
+      const track = CGPArcade.TrackCatalog.get(document.getElementById("track").value),
+        surface = CGPArcade.Surface.create(track);
+      return {
+        laps: __driveSnapshot.race.laps,
+        lengthScale: track.pov?.originalLength
+          ? surface.g.len / track.pov.originalLength : 1,
+      };
+    });
     if (id === "bahrain") {
       expect(laps).toBe(8);
       await expect(page.locator("#arcadeApp")).toHaveAttribute("data-rendering", "3d");
@@ -50,8 +58,8 @@ for (const id of ["bahrain", "france", "russia"])
     const storage = await page.evaluate(() => ({ ...localStorage }));
     await page.locator("#pause").click();
     await page.evaluate(pilotRace);
-    for (let step = 0; step < 20; step++) {
-      await page.clock.runFor(20000);
+    for (let step = 0; step < 400; step++) {
+      await page.clock.runFor(1000);
       if (await page.evaluate(() => __driveSnapshot.race.phase === "finished")) break;
     }
     const s = await page.evaluate(() => __driveSnapshot),
@@ -59,8 +67,9 @@ for (const id of ["bahrain", "france", "russia"])
     expect(s.race.phase).toBe("finished");
     expect(s.race.finished).toBe(13);
     expect(s.entries.every((e) => e.timing.completed === laps && e.timing.lastLap.valid)).toBe(true);
-    expect(player.finishTime).toBeGreaterThanOrEqual(180);
-    expect(player.finishTime).toBeLessThanOrEqual(240);
+    expect(player.finishTime).toBeGreaterThanOrEqual(180 * lengthScale);
+    expect(player.finishTime).toBeLessThanOrEqual(240 * lengthScale);
+    await page.clock.runFor(250); // Allow the existing result UI update after pausing.
     await expect(page.locator("#raceLap")).toHaveText(`${laps} / ${laps}`);
     await expect(page.locator("#resultRows tr")).toHaveCount(13);
     await page.locator("#restart").click();

@@ -29,7 +29,7 @@ function before() {
 
 it("südliche Verlängerungen erhalten die anderen 20 Strecken samt Seilen sowie Originalspiel, Fahrer und Fahrphysik exakt", () => {
   const old = before(),
-    current = loadArcade();
+    current = loadArcade({historicalBahrain:true});
   for (const id of Object.keys(old.data.tracks)) {
     if (["england", "portugal"].includes(id)) continue;
     expect(plain(current.data.tracks[id])).toEqual(plain(old.data.tracks[id]));

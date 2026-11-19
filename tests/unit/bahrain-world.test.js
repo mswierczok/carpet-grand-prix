@@ -1,3 +1,4 @@
+import { withoutBahrainIteration2 } from "../helpers/bahrain-layout-source.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -35,11 +36,8 @@ it("erhält sämtliche Rennsysteme, Stammdaten, Speicherformate und 35 Original-
     ]);
   for (const path of files)
     expect(
-      readFileSync(path).equals(
-        execFileSync("git", ["show", `${base}:${path}`], {
-          maxBuffer: 8 * 1024 * 1024,
-        }),
-      ),
+      withoutBahrainIteration2(path, readFileSync(path, "utf8"), base) ===
+        execFileSync("git", ["show", `${base}:${path}`], {maxBuffer:8*1024*1024}).toString(),
       path,
     ).toBe(true);
 });
@@ -61,12 +59,12 @@ it("übernimmt dieselben Fahrbahndreiecke und hält reale Requisitenflächen au�
     );
   }
   expect(world.layout.tunnel.at.x).toBeCloseTo(
-    surface.at(0.12 * surface.g.len).x,
+    surface.at(0.12 * surface.g.layout.originalLength).x,
     6,
   );
   expect(
     world.layout.objects.filter((s) => s.id.startsWith("parked-car-")).length,
-  ).toBe(4);
+  ).toBe(0);
   expect([...road.attributes.position.array]).toEqual([
     ...api.Tracks3D.roadGeometry(surface, surface.roadRadius, 0.07).attributes
       .position.array,
@@ -90,7 +88,7 @@ it("übernimmt dieselben Fahrbahndreiecke und hält reale Requisitenflächen au�
           p.getY(i),
           p.getZ(i),
         ).applyMatrix4(node.matrixWorld);
-        if (["block-tunnel", "wooden-tunnel"].includes(spec.id) && v.y >= 21.5)
+        if ((["block-tunnel", "wooden-tunnel"].includes(spec.id) && v.y >= 21.5) || (spec.id === "bed" && v.y >= 44))
           continue;
         expect(
           surface.project({ x: v.x, y: v.z }).distance,

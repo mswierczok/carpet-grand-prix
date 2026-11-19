@@ -430,6 +430,55 @@
         0,
       );
     }
+    function supportTrailer(o, color) {
+      o.block([0, 3, 0], [25, 3, 11], palette.honey);
+      o.block([-2, 8, 0], [19, 9, 11], color);
+      o.block([9, 6, 0], [7, 7, 10], palette.paper);
+      o.block([10, 8, 0], [4, 0.9, 10.2], "#526e86", [0, 0, 0], "plain", 0.02);
+      for (const x of [-8, 8])
+        for (const z of [-6, 6])
+          o.cylinder(
+            [x, 2, z],
+            [1.9, 1.9],
+            1.3,
+            "#26323b",
+            [Math.PI / 2, 0, 0],
+            "plain",
+            0.03,
+          );
+      o.label(4, [-2, 8, 5.6], [14, 5]);
+    }
+    function paddock(o) {
+      o.shadow([0, 0], [192, 62]);
+      o.flat([0, 0.02, 0], [186, 60], "#c0ad8c");
+      for (const [i, x] of [-66, -22, 22, 66].entries()) {
+        o.detail(() =>
+          o.withTransform([x, 0, 15], [1, 1, 1], [0, Math.PI / 2, 0], () =>
+            parkedCar(
+              { ...o, box: o.block },
+              [
+                "parked-car-red",
+                "parked-car-blue",
+                "parked-car-green",
+                "parked-car-yellow",
+              ][i],
+            ),
+          ),
+        );
+        for (const side of [-1, 1])
+          o.flat([x + side * 12, 0.04, 15], [0.6, 22], palette.paper);
+        o.flat([x, 0.04, 28], [24, 0.6], palette.paper);
+      }
+      for (const [i, x] of [-57, 0, 57].entries())
+        o.withTransform([x, 0, -15], [1, 1, 1], [0, 0, 0], () =>
+          supportTrailer(o, [palette.red, palette.blue, palette.green][i]),
+        );
+      for (const x of [-89, 89]) {
+        o.box([x, 6, 0], [1.4, 12, 1.4], palette.honey);
+      }
+      o.box([0, 13, -28], [65, 9, 1], palette.paper);
+      o.label(10, [0, 13, -27.4], [62, 7]);
+    }
     function chest(o) {
       o.shadow([0, 0], [135, 105]);
       o.box([0, 24, 0], [98, 45, 65], palette.red);
@@ -504,34 +553,103 @@
         );
     }
     function figure(o, x, y, z, color, index = 0) {
-      for (const side of [-1, 1])
-        o.block(
-          [x + side * 1.4, y + 1.5, z],
-          [0.7, 2.2, 0.9],
-          color,
-          [0, 0, side * 0.15],
-          "plain",
-          0.05,
-        );
       const skin = ["#d29b66", "#995e3f", "#edc694"][index % 3];
-      o.box([x, y + 1.4, z], [2.1, 2.8, 1.7], color, [0, 0, 0], "plain", 0.08);
+      for (const side of [-1, 1]) {
+        o.block(
+          [x + side * 0.63, y + 0.65, z],
+          [0.85, 1.3, 1.1],
+          "#44535a",
+          [0, 0, 0],
+          "plain",
+          0,
+        );
+        o.block(
+          [x + side * 0.63, y + 0.12, z + 0.55],
+          [0.9, 0.6, 1.9],
+          "#29383f",
+          [0, 0, 0],
+          "plain",
+          0,
+        );
+        o.block(
+          [x + side * 1.65, y + 2.3, z + 0.1],
+          [0.7, 1.7, 0.9],
+          color,
+          [0, 0, -side * 0.12],
+          "plain",
+          0,
+        );
+        o.block(
+          [x + side * 1.75, y + 1.5, z + 0.25],
+          [0.65, 0.65, 0.65],
+          skin,
+          [0, 0, 0],
+          "plain",
+          0,
+        );
+      }
+      o.block(
+        [x, y + 2.2, z],
+        [2.4, 2.2, 1.6],
+        color,
+        [0, 0, 0],
+        "plain",
+        0.08,
+      );
       o.cylinder(
-        [x, y + 3.8, z],
-        [1.2, 1.2],
-        2.5,
+        [x, y + 4.5, z],
+        [1.05, 1.05],
+        2,
         skin,
         [0, 0, 0],
         "plain",
         0.07,
       );
-      o.box(
-        [x, y - 0.2, z + 0.7],
-        [2.3, 0.65, 2.3],
-        "#343d44",
+      o.cylinder(
+        [x, y + 5.65, z],
+        [0.5, 0.5],
+        0.35,
+        skin,
         [0, 0, 0],
         "plain",
-        0.03,
+        0,
       );
+      for (const side of [-1, 1])
+        o.block(
+          [x + side * 0.37, y + 4.65, z + 1],
+          [0.15, 0.2, 0.09],
+          "#26323b",
+          [0, 0, 0],
+          "plain",
+          0,
+        );
+      o.block(
+        [x, y + 4.15, z + 1.04],
+        [0.55, 0.1, 0.08],
+        "#694733",
+        [0, 0, 0],
+        "plain",
+        0,
+      );
+      if (index % 5 === 0) {
+        o.cylinder(
+          [x + 2.5, y + 4, z + 0.3],
+          [0.1, 0.1],
+          7,
+          palette.honey,
+          [0, 0, 0],
+          "wood",
+          0.02,
+        );
+        o.block(
+          [x + 3.65, y + 6.5, z + 0.3],
+          [2.3, 1.7, 0.13],
+          index % 2 ? palette.red : palette.paper,
+          [0, 0.15, 0],
+          "cloth",
+          0.05,
+        );
+      }
     }
     function sail(o, width, depth, base) {
       const key = `sail:${width}:${depth}:${base}`;
@@ -638,17 +756,19 @@
                 "plain",
                 0.06,
               );
-            if ((row + b) % 2 === 0)
+            for (let seat = 0; seat < 6; seat++) {
+              if ((seat + row + b) % 4 !== 0) continue;
               figure(
                 o,
-                x - 9 + (b % 2) * 12,
+                x - 15 + seat * 6,
                 y + 4 + row,
                 z,
                 [palette.red, palette.green, palette.blue, palette.paper][
-                  (row + b) % 4
+                  (seat + row + b) % 4
                 ],
-                b + row,
+                b * 24 + row * 6 + seat,
               );
+            }
           });
         }
         for (const xOffset of [-18, 18])
@@ -672,6 +792,17 @@
         );
         brick(o, [x, 3, 26], [37, 6, 3], b % 2 ? palette.red : palette.blue, 3);
       }
+      for (const side of [-1, 1])
+        o.detail(() =>
+          figure(
+            o,
+            side * ((bays * bay) / 2 - 5),
+            6,
+            23,
+            palette.red,
+            side > 0 ? 10 : 15,
+          ),
+        );
       o.block([0, 13, -26], [bays * bay + 3, 24, 2], palette.blue);
       o.label(7, [0, 7, 27.7], [bays * bay - 8, 6]);
     }
@@ -725,6 +856,28 @@
       for (const x of [-81, 81])
         o.block([x, 58, 0], [12, 22, 368], palette.wood);
       o.block([0, 60, 0], [161, 14, 364], palette.honey);
+      for (const z of [-120, -40, 40, 120])
+        o.block([0, 50, z], [146, 6, 5], palette.wood);
+      for (const z of [-168, 168])
+        for (const x of [-72, 72]) {
+          o.block(
+            [x, 11, z + 9.2],
+            [16, 2, 0.5],
+            "#efd5a5",
+            [0, 0, 0],
+            "plain",
+            0.04,
+          );
+          o.cylinder(
+            [x, 39, z + 9.3],
+            [1.1, 1.1],
+            0.5,
+            "#82613f",
+            [Math.PI / 2, 0, 0],
+            "plain",
+            0.02,
+          );
+        }
       o.box([0, 76, 0], [157, 23, 356], "#f2e4c9", [0, 0, 0], "cloth", 0.22);
       o.block(
         [0, 91, -116],
@@ -768,6 +921,7 @@
           "plain",
           0,
         );
+      o.label(11, [72, 31, 158.7], [14, 5], [0, Math.PI, 0]);
       o.block([0, 80, -185], [174, 78, 11], palette.honey);
       o.block([0, 65, 185], [174, 41, 11], palette.wood);
       for (const x of [-64, 64])
@@ -1078,6 +1232,8 @@
     }
     const builders = {
       pit,
+      paddock,
+      supportTrailer,
       camel,
       towers,
       dunes,

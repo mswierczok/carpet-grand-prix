@@ -195,7 +195,19 @@ test("absolviert im echten Canvas drei Runden mit ausschließlich Tastaturereign
     }
     requestAnimationFrame(steer);
   });
-  await page.clock.runFor(125000);
+  // Keep the original 125-second budget per original track length. The
+  // explicitly extended Bahrain route needs more time, with the same physics.
+  const drivingBudget = await page.evaluate(() => {
+    const track = CGPArcadeData.tracks.bahrain,
+      surface = CGPArcade.Surface.create(track);
+    return 125000 * (track.pov?.originalLength
+      ? surface.g.len / track.pov.originalLength : 1);
+  });
+  test.setTimeout(Math.ceil(120000 * drivingBudget / 125000));
+  for (let elapsed = 0; elapsed < Math.ceil(drivingBudget); elapsed += 1000) {
+    await page.clock.runFor(Math.min(1000, Math.ceil(drivingBudget) - elapsed));
+    if (Number(await page.locator("#laps").innerText()) >= 3) break;
+  }
   expect(
     Number(await page.locator("#laps").innerText()),
   ).toBeGreaterThanOrEqual(3);

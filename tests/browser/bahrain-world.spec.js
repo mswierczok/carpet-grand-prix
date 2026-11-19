@@ -1,3 +1,4 @@
+import { pilotPit } from "../helpers/pitlane-browser.js";
 import { test, expect } from "@playwright/test";
 import { capture3D, selectDriveSetting } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
@@ -43,7 +44,7 @@ test("Bahrain-Welt: echter Renderer, unveränderliche Eingabe und sicherer Wechs
   });
   expect(result.same).toBe(true);
   expect(result.glError).toBe(0);
-  expect(result.diag.world.assets).toBe(23);
+  expect(result.diag.world.assets).toBe(22);
   expect(result.diag.world.room.id).toBe("motorsport-bedroom");
   expect(result.diag.world.room.furniture).toBe(6);
   expect(result.diag.world.passage.clearHeight).toBe(26);
@@ -81,7 +82,7 @@ test("Bahrain-Welt: vollständiges Standardrennen mit 13 echten Fahrzeugen und a
   await selectDriveSetting(page, "quality", "low");
   await page.locator("#pause").click();
   await page.evaluate(pilotRace);
-  for (let i = 0; i < 330; i++) {
+  for (let i = 0; i < 550; i++) {
     await page.clock.runFor(1000);
     if (await page.evaluate(() => __driveSnapshot.race.phase === "finished"))
       break;
@@ -142,4 +143,37 @@ test("Bahrain-Welt: vollständig offline mit 3D, mobilen Abmessungen und sichere
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
+});
+
+test("Bahrain-Welt: fährt per Tastatur durch Unterbett und offene Boxengasse mit gültiger Zielwertung", async ({
+  page,
+}) => {
+  test.setTimeout(180000);
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await capture3D(page, { renderEvery: 90 });
+  await page.goto("arcade3d.html?track=bahrain");
+  await expect(page.locator("#arcadeApp")).toHaveAttribute(
+    "data-rendering",
+    "3d",
+  );
+  await selectDriveSetting(page, "quality", "low");
+  await page.locator("#pause").click();
+  await page.evaluate(pilotPit);
+  for (let i = 0; i < 600; i++) {
+    await page.clock.runFor(250);
+    if (await page.evaluate(() => __pitDrive.done)) break;
+  }
+  const result = await page.evaluate(() => ({
+    drive: __pitDrive,
+    timing: __driveSnapshot.timing,
+    contacts: __driveSnapshot.contacts,
+    car: __driveSnapshot.car,
+  }));
+  expect(result.drive.done).toBe(true);
+  expect(result.timing.completed).toBe(1);
+  expect(result.timing.lastLap.valid).toBe(true);
+  expect(result.contacts).toBe(0);
+  expect(result.car.hitWall).toBe(false);
+  expect(errors).toEqual([]);
 });

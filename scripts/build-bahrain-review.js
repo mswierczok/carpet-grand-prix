@@ -7,10 +7,13 @@ import {
 } from "node:fs";
 const target = "dist/bahrain-review";
 mkdirSync(target, { recursive: true });
-let html = readFileSync("previews/bahrain-world/index.html", "utf8");
+const gallery = existsSync("previews/bahrain-iteration2/index.html")
+  ? "previews/bahrain-iteration2/index.html"
+  : "previews/bahrain-world/index.html";
+let html = readFileSync(gallery, "utf8");
 html = html
   .replace(
-    /src="\.\.\/\.\.\/(docs\/(?:bahrain-(?:world|gate)|master-bedroom)\/[^" ]+\.png)"/g,
+    /src="\.\.\/\.\.\/(docs\/(?:bahrain-(?:world|gate|iteration2)|master-bedroom)\/[^" ]+\.png)"/g,
     (_, path) =>
       `src="data:image/png;base64,${readFileSync(path).toString("base64")}"`,
   )

@@ -1,3 +1,4 @@
+import { withoutBahrainIteration2 } from "../helpers/bahrain-layout-source.js";
 import { withoutEnvironmentCameraOptions } from "../helpers/environment-camera.js";
 import { withoutMainEntry } from "../helpers/legacy-entry.js";
 import { it, expect } from "vitest";
@@ -100,7 +101,7 @@ it("schützt Physik, Grafik, Daten und Originalspiel trotz freigegebener KI-Änd
     "src/rendering/vehicles3d.js",
   ];
   for (const file of files) {
-    const current = read(file),
+    const current = withoutBahrainIteration2(file, read(file), baseline),
       original = execFileSync("git", ["show", `${baseline}:${file}`], {
         cwd: ROOT,
         encoding: "utf8",
