@@ -1,38 +1,10 @@
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
-import { runInNewContext } from "node:vm";
 import * as THREE from "three";
-import { loadArcade } from "../helpers/arcade.js";
+import { createWorld as setup } from "../helpers/world3d.js";
 const base = "34a7c07ac683ababd4e5f130b3a75e9029448560";
-function setup() {
-  const { api } = loadArcade({ race: true });
-  const context = new Proxy(
-    { createRadialGradient: () => ({ addColorStop() {} }) },
-    { get: (o, k) => o[k] || (() => {}) },
-  );
-  const document = {
-    createElement: () => ({ width: 0, height: 0, getContext: () => context }),
-  };
-  for (const module of [
-    "camera3d",
-    "materials3d",
-    "tracks3d",
-    "illustrated-kit3d",
-    "bahrain-materials3d",
-    "bahrain-layout",
-    "bahrain3d",
-  ])
-    runInNewContext(readFileSync(`src/rendering/${module}.js`, "utf8"), {
-      CGPArcade: api,
-      CGPThree: THREE,
-      document,
-    });
-  const surface = api.Surface.create(api.TrackCatalog.get("bahrain")),
-    materials = api.Materials3D.create(null),
-    world = api.Tracks3D.create(surface, materials);
-  return { api, surface, materials, world };
-}
+
 it("erhält sämtliche Rennsysteme, Stammdaten, Speicherformate und 35 Original-PNGs bytegenau", () => {
   const files = [
     "physics",
@@ -106,7 +78,7 @@ it("übernimmt dieselben Fahrbahndreiecke und hält reale Requisitenflächen au�
       expect(attribute.array.every(Number.isFinite), node.name).toBe(true);
   });
   for (const spec of world.layout.objects) {
-    if (spec.id !== "block-tunnel")
+    if (!["block-tunnel", "wooden-tunnel"].includes(spec.id))
       expect(spec.clearance, spec.id).toBeGreaterThan(4);
     const root = world.group.getObjectByName(spec.id);
     root.traverse((node) => {
@@ -118,7 +90,8 @@ it("übernimmt dieselben Fahrbahndreiecke und hält reale Requisitenflächen au�
           p.getY(i),
           p.getZ(i),
         ).applyMatrix4(node.matrixWorld);
-        if (spec.id === "block-tunnel" && v.y >= 21.5) continue;
+        if (["block-tunnel", "wooden-tunnel"].includes(spec.id) && v.y >= 21.5)
+          continue;
         expect(
           surface.project({ x: v.x, y: v.z }).distance,
           `${spec.id} @ ${v.x},${v.z}`,
@@ -132,7 +105,7 @@ it("übernimmt dieselben Fahrbahndreiecke und hält reale Requisitenflächen au�
 it("lässt die echte Verfolgungskamera durch den Tunnel und hält den Sichtstrahl zum Auto frei", () => {
   const { api, surface, materials, world } = setup(),
     camera = new THREE.PerspectiveCamera(55, 1, 0.3, 800),
-    rig = api.Camera3D.create();
+    rig = api.Camera3D.create(api.EnvironmentScenes.get("bahrain").camera);
   world.group.updateMatrixWorld(true);
   for (let s = 0.095 * surface.g.len; s < 0.15 * surface.g.len; s += 4)
     for (const lane of [-25.5, -23, -6, 0, 6, 23, 25.5]) {

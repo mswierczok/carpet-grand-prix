@@ -1,3 +1,18 @@
+# Aktueller Bahrain-Zimmerausbau
+
+Der Master-Kinderzimmer-Ausbau ergänzt `master-bedroom.test.js`: unabhängiger
+Zimmeraufbau, Modulbibliothek, Möbelabstände, beide Durchfahrten, Fenstergrenzen,
+Kamera-Kompatibilität, Übersicht und Freigabe aller Szenengeometrien.
+Die bisherigen Weltprüfungen bleiben erhalten. Für das ausdrücklich größere
+Zimmer gelten 45.000 Dreiecke im freien Fahrtest sowie 90.000 Dreiecke und
+190 Draw Calls im vollständigen Startfeld. Die unveränderten anderen Strecken
+behalten ihre bisherigen Grenzen. Vergleichbare Messwerte, tatsächliche
+Spielaufnahmen und die offene iPhone-Geräteprüfung stehen in
+[MASTER_BEDROOM.md](MASTER_BEDROOM.md).
+
+Die folgenden Angaben zu 30.000/80.000 Dreiecken beschreiben den ursprünglichen
+kleineren Bahrain-Umbau und bleiben als Ausgangsgrundlage dokumentiert.
+
 # Tests
 
 Der Bahrain-Grafikumbau hat zusätzlich `bahrain-world.test.js` (bytegleiche
@@ -234,3 +249,10 @@ Original- und Export-Prüfsummen, Dateibudget, unveränderte Quelle bei Transfer
 Rückfall auf 57 Vektorfiguren sowie Dekodierung aller WebPs online und offline.
 `build:uploaded-portraits` ist ein optionaler Entwicklerexport mit ImageMagick;
 CI und das veröffentlichte Spiel benötigen nur die versionierten WebP-Dateien.
+
+Die historischen Quelltextvergleiche für Rennlänge und südliche Verlängerungen
+normalisieren in `camera3d.js` ausschließlich die freigegebene Erweiterung um
+Kameraoptionen. Die ursprünglichen Standardwerte und der restliche Quelltext
+werden weiterhin bytegenau verglichen; die neue Zimmerprüfung vergleicht
+zusätzlich tatsächliche Standardkameraposen mit dem veröffentlichten Original.
+Der Cache-Test verlangt für die veränderte Kamera eine neue Script-URL.

@@ -178,3 +178,9 @@ damit verbundene GitHub-Pages-Veröffentlichung benötigen die ausdrückliche Fr
 Die anschließende Nutzeranpassung mit Teppichfahrbahn, versetztem Rundbogentor
 und geparkten Spielzeugautos ist in [bahrain-gate/README.md](bahrain-gate/README.md)
 beschrieben. Die Abnahmegalerie zeigt diese neueste Fassung.
+
+## Master-Kinderzimmer und modulare Umgebung
+
+Der anschließende vollständige Zimmerausbau mit überdachter Haupttribüne und
+zusätzlichem Bauklotztunnel ist in [MASTER_BEDROOM.md](MASTER_BEDROOM.md)
+beschrieben. Die Abnahmegalerie zeigt jetzt diesen Entwicklungsstand.

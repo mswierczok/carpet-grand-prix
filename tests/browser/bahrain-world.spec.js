@@ -43,11 +43,14 @@ test("Bahrain-Welt: echter Renderer, unveränderliche Eingabe und sicherer Wechs
   });
   expect(result.same).toBe(true);
   expect(result.glError).toBe(0);
-  expect(result.diag.world.assets).toBe(18);
+  expect(result.diag.world.assets).toBe(23);
+  expect(result.diag.world.room.id).toBe("motorsport-bedroom");
+  expect(result.diag.world.room.furniture).toBe(6);
+  expect(result.diag.world.passage.clearHeight).toBe(26);
   expect(result.diag.world.tunnelClearHeight).toBe(22);
   expect(result.diag.world.tunnelHalfWidth).toBe(32);
-  expect(result.diag.drawCalls).toBeLessThan(170);
-  expect(result.diag.triangles).toBeLessThan(80000);
+  expect(result.diag.drawCalls).toBeLessThan(190);
+  expect(result.diag.triangles).toBeLessThan(90000);
   await page.locator("#track").selectOption("luxembourg");
   await page.clock.runFor(32);
   expect(

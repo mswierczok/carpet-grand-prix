@@ -2,7 +2,7 @@
   "use strict";
   const A = (globalThis.CGPArcade = globalThis.CGPArcade || {});
   const blend = (a, b, k) => a + (b - a) * k;
-  function create() {
+  function create(options = {}) {
     let previous = null,
       wasOverview = false;
     function update(
@@ -27,9 +27,9 @@
         position = { x, y: span * 1.12, z: z + span * 0.26 };
         target = { x, y: 0, z };
       } else {
-        const distance = 26,
-          height = 17,
-          look = 14 + speed * 0.09;
+        const distance = options.distance ?? 26,
+          height = options.height ?? 17,
+          look = (options.look ?? 14) + speed * (options.speedLook ?? 0.09);
         position = {
           x: pose.x - forward.x * distance,
           y: height + (pose.elevation || 0),

@@ -19,6 +19,15 @@ const html = old("race.html"),
       ...html.matchAll(/<script src="\.\/([^"?]+)(?:\?[^" ]*)?"><\/script>/g),
     ].map((m) => [m[1], old(m[1])]),
   ]);
+const currentHTML = readFileSync("race.html", "utf8"),
+  currentSources = new Map([
+    ["race.html", currentHTML],
+    ...[
+      ...currentHTML.matchAll(
+        /<script src="\.\/([^"?]+)(?:\?[^" ]*)?"><\/script>/g,
+      ),
+    ].map((m) => [m[1], readFileSync(m[1], "utf8")]),
+  ]);
 const browser = await chromium.launch({
   executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || undefined,
   args: ["--enable-unsafe-swiftshader"],
@@ -35,21 +44,39 @@ try {
         isMobile: mobile,
         hasTouch: mobile,
       });
-      if (version === "before")
-        await page.route("**/*", async (route) => {
-          const path = new URL(route.request().url()).pathname.split(
-            "/carpet-grand-prix/",
-          )[1];
-          if (sources.has(path))
-            await route.fulfill({
-              contentType: path.endsWith(".html")
-                ? "text/html"
-                : "application/javascript",
-              body: sources.get(path),
-            });
-          else await route.continue();
-        });
+      const responses = version === "before" ? sources : currentSources;
+      await page.route("**/*", async (route) => {
+        const path = new URL(route.request().url()).pathname.split(
+          "/carpet-grand-prix/",
+        )[1];
+        if (responses.has(path))
+          await route.fulfill({
+            contentType: path.endsWith(".html")
+              ? "text/html"
+              : "application/javascript",
+            body: responses.get(path),
+          });
+        else await route.continue();
+      });
       await page.addInitScript(() => {
+        let library;
+        Object.defineProperty(globalThis, "CGPThree", {
+          configurable: true,
+          get: () => library,
+          set: (value) => {
+            class MeasuredRenderer extends value.WebGLRenderer {
+              constructor(...args) {
+                super(...args);
+                const original = this.render;
+                this.render = (scene, camera) => {
+                  globalThis.__measureScene = scene;
+                  return original.call(this, scene, camera);
+                };
+              }
+            }
+            library = { ...value, WebGLRenderer: MeasuredRenderer };
+          },
+        });
         globalThis.CGPArcade = {};
         let module;
         Object.defineProperty(CGPArcade, "Renderer3D", {
@@ -58,7 +85,9 @@ try {
           set: (value) => {
             module = {
               create(...args) {
+                const started = performance.now();
                 const r = value.create(...args);
+                globalThis.__worldCreateMs = performance.now() - started;
                 globalThis.__fixedRenderer = r;
                 return {
                   ...r,
@@ -112,8 +141,23 @@ try {
             Math.floor(samples.length * q)
           ];
         const ext = gl.getExtension("WEBGL_debug_renderer_info");
+        const geometries = new Set();
+        __measureScene.traverse((n) => {
+          if (n.isMesh) geometries.add(n.geometry);
+        });
+        let geometryBytes = 0;
+        for (const g of geometries) {
+          for (const a of Object.values(g.attributes))
+            geometryBytes += a.array.byteLength;
+          geometryBytes += g.index?.array.byteLength || 0;
+        }
+        const navigation = performance.getEntriesByType("navigation")[0];
         return {
           samples: samples.length,
+          loadMs: navigation?.duration,
+          worldCreateMs: globalThis.__worldCreateMs,
+          geometryAttributeBytes: geometryBytes,
+          heapUsedBytes: performance.memory?.usedJSHeapSize ?? null,
           cpuSubmitP50ms: p("submitMs", 0.5),
           cpuSubmitP95ms: p("submitMs", 0.95),
           synchronizedP50ms: p("synchronizedMs", 0.5),
@@ -152,13 +196,18 @@ const files = [
   "src/rendering/bahrain3d.js",
   "src/rendering/illustrated-kit3d.js",
   "src/rendering/bahrain-materials3d.js",
+  "src/rendering/illustrated-materials3d.js",
+  "src/rendering/environment-scenes.js",
+  "src/rendering/environment-assets3d.js",
+  "src/rendering/master-bedroom3d.js",
+  "src/rendering/camera3d.js",
 ];
 const result = {
   recordedAt: new Date().toISOString(),
   reference,
   browser: browser.version(),
   methodology:
-    "Same real paused 13-car grid, auto quality and fixed deviceScaleFactor 0.75: identical render pixel budget before/after, independent of adaptive low-mode changes. One draw per actual animation frame: 10 warm-up then 30 measured draws. gl.finish and one-pixel readback synchronize GPU. Reference scripts served from pinned commit in test responses only. No clock or pose edits.",
+    "Same real paused 13-car grid, auto quality and fixed deviceScaleFactor 0.75: identical render pixel budget before/after, independent of adaptive low-mode changes. One draw per actual animation frame: 10 warm-up then 30 measured draws. gl.finish and one-pixel readback synchronize GPU. Both versions use identical test-only response routing; reference scripts are pinned to a commit. Geometry bytes count unique scene BufferGeometry attributes and indices; heap is a Chromium estimate. Camera changes are part of the actual new presentation. No clock or pose edits.",
   limits:
     "Synchronized submission is not delivered game FPS. SwiftShader is not an iPhone GPU; no physical Safari acceptance.",
   hashes: Object.fromEntries(

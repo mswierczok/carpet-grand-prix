@@ -57,7 +57,6 @@
     find("plush-camel", 0.065, -78, 50, 30, 33, 2.2);
     find("thread-towers", 0.3, 78, 42, 32, 38);
     find("cloth-dunes", 0.54, -88, 48, 34, 8);
-    find("carpet-club", 0.98, 64, 56, 25, 17, Math.PI);
     find("floodlight-east", 0.13, -74, 24, 18, 43);
     find("floodlight-hairpin", 0.21, -85, 24, 18, 43);
     find("floodlight-west", 0.81, -80, 24, 18, 43);
@@ -103,20 +102,35 @@
       minY: Math.min(...ys),
       maxY: Math.max(...ys),
     };
-    add(
-      "wardrobe",
-      { x: bounds.minX - 140, y: (bounds.minY + bounds.maxY) / 2, ang: 0 },
-      88,
-      245,
-      145,
-    );
-    add(
-      "toy-chest",
-      { x: bounds.minX + 115, y: bounds.maxY + 105, ang: -0.13 },
-      110,
-      90,
-      65,
-    );
+    const scene = A.EnvironmentScenes.get(surface.id);
+    for (const spec of [
+      ...scene.room.furniture.map((f) => ({ ...f, roomFurniture: true })),
+      ...scene.landmarks,
+    ]) {
+      const { id, at, w, d, h, ...options } = spec;
+      add(id, at, w, d, h, options);
+    }
+    const passage = scene.passage,
+      at = surface.at(passage.u * surface.g.len),
+      passageSpec = {
+        ...passage,
+        at,
+        solids: [
+          [-32, 32, -44, -32, 0, 26],
+          [-32, 32, 32, 44, 0, 26],
+          [-33, 33, -44, 44, 26, 35],
+        ],
+      };
+    for (const side of [-1, 1]) {
+      const p = {
+        x: at.x - Math.sin(at.ang) * side * 38,
+        y: at.y + Math.cos(at.ang) * side * 38,
+        ang: at.ang,
+      };
+      if (clearance(p, 64, 12) < 3)
+        throw Error("Bauklotztunnel berührt den Fahrkorridor.");
+    }
+    objects.push(passageSpec);
     add(
       "pencils",
       { x: bounds.maxX + 110, y: bounds.minY + 165, ang: 0.27 },
@@ -128,6 +142,7 @@
       objects: Object.freeze(objects.map((o) => Object.freeze(o))),
       bounds: Object.freeze(bounds),
       tunnel: Object.freeze(tunnel),
+      passage: Object.freeze(passageSpec),
       clearance,
     });
   }

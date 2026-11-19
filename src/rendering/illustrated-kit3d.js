@@ -7,13 +7,49 @@
     const sources = new Map(),
       geometries = [],
       shadows = [];
+    // One static material pass for painted, wooden and fabric parts. A per-face
+    // selector chooses existing textures; vertex colours already contain lighting.
+    const surfaceMaterial = materials.basic("#ffffff", {
+      map: maps.wood,
+      vertexColors: true,
+    });
+    surfaceMaterial.onBeforeCompile = (shader) => {
+      shader.uniforms.cgpCloth = { value: maps.cloth };
+      shader.vertexShader = shader.vertexShader
+        .replace(
+          "#include <common>",
+          "#include <common>\nattribute float cgpSurface; varying float vCgpSurface;",
+        )
+        .replace(
+          "#include <begin_vertex>",
+          "#include <begin_vertex>\nvCgpSurface = cgpSurface;",
+        );
+      shader.fragmentShader = shader.fragmentShader
+        .replace(
+          "#include <common>",
+          "#include <common>\nuniform sampler2D cgpCloth; varying float vCgpSurface;",
+        )
+        .replace(
+          "#include <map_fragment>",
+          `
+          vec4 cgpTexel = vec4(1.0);
+          if (vCgpSurface > 1.5) cgpTexel = texture2D(cgpCloth, vMapUv);
+          else if (vCgpSurface > 0.5) cgpTexel = texture2D(map, vMapUv);
+          diffuseColor *= cgpTexel;
+        `,
+        );
+    };
+    surfaceMaterial.customProgramCacheKey = () => "cgp-static-surfaces-1";
     const finishes = {
-      wood: materials.basic("#ffffff", { map: maps.wood, vertexColors: true }),
-      cloth: materials.basic("#ffffff", {
-        map: maps.cloth,
+      surface: surfaceMaterial,
+      carpet: materials.basic("#ffffff", {
+        map: maps.carpet,
         vertexColors: true,
       }),
-      plain: materials.basic("#ffffff", { vertexColors: true }),
+      laminate: materials.basic("#ffffff", {
+        map: maps.laminate,
+        vertexColors: true,
+      }),
       ink: materials.basic("#39332e", { side: T.BackSide }),
       label: materials.basic("#ffffff", {
         map: maps.labels,
@@ -55,26 +91,35 @@
     function object(name, at = { x: 0, y: 0, ang: 0 }) {
       const group = new T.Group(),
         batches = new Map();
+      let frame = new T.Group().matrix,
+        detailed = false;
       group.name = name;
       group.position.set(at.x, 0, at.y);
       group.rotation.y = -(at.ang || 0);
       function append(g, kind, color) {
-        const b = batches.get(kind) || {
+        const mergedKind = ["wood", "cloth", "plain"].includes(kind)
+          ? "surface"
+          : kind;
+        const key = (detailed ? "detail:" : "") + mergedKind;
+        const b = batches.get(key) || {
           position: [],
           normal: [],
           uv: [],
           color: [],
+          cgpSurface: [],
         };
-        batches.set(kind, b);
+        batches.set(key, b);
         const c = new T.Color(color),
           p = g.attributes.position,
           n = g.attributes.normal,
-          u = g.attributes.uv;
-        const baked = ["wood", "cloth", "plain"].includes(kind),
+          u = g.attributes.uv,
+          sourceColor = g.attributes.color;
+        const baked = ["wood", "cloth", "plain", "laminate"].includes(kind),
           cosine = Math.cos(at.ang || 0),
           sine = Math.sin(at.ang || 0);
         for (let i = 0; i < p.count; i++) {
           b.position.push(p.getX(i), p.getY(i), p.getZ(i));
+          b.cgpSurface.push(kind === "wood" ? 1 : kind === "cloth" ? 2 : 0);
           b.normal.push(n.getX(i), n.getY(i), n.getZ(i));
           b.uv.push(u?.getX(i) || 0, u?.getY(i) || 0);
           if (baked) {
@@ -85,7 +130,12 @@
               dot = (-150 * nx + 200 * n.getY(i) - 80 * nz) / 262.49,
               band = dot > 0.4 ? 1.03 : dot > -0.15 ? 0.76 : 0.48;
             b.color.push(c.r * band * 1.025, c.g * band, c.b * band * 0.94);
-          } else b.color.push(c.r, c.g, c.b);
+          } else
+            b.color.push(
+              c.r * (sourceColor?.getX(i) ?? 1),
+              c.g * (sourceColor?.getY(i) ?? 1),
+              c.b * (sourceColor?.getZ(i) ?? 1),
+            );
         }
       }
       function part(
@@ -104,6 +154,7 @@
         m.rotation.set(...rotation);
         m.updateMatrix();
         g.applyMatrix4(m.matrix);
+        g.applyMatrix4(frame);
         append(g, kind, color);
         if (stroke) {
           const p = g.attributes.position,
@@ -129,6 +180,24 @@
       ) {
         part(
           roundedBox(...size),
+          color,
+          position,
+          [1, 1, 1],
+          rotation,
+          kind,
+          stroke,
+        );
+      }
+      function block(
+        position,
+        size,
+        color,
+        rotation = [0, 0, 0],
+        kind = "wood",
+        stroke = 0.16,
+      ) {
+        part(
+          source(`block:${size}`, () => new T.BoxGeometry(...size)),
           color,
           position,
           [1, 1, 1],
@@ -230,18 +299,22 @@
         );
       }
       function finish() {
-        for (const [kind, b] of batches) {
+        for (const [key, b] of batches) {
+          const kind = key.replace("detail:", "");
           const g = new T.BufferGeometry();
           for (const [key, size] of [
             ["position", 3],
             ["normal", 3],
             ["uv", 2],
             ["color", 3],
+            ["cgpSurface", 1],
           ])
             g.setAttribute(key, new T.Float32BufferAttribute(b[key], size));
           g.computeBoundingSphere();
           geometries.push(g);
-          group.add(new T.Mesh(g, finishes[kind]));
+          const mesh = new T.Mesh(g, finishes[kind]);
+          mesh.userData.environmentDetail = key.startsWith("detail:");
+          group.add(mesh);
           if (kind === "shadow") {
             group.updateMatrix();
             g.applyMatrix4(group.matrix);
@@ -252,10 +325,35 @@
         batches.clear();
         return group;
       }
-      return {
+      function withTransform(position, scale, rotation, build) {
+        const previous = frame,
+          transform = new T.Group();
+        transform.position.set(...position);
+        transform.scale.set(...scale);
+        transform.rotation.set(...rotation);
+        transform.updateMatrix();
+        frame = previous.clone().multiply(transform.matrix);
+        try {
+          build(api);
+        } finally {
+          frame = previous;
+        }
+      }
+      const api = {
         group,
+        withTransform,
+        detail(build) {
+          const old = detailed;
+          detailed = true;
+          try {
+            build(api);
+          } finally {
+            detailed = old;
+          }
+        },
         part,
         box,
+        block,
         ball,
         cylinder,
         label,
@@ -264,6 +362,7 @@
         decal,
         finish,
       };
+      return api;
     }
     function finishShadows() {
       const g = new T.BufferGeometry();
@@ -290,5 +389,32 @@
       },
     });
   }
-  A.IllustratedKit3D = Object.freeze({ create });
+  function updateVisibility(instances, camera, overview) {
+    for (const { spec, node } of instances) {
+      const dx = camera.position.x - spec.at.x,
+        dz = camera.position.z - spec.at.y,
+        x = dx * Math.cos(spec.at.ang) + dz * Math.sin(spec.at.ang),
+        z = -dx * Math.sin(spec.at.ang) + dz * Math.cos(spec.at.ang),
+        y = camera.position.y;
+      for (const child of node.children)
+        if (child.userData.environmentDetail)
+          child.visible =
+            overview || Math.hypot(dx, dz) < (spec.detailDistance || 380);
+      const solids = spec.solids || [
+        [-spec.w / 2, spec.w / 2, -spec.d / 2, spec.d / 2, 0, spec.h],
+      ];
+      node.visible =
+        overview ||
+        !solids.some(
+          (b) =>
+            x > b[0] - 2 &&
+            x < b[1] + 2 &&
+            z > b[2] - 2 &&
+            z < b[3] + 2 &&
+            y > b[4] - 2 &&
+            y < b[5] + 2,
+        );
+    }
+  }
+  A.IllustratedKit3D = Object.freeze({ create, updateVisibility });
 })();

@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-11-19T18:41:56.962365+00:00",
+  "capturedSourceCommit": "06176f53d3efb258c9d06b052ffadee6d94b4348",
+  "scope": "Only the camera script cache query changes in the delivered HTML; captured source hashes remain unmodified.",
+  "html": {
+    "arcade3d.html": {
+      "captured": "20688fbfcb6a7b8ddc35f29640299c932236429ee8146b40a1834dae189b5e0a",
+      "delivered": "7c8e3dfcbd63aa70d9067fc6c443720acf9c9dc356e862343c44fb467245d161",
+      "replacement": "camera3d.js?v=pov-calendar-1 -> camera3d.js?v=master-room-2"
+    },
+    "race.html": {
+      "captured": "ce12a960a1a4c5c089d07d8aec86eed6d9e6fc95e285fc60d988bda99b1772fb",
+      "delivered": "17bee06e142a28b409732d58d72b6233a5f6ef1fab612028bf3a732211ee25e4",
+      "replacement": "camera3d.js?v=pov-calendar-1 -> camera3d.js?v=master-room-2"
+    }
+  },
+  "offlineBuilds": {
+    "carpet-grand-prix-arcade-offline.html": {
+      "before": "261e3ae73933d66eaa9dc72cfea2b353dadd639284a831cd09c861ab9c6d5611",
+      "after": "261e3ae73933d66eaa9dc72cfea2b353dadd639284a831cd09c861ab9c6d5611",
+      "byteIdentical": true
+    },
+    "carpet-grand-prix-race-offline.html": {
+      "before": "bb5635fd4537a3957f040a05b2901e5f02dbcff4eb209148aefe93624cd7c292",
+      "after": "bb5635fd4537a3957f040a05b2901e5f02dbcff4eb209148aefe93624cd7c292",
+      "byteIdentical": true
+    },
+    "carpet-grand-prix-arcade3d-offline.html": {
+      "before": "2f213783be5a0a982c2f6312ae8b4ab9c5c5ebc1e47f1b72a81cb34c78e7e78a",
+      "after": "2f213783be5a0a982c2f6312ae8b4ab9c5c5ebc1e47f1b72a81cb34c78e7e78a",
+      "byteIdentical": true
+    },
+    "carpet-grand-prix-menu-offline.html": {
+      "before": "aac646a82e175cf81577d40491d23723d67469720ec7aeb7adaa0c3cd4e6c482",
+      "after": "aac646a82e175cf81577d40491d23723d67469720ec7aeb7adaa0c3cd4e6c482",
+      "byteIdentical": true
+    }
+  },
+  "runtimeUnchanged": true
+}

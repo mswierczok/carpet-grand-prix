@@ -16,7 +16,11 @@
   function create(surface, materials) {
     const group = new T.Group();
     group.name = "bahrain-carpet-desert";
-    const maps = A.BahrainMaterials3D.create(materials),
+    const sceneConfig = A.EnvironmentScenes.get(surface.id);
+    const maps = A.IllustratedMaterials3D.create(
+        materials,
+        sceneConfig.materials,
+      ),
       kit = A.IllustratedKit3D.create(materials, maps),
       layout = A.BahrainLayout.create(surface),
       geometries = [],
@@ -39,28 +43,9 @@
       return g;
     }
     // Same triangle coverage, same heights, same physical definitions as Tracks3D.
-    const groundGeo = new T.PlaneGeometry(2700, 2700, 16, 16);
-    groundGeo.rotateX(-Math.PI / 2);
-    groundGeo.translate(590, 0, 374);
-    const gp = groundGeo.attributes.position,
-      gu = groundGeo.attributes.uv,
-      colors = [];
-    for (let i = 0; i < gp.count; i++) {
-      gu.setXY(i, gp.getX(i) / 32, gp.getZ(i) / 32);
-      const shade =
-        0.965 +
-        0.03 * Math.sin(gp.getX(i) * 0.017) * Math.cos(gp.getZ(i) * 0.014);
-      colors.push(shade, shade, shade);
-    }
-    groundGeo.setAttribute("color", new T.Float32BufferAttribute(colors, 3));
-    mesh(
-      groundGeo,
-      materials.basic("#ffffff", { map: maps.carpet, vertexColors: true }),
-      "looped-carpet",
-    );
     mesh(
       uvScale(A.Tracks3D.boundaryGeometry(surface), 9 / 32),
-      materials.basic("#a9916d", { map: maps.carpet }),
+      materials.basic(sceneConfig.materials.shoulderTint, { map: maps.carpet }),
       "unchanged-dark-shoulder",
     );
     mesh(
@@ -73,7 +58,7 @@
         A.Tracks3D.roadGeometry(surface, surface.roadRadius, 0.07),
         9 / 32,
       ),
-      materials.basic("#ffffff", { map: maps.carpet }),
+      materials.basic(sceneConfig.materials.roadTint, { map: maps.carpet }),
       "unchanged-carpet-road",
     );
 
@@ -277,530 +262,35 @@
 
     function assemble(spec, build) {
       const obj = kit.object(spec.id, spec.at);
-      build(obj);
+      if (spec.scale)
+        obj.withTransform([0, 0, 0], spec.scale, [0, 0, 0], () => build(obj));
+      else build(obj);
       const node = obj.finish();
       group.add(node);
       guards.push({ spec, node });
       return node;
     }
-    function pit(o) {
-      o.shadow([0, 0], [124, 58]);
-      o.box([0, 1, 0], [102, 2, 32], palette.wood);
-      for (let i = 0; i < 3; i++) {
-        const x = (i - 1) * 32;
-        o.box([x, 11, -10], [30, 20, 9], i === 1 ? palette.red : palette.honey);
-        o.box([x, 10.5, 4.2], [22, 15, 1], "#3c4850", [0, 0, 0], "plain", 0.07);
-        for (const side of [-1, 1])
-          o.box(
-            [x + side * 13, 10, 6],
-            [4, 18, 8],
-            side < 0 ? palette.wood : palette.honey,
-          );
-        o.box([x, 21, 4], [32, 4, 28], i === 1 ? palette.honey : palette.red);
-        o.box(
-          [x, 2.2, 7],
-          [21, 0.18, 16],
-          palette.paper,
-          [0, 0, 0],
-          "plain",
-          0.04,
-        );
-        o.box([x - 6, 3.4, 10], [3, 2.5, 3], palette.blue);
-        o.cylinder(
-          [x + 7, 3.8, 9],
-          [1.5, 1.6],
-          3,
-          "#3e4545",
-          [0, 0, 0],
-          "plain",
-        );
-        o.label(6, [x, 14, 4.8], [6, 3]);
-      }
-      o.box([0, 24, 3], [73, 3, 6], palette.paper);
-      o.label(2, [0, 24, 6.1], [69, 6]);
-      for (const x of [-45, 45]) {
-        o.box([x, 10.5, 11], [3, 18, 2], palette.honey);
-        o.box([x, 20, 11], [6, 2, 3], palette.paper);
-      }
-    }
-    function camel(o) {
-      const fur = "#cda36d",
-        light = "#e6c28c",
-        seam = "#88613f";
-      o.shadow([0, 0], [50, 30]);
-      for (const x of [-8, 8])
-        for (const z of [-3.6, 3.6]) {
-          o.ball([x, 5.1, z], [1.65, 5.1, 1.7], fur);
-          o.ball([x + 0.3, 1.2, z - 0.2], [2.5, 1.2, 2.2], "#b88a59");
-        }
-      o.ball([0, 11, 0], [12.6, 6.6, 6.2], fur);
-      o.ball([-2, 17, 0], [5.8, 7.5, 5.3], light);
-      o.ball([10.7, 18.5, 0], [3, 8, 3.5], fur, "cloth", [0, 0, 0.23]);
-      o.ball([14, 26, 0], [4.5, 4.5, 3.6], light);
-      o.ball([19, 24, 0], [5, 2.7, 3.6], fur);
-      for (const z of [-3.1, 3.1]) {
-        o.ball([12.3, 30, z], [1.1, 2.5, 1.45], light, "cloth", [0.3, 0, -0.3]);
-        o.ball(
-          [18.4, 28, z * 0.7],
-          [0.65, 1.7, 1.2],
-          "#fff6dc",
-          "plain",
-          [0, 0, 0],
-          0.11,
-        );
-        o.ball(
-          [19, 28, z * 0.7],
-          [0.25, 0.8, 0.55],
-          "#26323b",
-          "plain",
-          [0, 0, 0],
-          0,
-        );
-        o.ball(
-          [23.5, 24.9, z * 0.5],
-          [0.23, 0.38, 0.45],
-          seam,
-          "plain",
-          [0, 0, 0],
-          0,
-        );
-      }
-      o.ball([11.8, 30.3, 0], [1.7, 1.5, 1.4], fur);
-      for (let z = -2; z <= 2; z += 0.5) {
-        const y = 22.7 + 0.1 * z * z;
-        const x =
-          19 + 5 * Math.sqrt(1 - ((y - 24) / 2.7) ** 2 - (z / 3.6) ** 2) + 0.09;
-        o.decal([x, y, z], [0.24, 0.24], seam, [0, Math.PI / 2, 0]);
-      }
-      o.ball([-13, 12, 0], [0.8, 3.2, 0.85], fur, "cloth", [0, 0, -0.7]);
-      for (let i = 0; i < 13; i++) {
-        const x = -10 + i * 1.65;
-        const z =
-          -6.2 * Math.sqrt(1 - (x / 12.6) ** 2 - (0.9 / 6.6) ** 2) - 0.09;
-        o.decal([x, 10.1, z], [0.18, 0.8], seam, [0, Math.PI, 0.4]);
-      }
-      for (let i = 0; i < 4; i++)
-        o.decal([16 + i * 1.5, 22.9, -3.05], [0.7, 0.11], seam, [
-          0,
-          Math.PI,
-          0,
-        ]);
-      o.box(
-        [-2, 14.3, -5.7],
-        [10, 5, 0.35],
-        palette.red,
-        [0, 0, 0],
-        "cloth",
-        0.07,
-      );
-      o.label(6, [-2, 14.4, -5.95], [7.5, 3.5], [0, Math.PI, 0]);
-    }
-    function spool(o, x, color, height) {
-      o.cylinder(
-        [x, height / 2 + 1, 0],
-        [6.2, 6.2],
-        height,
-        color,
-        [0, 0, 0],
-        "cloth",
-        0.12,
-      );
-      for (const y of [1, height + 1]) {
-        o.cylinder([x, y, 0], [8.6, 8.6], 1.8, palette.honey);
-        o.cylinder(
-          [x, y + 1, 0],
-          [2.1, 2.1],
-          0.3,
-          "#7c5b40",
-          [0, 0, 0],
-          "plain",
-          0,
-        );
-      }
-      for (let y = 4; y < height; y += 3)
-        o.cylinder(
-          [x, y, 0],
-          [6.35, 6.35],
-          0.22,
-          color === "#526e86" ? "#90a7b4" : "#c77968",
-          [0, 0, 0],
-          "plain",
-          0,
-        );
-    }
-    function towers(o) {
-      o.shadow([0, 0], [48, 35]);
-      spool(o, -10, palette.blue, 27);
-      spool(o, 10, palette.red, 20);
-      o.cylinder([-10, 33, 0], [0.4, 0.4], 9, "#e4cc86", [0, 0, 0.08]);
-      o.label(5, [8, 11, -6.5], [9, 4], [0, Math.PI, 0]);
-    }
-    function dunes(o) {
-      o.shadow([0, 0], [55, 39]);
-      o.box(
-        [0, 1, 0],
-        [42, 1.5, 28],
-        palette.paper,
-        [0, 0.07, 0],
-        "cloth",
-        0.07,
-      );
-      o.box(
-        [-9, 4, -1],
-        [21, 0.7, 24],
-        palette.cream,
-        [0, 0.07, -0.28],
-        "cloth",
-        0.06,
-      );
-      o.box(
-        [11, 3, 0],
-        [21, 0.7, 25],
-        "#dfca9f",
-        [0, 0.07, 0.22],
-        "cloth",
-        0.06,
-      );
-      for (let i = 0; i < 9; i++)
-        o.box(
-          [-18 + i * 4, 0.8, 13.8],
-          [0.7, 0.2, 1.3],
-          "#9e8763",
-          [0, 0.07, 0],
-          "plain",
-          0,
-        );
-    }
-    function stand(o) {
-      o.shadow([0, 0], [64, 35]);
-      for (let i = 0; i < 3; i++) {
-        o.box(
-          [0, 2 + i * 3.4, 8 - i * 7],
-          [52, 3.8, 8],
-          i % 2 ? palette.blue : palette.honey,
-        );
-        for (let j = 0; j < 8; j++) {
-          const x = -23 + j * 6.4;
-          o.box(
-            [x, 5.5 + i * 3.3, 8 - i * 7],
-            [3, 0.8, 2],
-            palette.paper,
-            [0, 0, 0],
-            "plain",
-            0.08,
-          );
-        }
-      }
-      o.box([0, 14, -8], [55, 4, 2], palette.paper);
-      o.label(7, [0, 14, -6.9], [51, 5]);
-      for (const side of [-1, 1])
-        o.box([side * 26, 7, 0], [1.4, 14, 22], palette.red);
-    }
-    function flood(o) {
-      o.shadow([1, 4], [22, 47], -0.4);
-      o.box([0, 1, 0], [10, 2, 9], palette.wood);
-      o.cylinder([0, 19, 0], [1, 1.5], 36, palette.honey, [0, 0, 0.025]);
-      o.box(
-        [0, 38, 0],
-        [20, 8, 3],
-        palette.blue,
-        [0.13, 0, 0.03],
-        "plain",
-        0.15,
-      );
-      for (const x of [-7, -2.3, 2.3, 7]) {
-        o.box(
-          [x, 38, 1.7],
-          [3.7, 5.8, 0.35],
-          palette.ink,
-          [0.13, 0, 0],
-          "plain",
-          0,
-        );
-        o.box(
-          [x, 38.3, 2.0],
-          [2.8, 4.2, 0.12],
-          "#fff1bf",
-          [0.13, 0, 0],
-          "light",
-          0,
-        );
-        o.box(
-          [x, 39.3, 2.12],
-          [2.4, 0.45, 0.05],
-          "#fffbea",
-          [0.13, 0, 0],
-          "light",
-          0,
-        );
-      }
-      for (const y of [9, 23, 31])
-        o.box(
-          [0, y, 0.1],
-          [2.9, 0.8, 2.8],
-          palette.wood,
-          [0, 0, 0],
-          "wood",
-          0.05,
-        );
-    }
-    // Closed extruded wood profiles in the cross-track (z/y) plane. Static
-    // triangles join the existing material batches; no new renderer dependency.
-    function woodProfile(o, points, depth, color) {
-      const contour = points.map(([z, y]) => new T.Vector2(y, z)),
-        triangles = T.ShapeUtils.triangulateShape(contour, []),
-        positions = [],
-        uv = [];
-      function face(a, b, c) {
-        for (const [x, y, z] of [a, b, c]) {
-          positions.push(x, y, z);
-          uv.push(z / 24, y / 24);
-        }
-      }
-      const at = (i, x) => [x, points[i][1], points[i][0]];
-      for (const triangle of triangles) {
-        let [a, b, c] = triangle;
-        const pa = contour[a],
-          pb = contour[b],
-          pc = contour[c];
-        if ((pb.x - pa.x) * (pc.y - pa.y) - (pb.y - pa.y) * (pc.x - pa.x) < 0)
-          [b, c] = [c, b];
-        face(at(a, depth / 2), at(b, depth / 2), at(c, depth / 2));
-        face(at(c, -depth / 2), at(b, -depth / 2), at(a, -depth / 2));
-      }
-      let area = 0;
-      for (let i = 0; i < contour.length; i++) {
-        const a = contour[i],
-          b = contour[(i + 1) % contour.length];
-        area += a.x * b.y - b.x * a.y;
-      }
-      for (let i = 0; i < points.length; i++) {
-        const j = (i + 1) % points.length;
-        const a = at(i, -depth / 2),
-          b = at(j, -depth / 2),
-          c = at(j, depth / 2),
-          d = at(i, depth / 2);
-        if (area > 0) {
-          face(a, b, c);
-          face(a, c, d);
-        } else {
-          face(c, b, a);
-          face(d, c, a);
-        }
-      }
-      const g = new T.BufferGeometry();
-      g.setAttribute("position", new T.Float32BufferAttribute(positions, 3));
-      g.setAttribute("uv", new T.Float32BufferAttribute(uv, 2));
-      g.computeVertexNormals();
-      o.part(g, color, [0, 0, 0], [1, 1, 1], [0, 0, 0], "wood", 0.1);
-      g.dispose();
-    }
-    function tunnel(o) {
-      // Short upside-down U, assembled from two block stacks and curved voussoirs.
-      // 22 units clear even at the edges; the chase camera is only 17 units high.
-      for (const side of [-1, 1])
-        for (let i = 0; i < 2; i++)
-          o.box(
-            [0, 5.5 + i * 11, side * 36.5],
-            [18, 10.8, 9],
-            [palette.honey, palette.wood, palette.red][
-              (i + (side > 0 ? 1 : 0)) % 3
-            ],
-          );
-      for (let i = 0; i < 12; i++) {
-        const a = (i * Math.PI) / 12 + 0.001,
-          b = ((i + 1) * Math.PI) / 12 - 0.001;
-        woodProfile(
-          o,
-          [
-            [32 * Math.cos(a), 22 + 12 * Math.sin(a)],
-            [41 * Math.cos(a), 22 + 20 * Math.sin(a)],
-            [41 * Math.cos(b), 22 + 20 * Math.sin(b)],
-            [32 * Math.cos(b), 22 + 12 * Math.sin(b)],
-          ],
-          18,
-          [palette.honey, palette.wood, "#e2bd80"][i % 3],
-        );
-      }
-      const crown = (z) => 22 + 20 * Math.sqrt(1 - (z / 41) ** 2);
-      for (const [i, z] of [-32, -16, 0, 16, 32].entries())
-        woodProfile(
-          o,
-          [
-            [z - 7.9, crown(z - 7.9) - 0.7],
-            [z + 7.9, crown(z + 7.9) - 0.7],
-            [z, crown(z) + 8],
-          ],
-          19.5,
-          i % 2 ? palette.honey : palette.red,
-        );
-      o.label(1, [-9.15, 38, 0], [26, 4.5], [0, -Math.PI / 2, 0]);
-      o.shadow([0, 0], [32, 87], 0, 0.078);
-    }
-    function parkedCar(o, id) {
-      const color = {
-        red: palette.red,
-        blue: palette.blue,
-        green: palette.green,
-        yellow: "#d9b458",
-      }[id.split("-").at(-1)];
-      o.shadow([0, 0], [17, 10]);
-      o.box([0, 2.2, 0], [13, 2.2, 5.6], color, [0, 0, 0], "plain", 0.12);
-      o.box([-0.8, 4.3, 0], [6.5, 2.7, 4.8], color, [0, 0, 0], "plain", 0.1);
-      for (const side of [-1, 1]) {
-        // Dark windows, cream pillars and real protruding toy wheels.
-        for (const x of [-2.3, 0.8])
-          o.box(
-            [x, 4.5, side * 2.42],
-            [2.45, 1.5, 0.08],
-            "#304753",
-            [0, 0, 0],
-            "plain",
-            0,
-          );
-        for (const x of [-4.1, 4.1]) {
-          o.cylinder(
-            [x, 1.5, side * 2.9],
-            [1.45, 1.45],
-            0.9,
-            "#293036",
-            [Math.PI / 2, 0, 0],
-            "plain",
-            0.07,
-          );
-          o.cylinder(
-            [x, 1.5, side * 3.4],
-            [0.65, 0.65],
-            0.12,
-            palette.paper,
-            [Math.PI / 2, 0, 0],
-            "plain",
-            0,
-          );
-        }
-      }
-      o.box([2.53, 4.4, 0], [0.09, 1.6, 3.7], "#304753", [0, 0, 0], "plain", 0);
-      o.box([-4.1, 4.4, 0], [0.09, 1.5, 3.7], "#304753", [0, 0, 0], "plain", 0);
-      o.box(
-        [4.7, 3.36, 0],
-        [3.1, 0.06, 0.7],
-        palette.paper,
-        [0, 0, 0],
-        "plain",
-        0,
-      );
-      for (const z of [-1.8, 1.8]) {
-        o.box(
-          [6.51, 2.5, z],
-          [0.08, 0.65, 1],
-          "#fff1bf",
-          [0, 0, 0],
-          "light",
-          0,
-        );
-        o.box(
-          [-6.51, 2.5, z],
-          [0.08, 0.5, 0.8],
-          "#e36d4e",
-          [0, 0, 0],
-          "plain",
-          0,
-        );
-      }
-      o.box(
-        [6.55, 1.8, 0],
-        [0.15, 0.3, 4.6],
-        palette.paper,
-        [0, 0, 0],
-        "plain",
-        0,
-      );
-    }
-    function wardrobe(o) {
-      o.shadow([15, 15], [140, 290]);
-      o.box([0, 73, 0], [82, 142, 238], palette.blue);
-      for (const z of [-57, 57]) {
-        o.box([43, 74, z], [2, 123, 108], "#698193", [0, 0, 0], "wood", 0.18);
-        o.cylinder([46, 73, z < 0 ? -11 : 11], [2.2, 2.2], 10, palette.honey, [
-          Math.PI / 2,
-          0,
-          0,
-        ]);
-      }
-      o.box([0, 145, 0], [88, 5, 245], palette.honey);
-      o.box([0, 6, 0], [88, 10, 245], palette.wood);
-    }
-    function chest(o) {
-      o.shadow([0, 0], [135, 105]);
-      o.box([0, 24, 0], [98, 45, 65], palette.red);
-      o.box([0, 46, -21], [103, 6, 68], palette.honey, [-0.18, 0, 0]);
-      o.box([0, 23, -33], [28, 10, 2], palette.paper);
-      o.label(4, [0, 23, -34.1], [27, 10], [0, Math.PI, 0]);
-      for (const x of [-40, 40]) o.box([x, 23, -33], [5, 39, 2], palette.wood);
-      o.box([28, 54, -14], [19, 14, 19], palette.green, [0, 0.25, 0.06]);
-      o.box([-27, 53, -11], [25, 13, 21], palette.blue, [0, -0.13, 0]);
-    }
-    function pencils(o) {
-      o.shadow([0, 0], [105, 55]);
-      for (const [i, color] of [
-        palette.red,
-        palette.green,
-        palette.blue,
-      ].entries()) {
-        const z = (i - 1) * 13;
-        o.cylinder(
-          [0, 3 + i * 0.6, z],
-          [2.4, 2.4],
-          65,
-          color,
-          [0, 0, Math.PI / 2],
-          "plain",
-          0.1,
-        );
-        o.cylinder(
-          [36, 3 + i * 0.6, z],
-          [0, 2.4],
-          8,
-          palette.honey,
-          [0, 0, -Math.PI / 2],
-          "wood",
-          0.04,
-        );
-        o.cylinder(
-          [40, 3 + i * 0.6, z],
-          [0, 0.8],
-          3,
-          color,
-          [0, 0, -Math.PI / 2],
-          "plain",
-          0,
-        );
-        o.cylinder(
-          [-34, 3 + i * 0.6, z],
-          [2.5, 2.5],
-          5,
-          palette.paper,
-          [0, 0, Math.PI / 2],
-          "plain",
-          0.05,
-        );
-      }
-    }
-    for (const spec of layout.objects)
+    const assets = A.EnvironmentAssets3D.create(
+      palette,
+      A.EnvironmentScenes.get(surface.id).finishes,
+    );
+    for (const spec of layout.objects.filter((o) => !o.roomFurniture))
       assemble(spec, (o) => {
-        if (spec.id === "wooden-pits") pit(o);
+        if (spec.asset) assets.build(spec.asset, o, spec);
+        else if (spec.id === "wooden-pits") assets.pit(o);
         else if (spec.id === "plush-camel") {
           o.group.scale.setScalar(0.75);
-          camel(o);
-        } else if (spec.id === "thread-towers") towers(o);
-        else if (spec.id === "cloth-dunes") dunes(o);
-        else if (spec.id === "carpet-club") stand(o);
-        else if (spec.id.startsWith("floodlight")) flood(o);
-        else if (spec.id === "block-tunnel") tunnel(o);
-        else if (spec.id.startsWith("parked-car-")) parkedCar(o, spec.id);
-        else if (spec.id === "wardrobe") wardrobe(o);
-        else if (spec.id === "toy-chest") chest(o);
-        else if (spec.id === "pencils") pencils(o);
+          assets.camel(o);
+        } else if (spec.id === "thread-towers") assets.towers(o);
+        else if (spec.id === "cloth-dunes") assets.dunes(o);
+        else if (spec.id === "carpet-club") assets.stand(o);
+        else if (spec.id.startsWith("floodlight")) assets.flood(o);
+        else if (spec.id === "block-tunnel") assets.archGate(o);
+        else if (spec.id.startsWith("parked-car-"))
+          assets.parkedCar(o, spec.id);
+        else if (spec.id === "wardrobe") assets.wardrobe(o);
+        else if (spec.id === "toy-chest") assets.chest(o);
+        else if (spec.id === "pencils") assets.pencils(o);
         else {
           o.shadow([0, 0], [29, 16]);
           o.box([0, 4, 0], [23, 8, 2], palette.honey);
@@ -819,53 +309,12 @@
           );
         }
       });
-    const room = kit.object("bedroom-wall-and-skirting"),
-      b = layout.bounds;
-    room.box(
-      [(b.minX + b.maxX) / 2, 65, b.minY - 190],
-      [b.maxX - b.minX + 520, 130, 10],
-      "#dfd4b8",
-      [0, 0, 0],
-      "plain",
-      0.2,
+    const room = A.MasterBedroom3D.create(
+      kit,
+      assets,
+      A.EnvironmentScenes.get(surface.id),
     );
-    room.box(
-      [(b.minX + b.maxX) / 2, 7, b.minY - 183],
-      [b.maxX - b.minX + 520, 14, 5],
-      "#ac8b65",
-    );
-    room.box(
-      [b.maxX + 190, 65, (b.minY + b.maxY) / 2],
-      [10, 130, b.maxY - b.minY + 390],
-      "#cfbea1",
-      [0, 0, 0],
-      "plain",
-      0.2,
-    );
-    room.box(
-      [b.maxX + 183, 7, (b.minY + b.maxY) / 2],
-      [5, 14, b.maxY - b.minY + 390],
-      "#ac8b65",
-    );
-    for (const x of [b.minX + 150, b.minX + 440]) {
-      room.box(
-        [x, 78, b.minY - 183],
-        [105, 62, 1],
-        palette.paper,
-        [0, 0, 0],
-        "plain",
-        0.3,
-      );
-      room.box(
-        [x, 78, b.minY - 182],
-        [90, 48, 1],
-        x === b.minX + 150 ? palette.blue : palette.green,
-        [0, 0, 0],
-        "cloth",
-        0,
-      );
-    }
-    group.add(room.finish());
+    group.add(room.group);
     const lightAt = surface.at(9, surface.outerRadius + 9),
       lamp = kit.object("handmade-start-lights", lightAt);
     lamp.shadow([0, 0], [17, 26]);
@@ -912,27 +361,8 @@
     group.add(greens);
     group.add(kit.finishShadows());
     function update(camera, pose, overview, snapshot) {
-      for (const { spec, node } of guards) {
-        const dx = camera.position.x - spec.at.x,
-          dz = camera.position.z - spec.at.y,
-          x = dx * Math.cos(spec.at.ang) + dz * Math.sin(spec.at.ang),
-          z = -dx * Math.sin(spec.at.ang) + dz * Math.cos(spec.at.ang),
-          y = camera.position.y;
-        const solids = spec.solids || [
-          [-spec.w / 2, spec.w / 2, -spec.d / 2, spec.d / 2, 0, spec.h],
-        ];
-        node.visible =
-          overview ||
-          !solids.some(
-            (b) =>
-              x > b[0] - 2 &&
-              x < b[1] + 2 &&
-              z > b[2] - 2 &&
-              z < b[3] + 2 &&
-              y > b[4] - 2 &&
-              y < b[5] + 2,
-          );
-      }
+      room.update(camera, overview);
+      A.IllustratedKit3D.updateVisibility(guards, camera, overview);
       const race = snapshot.race,
         lit =
           race?.phase === "countdown"
@@ -945,19 +375,28 @@
       group,
       update,
       layout,
+      overview: room.overview,
       diagnostics() {
         return {
           theme: "carpet-desert",
+          room: room.diagnostics(),
+          passage: {
+            clearHeight: layout.passage.clearHeight,
+            clearHalfWidth: layout.passage.clearHalfWidth,
+          },
           assets: layout.objects.length,
           ropeTriangles,
           tunnelClearHeight: layout.tunnel.clearHeight,
           tunnelHalfWidth: layout.tunnel.clearHalfWidth,
-          hiddenForCamera: guards.filter((g) => !g.node.visible).length,
+          hiddenForCamera:
+            guards.filter((g) => !g.node.visible).length +
+            room.diagnostics().hiddenForCamera,
         };
       },
       dispose() {
         geometries.forEach((g) => g.dispose());
         kit.dispose();
+        assets.dispose();
       },
     });
   }

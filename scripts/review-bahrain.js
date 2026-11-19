@@ -1,6 +1,7 @@
 // Developer-only real-game capture. Normal keyboard commands; no pose/state edits.
 import { chromium } from "@playwright/test";
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
   capture3D,
@@ -12,6 +13,25 @@ const output =
   "docs/bahrain-world/after";
 const quick = process.argv.includes("--quick");
 const gate = process.argv.includes("--gate");
+const room = process.argv.includes("--room");
+const reference = process.argv
+  .find((a) => a.startsWith("--reference="))
+  ?.slice(12);
+const readSource = (p) =>
+  reference
+    ? execFileSync("git", ["show", `${reference}:${p}`], {
+        maxBuffer: 8 * 1024 * 1024,
+      })
+    : readFileSync(p);
+const referenceSources = new Map();
+if (reference) {
+  const html = readSource("race.html").toString();
+  referenceSources.set("race.html", html);
+  for (const m of html.matchAll(
+    /<script src="\.\/([^"?]+)(?:\?[^" ]*)?"><\/script>/g,
+  ))
+    referenceSources.set(m[1], readSource(m[1]).toString());
+}
 mkdirSync(output, { recursive: true });
 const browser = await chromium.launch({
   executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || undefined,
@@ -32,6 +52,20 @@ try {
       errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
     await capture3D(page, { renderEvery: 40, observeFleet: true });
+    if (reference)
+      await page.route("**/*", async (route) => {
+        const key = new URL(route.request().url()).pathname.split(
+          "/carpet-grand-prix/",
+        )[1];
+        if (referenceSources.has(key))
+          await route.fulfill({
+            contentType: key.endsWith(".html")
+              ? "text/html"
+              : "application/javascript",
+            body: referenceSources.get(key),
+          });
+        else await route.continue();
+      });
     await page.goto(
       "http://127.0.0.1:4173/carpet-grand-prix/race.html?track=bahrain",
     );
@@ -70,24 +104,36 @@ try {
       () =>
         CGPArcade.Surface.create(CGPArcade.TrackCatalog.get("bahrain")).g.len,
     );
-    const checkpoints = gate
+    const checkpoints = room
       ? [
-          ["02-gate-approach", 0.04],
-          ["02b-gate-near", 0.075],
-          ["03-gate-entry", 0.115],
-          ["04-gate-through", 0.128],
-          ["05-parked-cars", 0.143],
-          ["06-corner", 0.25],
-          ["07-pits", 0.977],
+          ["02-first-corner", 0.04],
+          ["03-bed-and-rope", 0.36],
+          ["04-window-and-desk", 0.58],
+          ["05-tunnel-entry", 0.85],
+          ["06-tunnel-through", 0.887],
+          ["07-grandstand", 0.94],
+          ["08-pits", 0.977],
+          ["09a-finish-approach", 0.993],
+          ["09-finish", 1.006],
         ]
-      : [
-          ["02-camel", 0.025],
-          ["03-corner", 0.25],
-          ["04-tunnel-entry", 0.85],
-          ["05-tunnel-inside", 0.883],
-          ["06-pits", 0.977],
-          ["07-finish", 1.006],
-        ];
+      : gate
+        ? [
+            ["02-gate-approach", 0.04],
+            ["02b-gate-near", 0.075],
+            ["03-gate-entry", 0.115],
+            ["04-gate-through", 0.128],
+            ["05-parked-cars", 0.143],
+            ["06-corner", 0.25],
+            ["07-pits", 0.977],
+          ]
+        : [
+            ["02-camel", 0.025],
+            ["03-corner", 0.25],
+            ["04-tunnel-entry", 0.85],
+            ["05-tunnel-inside", 0.883],
+            ["06-pits", 0.977],
+            ["07-finish", 1.006],
+          ];
     let next = 0,
       finished = false;
     for (let i = 0; i < 1400; i++) {
@@ -114,9 +160,9 @@ try {
       throw Error(`${prefix}: incomplete actual drive (${next} images)`);
     await page.keyboard.press("p");
     await page.clock.runFor(32);
-    if (gate) {
+    if (gate || room) {
       await page.locator("#overview").click();
-      await shot("08-overview", true);
+      await shot(room ? "10-room-overview" : "08-overview", true);
       await page.locator("#overview").click();
     }
     reports.push({
@@ -141,6 +187,7 @@ writeFileSync(
   JSON.stringify(
     {
       recordedAt: new Date().toISOString(),
+      reference: reference || null,
       browser:
         "Chromium software WebGL; mobile viewport, not a physical iPhone",
       hashes: Object.fromEntries(
@@ -153,7 +200,7 @@ writeFileSync(
           "src/persistence/pov-checkpoint.js",
         ].map((p) => [
           p,
-          createHash("sha256").update(readFileSync(p)).digest("hex"),
+          createHash("sha256").update(readSource(p)).digest("hex"),
         ]),
       ),
       artHashes: Object.fromEntries(
@@ -163,7 +210,11 @@ writeFileSync(
           "bahrain3d",
           "bahrain-layout",
           "bahrain-materials3d",
+          "illustrated-materials3d",
           "illustrated-kit3d",
+          "environment-scenes",
+          "environment-assets3d",
+          "master-bedroom3d",
         ]
           .map((n) => `src/rendering/${n}.js`)
           .concat([
@@ -181,10 +232,16 @@ writeFileSync(
                 `assets/drivers/portraits/d${String(i + 1).padStart(3, "0")}.png`,
             ),
           )
-          .filter((p) => existsSync(p))
+          .filter(
+            (p) =>
+              existsSync(p) &&
+              (!reference ||
+                !p.startsWith("src/rendering/") ||
+                referenceSources.has(p)),
+          )
           .map((p) => [
             p,
-            createHash("sha256").update(readFileSync(p)).digest("hex"),
+            createHash("sha256").update(readSource(p)).digest("hex"),
           ]),
       ),
       reports,

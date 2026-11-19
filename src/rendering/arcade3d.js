@@ -18,23 +18,31 @@
     renderer.outputColorSpace = T.SRGBColorSpace;
     const scene = new T.Scene();
     const desert = surface.id === "bahrain" && !!A.Bahrain3D;
-    scene.background = new T.Color(desert ? "#e3d9c7" : "#b8beb5");
-    scene.fog = new T.Fog(desert ? "#e3d9c7" : "#b8beb5", 180, 480);
+    const environment = desert ? A.EnvironmentScenes?.get(surface.id) : null,
+      lighting = environment?.lighting;
+    scene.background = new T.Color(
+      lighting?.background || (desert ? "#e3d9c7" : "#b8beb5"),
+    );
+    scene.fog = new T.Fog(
+      lighting?.background || (desert ? "#e3d9c7" : "#b8beb5"),
+      180,
+      480,
+    );
     scene.add(
       new T.HemisphereLight(
-        desert ? "#fff3d8" : "#ffedce",
-        desert ? "#735f50" : "#627384",
-        desert ? 1 : 1.5,
+        lighting?.sky || (desert ? "#fff3d8" : "#ffedce"),
+        lighting?.ground || (desert ? "#735f50" : "#627384"),
+        lighting?.skyIntensity ?? (desert ? 1 : 1.5),
       ),
     );
     const light = new T.DirectionalLight(
-      desert ? "#ffecd1" : "#fff1d6",
-      desert ? 1.2 : 1.6,
+      lighting?.sun || (desert ? "#ffecd1" : "#fff1d6"),
+      lighting?.sunIntensity ?? (desert ? 1.2 : 1.6),
     );
     light.position.set(-150, 200, -80);
     scene.add(light);
     const camera = new T.PerspectiveCamera(55, 1, 0.3, 2400),
-      cameraRig = A.Camera3D.create();
+      cameraRig = A.Camera3D.create(environment?.camera);
     const materials = A.Materials3D.create(
         document.getElementById("worldAtlas"),
         options.invalidate,
@@ -84,20 +92,26 @@
         fleet.update(snapshot.visibleEntries || snapshot.entries);
       }
       vehicle.update(snapshot.visual, teamId);
-      const pose = cameraRig.update(snapshot.visual, surface, frameSeconds, {
+      let pose = cameraRig.update(snapshot.visual, surface, frameSeconds, {
         overview,
         reset: snapshot.paused || overview !== lastOverview,
         aspect: camera.aspect,
       });
+      if (overview && track.overview)
+        pose = track.overview(camera.aspect, camera.fov);
       lastOverview = overview;
       camera.position.set(pose.position.x, pose.position.y, pose.position.z);
       camera.lookAt(pose.target.x, pose.target.y, pose.target.z);
       camera.near = overview ? 50 : 0.3;
-      camera.far = overview ? 6000 : 800;
+      camera.far = overview ? 6000 : lighting?.far || 800;
       camera.updateProjectionMatrix();
       track.update?.(camera, snapshot.visual, overview, snapshot);
-      scene.fog.far = overview ? 5000 : desert ? 680 : 480;
-      scene.fog.near = overview ? 1800 : desert ? 240 : 180;
+      scene.fog.far = overview
+        ? 5000
+        : lighting?.fogFar || (desert ? 680 : 480);
+      scene.fog.near = overview
+        ? 1800
+        : lighting?.fogNear || (desert ? 240 : 180);
       renderer.render(scene, camera);
       // Conservative automatic quality reduction; this measures delivered frame intervals, not GPU time.
       if (!snapshot.paused && quality === "auto") {

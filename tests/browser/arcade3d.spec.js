@@ -53,7 +53,8 @@ test("zeichnet echte 3D-Geometrie, folgt dem Auto und erhält alle 13 Lackierung
   const diag = await page.evaluate(() => __inspect3D.diagnostics());
   expect(diag.drawCalls).toBeLessThan(150);
   expect(diag.triangles).toBeGreaterThan(1000);
-  expect(diag.triangles).toBeLessThan(30000);
+  // Larger, explicitly commissioned master room; other tracks retain their budgets.
+  expect(diag.triangles).toBeLessThan(45000);
   expect(await page.evaluate(() => __driveSnapshot.car)).toEqual(moving);
   expect(
     await page.evaluate(() => localStorage.getItem("carpet_gp_v072")),
