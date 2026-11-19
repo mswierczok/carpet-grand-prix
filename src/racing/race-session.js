@@ -315,6 +315,8 @@
           ...(catchupEnabled ? { catchup: true } : {}),
           phase,
           countdown: Math.max(0, Math.ceil(countdown - 1e-9)),
+          startLights: { red: phase === "countdown" ? Math.min(5, 1 + Math.floor((3 - countdown + 1e-9) / 0.6)) : 0,
+            green: phase === "racing" && elapsed < 2 },
           elapsed,
           laps,
           playerTeam,

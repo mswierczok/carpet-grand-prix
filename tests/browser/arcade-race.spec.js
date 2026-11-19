@@ -70,7 +70,7 @@ test("hält das volle Feld bei Rot an, pausiert alle Fahrer und erhält sie beim
   await page.locator("#pause").click();
   await page.keyboard.down("w");
   await page.clock.runFor(1100);
-  await expect(page.locator("#raceSignal")).toHaveText("2");
+  await expect(page.locator("#raceSignal .is-red")).toHaveCount(2);
   expect(
     await page.evaluate(() =>
       __driveSnapshot.entries.map((e) => [e.car.x, e.car.y]),
@@ -78,7 +78,7 @@ test("hält das volle Feld bei Rot an, pausiert alle Fahrer und erhält sie beim
   ).toEqual(initial);
   await page.keyboard.press("p");
   await page.clock.runFor(500);
-  await expect(page.locator("#raceSignal")).toHaveText("2");
+  await expect(page.locator("#raceSignal .is-red")).toHaveCount(2);
   await page.locator("#pause").click();
   await page.keyboard.down("w");
   await page.clock.runFor(4500);

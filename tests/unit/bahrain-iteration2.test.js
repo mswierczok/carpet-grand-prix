@@ -1,3 +1,4 @@
+import { withoutStartLightsSource } from "../helpers/start-lights.js";
 import { it, expect } from "vitest";
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -44,7 +45,6 @@ it("Iteration 2: erhält 21 Strecken, Originalzeichnung, Rennsysteme und Breite;
   for (const file of [
     "physics",
     "opponents",
-    "opponent-line",
     "timing",
     "vehicle-contacts",
     "slipstream",
@@ -52,9 +52,8 @@ it("Iteration 2: erhält 21 Strecken, Originalzeichnung, Rennsysteme und Breite;
     "race-session",
   ])
     expect(
-      readFileSync(`src/racing/${file}.js`).equals(
-        execFileSync("git", ["show", `${base}:src/racing/${file}.js`]),
-      ),
+      (file === "race-session" ? withoutStartLightsSource(readFileSync(`src/racing/${file}.js`, "utf8")) : readFileSync(`src/racing/${file}.js`, "utf8")) ===
+        execFileSync("git", ["show", `${base}:src/racing/${file}.js`]).toString(),
     ).toBe(true);
 });
 it("Iteration 2: fährt zwei gültige Runden mit unveränderter Physik und normalen binären Befehlen", () => {

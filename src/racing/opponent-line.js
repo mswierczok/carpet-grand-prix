@@ -48,8 +48,11 @@
               curvature(a, pos(i, offsets[i] - 0.1), c)) /
             0.2;
         if (Math.abs(derivative) < 1e-8) continue;
+        // A small optional inward bias trades excess distance for apex use.
+        // The existing smoothness solver and road margin still bound the line.
         offsets[i] = clamp(
-          offsets[i] + clamp((wanted - current) / derivative, -0.2, 0.2) * 0.5,
+          offsets[i] + clamp((wanted - current) / derivative, -0.2, 0.2) * 0.5 +
+            (profile.pathBias || 0) * Math.sign(current) * Math.min(1, Math.abs(current) * 40),
           -limit,
           limit,
         );

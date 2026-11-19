@@ -23,6 +23,7 @@ export function loadArcade({
     "racing/track-catalog",
     "racing/physics",
     "racing/bridge-physics",
+    ...(!race ? ["racing/pitlane"] : []),
     "racing/timing",
     "racing/session",
     ...(race
@@ -38,6 +39,7 @@ export function loadArcade({
           "racing/slipstream",
           "racing/race-gaps",
           "racing/catchup",
+          "racing/pitlane",
           "racing/race-session",
           "racing/qualifying-drivers",
           "racing/qualifying-session",

@@ -1,3 +1,4 @@
+import { withoutStartLights } from "../helpers/start-lights.js";
 import { withoutMainEntry } from "../helpers/legacy-entry.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
@@ -116,9 +117,9 @@ it("liefert auf den vier abgenommenen Strecken dieselben Rennen trotz optionaler
       a.advance(input, 1 / 30);
       b.advance(input, 1 / 30);
       if (frame % 30 === 0) {
-        const current = plain(b.snapshot());
+        const current = withoutStartLights(b.snapshot());
         delete current.race.difficulty;
-        expect(current).toEqual(plain(a.snapshot()));
+        expect(current).toEqual(withoutStartLights(a.snapshot()));
       }
     }
   }

@@ -45,7 +45,7 @@
         set("status", q.finished ? "Qualifying beendet · Dein Startplatz: " + q.player.position
           : r.phase === "grid" ? "Bereit zum Qualifying"
             : snapshot.paused ? "Qualifying pausiert"
-              : r.phase === "countdown" ? "Qualifying startet in " + r.countdown
+              : r.phase === "countdown" ? "Startampel · bei Grün beginnt das Qualifying"
                 : r.phase === "finishing" ? "Deine schnellen Runden sind beendet · Gegner schließen ihre Fahrten ab"
                   : running && completed === 0 ? "Auslaufrunde · Reifen und Strecke kennenlernen"
                     : "Schnelle Runde " + Math.min(q.timedLaps, completed) + " / " + q.timedLaps);

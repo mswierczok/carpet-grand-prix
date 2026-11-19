@@ -1,3 +1,4 @@
+import { withoutStartLights } from "../helpers/start-lights.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -319,7 +320,7 @@ it("reproduziert ohne Windschatten das veröffentlichte 13er-Feld exakt", () => 
   for (let i = 0; i < 30 * 20; i++) {
     const command = { throttle: Number(i % 200 < 150), brake: Number(i % 200 >= 150), steer: Math.sin(i / 120) };
     a.advance(command, 1 / 30); b.advance(command, 1 / 30);
-    if (i % 30 === 0) expect(plain(a.snapshot())).toEqual(plain(b.snapshot()));
+    if (i % 30 === 0) expect(withoutStartLights(a.snapshot())).toEqual(withoutStartLights(b.snapshot()));
   }
 }, 120000);
 
