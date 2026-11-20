@@ -251,3 +251,19 @@ verbindet die Team-IDs mit Kampagnenfahrern, ohne die nativen Renndaten umzubaue
 Die 22-Rennen-Meisterschaft und der klassische Modus bleiben unabhängig.
 Umfang, Zuordnungen, Speicherregeln und offene Roguelite-Entscheidungen:
 [CAMPAIGN.md](CAMPAIGN.md).
+
+## Vollbild-HUD und fortsetzbare Kampagnenwochenenden
+
+`race-presentation` bereitet die nativen Standings für das relative HUD und
+das vollständige 13er-Klassement gemeinsam auf. Abstände verwenden `RaceGaps`
+und offizielle Zielzeiten; es gibt keine zweite Positionsberechnung.
+`racing-hud`, `race-settings` und `result-details` trennen stabile HUD-Zeilen,
+pausierte Menüansichten und nur lesende historische Ergebnisse.
+
+`CampaignWeekend` umschließt genau eine native Session und erzwingt den
+Qualifying-/Startaufstellungsablauf. Kampagnenformat 2 erweitert den eigenen
+Speicher um eindeutige historische Grand Prix und die nächste offene Strecke.
+Der festgehaltene v1-Validator prüft alte Daten vor der Migration. Klassische
+Speicher und POV-Meisterschaft bleiben getrennt. Ablauf, Pauseregeln,
+Vorher-/Nachher-Aufnahmen und Grenzen: [RACING_HUD.md](RACING_HUD.md) und
+[CAMPAIGN.md](CAMPAIGN.md).

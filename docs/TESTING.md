@@ -335,3 +335,28 @@ Zwei bereits auf main überholte Tests verlangten noch einen exakten Seil-Stopp
 beziehungsweise zwingenden Rückwärtsgang. Sie prüfen nun das freigegebene Gleiten,
 ein stets freies Fahrzeugrechteck und erfolgreiche Weiterfahrt; Physik und
 Referenz-Fixtures wurden nicht verändert.
+
+## Vollbild-HUD, Kampagnenfortsetzung und Ergebnisarchiv
+
+`racing-hud.test.js` prüft gemeinsame native Positionen, P1/P6/P13, echte
+Passageabstände, fehlende Historie, Rundendifferenzen und offizielle Zielzeiten.
+`campaign-progress.test.js` prüft den nativen Pflichtqualifying-Ablauf,
+einmalige Übernahme, vollständige historische Ergebnisse, nächste offene
+Strecken und validierte v1-Migration. Gemeinsam mit `campaign.test.js` sind
+26 entsprechende Unit-Prüfungen vorhanden.
+
+`racing-hud.spec.js` verwendet echte WebGL-Ansichten und CDP-Touch für vier
+Viewportgrößen, dauerhaftes Gas/Lenken, Pause, alle 13 Fahrer und Rücknavigation.
+`campaign.spec.js` fährt Bahrain und Kanada mit echtem Qualifying und allen
+13 Zieleinläufen, lädt die Aufstellung neu, migriert ein tatsächlich erzeugtes
+v1-Bahrain-Ergebnis und prüft beide Archiv-Reiter nach erneutem Laden.
+Nur die Rennlänge der langen Fahrprüfung wird über die öffentliche Option auf
+eine Runde verkürzt. Alle Physik-/Zeitschritte und Fahrbefehle bleiben echt.
+
+Die verschobenen Bestandsfunktionen werden in bisherigen Browserprüfungen
+über `racing-menu.js` im echten Menü bedient. Keine Produktions-Testhooks,
+überschriebenen Referenz-Fixtures oder ausgelassenen Bestandsprüfungen.
+Die Offline-Builds betten das neue CSS und dieselben Module ein.
+`build-hud-review.js` erstellt die spielbare Abnahmegalerie und das CI-Artefakt
+`carpet-grand-prix-hud-campaign-review`. Echte Screenshots, Reproduktion,
+Migration und Einschränkungen: [RACING_HUD.md](RACING_HUD.md).

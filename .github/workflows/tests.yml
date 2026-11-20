@@ -26,9 +26,16 @@ jobs:
       - run: npm run build:arcade-offline
       - run: node scripts/build-bahrain-review.js
       - run: node scripts/build-calendar-review.js
+      - run: node scripts/build-hud-review.js
       - run: npm run build:race-preview
       - run: npm run build:pilot-preview
       - run: npm run build:world-review
+      - uses: actions/upload-artifact@v4
+        with:
+          name: carpet-grand-prix-hud-campaign-review
+          path: dist/hud-review/
+          if-no-files-found: error
+          retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
           name: carpet-grand-prix-calendar-environments
@@ -278,6 +285,7 @@ jobs:
           name: campaign-${{ matrix.project }}
           path: |
             docs/campaign/
+            docs/racing-hud/
             playwright-report/
             test-results/
           retention-days: 30
