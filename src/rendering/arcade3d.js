@@ -18,7 +18,7 @@
     renderer.outputColorSpace = T.SRGBColorSpace;
     const scene = new T.Scene();
     const desert = surface.id === "bahrain" && !!A.Bahrain3D;
-    const environment = desert ? A.EnvironmentScenes?.get(surface.id) : null,
+    const environment = desert ? A.EnvironmentScenes?.get(surface.id) : A.TrackEnvironments?.scene(surface),
       lighting = environment?.lighting;
     scene.background = new T.Color(
       lighting?.background || (desert ? "#e3d9c7" : "#b8beb5"),

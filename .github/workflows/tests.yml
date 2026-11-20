@@ -25,9 +25,16 @@ jobs:
       - run: npm run build:offline
       - run: npm run build:arcade-offline
       - run: node scripts/build-bahrain-review.js
+      - run: node scripts/build-calendar-review.js
       - run: npm run build:race-preview
       - run: npm run build:pilot-preview
       - run: npm run build:world-review
+      - uses: actions/upload-artifact@v4
+        with:
+          name: carpet-grand-prix-calendar-environments
+          path: dist/calendar-review/
+          if-no-files-found: error
+          retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
           name: carpet-grand-prix-bahrain-review
@@ -99,7 +106,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:browser -- --project=${{ matrix.project }} --grep-invert 'POV-Kalender:|Qualifying:|POV-Karriere:|Bahrain-Welt:'
+      - run: npm run test:browser -- --project=${{ matrix.project }} --grep-invert 'POV-Kalender:|Qualifying:|POV-Karriere:|Bahrain-Welt:|Streckenwelten:'
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
@@ -213,3 +220,32 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 7
+
+  calendar-environments:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [chromium, mobile-chromium]
+        group: [0, 1, 2]
+    env:
+      CGP_ENV_TEST_GROUP: ${{ matrix.group }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test tests/browser/calendar-environments.spec.js --project=${{ matrix.project }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: calendar-environments-${{ matrix.project }}-${{ matrix.group }}
+          path: |
+            docs/calendar-environments/
+            playwright-report/
+            test-results/
+          retention-days: 14
