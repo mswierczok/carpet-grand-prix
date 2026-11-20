@@ -1,4 +1,4 @@
-import { driveButton, raceAction, selectRaceOption } from "../helpers/racing-menu.js";
+import { driveButton, raceAction, selectRaceOption, openRaceMenu } from "../helpers/racing-menu.js";
 import { resolve } from "node:path";
 import { test, expect } from "@playwright/test";
 import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
@@ -297,6 +297,7 @@ if (group === undefined || group === "0")
           await page.evaluate(() => __inspect3D.diagnostics().world.theme),
         ).toBe(id);
     }
+    await openRaceMenu(page, "save");
     await page
       .locator('a[href*="carpet-grand-prix-menu-offline.html"]')
       .first()
