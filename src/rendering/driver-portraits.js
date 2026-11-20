@@ -76,7 +76,7 @@
   art+=`<g data-personal-helmet="${esc(driver.id)}" transform="translate(${p.pose===1?16:0} 0)">`+path('M68 300Q31 287 27 319L25 353L101 362L115 325Q96 306 68 300Z',hc)+path('M35 318L102 321L106 341L30 339Z','#253744')+path(p.helmetPattern%2?'M56 298L65 298L70 319L61 319ZM42 341L51 341L54 359L45 358Z':'M31 308L90 311L102 318L28 315ZM31 347L96 349L90 355L28 353Z',helmetColors[(p.helmet+3)%8],'none')+path('M37 324L62 325','none','#96bfc6',2)+`<text x="77" y="308" font-size="8" font-family="sans-serif" fill="${ink}">${esc(driver.id.slice(-3))}</text></g>`;
   art+=path(p.pose===2?'M190 291Q151 294 116 316L125 334Q175 329 207 316L211 303Z':'M194 277Q180 302 100 330L106 351Q179 343 214 311L211 293Z',main)+path('M102 329Q90 323 85 335L91 349L108 351L116 340Z',secondary);
   art+=path('M69 355L71 365L215 365L214 353Z','#24313a')+path('M126 354H144V366H126Z',accent);
-  const result=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${size==='small'?'68 28 133 166':'0 20 270 355'}" width="270" height="355" role="img" aria-label="Porträt von ${esc(driver.name)}" data-driver-portrait="${esc(driver.id)}"><g stroke-linejoin="round">${art}</g></svg>`;
+  const result=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${size==='small'?'68 28 133 166':size==='medium'?'40 28 190 238':'0 20 270 355'}" width="270" height="355" role="img" aria-label="Porträt von ${esc(driver.name)}" data-driver-portrait="${esc(driver.id)}"><g stroke-linejoin="round">${art}</g></svg>`;
   if(cache.size>512)cache.clear();cache.set(key,result);return result;
  }
  function code(name){const words=String(name||'').trim().split(/\s+/),clean=(words.at(-1)||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z]/g,'').toUpperCase();return(clean.slice(0,3)||'???').padEnd(3,'X');}
@@ -84,8 +84,8 @@
  function svg(driver,team=null,size='large'){
   const art=uploaded(driver?.id);if(!art)return vectorSVG(driver,team,size);
   const color=/^#[\da-f]{3,8}$/i.test(team?.color||'')?team.color:'#536974';
-  const box=size==='small'?'55 0 160 178':'0 0 270 355';
-  const border=size==='small'?'<rect x="57" y="2" width="156" height="174" rx="6"':'<rect x="2" y="2" width="266" height="351" rx="8"';
+  const box=size==='small'?'55 0 160 178':size==='medium'?'45 0 180 225':'0 0 270 355';
+  const border=size==='small'?'<rect x="57" y="2" width="156" height="174" rx="6"':size==='medium'?'<rect x="47" y="2" width="176" height="221" rx="6"':'<rect x="2" y="2" width="266" height="351" rx="8"';
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${box}" width="270" height="355" role="img" aria-label="${esc(driver.name)} · ${esc(art.code)} · ${esc(driver.id)}" data-driver-portrait="${esc(driver.id)}" data-portrait-source="uploaded"><image href="${esc(art.src)}" x="0" y="0" width="270" height="338" preserveAspectRatio="xMidYMin meet"/>${size==='small'?'':`<rect x="3" y="328" width="264" height="25" rx="4" fill="${color}"/><text x="135" y="344" text-anchor="middle" font-family="system-ui" font-size="9" font-weight="bold" fill="#fff" stroke="#17232c" stroke-width=".2">${esc(art.code)} · ${esc(team?.name||'VERTRAGSFREI')}</text>`}${border} fill="none" stroke="${color}" stroke-width="3"/></svg>`;
  }
  globalThis.CGPDriverPortraits=Object.freeze({svg,vectorSVG,uploaded,code,identity:id=>globalThis.CGPDriverIdentities?.[id],escape:esc});
