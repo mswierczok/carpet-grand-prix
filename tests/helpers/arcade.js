@@ -49,6 +49,9 @@ export function loadArcade({
           "championship/pov-career",
           "management/pov-workshop",
           "persistence/pov-game-store",
+          "data/campaign-config",
+          "championship/campaign",
+          "persistence/campaign-store",
         ]
       : []),
   ])

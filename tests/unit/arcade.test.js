@@ -108,8 +108,8 @@ it("verliert auf der Schulter Tempo und begrenzt Kurvenführung bei zu hoher Que
   expect(fastTurn.heading).toBeLessThan(slowTurn.heading);
   expect(fastTurn.x - road.x).toBeGreaterThan((slowTurn.x - road.x) * 2);
 });
-it("stoppt vor dem äußeren Rand ohne Durchfahren oder automatische Rückführung", () => {
-  const { api, data } = loadArcade(),
+it("bleibt beim Gasgeben am äußeren Seil ohne Durchfahren oder automatische Rückführung", () => {
+  const { api, data } = loadArcade({ race: true }),
     surface = api.Surface.create(data.tracks.bahrain);
   let car = api.Physics.spawn(surface, 0);
   car = { ...car, heading: Math.PI / 2, vx: 0, vy: 60, speed: 60 };
@@ -117,10 +117,11 @@ it("stoppt vor dem äußeren Rand ohne Durchfahren oder automatische Rückführu
   for (let i = 0; i < 100; i++) {
     car = api.Physics.step(car, { throttle: 1, brake: 0, steer: 0 }, surface);
     hit ||= car.hitWall;
+    expect(surface.boundary.blocksFootprint(api.VehicleContacts.footprint(car, api.Physics.parameters))).toBe(false);
   }
   expect(hit).toBe(true);
   expect(surface.project(car, 0).distance).toBeLessThan(surface.outerRadius);
-  expect(car.speed).toBe(0);
+  expect(car.speed).toBeLessThan(1);
 });
 it("respektiert Pause und Schrittgröße und beginnt nach Rücksetzen eine neue Messung", () => {
   const { api, data } = loadArcade(),

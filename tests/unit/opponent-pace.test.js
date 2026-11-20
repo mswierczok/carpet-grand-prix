@@ -73,14 +73,14 @@ it("hält das volle Feld über drei Runden schneller und kompakter als die verö
   ).toBe(true);
 }, 120000);
 
-it("befreit ein an der Seilkante feststehendes KI-Auto über den echten Rückwärtsgang und fährt weiter", () => {
+it("befreit ein an der Seilkante feststehendes KI-Auto durch normale Fahrbefehle und fährt weiter", () => {
   const { api, data } = loadArcade({ race: true }),
     surface = api.Surface.create(data.tracks.bahrain),
     p = api.Physics.parameters,
     driver = api.Opponents.create(surface, p),
     memory = driver.memory(1);
-  // A car pointing outwards close to the rope cannot turn on the spot. All
-  // following movement uses normal inputs and the player's reverse delay.
+  // Rope sliding now allows forward recovery as well as reversing. All
+  // movement must still use normal inputs and keep the full footprint inside.
   const start = -200,
     placed = (lane) => {
       const pose = surface.at(start, lane);
@@ -105,7 +105,7 @@ it("befreit ein an der Seilkante feststehendes KI-Auto über den echten Rückwä
     else inner = middle;
   }
   let car = placed(inner - 0.01),
-    reversed = false,
+    contact = false,
     resumed = false;
   expect(
     surface.boundary.blocksFootprint(api.VehicleContacts.footprint(car, p)),
@@ -122,13 +122,13 @@ it("befreit ein an der Seilkante feststehendes KI-Auto über den echten Rückwä
       expect(
         surface.boundary.blocksFootprint(api.VehicleContacts.footprint(car, p)),
       ).toBe(false);
-      reversed ||= car.longitudinalSpeed < -1;
+      contact ||= car.hitWall;
     }
     if (car.s > start + 56 && car.longitudinalSpeed > 20) {
       resumed = true;
       break;
     }
   }
-  expect(reversed).toBe(true);
+  expect(contact).toBe(true);
   expect(resumed).toBe(true);
 });

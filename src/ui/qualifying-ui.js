@@ -1,8 +1,8 @@
 (() => {
   "use strict";
   const A = globalThis.CGPArcade;
-  function attach(root, format) {
-    const raceUI = A.RaceUI.attach(root, format), el = (id) => root.querySelector("#" + id),
+  function attach(root, format, entryLabel = entry => entry.name) {
+    const raceUI = A.RaceUI.attach(root, format, entryLabel), el = (id) => root.querySelector("#" + id),
       results = new Map(), write = (node, value) => {
         const text = String(value);
         if (node.textContent !== text) node.textContent = text;
@@ -67,7 +67,7 @@
           const row = results.get(e.id);
           row.classList.toggle("is-player", e.player);
           write(row.children[0], e.position);
-          write(row.children[1], e.name + (e.player ? " · DU" : ""));
+          write(row.children[1], entryLabel(e) + (e.player ? " · DU" : ""));
           write(row.children[2], e.bestLap === null ? "Keine Zeit" : format(e.bestLap));
           if (el("qualifyingRows").children[e.position - 1] !== row)
             el("qualifyingRows").insertBefore(row, el("qualifyingRows").children[e.position - 1] || null);

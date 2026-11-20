@@ -1,0 +1,403 @@
+body.campaign-page {
+  background: radial-gradient(ellipse at 35% 0%, #244d42, #10312c 50%, #091c1b);
+  min-height: 100dvh;
+}
+#campaignApp {
+  max-width: 1260px;
+  margin: auto;
+  padding: 28px 22px 50px;
+}
+.campaign-hero {
+  max-width: 780px;
+  margin: 50px 0 38px;
+}
+.campaign-hero h1 {
+  color: #fff1d3;
+  font:
+    700 clamp(36px, 6vw, 68px) / 1.08 Georgia,
+    serif;
+  letter-spacing: -0.03em;
+  margin: 14px 0 22px;
+}
+.campaign-hero > p:last-child {
+  color: #c6d5ce;
+  font-size: 18px;
+  line-height: 1.6;
+}
+.campaign-panel {
+  padding: clamp(18px, 3vw, 32px);
+  border: 1px solid #718f7959;
+  border-radius: 18px;
+  background: #123b35dd;
+  margin: 24px 0;
+  box-shadow: 0 14px 30px #0002;
+}
+.campaign-panel h2,
+#campaignSetup h2 {
+  font:
+    700 clamp(24px, 3vw, 34px) / 1.2 Georgia,
+    serif;
+  color: #fff1d3;
+  margin: 12px 0 16px;
+}
+.campaign-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0 32px;
+}
+.campaign-steps span {
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 1px solid #637e70;
+  color: #a9c0b7;
+}
+.campaign-steps [aria-current] {
+  color: #182c25;
+  background: #edc271;
+  border-color: #edc271;
+  font-weight: 700;
+}
+.campaign-team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 24px 0;
+}
+.campaign-team-card,
+.campaign-driver-card {
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid #466a5b;
+  border-radius: 16px;
+  background: #14362f;
+  color: #f5edd7;
+  text-align: left;
+}
+.campaign-team-card {
+  padding: 16px;
+}
+.campaign-team-card h3 {
+  margin: 8px 0;
+  font-size: 18px;
+}
+.campaign-team-card p {
+  margin: 8px 0;
+}
+.campaign-car {
+  width: 100%;
+  height: 145px;
+  object-fit: contain;
+  display: block;
+}
+.campaign-team-card.is-locked {
+  opacity: 1;
+  background: #102a26;
+  color: #a4b5ae;
+  cursor: default;
+}
+.campaign-team-card.is-locked .campaign-car {
+  opacity: 0.3;
+  filter: saturate(0.25);
+}
+.campaign-team-card.is-locked small {
+  color: #a4b5ae;
+}
+.campaign-team-card[aria-pressed="true"],
+.campaign-driver-card[aria-pressed="true"] {
+  border-color: #edc271;
+  box-shadow: 0 0 0 2px #edc27155;
+}
+.campaign-tag {
+  display: inline-block;
+  color: #edc271;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+.campaign-driver-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin: 28px 0;
+  align-items: stretch;
+}
+.campaign-driver-card {
+  display: flex;
+  flex-direction: column;
+}
+.campaign-portrait {
+  height: 320px;
+  width: 100%;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 20%, #49645c, #18342d 75%);
+}
+.campaign-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+.campaign-portrait.is-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  border: 2px dashed #728b79;
+  box-sizing: border-box;
+  color: #c3d3c9;
+}
+.campaign-portrait.is-placeholder b {
+  font:
+    700 76px Georgia,
+    serif;
+  opacity: 0.7;
+}
+.campaign-portrait.is-placeholder span {
+  font-size: 14px;
+}
+.campaign-driver-info {
+  padding: 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.campaign-driver-info h3 {
+  font:
+    700 25px Georgia,
+    serif;
+  margin: 12px 0 2px;
+}
+.campaign-driver-info p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+.campaign-strengths,
+.campaign-weaknesses {
+  padding-left: 18px;
+  margin: 8px 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.campaign-strengths {
+  color: #c6dfb0;
+}
+.campaign-weaknesses {
+  color: #e4b9a1;
+}
+.campaign-card-action {
+  border-top: 1px solid #718f7960;
+  padding-top: 18px;
+  margin-top: auto;
+  color: #edc271;
+  font-weight: 700;
+}
+.campaign-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+.campaign-actions button {
+  min-height: 48px;
+}
+.campaign-actions .primary {
+  color: #182c25;
+  background: #edc271;
+  border-color: #edc271;
+  font-weight: 800;
+}
+.campaign-saved-identity {
+  display: grid;
+  grid-template-columns: 150px 1fr 1fr;
+  align-items: center;
+  gap: 24px;
+}
+.campaign-saved-identity .campaign-portrait {
+  height: 170px;
+  border-radius: 12px;
+}
+.campaign-saved-identity .campaign-portrait b {
+  font-size: 46px;
+}
+.campaign-saved-identity h3 {
+  font-size: 26px;
+  margin: 10px 0;
+}
+.campaign-track-grid {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.campaign-track-grid li {
+  padding: 18px;
+  border: 1px solid #5c806559;
+  border-radius: 12px;
+  background: #09282180;
+}
+.campaign-track-grid h3 {
+  font-size: 18px;
+  margin: 10px 0;
+}
+.campaign-track-grid p {
+  font-size: 13px;
+}
+.campaign-track-number {
+  font:
+    700 28px Georgia,
+    serif;
+  color: #d7b671;
+}
+.campaign-backup label {
+  display: block;
+  margin: 20px 0 8px;
+}
+.campaign-backup input {
+  max-width: 100%;
+}
+.campaign-message {
+  color: #edc271;
+  line-height: 1.6;
+}
+.campaign-interim table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.campaign-interim td,
+.campaign-interim th {
+  padding: 12px 8px;
+  text-align: left;
+  border-bottom: 1px solid #718f7950;
+}
+.campaign-interim small {
+  display: block;
+  color: #b6c8c0;
+  margin-top: 4px;
+}
+.campaign-interim caption {
+  text-align: left;
+  margin: 16px 0;
+}
+.campaign-interim .is-player {
+  background: #edc27122;
+}
+.campaign-result-lead {
+  font-size: 22px;
+  color: #edc271;
+}
+.campaign-race-banner {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 16px;
+  margin: 16px 0;
+  border: 1px solid #c8a664;
+  border-radius: 14px;
+  background: #173c32;
+}
+.campaign-race-banner .campaign-portrait {
+  width: 72px;
+  height: 80px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.campaign-race-banner .campaign-portrait b {
+  font-size: 24px;
+}
+.campaign-race-banner .campaign-portrait span {
+  display: none;
+}
+.campaign-race-banner p {
+  margin: 4px 0;
+}
+.campaign-race-banner h2 {
+  font-size: 18px;
+  margin: 0;
+}
+.campaign-race-stage {
+  margin: 20px 0;
+}
+#campaignApp button {
+  touch-action: manipulation;
+}
+#campaignApp button:focus-visible,
+#campaignApp a:focus-visible {
+  outline: 3px solid #f5d891;
+  outline-offset: 4px;
+}
+#campaignApp footer {
+  padding-top: 25px;
+}
+@media (max-width: 900px) {
+  .campaign-team-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .campaign-driver-grid {
+    gap: 12px;
+  }
+  .campaign-driver-info {
+    padding: 16px;
+  }
+  .campaign-portrait {
+    height: 250px;
+  }
+}
+@media (max-width: 650px) {
+  #campaignApp {
+    padding: 22px 14px;
+  }
+  .campaign-hero {
+    margin: 32px 0;
+  }
+  .campaign-team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .campaign-team-card {
+    padding: 12px;
+  }
+  .campaign-car {
+    height: 105px;
+  }
+  .campaign-team-card h3 {
+    font-size: 16px;
+  }
+  .campaign-driver-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .campaign-portrait {
+    height: 350px;
+  }
+  .campaign-saved-identity {
+    grid-template-columns: 100px 1fr;
+    gap: 16px;
+  }
+  .campaign-saved-identity .campaign-car {
+    display: none;
+  }
+  .campaign-saved-identity .campaign-portrait {
+    height: 140px;
+  }
+  .campaign-track-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .campaign-actions > * {
+    flex: 1 1 160px;
+  }
+  .campaign-steps span {
+    padding: 8px 14px;
+  }
+  .campaign-interim td,
+  .campaign-interim th {
+    padding: 10px 4px;
+    font-size: 12px;
+  }
+}

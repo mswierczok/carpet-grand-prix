@@ -312,3 +312,26 @@ online und offline; zwei echte Bahrain-Rennen verlangen alle 13 gültigen
 Zieleinläufe. Alte Brücken-Replays isolieren weiterhin den damaligen Adapter,
 indem nur dort der neue Kontaktadapter explizit nicht geladen wird. Referenz-
 Fixtures bleiben erhalten. Details: [ROPE_CONTACT.md](ROPE_CONTACT.md).
+
+## Kampagnen-Grundlage
+
+`tests/unit/campaign.test.js` prüft acht gegenüber 22 Strecken, originale und
+kampagnenspezifische Teamwerte, 39 eindeutige Fahrer, 35 Originalillustrationen,
+vier offene Porträts, deterministische KI-Fahrerauswahl, Formatvalidierung,
+atomare getrennte Speicherung und Schutz vor beschädigten/neueren Daten sowie
+konkurrierenden Tabs. Native Wochenend-Checkpoints werden pausiert restauriert.
+Ein vollständiges Feld fährt bis zu 13 Zieleinläufen und erzeugt nur einen
+Zwischenstand. Bytevergleiche schützen bestehende Renn-, Kamera- und Datenmodule.
+
+`tests/browser/campaign.spec.js` prüft den neuen Menüweg auf Desktop und Mobil,
+Auswahl, Neustart-Abbruch, tatsächliches Qualifying, 13er-Rennen, Ergebnis und
+Fortsetzen. Der lange Ablauf verkürzt nur die Rennlänge über die öffentliche
+Engine-Option; Qualifying und Fahrbefehle bleiben echt. Ein weiterer Fall startet
+mit regulärer Länge in WebGL. Offline-Dateien werden ohne Netzwerk ausgeführt.
+Eigene CI-Jobs stellen Screenshots bereit. Safari auf einem echten iPhone und
+lokale file://-Navigation sind damit nicht vollständig nachgewiesen.
+
+Zwei bereits auf main überholte Tests verlangten noch einen exakten Seil-Stopp
+beziehungsweise zwingenden Rückwärtsgang. Sie prüfen nun das freigegebene Gleiten,
+ein stets freies Fahrzeugrechteck und erfolgreiche Weiterfahrt; Physik und
+Referenz-Fixtures wurden nicht verändert.

@@ -6,10 +6,13 @@
     teams = CGPArcadeData.roster.teams,
     catalog = A.TrackCatalog,
     query = new URLSearchParams(location.search),
+    campaignMode = racing && query.get("mode") === "campaign",
+    requestedCampaign = campaignMode ? A.CampaignStore.load() : null,
+    bootCampaign = requestedCampaign?.status === "valid" ? requestedCampaign.game : null,
     requestedTrack = query.get("track"),
     preferences = racing ? A.POVPreferences.load() : null,
     selection = racing ? A.POVSelection.load() : null,
-    requestedSave = racing && query.get("resume") === "1" ? A.POVGameStore.load() : null,
+    requestedSave = racing && !campaignMode && query.get("resume") === "1" ? A.POVGameStore.load() : null,
     bootGame = requestedSave?.status === "valid" ? requestedSave.game : null;
   const el = (id) => document.getElementById(id),
     format = (seconds) => {
@@ -18,17 +21,18 @@
     };
   let canvas = document.getElementById("arcadeCanvas"),
     gameUI = null,
-    loadError = requestedSave && !bootGame ? requestedSave.message : "",
-    resumePending = !!bootGame?.weekend,
+    loadError = campaignMode && !bootCampaign ? (requestedCampaign.message + " Bitte über die Kampagnenübersicht starten oder eine Sicherung laden.") : requestedSave && !bootGame ? requestedSave.message : "",
+    campaign = bootCampaign,
+    resumePending = !!(bootCampaign || bootGame)?.weekend,
     steeringSensitivity = racing ? (A.POVPreferences.isSteeringSensitivity(Number(query.get("steeringSensitivity")))
       ? Number(query.get("steeringSensitivity")) : preferences.steeringSensitivity) : 100,
-    difficultyId = bootGame?.options.difficulty || (racing ? (A.AIDifficulty.profiles.some(p => p.id === query.get("difficulty"))
+    difficultyId = bootCampaign?.options.difficulty || bootGame?.options.difficulty || (racing ? (A.AIDifficulty.profiles.some(p => p.id === query.get("difficulty"))
       ? query.get("difficulty") : preferences.difficulty) : null),
-    catchupEnabled = bootGame ? bootGame.options.catchup : (query.has("catchup") ? query.get("catchup") !== "0" : (preferences?.catchup ?? true)),
-    teamId = bootGame?.teamId || (racing ? (teams.some(t => t.id === query.get("team")) ? query.get("team") : selection.teamId) : teams[0].id),
-    trackId = bootGame?.trackId || (query.get("new") === "championship" ? catalog.defaultId
+    catchupEnabled = bootCampaign ? bootCampaign.options.catchup : bootGame ? bootGame.options.catchup : (query.has("catchup") ? query.get("catchup") !== "0" : (preferences?.catchup ?? true)),
+    teamId = bootCampaign?.teamId || (campaignMode ? A.CampaignConfig.initialTeam : null) || bootGame?.teamId || (racing ? (teams.some(t => t.id === query.get("team")) ? query.get("team") : selection.teamId) : teams[0].id),
+    trackId = bootCampaign?.trackId || (campaignMode ? A.CampaignConfig.firstTrack : null) || bootGame?.trackId || (query.get("new") === "championship" ? catalog.defaultId
       : catalog.tracks.some((t) => t.id === requestedTrack) ? requestedTrack : (selection?.trackId || catalog.defaultId)),
-    game = bootGame || (racing && ["single", "championship"].includes(query.get("new"))
+    game = bootGame || (racing && !campaignMode && ["single", "championship"].includes(query.get("new"))
       ? A.POVCareer.create({ mode: query.get("new"), teamId, trackId, difficulty: difficultyId,
         catchup: catchupEnabled, slipstream: query.get("slipstream") !== "0" }) : null),
     session = createSession(),
@@ -46,17 +50,17 @@
     const node = el(id);
     if (node.textContent !== text) node.textContent = text;
   };
-  const raceUI = racing ? A.QualifyingUI.attach(root, format) : null;
+  const raceUI = racing ? A.QualifyingUI.attach(root, format, entry => campaign ? A.CampaignView.label(campaign, entry) : entry.name) : null;
   function createSession() {
     if (resumePending) {
       resumePending = false;
-      try { return A.RaceWeekend.restore(game.weekend); }
-      catch (error) { loadError = error.message; game = null; }
+      try { return A.RaceWeekend.restore((campaign || game).weekend); }
+      catch (error) { loadError = error.message; game = null; campaign = null; }
     }
     return (racing ? A.RaceWeekend : A.Session).create(
       catalog.get(trackId),
       racing ? { playerTeam: teamId, difficulty: difficultyId,
-        slipstream: game ? game.options.slipstream : query.get("slipstream") !== "0",
+        slipstream: campaign ? campaign.options.slipstream : game ? game.options.slipstream : query.get("slipstream") !== "0",
         catchup: catchupEnabled,
         diagnostics: new URLSearchParams(location.search).has("balance") } : {},
     );
@@ -185,7 +189,10 @@
     freshCanvas(); createRenderer(threeD); renderer.resetCamera?.(); lastRacePhase = null;
     el("team").value = teamId; updateTrack(); lastFrame = performance.now(); dirty = true; updateUI();
   }
-  if (racing) gameUI = A.POVGameUI.attach(root, {
+  if (campaignMode) gameUI = A.CampaignRaceUI.attach(root, {
+    getGame: () => campaign, setGame: value => { campaign = value; }, getSession: () => session, onPause: pauseForGame,
+  });
+  else if (racing) gameUI = A.POVGameUI.attach(root, {
     getGame: () => game, setGame: value => { game = value; }, getSession: () => session,
     onLoad: loadGame, onPause: pauseForGame, replace: query.get("replace") === "1",
   });
@@ -313,7 +320,7 @@
   el("pause").onclick = togglePause;
   el("recover").onclick = recover;
   el("restart").onclick = () => {
-    if (loadError || (game?.mode === "championship" && A.POVCareer.recorded(game))) return;
+    if (loadError || campaign?.stage === "interim" || (game?.mode === "championship" && A.POVCareer.recorded(game))) return;
     session.restart();
     renderer.resetCamera?.();
     controls.clear();
@@ -328,6 +335,7 @@
     dirty = true;
   };
   el("team").onchange = (event) => {
+    if (campaignMode) { el("team").value = teamId; return; }
     if (racing && (game?.mode === "championship" || !session.selectTeam(event.target.value))) return;
     teamId = event.target.value;
     updateLaunchQuery("team", teamId);
@@ -342,7 +350,7 @@
   };
   if (racing) {
     const changeStage = (action) => {
-      if (loadError || !action()) return;
+      if (loadError || campaign?.stage === "interim" || !action()) return;
       controls.clear();
       renderer.resetCamera?.();
       lastRacePhase = null;
@@ -388,7 +396,7 @@
   el("track").onchange = (event) => {
     const next = event.target.value;
     if (
-      game?.mode === "championship" || (racing && session.snapshot().race.phase !== "grid") ||
+      campaignMode || game?.mode === "championship" || (racing && session.snapshot().race.phase !== "grid") ||
       !catalog.tracks.some((t) => t.id === next)
     ) {
       el("track").value = trackId;
@@ -469,6 +477,7 @@
   }
   updateTrack();
   updateUI();
+  if (campaign && !loadError) gameUI.changed();
   if (game && !loadError) {
     const saved = gameUI.changed();
     const url = new URL(location.href);

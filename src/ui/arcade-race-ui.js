@@ -1,7 +1,7 @@
 (() => {
   "use strict";
   const A = globalThis.CGPArcade;
-  function attach(root, format) {
+  function attach(root, format, entryLabel = entry => entry.name) {
     const kilometers = A.Physics.parameters.metersPerUnit * 3.6;
     const write = (node, value) => {
       const text = String(value);
@@ -20,7 +20,7 @@
         detail = document.createElement(result ? "td" : "small");
       node.dataset.team = entry.id;
       node.classList.toggle("is-player", entry.player);
-      name.textContent = entry.name + (entry.player ? " · DU" : "");
+      name.textContent = entryLabel(entry) + (entry.player ? " · DU" : "");
       node.append(position, name, detail);
       return { node, position, name, detail };
     }
@@ -133,7 +133,7 @@
         if (!rows.has(entry.id)) rows.set(entry.id, row(entry));
         const item = rows.get(entry.id);
         item.node.classList.toggle("is-player", entry.player);
-        const label = entry.name + (entry.player ? " · DU" : "");
+        const label = entryLabel(entry) + (entry.player ? " · DU" : "");
         if (item.name.textContent !== label) item.name.textContent = label;
         write(item.position, entry.position);
         write(
@@ -166,7 +166,7 @@
           if (!results.has(entry.id)) results.set(entry.id, row(entry, true));
           const item = results.get(entry.id);
           item.node.classList.toggle("is-player", entry.player);
-          const label = entry.name + (entry.player ? " · DU" : "");
+          const label = entryLabel(entry) + (entry.player ? " · DU" : "");
           if (item.name.textContent !== label) item.name.textContent = label;
           write(item.position, entry.position);
           write(

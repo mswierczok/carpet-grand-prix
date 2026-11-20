@@ -48,6 +48,7 @@ jobs:
             dist/carpet-grand-prix-arcade-offline.html
             dist/carpet-grand-prix-arcade3d-offline.html
             dist/carpet-grand-prix-race-offline.html
+            dist/carpet-grand-prix-campaign-offline.html
             dist/carpet-grand-prix-menu-offline.html
             dist/carpet-grand-prix-offline.html
           if-no-files-found: error
@@ -106,7 +107,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:browser -- --project=${{ matrix.project }} --grep-invert 'POV-Kalender:|Qualifying:|POV-Karriere:|Bahrain-Welt:|Streckenwelten:'
+      - run: npm run test:browser -- --project=${{ matrix.project }} --grep-invert 'POV-Kalender:|Qualifying:|POV-Karriere:|Kampagne:|Bahrain-Welt:|Streckenwelten:'
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
@@ -252,3 +253,31 @@ jobs:
             playwright-report/
             test-results/
           retention-days: 14
+
+  campaign:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [chromium, mobile-chromium]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test tests/browser/campaign.spec.js --project=${{ matrix.project }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: campaign-${{ matrix.project }}
+          path: |
+            docs/campaign/
+            playwright-report/
+            test-results/
+          retention-days: 30
