@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { capture2D, capture3D } from "../helpers/arcade-browser.js";
+import { loadArcade } from "../helpers/arcade.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
 import {
   createCampaignOffline,
@@ -7,11 +8,17 @@ import {
   createPOVMenuOffline,
 } from "../../scripts/build-arcade-offline.js";
 const key = "carpet_gp_campaign_v1";
+const championship = JSON.stringify(
+  loadArcade({ race: true }).api.POVCareer.create({
+    mode: "championship",
+    teamId: "t05",
+  }),
+);
 async function prepare(page, { short = false, threeD = false } = {}) {
   if (threeD) await capture3D(page, { renderEvery: 90 });
   else await capture2D(page);
   await page.addInitScript(
-    ({ short, threeD }) => {
+    ({ short, threeD, championship }) => {
       if (!threeD) {
         const original = HTMLCanvasElement.prototype.getContext;
         HTMLCanvasElement.prototype.getContext = function (type, ...args) {
@@ -21,7 +28,10 @@ async function prepare(page, { short = false, threeD = false } = {}) {
       // Keep sentinels stable across navigation; the application must never write them.
       for (const k of ["carpet_gp_v072", "carpet_gp_pov_game_v1"])
         if (localStorage.getItem(k) === null)
-          localStorage.setItem(k, "untouched-" + k);
+          localStorage.setItem(
+            k,
+            k === "carpet_gp_pov_game_v1" ? championship : "untouched-" + k,
+          );
       if (short) {
         let module;
         Object.defineProperty(CGPArcade, "RaceWeekend", {
@@ -38,7 +48,7 @@ async function prepare(page, { short = false, threeD = false } = {}) {
         });
       }
     },
-    { short, threeD },
+    { short, threeD, championship },
   );
 }
 async function start(page, driver = "d012") {
@@ -64,7 +74,7 @@ async function finish(page) {
 async function unchanged(page) {
   for (const k of ["carpet_gp_v072", "carpet_gp_pov_game_v1"])
     expect(await page.evaluate((k) => localStorage.getItem(k), k)).toBe(
-      "untouched-" + k,
+      k === "carpet_gp_pov_game_v1" ? championship : "untouched-" + k,
     );
 }
 test("Kampagne: Hauptmenü, 13 Teamkarten, drei feste Fahrer und isoliertes Fortsetzen", async ({
@@ -222,13 +232,11 @@ test("Kampagne: beschädigte und neuere Sicherungen bleiben erhalten; neue Start
   await expect(page.locator("#pause")).toBeDisabled();
   expect(await page.evaluate((k) => localStorage.getItem(k), key)).toBe(newer);
   await page.goto("campaign.html");
-  await page
-    .locator("#importCampaign")
-    .setInputFiles({
-      name: "bad.json",
-      mimeType: "application/json",
-      buffer: Buffer.from('{"version":1}'),
-    });
+  await page.locator("#importCampaign").setInputFiles({
+    name: "bad.json",
+    mimeType: "application/json",
+    buffer: Buffer.from('{"version":1}'),
+  });
   await expect(page.locator("#campaignMessage")).toContainText(
     "Import abgebrochen",
   );
@@ -247,18 +255,37 @@ test("Kampagne: beschädigte und neuere Sicherungen bleiben erhalten; neue Start
   expect(await page.evaluate((k) => localStorage.getItem(k), key)).toBe(prior);
   await unchanged(page);
 });
-test("Kampagne: ein bestätigter Import bleibt beim Seitenwechsel erhalten und lädt die gewählte Identität", async ({ page }) => {
+test("Kampagne: ein bestätigter Import bleibt beim Seitenwechsel erhalten und lädt die gewählte Identität", async ({
+  page,
+}) => {
   await prepare(page);
   await page.goto("campaign.html");
   await start(page);
-  const replacement = await page.evaluate(() => CGPArcade.Campaign.create({ driverId: "d035" }));
+  const replacement = await page.evaluate(() =>
+    CGPArcade.Campaign.create({ driverId: "d035" }),
+  );
   await page.locator("#openSettings").click();
-  page.once("dialog", dialog => dialog.accept());
-  await page.locator("#importPOV").setInputFiles({ name: "campaign.json", mimeType: "application/json", buffer: Buffer.from(JSON.stringify(replacement)) });
-  await expect(page.locator("#campaignRaceIdentity")).toContainText("D. Kluszic");
+  page.once("dialog", (dialog) => dialog.accept());
+  await page
+    .locator("#importPOV")
+    .setInputFiles({
+      name: "campaign.json",
+      mimeType: "application/json",
+      buffer: Buffer.from(JSON.stringify(replacement)),
+    });
+  await expect(page.locator("#campaignRaceIdentity")).toContainText(
+    "D. Kluszic",
+  );
   await page.clock.runFor(32);
-  expect(await page.evaluate(k => JSON.parse(localStorage.getItem(k)).driverId,key)).toBe("d035");
-  await expect(page.locator('#raceOrder [data-team="t13"]')).toContainText("D. Kluszic");
+  expect(
+    await page.evaluate(
+      (k) => JSON.parse(localStorage.getItem(k)).driverId,
+      key,
+    ),
+  ).toBe("d035");
+  await expect(page.locator('#raceOrder [data-team="t13"]')).toContainText(
+    "D. Kluszic",
+  );
   await unchanged(page);
 });
 test("Kampagne: vollständig eingebettete Offline-Dateien navigieren und speichern ohne Netzwerk", async ({

@@ -240,3 +240,14 @@ langsame Kontaktdrehung; die tatsächlichen Rechteck- und Ebenenprüfungen bleib
 verbindlich. Kontaktfreie Zustände bleiben exakt gleich. Konturen, KI-Regler
 und Spielstandfelder werden nicht angepasst. Verhalten, Freiraumkorrektur und
 Prüfungen: [ROPE_CONTACT.md](ROPE_CONTACT.md).
+
+## Eigenständige Kampagnen-Grundlage
+
+`campaign-config`, `campaign`, `campaign-store` und die Kampagnenoberflächen
+bilden einen getrennten Einstieg mit acht vorbereiteten Strecken, 39 festen
+Fahrerplätzen und eigenem Speicher. `race.html?mode=campaign` verwendet denselben
+`RaceWeekend` samt Checkpoint, Physik, KI und Kamera. Eine optionale Beschriftung
+verbindet die Team-IDs mit Kampagnenfahrern, ohne die nativen Renndaten umzubauen.
+Die 22-Rennen-Meisterschaft und der klassische Modus bleiben unabhängig.
+Umfang, Zuordnungen, Speicherregeln und offene Roguelite-Entscheidungen:
+[CAMPAIGN.md](CAMPAIGN.md).

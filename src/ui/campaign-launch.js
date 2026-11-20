@@ -26,7 +26,7 @@
     }
     const title = el(`campaign${step[0].toUpperCase() + step.slice(1)}Title`);
     title.focus({ preventScroll: true });
-    title.scrollIntoView({ block: "start", behavior: "instant" });
+    title.scrollIntoView({ block: "start", behavior: "auto" });
   }
   function identity(root, teamId, driverId) {
     root.replaceChildren();
