@@ -79,7 +79,7 @@ it("enthält alle 22 Kalenderstrecken, unveränderte Originalzeichnungen und die
 });
 
 it("liefert auf den vier abgenommenen Strecken dieselben Rennen trotz optionaler Brückenunterstützung", () => {
-  const after = loadArcade({ race: true, historicalBahrain:true }),
+  const after = loadArcade({ race: true, historicalBahrain:true, ropeContacts: false }),
     scope = {};
   for (const path of [
     "data/arcade-tracks",
@@ -99,7 +99,8 @@ it("liefert auf den vier abgenommenen Strecken dieselben Rennen trotz optionaler
     plain(scope.CGPArcade.Physics.parameters),
   );
   // Isolate the original bridge-adapter regression from the explicitly
-  // authorized new AI. Both kernels replay the same published controller.
+  // authorized new AI and rope-contact response. Both kernels replay the
+  // same published controller; current gameplay tests include both additions.
   after.api.Opponents = scope.CGPArcade.Opponents;
   for (const id of povIds.slice(0, 4)) {
     const a = scope.CGPArcade.RaceSession.create(

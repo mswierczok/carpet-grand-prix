@@ -1,5 +1,9 @@
 # Geschlossene Seilränder und gültige Randrunden
 
+Die spätere Kontaktantwort (Gleiten und Befreien mit Gas/Lenken) beschreibt
+[ROPE_CONTACT.md](ROPE_CONTACT.md). Die hier definierten Kollisionskonturen
+bleiben dabei unverändert.
+
 Nachfolgende Korrektur: [Trennseile gegen Abkürzungen](ARCADE_SHORTCUTS.md).
 Die hier dokumentierten Konturen und die Randrundenwertung bleiben erhalten.
 Die spätere Umstellung von 32 Zwischenprüfungen auf die echten Sektorlinien

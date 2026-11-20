@@ -13,6 +13,7 @@ const result = {
     "Three real laps with 12 AI opponents. The same published feedback controller drives the player from P13 in both runs. Normal Physics/RaceSession, 120 Hz physics, 30 Hz input; no pose, timing or contact writes. Not a human-skill or FPS benchmark.",
   userReportedSeconds: { firstFinish: 28.5, secondFinish: 53, raceFinish: 77 },
   physicsSHA256: hash("src/racing/physics.js"),
+  ropeContactSHA256: hash("src/racing/rope-contact.js"),
   opponentsSHA256: hash("src/racing/opponents.js"),
   lineSHA256: hash("src/racing/opponent-line.js"),
   before: measureField(true),
