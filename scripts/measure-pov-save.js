@@ -29,7 +29,7 @@ for (let i=0;i<80;i++) {
   session.advance(input,1/30); resumed.advance(input,1/30);
 }
 deepStrictEqual(resumed.snapshot(), session.snapshot());
-const files = ["scripts/measure-pov-save.js", "src/racing/physics.js", "src/racing/opponents.js", "src/data/arcade-tracks.js", "src/data/arcade-roster.js", "src/racing/race-session.js","src/racing/race-gaps.js","src/racing/race-weekend.js","src/persistence/pov-checkpoint.js","src/persistence/pov-game-store.js","src/championship/pov-career.js"];
+const files = ["scripts/measure-pov-save.js", "src/racing/physics.js", "src/racing/rope-contact.js", "src/racing/opponents.js", "src/data/arcade-tracks.js", "src/data/arcade-roster.js", "src/racing/race-session.js","src/racing/race-gaps.js","src/racing/race-weekend.js","src/persistence/pov-checkpoint.js","src/persistence/pov-game-store.js","src/championship/pov-career.js"];
 const data = { measuredAt:new Date().toISOString(), scenario:"100 seconds parked player, 12 actual AI cars, autosave every 5 seconds; paused checkpoint; identical resume after history expiry", resumeIdentical:true, bytes:Buffer.byteLength(storage.get(api.POVGameStore.key)),
   storage:"in-memory adapter, no browser/localStorage/GPU timing", samples,
   hashes:Object.fromEntries(files.map(path=>[path,createHash("sha256").update(readFileSync(path)).digest("hex")])) };

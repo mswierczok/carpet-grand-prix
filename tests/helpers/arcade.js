@@ -6,6 +6,7 @@ export function loadArcade({
   race = false,
   formats = true,
   historicalBahrain = false,
+  ropeContacts = true,
 } = {}) {
   const math = Object.create(Math);
   math.random = () => {
@@ -22,6 +23,7 @@ export function loadArcade({
     "racing/track-surface",
     "racing/track-catalog",
     "racing/physics",
+    ...(ropeContacts ? ["racing/rope-contact"] : []),
     "racing/bridge-physics",
     ...(!race ? ["racing/pitlane"] : []),
     "racing/timing",

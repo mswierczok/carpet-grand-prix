@@ -10,7 +10,7 @@ const baseline = "a158c92f5f3d3cc8342da1bada9e2df5d7868fe5",
   path = "src/racing/slipstream.js",
   priorSource = execFileSync("git", ["show", `${baseline}:${path}`], { encoding: "utf8" }),
   hash = (value) => createHash("sha256").update(value).digest("hex"),
-  files = [path, "src/racing/physics.js", "src/racing/bridge-physics.js",
+  files = [path, "src/racing/physics.js", "src/racing/rope-contact.js", "src/racing/bridge-physics.js",
     "src/racing/catchup.js", "tests/helpers/arcade.js", "scripts/measure-close-wake.js"],
   hashes = () => Object.fromEntries(files.map((file) => [file, hash(readFileSync(file))])),
   sources = hashes();

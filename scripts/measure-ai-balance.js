@@ -97,7 +97,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     all = loadArcade().api.TrackCatalog.tracks,
     ids = catalog ? all.map((t) => t.id) : process.argv.slice(2).length ? process.argv.slice(2) : ["bahrain", "france", "portugal", "japan", "russia"],
     modes = catalog ? ["normal", "hard", "expert"] : ["keyboard-reference", "published-ai", "beginner", "normal", "hard", "expert"],
-    files = ["scripts/measure-ai-balance.js", "tests/helpers/arcade.js", "src/racing/ai-difficulty.js", "src/racing/opponents.js", "src/racing/opponent-line.js", "src/racing/physics.js", "src/racing/bridge-physics.js", "src/racing/vehicle-contacts.js", "src/racing/timing.js", "src/racing/boundary-field.js", "src/racing/track-surface.js", "src/racing/bridge-surface.js", "src/racing/track-shape.js", "src/racing/track-catalog.js", "src/data/arcade-tracks.js", "src/data/arcade-boundaries.js"],
+    files = ["scripts/measure-ai-balance.js", "tests/helpers/arcade.js", "src/racing/ai-difficulty.js", "src/racing/opponents.js", "src/racing/opponent-line.js", "src/racing/physics.js", "src/racing/rope-contact.js", "src/racing/bridge-physics.js", "src/racing/vehicle-contacts.js", "src/racing/timing.js", "src/racing/boundary-field.js", "src/racing/track-surface.js", "src/racing/bridge-surface.js", "src/racing/track-shape.js", "src/racing/track-catalog.js", "src/data/arcade-tracks.js", "src/data/arcade-boundaries.js"],
     hashes = Object.fromEntries(files.map((file) => [file, createHash("sha256").update(readFileSync(file)).digest("hex")])),
     results = [];
   for (const id of ids) {

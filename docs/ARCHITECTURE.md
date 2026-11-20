@@ -231,3 +231,12 @@ bisherigen Assembler. Rennsystem, Kalenderdaten und Spielstandformat bleiben
 unverändert. Zuordnung, Durchfahrten, Darstellungsplattformen, Abnahmegalerie und
 die ausdrücklich einfache künftige Boxen-Reparaturregel:
 [CALENDAR_ENVIRONMENTS.md](CALENDAR_ENVIRONMENTS.md).
+
+## Seilkontakt als begrenzter Physikadapter
+
+`rope-contact.js` liegt zwischen dem unveränderten `Physics`-Kern und dem
+Brückenadapter. Nur bei Seilkontakt erhält es tangentiale Bewegung und eine
+langsame Kontaktdrehung; die tatsächlichen Rechteck- und Ebenenprüfungen bleiben
+verbindlich. Kontaktfreie Zustände bleiben exakt gleich. Konturen, KI-Regler
+und Spielstandfelder werden nicht angepasst. Verhalten, Freiraumkorrektur und
+Prüfungen: [ROPE_CONTACT.md](ROPE_CONTACT.md).

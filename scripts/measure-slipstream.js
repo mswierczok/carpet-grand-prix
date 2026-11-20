@@ -9,7 +9,7 @@ import { dirname } from "node:path";
 import { loadArcade } from "../tests/helpers/arcade.js";
 
 const files = ["src/racing/slipstream.js", "src/racing/race-session.js", "src/racing/opponents.js",
-  "src/racing/opponent-line.js", "src/racing/ai-difficulty.js", "src/racing/physics.js",
+  "src/racing/opponent-line.js", "src/racing/ai-difficulty.js", "src/racing/physics.js", "src/racing/rope-contact.js",
   "src/racing/bridge-physics.js", "src/racing/vehicle-contacts.js", "src/racing/track-surface.js",
   "src/racing/bridge-surface.js", "src/racing/timing.js", "src/data/arcade-tracks.js",
   "src/data/arcade-boundaries.js", "src/data/race-formats.js", "src/racing/track-shape.js",

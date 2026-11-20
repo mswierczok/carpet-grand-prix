@@ -300,3 +300,15 @@ Desktop und Mobil. Die separaten Jobs halten den bestehenden Browserlauf klein.
 Parallele lokale Playwright-Prozesse benötigen unterschiedliche `--output`-Pfade.
 Nach den Offline-Builds erzeugt `npm run build:calendar-review` die spielbare
 Abnahmegalerie. Details: [CALENDAR_ENVIRONMENTS.md](CALENDAR_ENVIRONMENTS.md).
+
+
+## Seilkontakt und Befreiung
+
+`rope-contact.test.js` vergleicht den alten Stopp mit echtem Gleiten, prüft
+Gas/Lenken zur Befreiung und sichert alle 22 Strecken samt Brückenebenen und
+Trennseilen über vollständige Rechtecke ab. `rope-contact.spec.js` fährt mit
+Tastatur und mobilen Mehrfingereingaben tatsächlich ans Seil und wieder weg,
+online und offline; zwei echte Bahrain-Rennen verlangen alle 13 gültigen
+Zieleinläufe. Alte Brücken-Replays isolieren weiterhin den damaligen Adapter,
+indem nur dort der neue Kontaktadapter explizit nicht geladen wird. Referenz-
+Fixtures bleiben erhalten. Details: [ROPE_CONTACT.md](ROPE_CONTACT.md).

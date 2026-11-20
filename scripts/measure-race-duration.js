@@ -122,7 +122,7 @@ export function measureCatalog(ids) {
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const ids = process.argv.slice(2),
     tracks = measureCatalog(ids.length ? ids : undefined),
-    files = ["src/racing/physics.js", "src/racing/bridge-physics.js", "src/racing/opponents.js", "src/racing/opponent-line.js", "src/racing/timing.js", "src/racing/track-shape.js", "src/data/arcade-tracks.js", "src/data/arcade-boundaries.js"],
+    files = ["src/racing/physics.js", "src/racing/rope-contact.js", "src/racing/bridge-physics.js", "src/racing/opponents.js", "src/racing/opponent-line.js", "src/racing/timing.js", "src/racing/track-shape.js", "src/data/arcade-tracks.js", "src/data/arcade-boundaries.js"],
     hashes = Object.fromEntries(files.map((file) => [file, createHash("sha256").update(readFileSync(file)).digest("hex")]));
   mkdirSync("docs/race-duration", { recursive: true });
   const output = ids.length ? `docs/race-duration/probe-${ids.join("-")}.json` : "docs/race-duration/clean-reference.json";
