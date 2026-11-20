@@ -6,22 +6,25 @@
     return raw === null ? null : JSON.parse(raw);
   }
   function load(storage) {
-    const defaults = { difficulty: A.AIDifficulty.defaultId, quality: "auto", catchup: true };
+    const defaults = { difficulty: A.AIDifficulty.defaultId, quality: "auto", catchup: true, steeringSensitivity: 100 };
     try {
       const value = read(storage);
       if (value?.version === 1) {
         if (A.AIDifficulty.profiles.some((p) => p.id === value.difficulty)) defaults.difficulty = value.difficulty;
         if (["auto", "low"].includes(value.quality)) defaults.quality = value.quality;
         if (typeof value.catchup === "boolean") defaults.catchup = value.catchup;
+        if (isSteeringSensitivity(value.steeringSensitivity)) defaults.steeringSensitivity = value.steeringSensitivity;
       }
     } catch { /* Unavailable storage or damaged preferences: keep the save intact. */ }
     return Object.freeze(defaults);
   }
+  const isSteeringSensitivity = value => Number.isInteger(value) && value >= 40 && value <= 100 && value % 5 === 0;
   function update(patch, storage) {
     for (const [name, value] of Object.entries(patch)) {
       if (name === "difficulty") A.AIDifficulty.get(value);
       else if (name === "quality" && ["auto", "low"].includes(value)) continue;
       else if (name === "catchup" && typeof value === "boolean") continue;
+      else if (name === "steeringSensitivity" && isSteeringSensitivity(value)) continue;
       else throw Error("Ungültige POV-Einstellung: " + name);
     }
     try {
@@ -35,5 +38,5 @@
     } catch { return false; }
   }
   const save = (difficulty, storage) => update({ difficulty }, storage);
-  A.POVPreferences = Object.freeze({ key, load, save, update });
+  A.POVPreferences = Object.freeze({ key, load, save, update, isSteeringSensitivity });
 })();

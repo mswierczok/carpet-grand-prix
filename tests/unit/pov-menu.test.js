@@ -40,10 +40,10 @@ it("bewahrt defekte oder neuere Auswahl beim Lesen und lässt Speicherfehler nic
 it("ergänzt Grafik und Aufholhilfe kompatibel zur bisherigen POV-Schwierigkeit und erhält fremde Felder", () => {
   const { POVPreferences: p, storage } = setup();
   storage.setItem(p.key, JSON.stringify({ version: 1, difficulty: "hard", future: "keep" }));
-  expect(p.load(storage)).toEqual({ difficulty: "hard", quality: "auto", catchup: true });
+  expect(p.load(storage)).toEqual({ difficulty: "hard", quality: "auto", catchup: true, steeringSensitivity: 100 });
   expect(p.update({ quality: "low", catchup: false }, storage)).toBe(true);
   expect(p.save("expert", storage)).toBe(true);
-  expect(p.load(storage)).toEqual({ difficulty: "expert", quality: "low", catchup: false });
+  expect(p.load(storage)).toEqual({ difficulty: "expert", quality: "low", catchup: false, steeringSensitivity: 100 });
   expect(JSON.parse(storage.getItem(p.key)).future).toBe("keep");
   const before = storage.getItem(p.key);
   for (const patch of [{ difficulty: "toString" }, { quality: "ultra" }, { catchup: "false" }, { unknown: 1 }])
@@ -52,4 +52,29 @@ it("ergänzt Grafik und Aufholhilfe kompatibel zur bisherigen POV-Schwierigkeit 
 });
 it("ändert am alten Spiel ausschließlich die genehmigte Weiterleitung zum POV-Hauptmenü", () => {
   expect(withoutMainEntry(read("index.html"))).toBe(execFileSync("git", ["show", "590f57a14328e9b7ab505b6f7e125705b63446ad:index.html"], { cwd: ROOT, encoding: "utf8", maxBuffer: 8 * 1024 * 1024 }));
+});
+it("ergänzt die Lenkempfindlichkeit ohne Spielstandmigration und verwirft ungültige Prozentwerte", () => {
+  const { POVPreferences: p, storage } = setup();
+  const old = { version: 1, difficulty: "expert", quality: "low", catchup: false, future: "keep" };
+  storage.setItem(p.key, JSON.stringify(old));
+  expect(p.load(storage).steeringSensitivity).toBe(100);
+  expect(JSON.parse(storage.getItem(p.key))).toEqual(old);
+  for (const value of [40, 65, 100]) {
+    expect(p.update({ steeringSensitivity: value }, storage)).toBe(true);
+    expect(p.load(storage)).toEqual({ difficulty: "expert", quality: "low", catchup: false, steeringSensitivity: value });
+    expect(JSON.parse(storage.getItem(p.key)).future).toBe("keep");
+  }
+  for (const value of [null, "60", 0, 35, 41, 105, NaN, Infinity]) {
+    expect(p.isSteeringSensitivity(value)).toBe(false);
+    const before = storage.getItem(p.key);
+    expect(() => p.update({ steeringSensitivity: value }, storage)).toThrow();
+    expect(storage.getItem(p.key)).toBe(before);
+    storage.setItem(p.key, JSON.stringify({ ...old, steeringSensitivity: value }));
+    expect(p.load(storage).steeringSensitivity).toBe(100);
+  }
+  const newer = JSON.stringify({ version: 2, steeringSensitivity: 60 });
+  storage.setItem(p.key, newer);
+  expect(p.update({ steeringSensitivity: 60 }, storage)).toBe(false);
+  expect(storage.getItem(p.key)).toBe(newer);
+  expect(p.load({ getItem() { throw Error("SecurityError"); } }).steeringSensitivity).toBe(100);
 });
