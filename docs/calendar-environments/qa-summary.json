@@ -1,0 +1,44 @@
+{
+  "base": "d5a9e933d648dc72e51ad3e029befecac92494db",
+  "sourceRevision": "bf9057faf3a382071246067d7d8628dd4ac03624",
+  "hashes": {
+    "race.html": "95163aca467873226d047f881210214aae0b3c963e0400814e42d99f93ed405e",
+    "arcade.html": "54a41efc5710197a530a159383aa61ae7fe467af6dfcdb81c337950f05091944",
+    "arcade3d.html": "7121934bca877683f1576ee6edac9a5a6d59658dd7a8fe9868aa24f08ff14bf9",
+    "src/rendering/track-environments.js": "0e0c593ce17d29fd5cc37f43ca87c78d56813724424e3c67acf76b91855af30d",
+    "src/rendering/environment-layout.js": "3b9e8c42540561809880e2793117fbda9588124bdffdc0764ba9ef73e743bb4a",
+    "src/rendering/calendar-assets3d.js": "024288e3c6cbf73e58adf4d66f07861c968664a7e12dc4f6ef274d713234df77",
+    "src/rendering/calendar-world3d.js": "79827a7bf4690883d040592d224141a08bab11e5e7043c76193b8b5f39d1d81c",
+    "src/rendering/tracks3d.js": "1c60c2c43162b9e7eb1e6b1c5bd48a6fb1b258689d916a39f536a0d9a2a9edb3",
+    "src/rendering/master-bedroom3d.js": "7de2335fc02905210e8b5fa3ad4263cfdec57f7afb4cf0c84ebb1fc1ee5f196e",
+    "src/rendering/arcade3d.js": "dd7f136782f2c03c7ac5b9ad68bc764e6f28e05e88011f169d11f7bc7cf4e191",
+    "src/arcade-main.js": "ec0c9538454e594e6b498bb032f5a8748db72f9fb8bb4b8f399cc0e9746dd7cd",
+    "src/ui/arcade-race-ui.js": "3f1fef595f5cf767cf9e1a72b3693c59034454418a63507e55b09f19a4f6b0cf"
+  },
+  "checks": {
+    "unit": "24 focused graphics/unit tests passed; final 21-world safety and ray tests passed",
+    "races": "All 21 desktop circuits completed one real lap with 13 valid finishes; China rerun passed with isolated trace output",
+    "views": "All 21 initial grids, overviews and honest detail-camera views rendered in Desktop/Mobile Chromium; no WebGL errors",
+    "offline": "Exact built HTML delivered from memory at approved local origin with networking disabled; gallery, image toggles, 3D launch, four track switches and menu passed on both projects",
+    "fileNavigation": "Direct file:// navigation blocked by managed browser policy; not claimed tested"
+  },
+  "limits": {
+    "triangles": 90000,
+    "drawCalls": 190,
+    "geometries": 160
+  },
+  "metrics": {
+    "chromium": {
+      "tracks": 21,
+      "maxTriangles": 68262,
+      "maxDrawCalls": 152,
+      "maxGeometries": 130
+    },
+    "mobile-chromium": {
+      "tracks": 21,
+      "maxTriangles": 67134,
+      "maxDrawCalls": 145,
+      "maxGeometries": 123
+    }
+  }
+}

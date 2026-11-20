@@ -220,3 +220,14 @@ weiterhin dieselben erzeugten Seilkonturen; der Ziel-Checkpoint schließt den
 parallelen Boxenweg ein. Bett und Kamera behalten ihre Zimmeranker und Höhe.
 Paddock und Support-Transporter sind zusätzliche wiederverwendbare Asset-Typen.
 Umfang, historische Prüfungen und Grenzen: [BAHRAIN_ITERATION2.md](BAHRAIN_ITERATION2.md).
+
+## Weitere POV-Spielwelten
+
+`track-environments`, `environment-layout`, `calendar-assets3d` und
+`calendar-world3d` erweitern den vorhandenen illustrierten Baukasten auf die
+übrigen 21 Strecken. Datengetriebene Themen definieren Boden, Zimmerbereich und
+Landmarken; die Platzierung schützt sämtliche Rennkorridore. Bahrain bleibt im
+bisherigen Assembler. Rennsystem, Kalenderdaten und Spielstandformat bleiben
+unverändert. Zuordnung, Durchfahrten, Darstellungsplattformen, Abnahmegalerie und
+die ausdrücklich einfache künftige Boxen-Reparaturregel:
+[CALENDAR_ENVIRONMENTS.md](CALENDAR_ENVIRONMENTS.md).
