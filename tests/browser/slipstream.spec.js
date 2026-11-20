@@ -1,4 +1,4 @@
-import { driveButton, raceAction, selectRaceOption } from "../helpers/racing-menu.js";
+import { driveButton, raceAction, selectRaceOption, openRaceMenu, closeRaceMenu } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
@@ -47,7 +47,9 @@ test("Windschatten: echter 3D-Heckwirbel entspricht der Physik, Pause/Neustart b
   await selectDriveSetting(page, "quality", "low");
   await page.clock.runFor(64);
   const before = await page.evaluate(() => ({ ...localStorage }));
+  await openRaceMenu(page, "settings");
   await page.locator("#balancePanel summary").click();
+  await closeRaceMenu(page);
   await driveButton(page);
   await page.evaluate(pilotRace);
   await page.clock.runFor(9000); // Three seconds red, then only six seconds racing.

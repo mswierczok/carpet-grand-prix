@@ -1,7 +1,7 @@
 import { driveButton, selectRaceOption } from "../helpers/racing-menu.js";
 import { pilotPit } from "../helpers/pitlane-browser.js";
 import { test, expect } from "@playwright/test";
-import { capture3D, selectDriveSetting } from "../helpers/arcade-browser.js";
+import { capture3D, selectDriveSetting, switchToTopDown } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
 test("Bahrain-Welt: echter Renderer, unveränderliche Eingabe und sicherer Wechsel zu bisherigen Strecken", async ({
   page,
@@ -134,9 +134,7 @@ test("Bahrain-Welt: vollständig offline mit 3D, mobilen Abmessungen und sichere
   expect(
     await page.evaluate(() => __driveSnapshot.race.elapsed),
   ).toBeGreaterThan(1);
-  await page.locator("#openSettings").click();
-  await page.locator("#fallback").click();
-  await page.locator("#closeSettings").click();
+  await switchToTopDown(page);
   await expect(page.locator("#arcadeApp")).toHaveAttribute(
     "data-rendering",
     "2d",

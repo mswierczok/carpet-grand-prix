@@ -2,9 +2,9 @@
   "use strict";
   const A = globalThis.CGPArcade;
   // Campaign flow around the native weekend; no simulation, forces or clocks.
-  function create(game) {
+  function create(game, { diagnostics = false } = {}) {
     const track = A.TrackCatalog.get(game.trackId),
-      options = { playerTeam: game.teamId, ...game.options };
+      options = { playerTeam: game.teamId, ...game.options, diagnostics };
     let weekend = game.weekend
         ? A.RaceWeekend.restore(game.weekend)
         : A.RaceWeekend.create(track, options),

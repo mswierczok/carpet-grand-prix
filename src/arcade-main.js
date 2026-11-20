@@ -53,7 +53,7 @@
   };
   const raceUI = racing ? A.QualifyingUI.attach(root, format, entry => campaign ? A.CampaignView.label(campaign, entry) : entry.name, { getSurface: () => session.surface, isCampaign: campaignMode, getCampaign: () => campaign, onInspect: pauseForGame, onResultsClose: () => raceMenu?.open() }) : null;
   function createSession() {
-    if (campaignMode && campaign) { resumePending = false; try { return A.CampaignWeekend.create(campaign); } catch (error) { loadError = error.message; campaign = null; } }
+    if (campaignMode && campaign) { resumePending = false; try { return A.CampaignWeekend.create(campaign, { diagnostics: query.has("balance") }); } catch (error) { loadError = error.message; campaign = null; } }
     if (resumePending) {
       resumePending = false;
       try { return A.RaceWeekend.restore((campaign || game).weekend); }

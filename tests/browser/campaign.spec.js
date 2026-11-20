@@ -1,4 +1,4 @@
-import { writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect } from "@playwright/test";
 import { capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
@@ -208,6 +208,7 @@ test("Kampagne: zwei echte Grand Prix, Migration eines Bahrain-Zwischenstands un
     expect(done.completed).toHaveLength(track === "bahrain" ? 1 : 2);
     expect(done.driverId).toBe("d035");
     await page.locator("#continueCampaignAfterRace").click();
+    await expect(page.locator("#campaignSaved")).toBeVisible();
     if (track === "bahrain") {
       first = done.completed[0];
       // Recreate the exact old v1 representation from genuine finished sessions.
@@ -281,6 +282,7 @@ test("Kampagne: zwei echte Grand Prix, Migration eines Bahrain-Zwischenstands un
     (k) => JSON.parse(localStorage.getItem(k)),
     key,
   );
+  mkdirSync("dist", { recursive: true });
   writeFileSync(`dist/hud-${info.project.name}-actual-results.json`,JSON.stringify(saved));
   expect(saved.version).toBe(2);
   expect(saved.completed[0].order).toEqual(first.order);
@@ -294,6 +296,9 @@ test("Kampagne: zwei echte Grand Prix, Migration eines Bahrain-Zwischenstands un
   await page.locator('#campaignArchive [data-track="bahrain"] button').click();
   await expect(page.locator("#archiveResultTitle")).toContainText("Bahrain");
   await expect(page.locator('[data-archive-rows="race"] tr')).toHaveCount(13);
+  expect(await page.locator('[data-archive-panel="race"] .result-scroll').evaluate(
+    el => el.scrollWidth <= el.clientWidth,
+  )).toBe(true);
   expect(
     await page
       .locator('[data-archive-rows="race"] tr')
@@ -307,6 +312,9 @@ test("Kampagne: zwei echte Grand Prix, Migration eines Bahrain-Zwischenstands un
   await expect(page.locator('[data-archive-rows="qualifying"] tr')).toHaveCount(
     13,
   );
+  expect(await page.locator('[data-archive-panel="qualifying"] .result-scroll').evaluate(
+    el => el.scrollWidth <= el.clientWidth,
+  )).toBe(true);
   expect(
     await page
       .locator('[data-archive-rows="qualifying"] tr')

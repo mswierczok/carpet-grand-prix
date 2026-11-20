@@ -46,6 +46,14 @@
           : []),
       ];
       values.forEach((v, index) => write(tr.children[index], v));
+      // Keep times visible on phones while retaining team/start information.
+      const details =
+        row.teamName +
+        (kind === "race" && row.startPosition
+          ? " · Start P" + row.startPosition
+          : "");
+      if (tr.children[1].dataset.details !== details)
+        tr.children[1].dataset.details = details;
       if (body.children[i] !== tr)
         body.insertBefore(tr, body.children[i] || null);
     }

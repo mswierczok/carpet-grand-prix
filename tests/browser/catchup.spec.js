@@ -1,4 +1,4 @@
-import { driveButton, raceAction, selectRaceOption } from "../helpers/racing-menu.js";
+import { driveButton, raceAction, selectRaceOption, openRaceMenu, closeRaceMenu } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
@@ -79,7 +79,9 @@ for (const [url, enabled, threeD] of [["race.html?balance=1", true, true],
     if (threeD) await selectDriveSetting(page, "quality", "low");
     if (url.startsWith("__arcade")) await context.setOffline(true);
     const saved = await page.evaluate(() => ({ ...localStorage }));
+    await openRaceMenu(page, "settings");
     await page.locator("#balancePanel summary").click();
+    await closeRaceMenu(page);
     await driveButton(page); await page.evaluate(pilotRace);
     for (let i = 0; i < 15; i++) {
       await page.clock.runFor(10000);

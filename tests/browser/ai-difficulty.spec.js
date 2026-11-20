@@ -1,4 +1,4 @@
-import { driveButton, raceAction, selectRaceOption } from "../helpers/racing-menu.js";
+import { driveButton, raceAction, selectRaceOption, openRaceMenu, closeRaceMenu } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
@@ -88,7 +88,9 @@ CGPArcade.RaceSession = { ...module, create(track, options = {}) {
     await page.clock.runFor(32);
     if (id === "bahrain") await selectDriveSetting(page, "quality", "low");
     const storage = await page.evaluate(() => ({ ...localStorage }));
+    await openRaceMenu(page, "settings");
     await page.locator("#balancePanel summary").click();
+    await closeRaceMenu(page);
     await driveButton(page);
     await page.evaluate(pilotRace);
     for (let i = 0; i < 10; i++) {

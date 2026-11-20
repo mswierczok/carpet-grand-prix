@@ -446,7 +446,25 @@ body.racing-page {
     font-size: 10px;
   }
   .racing-dialog table {
-    min-width: 440px;
+    min-width: 0;
+    font-size: 12px;
+  }
+  .racing-dialog table th:nth-child(3),
+  .racing-dialog table td:nth-child(3),
+  .racing-dialog table th:nth-child(5),
+  .racing-dialog table td:nth-child(5) {
+    display: none;
+  }
+  .racing-dialog table td:nth-child(2)::after {
+    content: attr(data-details);
+    display: block;
+    font-size: 10px;
+    color: #b9d1c4;
+    margin-top: 4px;
+  }
+  .racing-dialog table td,
+  .racing-dialog table th {
+    padding: 10px 4px;
   }
   .racing-screen .touch-controls button {
     height: 66px;

@@ -39,7 +39,8 @@ beforeAll(() => {
   drive(legacy, (s) => s.race.phase === "finished");
   oldFinished = A.CampaignV1.capture(old, legacy.exportState());
   game = A.Campaign.create({ driverId: "d035" });
-  const w = A.CampaignWeekend.create(game);
+  const w = A.CampaignWeekend.create(game, { diagnostics: true });
+  expect(w.exportState().config.diagnostics).toBe(true);
   expect(w.pause(false)).toBe(false);
   expect(w.snapshot().race.phase).toBe("grid");
   expect(w.startQualifying()).toBe(true);
