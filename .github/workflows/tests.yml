@@ -231,6 +231,7 @@ jobs:
         group: [0, 1, 2]
     env:
       CGP_ENV_TEST_GROUP: ${{ matrix.group }}
+      CGP_ENV_ARTIFACT_DIR: dist/calendar-environment-proof
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -239,13 +240,15 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
+      - run: npm run build:offline && npm run build:arcade-offline && npm run build:calendar-review
+        if: matrix.group == 0
       - run: npx playwright test tests/browser/calendar-environments.spec.js --project=${{ matrix.project }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: calendar-environments-${{ matrix.project }}-${{ matrix.group }}
           path: |
-            docs/calendar-environments/
+            dist/calendar-environment-proof/
             playwright-report/
             test-results/
           retention-days: 14

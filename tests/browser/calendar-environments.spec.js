@@ -1,13 +1,16 @@
+import { resolve } from "node:path";
 import { test, expect } from "@playwright/test";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
 import { povIds } from "../helpers/pov-catalog.js";
 const group = process.env.CGP_ENV_TEST_GROUP;
+const selected = process.env.CGP_ENV_TEST_IDS?.split(",");
 const ids = povIds
   .slice(1)
-  .filter((_, i) => group === undefined || i % 3 === Number(group));
-const output = "docs/calendar-environments";
+  .filter((_, i) => group === undefined || i % 3 === Number(group))
+  .filter((id) => !selected || selected.includes(id));
+const output = process.env.CGP_ENV_ARTIFACT_DIR || "docs/calendar-environments";
 test("Streckenwelten: 21 Themen in echtem WebGL, Übersicht und Startansicht", async ({
   page,
 }, info) => {
@@ -75,7 +78,7 @@ test("Streckenwelten: 21 Themen in echtem WebGL, Übersicht und Startansicht", a
           (Math.hypot(spec.w, spec.d) * 0.65) /
           (Math.tan((55 * Math.PI) / 360) * Math.min(1, aspect)),
         at = spec.at,
-        ang = at.ang,
+        ang = at.ang + (types.has(cfg.signature) ? Math.PI / 2 : 0),
         eye = {
           x: at.x - Math.sin(ang) * distance + Math.cos(ang) * distance * 0.22,
           y: Math.max(55, spec.h * 0.75 + distance * 0.12),
@@ -106,17 +109,15 @@ test("Streckenwelten: 21 Themen in echtem WebGL, Übersicht und Startansicht", a
     });
     await page.locator("#overview").click();
     await page.clock.runFor(64);
-    await page
-      .locator("#arcadeCanvas")
-      .screenshot({
-        path: `${output}/${info.project.name}-${id}-overview.png`,
-      });
+    await page.locator("#arcadeCanvas").screenshot({
+      path: `${output}/${info.project.name}-${id}-overview.png`,
+    });
     rows.push({ id, ...s.d });
     await page.locator("#overview").click();
     await page.clock.runFor(32);
   }
   writeFileSync(
-    `${output}/${info.project.name}-metrics-${group ?? "all"}.json`,
+    `${output}/${info.project.name}-metrics-${group ?? (selected ? "focused" : "all")}.json`,
     JSON.stringify(rows, null, 2) + "\n",
   );
   expect(errors).toEqual([]);
@@ -181,11 +182,9 @@ for (const id of ids)
             1 / 60,
           ),
         );
-        await page
-          .locator("#arcadeCanvas")
-          .screenshot({
-            path: `${output}/${info.project.name}-${id}-entry.png`,
-          });
+        await page.locator("#arcadeCanvas").screenshot({
+          path: `${output}/${info.project.name}-${id}-entry.png`,
+        });
         entered = true;
       }
       if (
@@ -202,11 +201,9 @@ for (const id of ids)
             1 / 60,
           ),
         );
-        await page
-          .locator("#arcadeCanvas")
-          .screenshot({
-            path: `${output}/${info.project.name}-${id}-passage.png`,
-          });
+        await page.locator("#arcadeCanvas").screenshot({
+          path: `${output}/${info.project.name}-${id}-passage.png`,
+        });
         captured = true;
       }
       if (state.phase === "finished") break;
@@ -226,5 +223,84 @@ for (const id of ids)
       expect(entered).toBe(true);
       expect(captured).toBe(true);
     }
+    expect(errors).toEqual([]);
+  });
+
+if (group === undefined || group === "0")
+  test("Streckenwelten: Offline-Galerie und Spielseiten benötigen keine externen Ressourcen", async ({
+    page,
+    context,
+  }) => {
+    test.setTimeout(180000);
+    await capture3D(page);
+    await context.setOffline(true);
+    const errors = [],
+      requests = [];
+    page.on("pageerror", (e) => errors.push(e.message));
+    page.on("request", (r) => {
+      if (
+        r.url().startsWith("http") &&
+        !(r.isNavigationRequest() && r.url().includes("/dist/calendar-review/"))
+      )
+        requests.push(r.url());
+    });
+    const allowed = new Set([
+      "index.html",
+      "carpet-grand-prix-race-offline.html",
+      "carpet-grand-prix-menu-offline.html",
+      "carpet-grand-prix-arcade-offline.html",
+      "carpet-grand-prix-arcade3d-offline.html",
+      "carpet-grand-prix-offline.html",
+    ]);
+    // The managed browser prohibits file:// navigation. Deliver the exact built
+    // HTML bytes at the permitted local test origin, including offline navigation.
+    await page.route("**/dist/calendar-review/*.html*", (route) => {
+      const file = new URL(route.request().url()).pathname.split("/").at(-1);
+      if (!allowed.has(file)) return route.abort();
+      return route.fulfill({
+        contentType: "text/html",
+        body: readFileSync(resolve("dist/calendar-review", file), "utf8"),
+      });
+    });
+    await page.goto("dist/calendar-review/index.html");
+    await expect(page.locator("article")).toHaveCount(21);
+    for (const device of ["mobile-chromium", "chromium"]) {
+      await page.locator(`[data-device="${device}"]`).click();
+      expect(
+        await page
+          .locator("article img")
+          .first()
+          .evaluate(async (img) => {
+            await img.decode();
+            return img.naturalWidth;
+          }),
+      ).toBeGreaterThan(100);
+    }
+    await page.locator("#italy a.play").click();
+    await page.clock.runFor(128);
+    await expect(page.locator("#arcadeApp")).toHaveAttribute(
+      "data-rendering",
+      "3d",
+    );
+    expect(
+      await page.evaluate(() => __inspect3D.diagnostics().world.theme),
+    ).toBe("italy");
+    for (const id of ["india", "china", "bahrain", "luxembourg"]) {
+      await page.locator("#track").selectOption(id);
+      await page.clock.runFor(64);
+      expect(await page.evaluate(() => __driveSnapshot.entries.length)).toBe(
+        13,
+      );
+      if (id !== "bahrain")
+        expect(
+          await page.evaluate(() => __inspect3D.diagnostics().world.theme),
+        ).toBe(id);
+    }
+    await page
+      .locator('a[href*="carpet-grand-prix-menu-offline.html"]')
+      .first()
+      .click();
+    expect(page.url()).toContain("carpet-grand-prix-menu-offline.html");
+    expect(requests).toEqual([]);
     expect(errors).toEqual([]);
   });

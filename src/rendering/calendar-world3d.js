@@ -269,6 +269,7 @@
     group.add(markings.finish());
     let room = null,
       roomKit = null;
+    const roomCamera = { position: { x: 0, y: 0, z: 0 } };
     if (config.area !== "terrace") {
       if (config.platformHeight)
         roomKit = A.IllustratedKit3D.create(materials, maps);
@@ -418,7 +419,12 @@
       config,
       overview,
       update(camera, pose, over, snapshot) {
-        room?.update(camera, over);
+        // Furniture bounds are relative to the room floor, which lies below
+        // the playing surface on the desk/bed variants. Never move the camera.
+        roomCamera.position.x = camera.position.x;
+        roomCamera.position.y = camera.position.y + config.platformHeight;
+        roomCamera.position.z = camera.position.z;
+        room?.update(roomCamera, over);
         A.IllustratedKit3D.updateVisibility(guards, camera, over);
       },
       diagnostics() {

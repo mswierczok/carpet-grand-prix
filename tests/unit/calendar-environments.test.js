@@ -93,6 +93,12 @@ it("baut 21 eigenständige Themen mit sicheren Requisiten, identischer Straße u
       expect(surface.bridge?.heightAt(pass.s) || 0).toBe(0);
     }
     world.group.updateMatrixWorld(true);
+    if (world.config.area === "desk") {
+      const bed = world.config.room.furniture.find((f) => f.asset === "bed");
+      const camera = { position: { x: bed.at.x, y: 17, z: bed.at.y } };
+      world.update(camera, {}, false, {});
+      expect(world.group.getObjectByName("bed").visible).toBe(true);
+    }
     for (const pass of world.layout.passages) {
       const node = world.group.getObjectByName(pass.id),
         pnt = surface.at(pass.s),
@@ -112,6 +118,25 @@ it("baut 21 eigenständige Themen mit sicheren Requisiten, identischer Straße u
         hits[0].distance,
         `${id}: Kopffreiheit der Kamera`,
       ).toBeGreaterThan(20);
+      for (const lane of [-6, 0, 6])
+        for (const height of [3, 17]) {
+          const a = surface.at(pass.s - pass.depth / 2 - 30, lane);
+          const b = surface.at(pass.s + pass.depth / 2 + 30, lane);
+          const origin = new initial.THREE.Vector3(a.x, height, a.y);
+          const target = new initial.THREE.Vector3(b.x, height, b.y);
+          const distance = origin.distanceTo(target);
+          const direction = target.sub(origin).normalize();
+          const forward = new initial.THREE.Raycaster(
+            origin,
+            direction,
+            0,
+            distance,
+          );
+          expect(
+            forward.intersectObject(node, true),
+            `${id}: freie Durchfahrt für Auto und Kamera`,
+          ).toHaveLength(0);
+        }
     }
 
     world.group.traverse((node) => {
@@ -122,7 +147,7 @@ it("baut 21 eigenständige Themen mit sicheren Requisiten, identischer Straße u
         );
     });
     // Actual solid landmark vertices, rather than only placement centres.
-    for (const spec of world.layout.objects) {
+    for (const spec of [...world.layout.objects, ...world.layout.passages]) {
       const node = world.group.getObjectByName(spec.id);
       for (const mesh of node.children) {
         if (!mesh.isMesh || mesh.material.transparent) continue;
