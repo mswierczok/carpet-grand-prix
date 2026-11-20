@@ -1,7 +1,8 @@
 (() => {
   "use strict";
   const A = (globalThis.CGPArcade = globalThis.CGPArcade || {});
-  function attach(root, { pause, recover, onBlur }) {
+  function attach(root, { pause, recover, onBlur, steeringSensitivity = () => 100 }) {
+    let steeringDirection = 0, steeringStarted = 0;
     const held = new Set(),
       pointers = new Map(),
       listeners = [];
@@ -23,6 +24,8 @@
       listeners.push(() => target.removeEventListener(type, handler, options));
     }
     function clear() {
+      steeringDirection = 0;
+      steeringStarted = 0;
       held.clear();
       const captures = [...pointers];
       pointers.clear();
@@ -44,6 +47,7 @@
       if (keys[event.code]) {
         event.preventDefault();
         held.add(event.code);
+        syncSteering();
       } else if (
         !event.repeat &&
         (event.code === "KeyP" ||
@@ -57,7 +61,10 @@
       }
     });
     listen(window, "keyup", (event) => {
-      if (keys[event.code]) held.delete(event.code);
+      if (keys[event.code]) {
+        held.delete(event.code);
+        syncSteering();
+      }
     });
     root.querySelectorAll("[data-drive]").forEach((button) => {
       listen(button, "pointerdown", (event) => {
@@ -67,6 +74,7 @@
         ) return;
         event.preventDefault();
         pointers.set(event.pointerId, button);
+        syncSteering();
         try {
           button.setPointerCapture(event.pointerId);
         } catch {
@@ -79,6 +87,7 @@
     function release(event) {
       const button = pointers.get(event.pointerId);
       pointers.delete(event.pointerId);
+      syncSteering();
       if (button && ![...pointers.values()].includes(button))
         button.classList.remove("is-held");
     }
@@ -105,11 +114,28 @@
       Object.entries(keys).some(
         ([code, action]) => action === key && held.has(code),
       ) || [...pointers.values()].some((button) => button.dataset.drive === key);
+    function syncSteering() {
+      const direction = Number(active("right")) - Number(active("left"));
+      if (direction !== steeringDirection) {
+        steeringDirection = direction;
+        steeringStarted = performance.now();
+      }
+      return direction;
+    }
+    function readSteering() {
+      const direction = syncSteering(), now = performance.now();
+      // Ramp only the player's press. Release stays immediate, and a held
+      // button still reaches full lock. AI and vehicle physics are unchanged.
+      const value = steeringSensitivity(),
+        sensitivity = Number.isFinite(value) ? Math.max(40, Math.min(100, value)) : 100,
+        riseMs = (100 - sensitivity) * 5;
+      return direction * (riseMs === 0 ? 1 : Math.min(1, Math.max(0, now - steeringStarted) / riseMs));
+    }
     return Object.freeze({
       read: () => ({
         throttle: Number(active("throttle")),
         brake: Number(active("brake")),
-        steer: Number(active("right")) - Number(active("left")),
+        steer: readSteering(),
       }),
       clear,
       destroy() {

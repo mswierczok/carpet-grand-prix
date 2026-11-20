@@ -20,6 +20,8 @@
     gameUI = null,
     loadError = requestedSave && !bootGame ? requestedSave.message : "",
     resumePending = !!bootGame?.weekend,
+    steeringSensitivity = racing ? (A.POVPreferences.isSteeringSensitivity(Number(query.get("steeringSensitivity")))
+      ? Number(query.get("steeringSensitivity")) : preferences.steeringSensitivity) : 100,
     difficultyId = bootGame?.options.difficulty || (racing ? (A.AIDifficulty.profiles.some(p => p.id === query.get("difficulty"))
       ? query.get("difficulty") : preferences.difficulty) : null),
     catchupEnabled = bootGame ? bootGame.options.catchup : (query.has("catchup") ? query.get("catchup") !== "0" : (preferences?.catchup ?? true)),
@@ -145,7 +147,20 @@
       updateUI();
       gameUI?.changed();
     },
+    steeringSensitivity: () => steeringSensitivity,
   });
+  if (racing) {
+    el("steeringSensitivity").value = steeringSensitivity;
+    el("steeringSensitivityValue").value = `${steeringSensitivity} %`;
+    el("steeringSensitivity").oninput = event => {
+      const value = Number(event.target.value);
+      if (!A.POVPreferences.isSteeringSensitivity(value)) return;
+      steeringSensitivity = value;
+      el("steeringSensitivityValue").value = `${value} %`;
+      controls.clear();
+      savePreference({ steeringSensitivity: value });
+    };
+  }
   if (racing) A.RaceSettings.attach(root, {
     onOpen() {
       session.pause(true);
@@ -154,7 +169,9 @@
       updateUI();
       gameUI?.changed();
     },
-    onClose: () => controls.clear(),
+    // Opening already clears and blocks input. A late native close event
+    // must not discard a new press made after the dialog has disappeared.
+    onClose() {},
   });
   function pauseForGame() {
     session.pause(true); controls.clear(); dirty = true; updateUI();
@@ -456,7 +473,7 @@
     const saved = gameUI.changed();
     const url = new URL(location.href);
     if (saved) {
-      for (const key of ["new", "replace", "team", "track", "difficulty", "catchup", "quality"]) url.searchParams.delete(key);
+      for (const key of ["new", "replace", "team", "track", "difficulty", "catchup", "quality", "steeringSensitivity"]) url.searchParams.delete(key);
       url.searchParams.set("resume", "1");
       try { history.replaceState(null, "", url.href); } catch { /* Standalone policy. */ }
     }

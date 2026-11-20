@@ -112,6 +112,17 @@
   A.RaceSettings.attach(root, { onOpen() {}, onClose() {} });
   el("quality").value = prefs.quality; el("difficulty").value = prefs.difficulty;
   el("catchup").value = prefs.catchup ? "on" : "off";
+  el("steeringSensitivity").value = prefs.steeringSensitivity;
+  el("steeringSensitivityValue").value = `${prefs.steeringSensitivity} %`;
+  el("steeringSensitivity").oninput = event => {
+    const value = Number(event.target.value);
+    if (!A.POVPreferences.isSteeringSensitivity(value)) return;
+    prefs.steeringSensitivity = value;
+    el("steeringSensitivityValue").value = `${value} %`;
+    const saved = A.POVPreferences.update({ steeringSensitivity: value });
+    el("menuPreferenceNote").textContent = saved ? "Für deine nächsten POV-Rennen gespeichert."
+      : "Für diesen Start aktiv. Auf diesem Gerät konnte die Einstellung nicht gespeichert werden.";
+  };
   for (const id of ["quality", "difficulty", "catchup"]) el(id).onchange = event => {
     prefs[id] = id === "catchup" ? event.target.value === "on" : event.target.value;
     const saved = A.POVPreferences.update({ [id]: prefs[id] });
@@ -125,6 +136,7 @@
     const url = new URL("./race.html", location.href);
     url.search = new URLSearchParams({ team: selection.teamId, track: selection.trackId,
       difficulty: prefs.difficulty, quality: prefs.quality, catchup: prefs.catchup ? "1" : "0",
+      steeringSensitivity: String(prefs.steeringSensitivity),
       new: setupMode, replace: ["valid", "invalid"].includes(previous.status) ? "1" : "0" }).toString();
     location.href = url.href;
   };
