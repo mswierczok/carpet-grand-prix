@@ -119,6 +119,9 @@ test("Lenkempfindlichkeit: verweigerter Speicher erhält die Auswahl beim Start 
   await page.locator("#openSettings").click(); await setSensitivity(page, 40);
   await expect(page.locator("#preferencesNote")).toContainText("nicht gespeichert");
   await page.locator("#closeSettings").click();
+  // The native close event clears held input before returning focus. Wait
+  // for that event, so it cannot clear the next deliberate key press.
+  await expect(page.locator("#openSettings")).toBeFocused();
   await page.keyboard.down("d"); await page.clock.runFor(60);
   const steer = await page.evaluate(() => __input.steer);
   expect(steer).toBeGreaterThan(0); expect(steer).toBeLessThan(0.25);
