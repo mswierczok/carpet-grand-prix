@@ -1,3 +1,4 @@
+import { withoutCalendarBranch } from "../helpers/calendar-source.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -11,7 +12,7 @@ function cameras(THREE, api, surface, world) {
   world.group.updateMatrixWorld(true);
   return { cfg, rig, camera };
 }
-it("behält Standardkamera und übrige Strecken exakt bei; Bahrain erhält nur eine explizite Darstellungsvariante", () => {
+it("behält Standardkamera und bisherigen Renderer-Kern trotz optionaler neuer Streckenwelten exakt bei", () => {
   const { api, surface, materials, world } = createWorld();
   const old = {};
   runInNewContext(
@@ -34,9 +35,8 @@ it("behält Standardkamera und übrige Strecken exakt bei; Bahrain erhält nur e
     }
   }
   expect(
-    readFileSync("src/rendering/tracks3d.js").equals(
-      execFileSync("git", ["show", `${base}:src/rendering/tracks3d.js`]),
-    ),
+    withoutCalendarBranch(readFileSync("src/rendering/tracks3d.js", "utf8")) ===
+      execFileSync("git", ["show", `${base}:src/rendering/tracks3d.js`]).toString(),
   ).toBe(true);
   world.dispose();
   materials.dispose();

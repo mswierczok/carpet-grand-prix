@@ -136,6 +136,8 @@
   function create(surface, materials) {
     if (surface.id === "bahrain" && A.Bahrain3D)
       return A.Bahrain3D.create(surface, materials);
+    if (A.TrackEnvironments?.get(surface.id) && A.CalendarWorld3D)
+      return A.CalendarWorld3D.create(surface, materials);
     const group = new T.Group(),
       geometries = [],
       disposables = [],

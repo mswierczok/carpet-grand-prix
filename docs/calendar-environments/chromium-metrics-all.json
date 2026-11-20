@@ -1,0 +1,756 @@
+[
+  {
+    "id": "luxembourg",
+    "drawCalls": 139,
+    "triangles": 54497,
+    "geometries": 117,
+    "textures": 22,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "luxembourg",
+      "place": "Helles Holzparkett",
+      "area": "wood",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": -83.19818806449825,
+          "maxX": 1263.1981880644983,
+          "minY": -129.9293289743448,
+          "maxY": 887.9293289743448,
+          "height": 550
+        },
+        "furniture": 5,
+        "hiddenForCamera": 0
+      },
+      "assets": 3,
+      "passages": [
+        {
+          "type": "woodBridge",
+          "s": 1358.0844843080747,
+          "clearHeight": 42,
+          "halfWidth": 49.25655233556824
+        }
+      ],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "canada",
+    "drawCalls": 152,
+    "triangles": 64956,
+    "geometries": 130,
+    "textures": 22,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "canada",
+      "place": "Schreibtisch",
+      "area": "desk",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": -19.189534866346946,
+          "maxX": 1199.189534866347,
+          "minY": -91.21185769569828,
+          "maxY": 849.2118576956983,
+          "height": 550
+        },
+        "furniture": 4,
+        "hiddenForCamera": 0
+      },
+      "assets": 5,
+      "passages": [],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "france",
+    "drawCalls": 145,
+    "triangles": 68052,
+    "geometries": 123,
+    "textures": 23,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "france",
+      "place": "Bettdecke",
+      "area": "bed",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": 49.41822753596341,
+          "maxX": 1130.5817724640365,
+          "minY": -215.2789351732348,
+          "maxY": 973.2789351732348,
+          "height": 550
+        },
+        "furniture": 4,
+        "hiddenForCamera": 0
+      },
+      "assets": 5,
+      "passages": [],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "switzerland",
+    "drawCalls": 148,
+    "triangles": 59989,
+    "geometries": 126,
+    "textures": 23,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "switzerland",
+      "place": "Grauer Teppich",
+      "area": "carpet",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": -157.71882013930122,
+          "maxX": 1337.7188201393012,
+          "minY": -122.0188534441564,
+          "maxY": 880.0188534441564,
+          "height": 550
+        },
+        "furniture": 5,
+        "hiddenForCamera": 0
+      },
+      "assets": 4,
+      "passages": [],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "portugal",
+    "drawCalls": 128,
+    "triangles": 58922,
+    "geometries": 106,
+    "textures": 22,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "portugal",
+      "place": "Balkon",
+      "area": "terrace",
+      "room": {
+        "id": "terrace"
+      },
+      "assets": 4,
+      "passages": [],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "india",
+    "drawCalls": 145,
+    "triangles": 63265,
+    "geometries": 123,
+    "textures": 23,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "india",
+      "place": "Bunte Spielmatte",
+      "area": "mat",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": -23.32702974951303,
+          "maxX": 1203.3270297495133,
+          "minY": -138.55096366933049,
+          "maxY": 896.5509636693305,
+          "height": 550
+        },
+        "furniture": 5,
+        "hiddenForCamera": 0
+      },
+      "assets": 3,
+      "passages": [
+        {
+          "type": "plasticTube",
+          "s": 1506.5860355441112,
+          "clearHeight": 42,
+          "halfWidth": 50.11320036711213
+        }
+      ],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "brazil",
+    "drawCalls": 142,
+    "triangles": 68262,
+    "geometries": 120,
+    "textures": 23,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "brazil",
+      "place": "Wohnzimmer",
+      "area": "living",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": 146.48829887891725,
+          "maxX": 1033.5117011210828,
+          "minY": -199.87285030249166,
+          "maxY": 957.8728503024917,
+          "height": 550
+        },
+        "furniture": 5,
+        "hiddenForCamera": 0
+      },
+      "assets": 4,
+      "passages": [],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "south-africa",
+    "drawCalls": 125,
+    "triangles": 60386,
+    "geometries": 103,
+    "textures": 22,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "south-africa",
+      "place": "Terrassenplatten",
+      "area": "terrace",
+      "room": {
+        "id": "terrace"
+      },
+      "assets": 4,
+      "passages": [],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "korea",
+    "drawCalls": 149,
+    "triangles": 65714,
+    "geometries": 127,
+    "textures": 22,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "korea",
+      "place": "Schreibtisch",
+      "area": "desk",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": 46.90126245438353,
+          "maxX": 1133.0987375456166,
+          "minY": -173.85540571200045,
+          "maxY": 931.8554057120004,
+          "height": 550
+        },
+        "furniture": 4,
+        "hiddenForCamera": 0
+      },
+      "assets": 5,
+      "passages": [],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "usa",
+    "drawCalls": 144,
+    "triangles": 59121,
+    "geometries": 122,
+    "textures": 23,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "usa",
+      "place": "Dunkler Teppich",
+      "area": "carpet",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": -141.06946090749608,
+          "maxX": 1321.0694609074963,
+          "minY": -108.21510190534892,
+          "maxY": 866.2151019053489,
+          "height": 550
+        },
+        "furniture": 5,
+        "hiddenForCamera": 0
+      },
+      "assets": 4,
+      "passages": [],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "belgium",
+    "drawCalls": 140,
+    "triangles": 57553,
+    "geometries": 118,
+    "textures": 23,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "belgium",
+      "place": "Unter dem Bett",
+      "area": "underbed",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": 153.14917825537293,
+          "maxX": 1026.850821744627,
+          "minY": -189.54114276945114,
+          "maxY": 947.5411427694511,
+          "height": 550
+        },
+        "furniture": 4,
+        "hiddenForCamera": 0
+      },
+      "assets": 3,
+      "passages": [
+        {
+          "type": "bedPassage",
+          "s": 313.7359327342763,
+          "clearHeight": 42,
+          "halfWidth": 46.424011458386616
+        }
+      ],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "sweden",
+    "drawCalls": 136,
+    "triangles": 56856,
+    "geometries": 114,
+    "textures": 22,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "sweden",
+      "place": "Helle Dielen",
+      "area": "wood",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": 74.16244178688339,
+          "maxX": 1131.464212575725,
+          "minY": -149.50881397508584,
+          "maxY": 907.5088139750859,
+          "height": 550
+        },
+        "furniture": 5,
+        "hiddenForCamera": 0
+      },
+      "assets": 4,
+      "passages": [],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "germany",
+    "drawCalls": 148,
+    "triangles": 64477,
+    "geometries": 126,
+    "textures": 22,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "germany",
+      "place": "Technikschreibtisch",
+      "area": "desk",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": 65.55248316243433,
+          "maxX": 1114.4475168375657,
+          "minY": -199.83698431468804,
+          "maxY": 957.8369843146879,
+          "height": 550
+        },
+        "furniture": 4,
+        "hiddenForCamera": 0
+      },
+      "assets": 5,
+      "passages": [],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "japan",
+    "drawCalls": 134,
+    "triangles": 56932,
+    "geometries": 112,
+    "textures": 23,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "japan",
+      "place": "Spielmatte",
+      "area": "mat",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": -82.87542675831497,
+          "maxX": 1262.8754267583151,
+          "minY": -70.91029894419793,
+          "maxY": 897.1264142711284,
+          "height": 550
+        },
+        "furniture": 5,
+        "hiddenForCamera": 0
+      },
+      "assets": 4,
+      "passages": [
+        {
+          "type": "futureTunnel",
+          "s": 2019.31814013511,
+          "clearHeight": 42,
+          "halfWidth": 49.90939494564202
+        }
+      ],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "china",
+    "drawCalls": 144,
+    "triangles": 60064,
+    "geometries": 122,
+    "textures": 23,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "china",
+      "place": "Gemusterte Bettdecke",
+      "area": "bed",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": 120.01908934436301,
+          "maxX": 1109.3738281504618,
+          "minY": -194.06733205268364,
+          "maxY": 952.0673320526837,
+          "height": 550
+        },
+        "furniture": 4,
+        "hiddenForCamera": 0
+      },
+      "assets": 4,
+      "passages": [
+        {
+          "type": "toyBridge",
+          "s": 714.5924068251405,
+          "clearHeight": 42,
+          "halfWidth": 46.32316860775908
+        }
+      ],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "russia",
+    "drawCalls": 139,
+    "triangles": 54885,
+    "geometries": 117,
+    "textures": 22,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "russia",
+      "place": "Holzfläche",
+      "area": "wood",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": -241.3103680024309,
+          "maxX": 1421.310368002431,
+          "minY": -136.71898102423546,
+          "maxY": 894.7189810242354,
+          "height": 550
+        },
+        "furniture": 5,
+        "hiddenForCamera": 0
+      },
+      "assets": 4,
+      "passages": [],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "australia",
+    "drawCalls": 128,
+    "triangles": 61616,
+    "geometries": 106,
+    "textures": 22,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "australia",
+      "place": "Terrasse",
+      "area": "terrace",
+      "room": {
+        "id": "terrace"
+      },
+      "assets": 4,
+      "passages": [],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "england",
+    "drawCalls": 141,
+    "triangles": 67350,
+    "geometries": 119,
+    "textures": 23,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "england",
+      "place": "Großer Zimmerteppich",
+      "area": "carpet",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": 133.73668083069003,
+          "maxX": 1046.2633191693099,
+          "minY": -153.00242982823625,
+          "maxY": 1051.0024298282362,
+          "height": 550
+        },
+        "furniture": 5,
+        "hiddenForCamera": 0
+      },
+      "assets": 4,
+      "passages": [],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "italy",
+    "drawCalls": 137,
+    "triangles": 58060,
+    "geometries": 115,
+    "textures": 23,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "italy",
+      "place": "Fliesenfläche",
+      "area": "tile",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": -79.31451701738894,
+          "maxX": 1259.3145170173889,
+          "minY": -140.62501595516818,
+          "maxY": 898.6250159551682,
+          "height": 550
+        },
+        "furniture": 5,
+        "hiddenForCamera": 0
+      },
+      "assets": 3,
+      "passages": [
+        {
+          "type": "dollhouse",
+          "s": 1615.4793376393477,
+          "clearHeight": 42,
+          "halfWidth": 49.37864018254461
+        }
+      ],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "hungary",
+    "drawCalls": 147,
+    "triangles": 61342,
+    "geometries": 125,
+    "textures": 23,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "hungary",
+      "place": "Farbige Bettdecke",
+      "area": "bed",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": -27.7958083208768,
+          "maxX": 1207.7958083208769,
+          "minY": -87.73227632389253,
+          "maxY": 901.5454995732491,
+          "height": 550
+        },
+        "furniture": 4,
+        "hiddenForCamera": 0
+      },
+      "assets": 4,
+      "passages": [
+        {
+          "type": "cushionTunnel",
+          "s": 1419.2683111821898,
+          "clearHeight": 42,
+          "halfWidth": 48.34430223447423
+        }
+      ],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  },
+  {
+    "id": "abu-dhabi",
+    "drawCalls": 138,
+    "triangles": 58686,
+    "geometries": 116,
+    "textures": 23,
+    "pixelRatio": 1,
+    "quality": "auto",
+    "lost": false,
+    "world": {
+      "theme": "abu-dhabi",
+      "place": "Sandfarbener Teppich",
+      "area": "carpet",
+      "room": {
+        "id": "motorsport-bedroom",
+        "unitMillimetres": 5,
+        "bounds": {
+          "minX": -45.955145447340726,
+          "maxX": 1225.9551454473406,
+          "minY": -147.0553824007505,
+          "maxY": 905.0553824007504,
+          "height": 550
+        },
+        "furniture": 5,
+        "hiddenForCamera": 0
+      },
+      "assets": 4,
+      "passages": [],
+      "hiddenForCamera": 0
+    },
+    "wake": {
+      "emitters": 0,
+      "triangles": 0
+    }
+  }
+]

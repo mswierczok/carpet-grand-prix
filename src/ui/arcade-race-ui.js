@@ -113,7 +113,7 @@
                     : snapshot.car.hitCar
                       ? "Fahrzeugkontakt · Fair weiterfahren"
                       : snapshot.car.offroad
-                        ? "Dunkler Teppich · weniger Grip"
+                        ? (root.dataset.track === "bahrain" ? "Dunkler Teppich · weniger Grip" : "Randbereich · weniger Grip")
                         : "Rennen läuft";
       set("status", message);
       set("checkpoint", r.finished + "/13 im Ziel");

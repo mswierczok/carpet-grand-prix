@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
 import * as THREE from "three";
 import { loadArcade } from "./arcade.js";
-export function createWorld() {
+export function createWorld(id = "bahrain") {
   const { api } = loadArcade({ race: true });
   const context = new Proxy(
     { createRadialGradient: () => ({ addColorStop() {} }) },
@@ -23,13 +23,17 @@ export function createWorld() {
     "master-bedroom3d",
     "bahrain-layout",
     "bahrain3d",
+    "track-environments",
+    "environment-layout",
+    "calendar-assets3d",
+    "calendar-world3d",
   ])
     runInNewContext(readFileSync(`src/rendering/${module}.js`, "utf8"), {
       CGPArcade: api,
       CGPThree: THREE,
       document,
     });
-  const surface = api.Surface.create(api.TrackCatalog.get("bahrain")),
+  const surface = api.Surface.create(api.TrackCatalog.get(id)),
     materials = api.Materials3D.create(null),
     world = api.Tracks3D.create(surface, materials);
   return { api, surface, materials, world, THREE };

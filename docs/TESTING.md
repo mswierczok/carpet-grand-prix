@@ -288,3 +288,15 @@ Schritten. Das maximale simulierte Fahrbudget bleibt gleich; bereits beendete
 Rennen werden nicht mehr bis zum nächsten 20-Sekunden-Block als pausierte
 Szene erneut gezeichnet. Auch die Dreirundenfahrt beendet den Prüflauf erst
 nach den drei tatsächlichen Runden, statt anschließend weiter zu zeichnen.
+
+## 21 weitere Umgebungen
+
+`calendar-environments.test.js` schützt die unveränderten Rennsysteme und Daten,
+prüft alle neuen Modelle sowie Durchfahrten und tatsächliche Dachflächen.
+`calendar-environments.spec.js` lädt alle Themen in echtem WebGL und fährt je
+Strecke eine vollständige Runde mit 13 Zieleinläufen. `CGP_ENV_TEST_GROUP=0..2`
+teilt die Bild-/Fahrprüfungen auf drei Gruppen auf; CI prüft jede Gruppe auf
+Desktop und Mobil. Die separaten Jobs halten den bestehenden Browserlauf klein.
+Parallele lokale Playwright-Prozesse benötigen unterschiedliche `--output`-Pfade.
+Nach den Offline-Builds erzeugt `npm run build:calendar-review` die spielbare
+Abnahmegalerie. Details: [CALENDAR_ENVIRONMENTS.md](CALENDAR_ENVIRONMENTS.md).

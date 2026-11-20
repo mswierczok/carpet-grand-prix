@@ -259,7 +259,7 @@
       : s.car.hitWall
         ? "Randkontakt · bei Bedarf R zum Zurücksetzen"
         : s.car.offroad
-          ? "Dunkler Teppich · weniger Grip"
+          ? (trackId === "bahrain" ? "Dunkler Teppich · weniger Grip" : "Randbereich · weniger Grip")
           : t.started
             ? "Deine Runde läuft"
             : "Fahre über Start/Ziel";
