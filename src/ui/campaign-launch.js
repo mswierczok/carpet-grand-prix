@@ -7,6 +7,9 @@
     el = (id) => document.getElementById(id),
     n = V.node,
     details = A.ResultDetails.attach(el("campaignApp"));
+  // Keep the primary continuation action beside the current identity/result.
+  el("campaignSaved").append(el("campaignNext"));
+  el("saveCampaign").before(el("newCampaign"));
   let stored = S.load(),
     selectedTeam = C.initialTeam,
     selectedDriver = null;
@@ -59,6 +62,7 @@
       g = stored.game,
       complete = valid && g.stage === "interim";
     el("campaignSaved").hidden = !valid;
+    el("newCampaign").hidden = !valid;
     el("campaignSetup").hidden = stored.status !== "empty";
     el("campaignNext").hidden = true;
     el("campaignTestStand").hidden = true;
@@ -243,6 +247,7 @@
     showStep("overview");
   };
   el("newCampaign").onclick = () => {
+    tab("overview");
     el("campaignSaved").hidden = true;
     el("campaignNext").hidden = true;
     el("campaignTestStand").hidden = true;

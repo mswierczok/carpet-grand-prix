@@ -1,3 +1,5 @@
+import { openLegacySettings, backToMenu } from "../helpers/racing-menu.js";
+import { driveButton, raceAction } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { capture2D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
@@ -37,17 +39,17 @@ test("POV-Karriere: speichert ein reales Feld und setzt über Hauptmenü und Neu
   await prepare(page);
   await page.goto("play.html"); await page.locator("#newDrive").click();
   await page.locator("#menuTeam").selectOption("t05"); await page.locator("#startDrive").click(); await ready(page);
-  await page.locator("#pause").click(); await page.keyboard.down("w"); await page.clock.runFor(6200);
-  await page.locator("#openSettings").click(); await page.keyboard.up("w"); await page.clock.runFor(32);
+  await driveButton(page); await page.keyboard.down("w"); await page.clock.runFor(6200);
+  await openLegacySettings(page, "save"); await page.keyboard.up("w"); await page.clock.runFor(32);
   const before = await page.evaluate(() => __driveSnapshot);
   expect(before.race.phase).toBe("racing"); expect(before.paused).toBe(true);
   await page.reload(); await ready(page);
   expect(await page.evaluate(() => __driveSnapshot.entries)).toEqual(before.entries);
   expect(await page.evaluate(() => __driveSnapshot.paused)).toBe(true);
-  await page.getByRole("link", { name: "← Hauptmenü" }).click();
+  await backToMenu(page);
   await expect(page.locator("#continuePOV")).toBeEnabled(); await page.locator("#continuePOV").click(); await ready(page);
   expect(await page.evaluate(() => __driveSnapshot.entries)).toEqual(before.entries);
-  await page.locator("#pause").click(); await page.clock.runFor(100);
+  await driveButton(page); await page.clock.runFor(100);
   expect(await page.evaluate(() => __driveSnapshot.race.elapsed)).toBeGreaterThan(before.race.elapsed);
   expect(await page.evaluate(() => localStorage.getItem("carpet_gp_v072"))).toBe("career-classic-sentinel");
   expect(errors).toEqual([]);
@@ -55,12 +57,12 @@ test("POV-Karriere: speichert ein reales Feld und setzt über Hauptmenü und Neu
 test("POV-Karriere: erhält Qualifying-Bestzeiten und übernommene Startaufstellung nach Neuladen", async ({ page }) => {
   test.setTimeout(240000); await prepare(page,true);
   await page.goto("race.html?new=single"); await ready(page);
-  await page.locator("#startQualifying").click(); await finish(page);
+  await raceAction(page, "startQualifying"); await finish(page);
   const result = await page.evaluate(() => __driveSnapshot.qualifying.standings);
-  await page.locator("#openSettings").click(); await page.locator("#closeSettings").click();
+  await openLegacySettings(page, "save"); await page.locator("#closeSettings").click();
   await page.reload(); await ready(page);
   expect(await page.evaluate(() => __driveSnapshot.qualifying.standings)).toEqual(result);
-  await page.locator("#acceptQualifying").click(); await page.clock.runFor(32);
+  await raceAction(page, "acceptQualifying"); await page.clock.runFor(32);
   const grid = await page.evaluate(() => __driveSnapshot.entries.map(e => e.id));
   await page.reload(); await ready(page);
   expect(await page.evaluate(() => __driveSnapshot.entries.map(e => e.id))).toEqual(grid);
@@ -73,19 +75,19 @@ test("POV-Karriere: verbucht ein echtes Rennen einmalig und geht mit unveränder
   await page.goto("play.html"); await page.locator("#newChampionship").click();
   await expect(page.locator("#menuTrack")).toBeDisabled(); await page.locator("#startDrive").click(); await ready(page);
   await expect(page.locator("#team")).toBeDisabled(); await expect(page.locator("#track")).toBeDisabled();
-  await page.locator("#pause").click(); await finish(page);
-  await page.locator("#commitPOVResult").click();
+  await driveButton(page); await finish(page);
+  await raceAction(page, "commitPOVResult", { close: false });
   const saved = await page.evaluate(k => JSON.parse(localStorage.getItem(k)),key);
   expect(saved.career.results).toHaveLength(1); expect(saved.career.results[0].order.map(e => e.points)).toEqual([25,18,15,12,10,8,6,4,2,1,0,0,0]);
   await page.evaluate(() => document.getElementById("commitPOVResult").click());
   expect(await page.evaluate(k => JSON.parse(localStorage.getItem(k)).career.teams,key)).toEqual(saved.career.teams);
   await page.reload(); await ready(page); await expect(page.locator("#commitPOVResult")).toBeHidden();
-  await page.locator("#nextPOVRound").click(); await page.clock.runFor(32);
+  await raceAction(page, "nextPOVRound"); await page.clock.runFor(32);
   await expect(page.locator("#track")).toHaveValue("luxembourg");
   expect(await page.evaluate(() => __driveSnapshot.race.phase)).toBe("grid");
   const next = await page.evaluate(k => JSON.parse(localStorage.getItem(k)),key);
   expect(next.career.round).toBe(1); expect(next.career.results).toHaveLength(1); expect(next.teamId).toBe(saved.teamId);
-  await page.locator("#openWorkshop").click(); await expect(page.locator("#povWorkshop svg")).toBeVisible();
+  await raceAction(page, "openWorkshop", { close: false }); await expect(page.locator("#povWorkshop svg")).toBeVisible();
   await expect(page.locator("[data-upgrade]")).toHaveCount(4);
   expect(errors).toEqual([]);
 });
@@ -98,7 +100,7 @@ function fundedGame() {
 }
 test("POV-Karriere: importiert Sicherungen, entwickelt das Teamfahrzeug und schützt einen gültigen Stand vor beschädigtem Import", async ({ page }) => {
   test.setTimeout(120000); await prepare(page);
-  await page.goto("play.html"); await page.locator("#openSettings").click();
+  await page.goto("play.html"); await openLegacySettings(page, "save");
   const game = fundedGame();
   await page.locator("#importMenuPOV").setInputFiles({ name:"pov.json", mimeType:"application/json", buffer:Buffer.from(JSON.stringify(game)) });
   await expect(page.locator("#menuMessage")).toContainText("importiert"); await page.locator("#closeSettings").click();
@@ -109,7 +111,7 @@ test("POV-Karriere: importiert Sicherungen, entwickelt das Teamfahrzeug und sch�
   await page.locator("[data-workshop-close]").click(); await page.locator("#continuePOV").click(); await ready(page);
   expect(await page.evaluate(() => CGPArcade.Physics.parameters.maxSpeed)).toBe(110);
   expect(await page.evaluate(() => CGPArcade.POVWorkshop.drivingEffectsActive)).toBe(false);
-  await page.locator("#openSettings").click();
+  await openLegacySettings(page, "save");
   const before = await page.evaluate(k => localStorage.getItem(k),key);
   await page.locator("#importPOV").setInputFiles({ name:"bad.json", mimeType:"application/json", buffer:Buffer.from('{"version":1}') });
   await expect(page.locator("#povSaveStatus")).toContainText("Import abgebrochen");
@@ -125,11 +127,11 @@ test("POV-Karriere: speichert und setzt mit vollständig abgeschaltetem Netzwerk
   await page.route("**/carpet-grand-prix-menu-offline.html*", route => route.fulfill({ contentType:"text/html", body:createPOVMenuOffline() }));
   await context.setOffline(true);
   await page.goto("__arcade_race_offline__/index.html?new=single"); await ready(page);
-  await page.locator("#pause").click(); await page.keyboard.down("w"); await page.clock.runFor(6200);
-  await page.locator("#openSettings").click(); await page.keyboard.up("w"); await page.clock.runFor(32);
+  await driveButton(page); await page.keyboard.down("w"); await page.clock.runFor(6200);
+  await openLegacySettings(page, "save"); await page.keyboard.up("w"); await page.clock.runFor(32);
   const before = await page.evaluate(() => __driveSnapshot.entries);
   await page.reload(); await ready(page); expect(await page.evaluate(() => __driveSnapshot.entries)).toEqual(before);
-  await page.getByRole("link", { name:"← Hauptmenü" }).click(); await page.locator("#continuePOV").click(); await ready(page);
+  await backToMenu(page); await page.locator("#continuePOV").click(); await ready(page);
   expect(await page.evaluate(() => __driveSnapshot.entries)).toEqual(before);
   expect(requests).toHaveLength(4);
 });
@@ -140,6 +142,6 @@ test("POV-Karriere: sperrt Fortsetzen bei beschädigtem lokalen Stand ohne ihn z
   await expect(page.locator("#povLoadProblem")).toBeVisible(); await expect(page.locator("#pause")).toBeDisabled();
   await page.keyboard.press("p"); await page.clock.runFor(500);
   expect(await page.evaluate(k => localStorage.getItem(k),key)).toBe("{broken");
-  await page.getByRole("link", { name:"← Hauptmenü" }).click(); await expect(page.locator("#continuePOV")).toBeDisabled();
+  await backToMenu(page); await expect(page.locator("#continuePOV")).toBeDisabled();
   expect(await page.evaluate(k => localStorage.getItem(k),key)).toBe("{broken");
 });

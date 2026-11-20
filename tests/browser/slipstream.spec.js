@@ -1,3 +1,4 @@
+import { driveButton, raceAction, selectRaceOption } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
@@ -47,7 +48,7 @@ test("Windschatten: echter 3D-Heckwirbel entspricht der Physik, Pause/Neustart b
   await page.clock.runFor(64);
   const before = await page.evaluate(() => ({ ...localStorage }));
   await page.locator("#balancePanel summary").click();
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.evaluate(pilotRace);
   await page.clock.runFor(9000); // Three seconds red, then only six seconds racing.
   expect(await page.evaluate(() => __driveSnapshot.race.elapsed)).toBeGreaterThan(5);
@@ -80,12 +81,12 @@ test("Windschatten: echter 3D-Heckwirbel entspricht der Physik, Pause/Neustart b
   const paused = await page.evaluate(() => __driveSnapshot.entries.map((e) => e.slipstream));
   await page.clock.runFor(1000);
   expect(await page.evaluate(() => __driveSnapshot.entries.map((e) => e.slipstream))).toEqual(paused);
-  await page.locator("#restart").click();
+  await raceAction(page, "restart");
   await page.clock.runFor(32);
   expect(await page.evaluate(() => __driveSnapshot.entries.every((e) => e.slipstream.strength === 0))).toBe(true);
   expect(await page.evaluate(() => __inspect3D.diagnostics().wake.emitters)).toBe(0);
   await expect(page.locator("#viewDraft")).toBeHidden();
-  await page.locator("#track").selectOption("russia");
+  await selectRaceOption(page, "track", "russia");
   await page.clock.runFor(64);
   expect(await page.evaluate(() => __inspect3D.diagnostics().wake.emitters)).toBe(0);
   expect(await page.evaluate(() => ({ ...localStorage }))).toEqual({ ...before,
@@ -112,7 +113,7 @@ for (const [url, enabled] of [["race.html?track=france&balance=1&slipstream=0", 
     await page.clock.runFor(32);
     if (enabled) await context.setOffline(true);
     const before = await page.evaluate(() => ({ ...localStorage }));
-    await page.locator("#pause").click();
+    await driveButton(page);
     await page.evaluate(pilotRace);
     let active = false;
     for (let i = 0; i < 90; i++) {

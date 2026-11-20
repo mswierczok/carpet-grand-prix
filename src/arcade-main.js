@@ -373,6 +373,10 @@
       if (campaignMode || loadError || session.snapshot().qualifying || session.snapshot().qualifyingResult || session.snapshot().race.phase !== "grid") return;
       raceUI.setDirectStart(true); raceMenu.close(); updateUI();
     };
+    el("repeatQualifying").onclick = () => {
+      if (campaignMode) return;
+      changeStage(() => { raceUI.setDirectStart(false); return session.startQualifying(); });
+    };
     el("acceptQualifying").onclick = () => changeStage(() => session.acceptQualifying());
     el("cancelQualifying").onclick = () => changeStage(() => session.cancelQualifying());
     el("catchup").value = catchupEnabled ? "on" : "off";

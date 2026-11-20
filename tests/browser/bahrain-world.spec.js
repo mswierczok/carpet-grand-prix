@@ -1,3 +1,4 @@
+import { driveButton, selectRaceOption } from "../helpers/racing-menu.js";
 import { pilotPit } from "../helpers/pitlane-browser.js";
 import { test, expect } from "@playwright/test";
 import { capture3D, selectDriveSetting } from "../helpers/arcade-browser.js";
@@ -52,7 +53,7 @@ test("Bahrain-Welt: echter Renderer, unveränderliche Eingabe und sicherer Wechs
   expect(result.diag.world.tunnelHalfWidth).toBe(32);
   expect(result.diag.drawCalls).toBeLessThan(190);
   expect(result.diag.triangles).toBeLessThan(90000);
-  await page.locator("#track").selectOption("luxembourg");
+  await selectRaceOption(page, "track", "luxembourg");
   await page.clock.runFor(32);
   const luxembourg = await page.evaluate(() => __inspect3D.diagnostics().world);
   expect(luxembourg.theme).toBe("luxembourg");
@@ -60,7 +61,7 @@ test("Bahrain-Welt: echter Renderer, unveränderliche Eingabe und sicherer Wechs
   expect(luxembourg.passages.map((passage) => passage.type)).toContain(
     "woodBridge",
   );
-  await page.locator("#track").selectOption("bahrain");
+  await selectRaceOption(page, "track", "bahrain");
   await page.clock.runFor(32);
   expect(await page.evaluate(() => __inspect3D.diagnostics().world.theme)).toBe(
     "carpet-desert",
@@ -83,7 +84,7 @@ test("Bahrain-Welt: vollständiges Standardrennen mit 13 echten Fahrzeugen und a
     "3d",
   );
   await selectDriveSetting(page, "quality", "low");
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.evaluate(pilotRace);
   for (let i = 0; i < 550; i++) {
     await page.clock.runFor(1000);
@@ -126,7 +127,7 @@ test("Bahrain-Welt: vollständig offline mit 3D, mobilen Abmessungen und sichere
   expect(await page.evaluate(() => __inspect3D.diagnostics().world.theme)).toBe(
     "carpet-desert",
   );
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.keyboard.down("w");
   await page.clock.runFor(5000);
   await page.keyboard.up("w");
@@ -161,7 +162,7 @@ test("Bahrain-Welt: fährt per Tastatur durch Unterbett und offene Boxengasse mi
     "3d",
   );
   await selectDriveSetting(page, "quality", "low");
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.evaluate(pilotPit);
   for (let i = 0; i < 600; i++) {
     await page.clock.runFor(250);

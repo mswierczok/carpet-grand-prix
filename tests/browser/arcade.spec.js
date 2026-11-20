@@ -1,3 +1,4 @@
+import { driveButton, raceAction } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { driveDarkShoulder, installPausedClock } from "../helpers/arcade-browser.js";
@@ -36,7 +37,7 @@ test("fährt per Tastatur frei, bremst, pausiert und lässt den klassischen Spie
   await page.clock.runFor(32);
   const before = await page.evaluate(() => ({ ...localStorage })),
     start = await page.evaluate(() => __arcadeDrawPose);
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.keyboard.down("w");
   await page.clock.runFor(1000);
   expect(Number(await page.locator("#speed").innerText())).toBeGreaterThan(40);
@@ -61,8 +62,8 @@ test("fährt per Tastatur frei, bremst, pausiert und lässt den klassischen Spie
   const time = await page.locator("#lapTime").innerText();
   await page.clock.runFor(1000);
   await expect(page.locator("#lapTime")).toHaveText(time);
-  await page.locator("#recover").click();
-  await page.locator("#restart").click();
+  await raceAction(page, "recover");
+  await raceAction(page, "restart");
   expect(await page.evaluate(() => ({ ...localStorage }))).toEqual(before);
   expect(errors).toEqual([]);
 });
@@ -71,13 +72,13 @@ test("löst gehaltenes Gas bei Fokusverlust und ignoriert Fahrbefehle im Auswahl
 }) => {
   await prepare(page);
   await page.goto("arcade.html");
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.keyboard.down("w");
   await page.clock.runFor(400);
   await page.evaluate(() => window.dispatchEvent(new Event("blur")));
   await expect(page.locator("#pause")).toHaveText("▶ Fahren");
-  await page.locator("#restart").click();
-  await page.locator("#pause").click();
+  await raceAction(page, "restart");
+  await driveButton(page);
   await page.clock.runFor(500);
   await expect(page.locator("#speed")).toHaveText("0");
   await page.keyboard.up("w");
@@ -109,7 +110,7 @@ test("ist mit Zeigertasten bedienbar, skaliert mobil und öffnet ohne weitere Re
   });
   await page.goto("__arcade_offline__/index.html");
   await context.setOffline(true);
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.locator('[data-drive="throttle"]').scrollIntoViewIfNeeded();
   const box = await page.locator('[data-drive="throttle"]').boundingBox();
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
@@ -117,7 +118,7 @@ test("ist mit Zeigertasten bedienbar, skaliert mobil und öffnet ohne weitere Re
   await page.clock.runFor(500);
   expect(Number(await page.locator("#speed").innerText())).toBeGreaterThan(10);
   await page.mouse.up();
-  await page.locator("#pause").click();
+  await driveButton(page);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= innerWidth,
@@ -131,7 +132,7 @@ test("absolviert im echten Canvas drei Runden mit ausschließlich Tastaturereign
   test.setTimeout(120000);
   await prepare(page);
   await page.goto("arcade.html");
-  await page.locator("#pause").click();
+  await driveButton(page);
   await driveDarkShoulder(page);
   await expect(page.locator("#status")).toContainText("Dunkler Teppich");
   await expect(page.locator("#arcadeApp")).not.toContainText("ungültig");

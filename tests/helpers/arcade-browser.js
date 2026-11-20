@@ -1,3 +1,4 @@
+import { openRaceMenu, closeRaceMenu } from "./racing-menu.js";
 // Test instrumentation is installed before application scripts; no production hooks.
 export async function installPausedClock(page) {
   // Freeze before loading WebGL. Reading Date in a busy renderer and issuing
@@ -21,30 +22,35 @@ export async function driveDarkShoulder(page) {
   await page.keyboard.up("a");
   await page.clock.runFor(80);
 }
-export async function capture2D(page) {
+export async function capture2D(page, { renderEvery = 1 } = {}) {
   await installPausedClock(page);
-  await page.addInitScript(() => {
-    globalThis.CGPArcade = {};
-    let module;
-    Object.defineProperty(CGPArcade, "Renderer", {
-      configurable: true,
-      get: () => module,
-      set: (value) => {
-        module = {
-          create(...args) {
-            const renderer = value.create(...args);
-            return {
-              ...renderer,
-              draw(snapshot, ...rest) {
-                globalThis.__driveSnapshot = snapshot;
-                return renderer.draw(snapshot, ...rest);
-              },
-            };
-          },
-        };
-      },
-    });
-  });
+  await page.addInitScript(
+    ({ renderEvery }) => {
+      globalThis.CGPArcade = {};
+      let module;
+      Object.defineProperty(CGPArcade, "Renderer", {
+        configurable: true,
+        get: () => module,
+        set: (value) => {
+          module = {
+            create(...args) {
+              const renderer = value.create(...args);
+              let frames = 0;
+              return {
+                ...renderer,
+                draw(snapshot, ...rest) {
+                  globalThis.__driveSnapshot = snapshot;
+                  if (snapshot.paused || frames++ % renderEvery === 0)
+                    return renderer.draw(snapshot, ...rest);
+                },
+              };
+            },
+          };
+        },
+      });
+    },
+    { renderEvery },
+  );
 }
 
 export async function capture3D(
@@ -255,13 +261,21 @@ export function keyboardPilot({ laps = 1, tryShortcut = false } = {}) {
 // Follow the actual menu flow in race.html; free driving keeps its inline options.
 export async function selectDriveSetting(page, id, value) {
   const menu = page.locator("#openSettings");
-  if (await menu.count()) await menu.click();
+  if (await menu.count()) {
+    if (await page.locator(".racing-screen").count())
+      await openRaceMenu(page, "settings");
+    else await menu.click();
+  }
   await page.locator("#" + id).selectOption(value);
   if (await menu.count()) await page.locator("#closeSettings").click();
 }
 export async function switchToTopDown(page) {
   const menu = page.locator("#openSettings");
-  if (await menu.count()) await menu.click();
+  if (await menu.count()) {
+    if (await page.locator(".racing-screen").count())
+      await openRaceMenu(page, "settings");
+    else await menu.click();
+  }
   await page.locator("#fallback").click();
   if (await menu.count()) await page.locator("#closeSettings").click();
 }

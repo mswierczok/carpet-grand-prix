@@ -53,8 +53,8 @@
     }
     function update(s) {
       const q = s.qualifying,
-        key = track().id + ":" + !!q,
-        r = s.race;
+        r = s.race,
+        key = track().id + ":" + !!q + ":" + r.playerTeam;
       if (
         key !== context ||
         r.elapsed < previousTime ||

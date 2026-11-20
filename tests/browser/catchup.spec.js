@@ -1,3 +1,4 @@
+import { driveButton, raceAction, selectRaceOption } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
@@ -44,17 +45,17 @@ test("Aufholhilfe: Auswahl wird als Einstellung gespeichert, bleibt ab Countdown
   await page.goto("race.html?balance=1"); await page.clock.runFor(32);
   await selectDriveSetting(page, "difficulty", "hard");
   const saved = await page.evaluate(() => ({ ...localStorage }));
-  await page.locator("#team").selectOption("t05");
+  await selectRaceOption(page, "team", "t05");
   await selectDriveSetting(page, "catchup", "off"); await page.clock.runFor(32);
   expect(await page.evaluate(() => __driveSnapshot.entries.every((e) => !Object.hasOwn(e, "catchup")))).toBe(true);
-  await page.locator("#track").selectOption("france"); await page.clock.runFor(32);
+  await selectRaceOption(page, "track", "france"); await page.clock.runFor(32);
   await expect(page.locator("#catchup")).toHaveValue("off");
   await expect(page.locator("#team")).toHaveValue("t05");
   await expect(page.locator("#difficulty")).toHaveValue("hard");
   await selectDriveSetting(page, "catchup", "on");
-  await page.locator("#pause").click(); await page.clock.runFor(1000);
+  await driveButton(page); await page.clock.runFor(1000);
   await expect(page.locator("#catchup")).toBeDisabled();
-  await page.locator("#restart").click(); await page.clock.runFor(32);
+  await raceAction(page, "restart"); await page.clock.runFor(32);
   await expect(page.locator("#catchup")).toHaveValue("on");
   await expect(page.locator("#catchup")).toBeEnabled();
   expect(await page.evaluate(() => __driveSnapshot.entries.every((e) => e.catchup.pace === 0))).toBe(true);
@@ -79,7 +80,7 @@ for (const [url, enabled, threeD] of [["race.html?balance=1", true, true],
     if (url.startsWith("__arcade")) await context.setOffline(true);
     const saved = await page.evaluate(() => ({ ...localStorage }));
     await page.locator("#balancePanel summary").click();
-    await page.locator("#pause").click(); await page.evaluate(pilotRace);
+    await driveButton(page); await page.evaluate(pilotRace);
     for (let i = 0; i < 15; i++) {
       await page.clock.runFor(10000);
       if (await page.evaluate(() => __driveSnapshot.race.phase === "finished")) break;

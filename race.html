@@ -14,7 +14,7 @@
       rel="stylesheet"
       href="./styles/arcade-race.css?v=steering-settings-1"
     />
-    <link rel="stylesheet" href="./styles/campaign.css?v=campaign-1" />
+    <link rel="stylesheet" href="./styles/campaign.css?v=hud-2" />
     <link rel="stylesheet" href="./styles/racing-hud.css?v=hud-2" />
   </head>
   <body class="racing-page">
@@ -140,7 +140,7 @@
             ><button id="recover" type="button">
               Auto zurücksetzen <kbd>R</kbd></button
             ><button id="restart" type="button">Rennen neu starten</button
-            ><button id="directRace" type="button">
+            ><button id="repeatQualifying" type="button">Qualifying (erneut) starten</button><button id="directRace" type="button">
               Direkt ins Rennen (ohne Qualifying)</button
             ><button id="cancelQualifying" type="button" hidden>
               Qualifying verwerfen</button
@@ -353,6 +353,7 @@
             </table>
           </div>
         </section>
+        <button id="acceptResultsQualifying" type="button" class="primary" hidden>Startaufstellung übernehmen</button>
         <a
           id="continueCampaignAfterRace"
           class="primary result-link"
@@ -438,7 +439,7 @@
     <script src="./src/ui/race-settings.js?v=hud-2"></script>
     <script src="./src/ui/pov-workshop-ui.js?v=career-1"></script>
     <script src="./src/ui/pov-game-ui.js?v=career-1"></script>
-    <script src="./src/ui/campaign-view.js?v=campaign-1"></script>
+    <script src="./src/ui/campaign-view.js?v=hud-2"></script>
     <script src="./src/ui/campaign-race-ui.js?v=hud-2"></script>
     <script src="./src/arcade-main.js?v=hud-2"></script>
   </body>

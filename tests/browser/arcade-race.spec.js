@@ -1,3 +1,4 @@
+import { driveButton, pauseControl, raceAction, selectRaceOption } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { selectDriveSetting, switchToTopDown, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace, threeLapRegression } from "../helpers/arcade-race-browser.js";
@@ -21,7 +22,7 @@ test("zeigt alle 13 echten Teamfahrzeuge mit gebündelter 3D-Geometrie und stabi
   await expect(page.locator("#position")).toHaveText("13 / 13");
   const before = await page.evaluate(() => ({ ...localStorage }));
   for (const id of ["t01", "t04", "t05", "t13", "t01"]) {
-    await page.locator("#team").selectOption(id);
+    await selectRaceOption(page, "team", id);
     await page.clock.runFor(32);
     const s = await page.evaluate(() => ({
       snapshot: __driveSnapshot,
@@ -67,7 +68,7 @@ test("hält das volle Feld bei Rot an, pausiert alle Fahrer und erhält sie beim
   const initial = await page.evaluate(() =>
     __driveSnapshot.entries.map((e) => [e.car.x, e.car.y]),
   );
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.keyboard.down("w");
   await page.clock.runFor(1100);
   await expect(page.locator("#raceSignal .is-red")).toHaveCount(2);
@@ -79,7 +80,7 @@ test("hält das volle Feld bei Rot an, pausiert alle Fahrer und erhält sie beim
   await page.keyboard.press("p");
   await page.clock.runFor(500);
   await expect(page.locator("#raceSignal .is-red")).toHaveCount(2);
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.keyboard.down("w");
   await page.clock.runFor(4500);
   await page.keyboard.up("w");
@@ -94,17 +95,17 @@ test("hält das volle Feld bei Rot an, pausiert alle Fahrer und erhält sie beim
   expect((await page.evaluate(() => __driveSnapshot)).entries).toEqual(
     paused.entries,
   );
-  await expect(page.locator("#pause")).toHaveText("Fortsetzen");
+  await expect(pauseControl(page)).toHaveText("Fortsetzen");
   await switchToTopDown(page);
   await expect(page.locator("#arcadeApp")).toHaveAttribute(
     "data-rendering",
     "2d",
   );
   await expect(page.locator("#raceOrder li")).toHaveCount(13);
-  await page.locator("#restart").click();
+  await raceAction(page, "restart");
   await expect(page.locator("#team")).toBeEnabled();
   await expect(page.locator("#raceClock")).toHaveText("0:00.000");
-  await expect(page.locator("#pause")).toHaveText("Rennen starten");
+  await expect(page.locator("#pause")).toHaveText("RENNEN STARTEN");
   expect(errors).toEqual([]);
 });
 
@@ -128,7 +129,7 @@ test("enthält das volle Feld auch im netzwerkfreien Renn-HTML", async ({
     "3d",
   );
   await selectDriveSetting(page, "quality", "low");
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.keyboard.down("w");
   await page.clock.runFor(5500);
   await page.keyboard.up("w");
@@ -164,7 +165,7 @@ test("fährt ausschließlich über Tastatur ein vollständiges Rennen bis zu 13 
     "2d",
   );
   const before = await page.evaluate(() => ({ ...localStorage }));
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.evaluate(pilotRace);
   for (let step = 0; step < 12; step++) {
     await page.clock.runFor(20000);
@@ -192,7 +193,7 @@ test("fährt ausschließlich über Tastatur ein vollständiges Rennen bis zu 13 
   );
   await expect(page.locator("#pause")).toBeDisabled();
   expect(await page.evaluate(() => ({ ...localStorage }))).toEqual(before);
-  await page.locator("#restart").click();
+  await raceAction(page, "restart");
   await expect(page.locator("#raceResults")).toBeHidden();
   await expect(page.locator("#position")).toHaveText("13 / 13");
   expect(errors).toEqual([]);

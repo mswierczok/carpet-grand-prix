@@ -6,7 +6,11 @@
 export async function threeLapRegression(page) {
   await page.route("**/src/racing/race-session.js*", async (route) => {
     const response = await route.fetch();
-    await route.fulfill({ response, body: await response.text() + `
+    await route.fulfill({
+      response,
+      body:
+        (await response.text()) +
+        `
 ;(() => {
   const original = CGPArcade.RaceSession;
   CGPArcade.RaceSession = Object.freeze({ ...original,
@@ -15,10 +19,11 @@ export async function threeLapRegression(page) {
     }
   });
 })();
-` });
+`,
+    });
   });
 }
-export function pilotRace() {
+export function pilotRace({ stopOnQualifiedGrid = false } = {}) {
   globalThis.__racePilotPeakSpeeds = {};
   const A = CGPArcade,
     surface = A.Surface.create(
@@ -43,7 +48,10 @@ export function pilotRace() {
         __racePilotPeakSpeeds[entry.id] || 0,
         entry.car.speed * p.metersPerUnit * 3.6,
       );
-    if (s.race.phase === "finished") {
+    if (
+      s.race.phase === "finished" ||
+      (stopOnQualifiedGrid && s.qualifyingResult && s.race.phase === "grid")
+    ) {
       for (const code of [...held]) key(code, false);
       globalThis.__racePilotDone = true;
       clearInterval(timer);
@@ -54,8 +62,11 @@ export function pilotRace() {
       return;
     }
     const traffic = driver.prepare(
-        (s.visibleEntries || s.entries).map((e) => ({ ...e.car, id: e.id,
-          ...(e.slipstream ? { slipstream: e.slipstream } : {}) })),
+        (s.visibleEntries || s.entries).map((e) => ({
+          ...e.car,
+          id: e.id,
+          ...(e.slipstream ? { slipstream: e.slipstream } : {}),
+        })),
       ),
       car = traffic.find((e) => e.id === s.race.playerTeam),
       input = driver.input(car, traffic, memory),

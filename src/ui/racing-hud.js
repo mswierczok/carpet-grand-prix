@@ -72,6 +72,11 @@
       if (!dialog.open) dialog.showModal();
     }
     el("showResults").onclick = openResults;
+    el("acceptResultsQualifying").onclick = () => {
+      if (isCampaign) return;
+      dialog.close();
+      el("acceptQualifying").click();
+    };
     function update(s) {
       latest = s;
       model = presentation.update(s);
@@ -147,6 +152,7 @@
         "classificationGapTitle",
         q ? "Bestzeit / Abstand" : "Abstand / Zeit",
       );
+      root.querySelector(".classification-head").lastElementChild.hidden = !!q;
       for (const e of model.rows) {
         let row = field.get(e.id);
         if (!row) {
@@ -181,7 +187,7 @@
         write(row.children[1].children[1], e.teamName);
         write(
           row.children[1].children[2],
-          `${e.completed} R · ${e.status} · Start P${e.startPosition}`,
+          `${e.completed} R · ${e.status}${q ? "" : " · Start P" + e.startPosition}`,
         );
         write(
           row.children[2].children[0],
@@ -198,6 +204,7 @@
         write(row.children[3], e.completed);
         write(row.children[4], e.status);
         write(row.children[5], "P" + e.startPosition);
+        row.children[5].hidden = !!q;
         if (el("raceOrder").children[e.position - 1] !== row)
           el("raceOrder").insertBefore(
             row,
@@ -209,6 +216,8 @@
       el("pause").hidden =
         !grid || !!q || (!s.qualifyingResult && !directReady);
       el("acceptQualifying").hidden = campaign || !q?.finished;
+      el("acceptResultsQualifying").hidden = campaign || !q?.finished;
+      el("repeatQualifying").hidden = campaign || !!q || !grid;
       el("cancelQualifying").hidden = campaign || !q;
       el("directRace").hidden =
         campaign || !!q || !grid || !!s.qualifyingResult;
@@ -287,7 +296,16 @@
           "qualifying",
           r.playerTeam,
         );
+      if (!qualifying)
+        A.ResultDetails.fill(
+          el("qualifyingRows"),
+          [],
+          "qualifying",
+          r.playerTeam,
+        );
       const finished = !q && player.finishTime !== null;
+      if (!finished)
+        A.ResultDetails.fill(el("resultRows"), [], "race", r.playerTeam);
       if (finished) {
         A.ResultDetails.fill(
           el("resultRows"),
@@ -359,6 +377,7 @@
         directReady = value;
       },
       reset() {
+        if (dialog.open) dialog.close();
         directReady = false;
         finishedShown = false;
       },

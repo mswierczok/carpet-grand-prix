@@ -1,3 +1,4 @@
+import { driveButton } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
@@ -27,7 +28,7 @@ for (const offline of [false, true])
       "3d",
     );
     await page.locator("#quality").selectOption("low");
-    await page.locator("#pause").click();
+    await driveButton(page);
     const held = new Map(),
       cdp = isMobile ? await context.newCDPSession(page) : null,
       keys = { throttle: "w", right: "d", left: "a" },
@@ -138,7 +139,7 @@ CGPArcade.RaceSession = Object.freeze({ ...original, create(track, options = {})
     "data-rendering",
     "3d",
   );
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.evaluate(pilotRace);
   for (let n = 0; n < 160; n++) {
     await page.clock.runFor(1000);

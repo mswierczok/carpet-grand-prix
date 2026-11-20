@@ -1,3 +1,4 @@
+import { driveButton, raceAction } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { selectDriveSetting, switchToTopDown, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
@@ -80,13 +81,13 @@ for (const offline of [false, true]) test(`Qualifying: echte Bestzeiten und Star
     page.on("request", (r) => { if (r.url().startsWith("http")) requests.push(r.url()); });
   } else await selectDriveSetting(page, "quality", "low");
   const storage = await page.evaluate(() => ({ ...localStorage }));
-  await page.locator("#startQualifying").click();
+  await raceAction(page, "startQualifying");
   await page.clock.runFor(1100);
   await expect(page.locator("#raceSignal .is-red")).toHaveCount(2);
   await page.keyboard.press("p");
   await page.clock.runFor(600);
   await expect(page.locator("#raceSignal .is-red")).toHaveCount(2);
-  await page.locator("#pause").click();
+  await driveButton(page);
   if (!offline) {
     await page.clock.runFor(3000);
     expect(await page.evaluate(() => __driveSnapshot.qualifying)).toBeTruthy();
@@ -96,7 +97,7 @@ for (const offline of [false, true]) test(`Qualifying: echte Bestzeiten und Star
     expect(fleet.maxOpponents).toBe(0);
     await page.locator("#arcadeCanvas").screenshot({ path: test.info().outputPath("solo-qualifying.png") });
     await switchToTopDown(page);
-    await page.locator("#pause").click();
+    await driveButton(page);
   }
   await finishSession(page);
   const q = await page.evaluate(() => __driveSnapshot);
@@ -115,7 +116,7 @@ for (const offline of [false, true]) test(`Qualifying: echte Bestzeiten und Star
   expect(sprites.qFrames).toBeGreaterThan(0);
   expect(sprites.qMax).toBe(1);
   expect(sprites.qWrongTeam).toBe(0);
-  await page.locator("#acceptQualifying").click();
+  await raceAction(page, "acceptQualifying");
   await page.clock.runFor(32);
   const grid = await page.evaluate(() => __driveSnapshot);
   expect(grid.race.phase).toBe("grid");
@@ -124,17 +125,17 @@ for (const offline of [false, true]) test(`Qualifying: echte Bestzeiten und Star
   expect(grid.entries.map((e) => e.id)).toEqual(q.qualifying.standings.map((e) => e.id));
   expect(grid.race.position).toBe(q.qualifying.player.position);
   expect(grid.entries.every((e) => e.car.speed === 0 && e.timing.completed === 0)).toBe(true);
-  await expect(page.locator("#status")).toContainText("Startplatz " + q.qualifying.player.position);
-  await page.locator("#pause").click();
+  await expect(page.locator("#sessionPrompt")).toContainText("Startplatz P" + q.qualifying.player.position);
+  await driveButton(page);
   await finishSession(page);
   expect(await page.evaluate(() => __driveSnapshot.race.finished)).toBe(13);
   await expect(page.locator("#resultRows tr")).toHaveCount(13);
-  await page.locator("#restart").click();
+  await raceAction(page, "restart");
   await page.clock.runFor(32);
   expect(await page.evaluate(() => __driveSnapshot.entries.map((e) => e.id))).toEqual(grid.entries.map((e) => e.id));
-  await page.locator("#startQualifying").click();
+  await raceAction(page, "startQualifying");
   await page.clock.runFor(32);
-  await page.locator("#cancelQualifying").click();
+  await raceAction(page, "cancelQualifying");
   await page.clock.runFor(32);
   expect(await page.evaluate(() => __driveSnapshot.qualifying)).toBeUndefined();
   await expect(page.locator("#position")).toHaveText("13 / 13");

@@ -1,3 +1,4 @@
+import { driveButton, raceAction, selectRaceOption } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
@@ -9,7 +10,7 @@ test("KI-Stufen: Auswahl bleibt über Streckenwechsel und Neuladen erhalten, kla
   await page.goto("race.html");
   await page.clock.runFor(32);
   await expect(page.locator("#difficulty option")).toHaveCount(4);
-  await page.locator("#team").selectOption("t05");
+  await selectRaceOption(page, "team", "t05");
   await selectDriveSetting(page, "quality", "low");
   for (const id of ["beginner", "hard", "expert", "normal", "expert"]) {
     await selectDriveSetting(page, "difficulty", id);
@@ -17,7 +18,7 @@ test("KI-Stufen: Auswahl bleibt über Streckenwechsel und Neuladen erhalten, kla
     expect(await page.evaluate(() => __driveSnapshot.race.difficulty)).toBe(id);
     expect(await page.evaluate(() => __driveSnapshot.race.playerTeam)).toBe("t05");
   }
-  await page.locator("#track").selectOption("france");
+  await selectRaceOption(page, "track", "france");
   await page.clock.runFor(32);
   await expect(page.locator("#difficulty")).toHaveValue("expert");
   await expect(page.locator("#quality")).toHaveValue("low");
@@ -25,10 +26,10 @@ test("KI-Stufen: Auswahl bleibt über Streckenwechsel und Neuladen erhalten, kla
   await page.reload();
   await page.clock.runFor(32);
   await expect(page.locator("#difficulty")).toHaveValue("expert");
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.clock.runFor(32);
   await expect(page.locator("#difficulty")).toBeDisabled();
-  await page.locator("#restart").click();
+  await raceAction(page, "restart");
   await page.clock.runFor(32);
   await expect(page.locator("#difficulty")).toBeEnabled();
   await expect(page.locator("#difficulty")).toHaveValue("expert");
@@ -88,7 +89,7 @@ CGPArcade.RaceSession = { ...module, create(track, options = {}) {
     if (id === "bahrain") await selectDriveSetting(page, "quality", "low");
     const storage = await page.evaluate(() => ({ ...localStorage }));
     await page.locator("#balancePanel summary").click();
-    await page.locator("#pause").click();
+    await driveButton(page);
     await page.evaluate(pilotRace);
     for (let i = 0; i < 10; i++) {
       await page.clock.runFor(10000);

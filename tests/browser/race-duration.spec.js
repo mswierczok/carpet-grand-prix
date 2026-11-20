@@ -1,3 +1,4 @@
+import { driveButton, raceAction, selectRaceOption } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
@@ -8,12 +9,12 @@ test("Rennlänge: zeigt alle 22 echten Standardformate auch offline und erhält 
   await page.goto("__arcade_race_offline__/index.html");
   await page.clock.runFor(64);
   await page.evaluate(() => localStorage.setItem("carpet_gp_v072", "duration-sentinel"));
-  await page.locator("#team").selectOption("t05");
+  await selectRaceOption(page, "team", "t05");
   await selectDriveSetting(page, "quality", "low");
   await context.setOffline(true);
   const formats = await page.evaluate(() => CGPArcade.RaceFormats.settings.tracks);
   for (const [id, format] of Object.entries(formats)) {
-    await page.locator("#track").selectOption(id);
+    await selectRaceOption(page, "track", id);
     await page.clock.runFor(32);
     await expect(page.locator("#raceLap")).toHaveText(`1 / ${format.laps}`);
     await expect(page.locator("#raceLength")).toHaveText(`${format.laps} Runden`);
@@ -56,7 +57,7 @@ for (const id of ["bahrain", "france", "russia"])
       await selectDriveSetting(page, "quality", "low");
     }
     const storage = await page.evaluate(() => ({ ...localStorage }));
-    await page.locator("#pause").click();
+    await driveButton(page);
     await page.evaluate(pilotRace);
     for (let step = 0; step < 400; step++) {
       await page.clock.runFor(1000);
@@ -72,7 +73,7 @@ for (const id of ["bahrain", "france", "russia"])
     await page.clock.runFor(250); // Allow the existing result UI update after pausing.
     await expect(page.locator("#raceLap")).toHaveText(`${laps} / ${laps}`);
     await expect(page.locator("#resultRows tr")).toHaveCount(13);
-    await page.locator("#restart").click();
+    await raceAction(page, "restart");
     await page.clock.runFor(32);
     await expect(page.locator("#raceLap")).toHaveText(`1 / ${laps}`);
     expect(await page.evaluate(() => ({ ...localStorage }))).toEqual(storage);
