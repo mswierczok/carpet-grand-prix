@@ -7,149 +7,188 @@
     <link rel="icon" href="data:," />
     <title>Carpet Grand Prix · Kampagne</title>
     <link rel="stylesheet" href="./styles/arcade.css?v=mobile-settings-1" />
-    <link rel="stylesheet" href="./styles/campaign.css?v=campaign-1" />
+    <link rel="stylesheet" href="./styles/campaign.css?v=hud-2" />
   </head>
-  <body class="campaign-page">
+  <body class="campaign-page campaign-dashboard">
     <main id="campaignApp">
-      <a class="back-link" href="./play.html">← Hauptmenü</a>
-      <header class="campaign-hero">
-        <p class="eyebrow">CARPET GRAND PRIX · KAMPAGNE</p>
-        <h1>Ein kleines Team.<br />Ein großer Anfang.</h1>
-        <p>
-          Dein Cockpit bei Redwood GP wartet. Wähle deinen Charakter und fahre
-          dein erstes Rennwochenende.
-        </p>
+      <header class="campaign-top">
+        <a class="back-link" href="./play.html">← Hauptmenü</a>
+        <p class="eyebrow">CARPET GRAND PRIX</p>
+        <h1>Kampagne</h1>
       </header>
+      <nav class="campaign-tabs" aria-label="Kampagnenbereiche">
+        <button type="button" data-campaign-tab="overview" aria-current="page">
+          Übersicht</button
+        ><button type="button" data-campaign-tab="results">
+          Rennergebnisse</button
+        ><button type="button" data-campaign-tab="tracks">Strecken</button
+        ><button type="button" data-campaign-tab="teams">Teams</button
+        ><button type="button" data-campaign-tab="save">Spielstand</button>
+      </nav>
       <p id="campaignMessage" role="status" class="campaign-message"></p>
-      <section
-        id="campaignSaved"
-        class="campaign-panel"
-        hidden
-        aria-labelledby="savedCampaignTitle"
-      >
-        <p class="eyebrow">DEIN KAMPAGNENSTAND</p>
-        <h2 id="savedCampaignTitle">Zurück ins Cockpit.</h2>
-        <div id="campaignSavedIdentity" class="campaign-saved-identity"></div>
-        <div class="campaign-actions">
-          <button id="continueCampaign" class="primary" type="button">
-            Rennwochenende fortsetzen</button
-          ><button id="newCampaign" type="button">
-            Neue Kampagne vorbereiten
-          </button>
-        </div>
-      </section>
-      <div id="campaignInterim"></div>
-      <section id="campaignSetup" aria-label="Neue Kampagne">
-        <nav class="campaign-steps" aria-label="Kampagnenstart">
-          <span data-step="team" aria-current="step">01 · Team</span
-          ><span data-step="driver">02 · Fahrer</span
-          ><span data-step="overview">03 · Start</span>
-        </nav>
-        <section id="campaignTeamStep" aria-labelledby="campaignTeamTitle">
-          <p class="eyebrow">DEIN STARTTEAM</p>
-          <h2 id="campaignTeamTitle" tabindex="-1">
-            Klein anfangen. Groß denken.
-          </h2>
-          <p>
-            Redwood GP ist freigeschaltet. Die anderen Teams warten auf spätere
-            Kapitel.
-          </p>
-          <div id="campaignTeams" class="campaign-team-grid"></div>
-          <div class="campaign-actions">
-            <button id="campaignChooseDriver" class="primary" type="button">
-              Mit Redwood GP zur Fahrerwahl →
-            </button>
-          </div>
-        </section>
+      <section data-campaign-view="overview">
         <section
-          id="campaignDriverStep"
-          hidden
-          aria-labelledby="campaignDriverTitle"
-        >
-          <p class="eyebrow">DREI CHARAKTERE. DEIN COCKPIT.</p>
-          <h2 id="campaignDriverTitle" tabindex="-1">Wer fährt für dich?</h2>
-          <p>
-            Alle drei sind Startoptionen mit unterschiedlichen Perspektiven.
-            Ihre Profile verändern die Fahrzeugwerte in dieser
-            Vorbereitungsphase noch nicht.
-          </p>
-          <div id="campaignDrivers" class="campaign-driver-grid"></div>
-          <div class="campaign-actions">
-            <button id="campaignBackTeam" type="button">← Team</button
-            ><button
-              id="campaignShowOverview"
-              class="primary"
-              type="button"
-              disabled
-            >
-              Zur Startübersicht →
-            </button>
-          </div>
-        </section>
-        <section
-          id="campaignOverviewStep"
+          id="campaignSaved"
           class="campaign-panel"
           hidden
-          aria-labelledby="campaignOverviewTitle"
+          aria-labelledby="savedCampaignTitle"
         >
-          <p class="eyebrow">BEREIT FÜR BAHRAIN</p>
-          <h2 id="campaignOverviewTitle" tabindex="-1">Dein erster Start.</h2>
-          <div id="campaignSelection" class="campaign-saved-identity"></div>
-          <p>
-            Starte mit einem Qualifying oder direkt ins Rennen. Ein Fahrzeug pro
-            Team, zwölf echte KI-Gegner.
-          </p>
-          <p class="hint">
-            Die verzweigte Reise, Fähigkeiten und Belohnungen kommen später.
-            Nach Bahrain erhältst du einen gesicherten Zwischenstand.
-          </p>
+          <p class="eyebrow">DEIN TEAM. DEIN WEG.</p>
+          <h2 id="savedCampaignTitle">Zurück ins Cockpit.</h2>
+          <div id="campaignSavedIdentity" class="campaign-saved-identity"></div>
+          <p id="campaignCurrent"></p>
+          <div id="campaignInterim"></div>
           <div class="campaign-actions">
-            <button id="campaignBackDriver" type="button">← Fahrer</button
-            ><button id="startCampaign" class="primary" type="button">
-              Auswahl sichern & auf Bahrain starten
+            <button id="continueCampaign" class="primary" type="button">
+              Rennwochenende fortsetzen</button
+            ><button id="newCampaign" type="button">
+              Neue Kampagne vorbereiten
+            </button>
+          </div>
+        </section>
+        <section id="campaignNext" class="campaign-panel" hidden>
+          <p class="eyebrow">DEIN NÄCHSTER GRAND PRIX</p>
+          <h2>Wo geht es weiter?</h2>
+          <label for="campaignNextTrack">Noch nicht absolvierte Strecke</label
+          ><select id="campaignNextTrack"></select>
+          <div class="campaign-actions">
+            <button id="startNextCampaign" class="primary" type="button">
+              Nächsten Grand Prix vorbereiten
             </button>
           </div>
           <p class="hint">
-            Die Kampagne hat ihren eigenen Speicher. Einzelrennen und
-            Meisterschaft bleiben erhalten.
+            Team und Fahrer bleiben. Jedes Wochenende beginnt mit Qualifying.
           </p>
         </section>
+        <section id="campaignTestStand" class="campaign-panel" hidden>
+          <h2>Kampagnen-Teststand gespeichert</h2>
+          <p>
+            Alle acht verfügbaren Strecken sind absolviert. Deine Ergebnisse
+            bleiben abrufbar. Run-Länge, weitere Stationen und die endgültige
+            Roguelite-Wertung werden später festgelegt.
+          </p>
+        </section>
+        <section id="campaignSetup" aria-label="Neue Kampagne">
+          <nav class="campaign-steps" aria-label="Kampagnenstart">
+            <span data-step="team" aria-current="step">01 · Team</span
+            ><span data-step="driver">02 · Fahrer</span
+            ><span data-step="overview">03 · Start</span>
+          </nav>
+          <section id="campaignTeamStep" aria-labelledby="campaignTeamTitle">
+            <p class="eyebrow">DEIN STARTTEAM</p>
+            <h2 id="campaignTeamTitle" tabindex="-1">
+              Klein anfangen. Groß denken.
+            </h2>
+            <p>
+              Redwood GP ist freigeschaltet. Die anderen Teams warten auf
+              spätere Kapitel.
+            </p>
+            <div id="campaignStartTeam" class="campaign-start-team"></div>
+            <div class="campaign-actions">
+              <button id="campaignChooseDriver" class="primary" type="button">
+                Mit Redwood GP zur Fahrerwahl →
+              </button>
+            </div>
+          </section>
+          <section
+            id="campaignDriverStep"
+            hidden
+            aria-labelledby="campaignDriverTitle"
+          >
+            <p class="eyebrow">DREI CHARAKTERE. DEIN COCKPIT.</p>
+            <h2 id="campaignDriverTitle" tabindex="-1">Wer fährt für dich?</h2>
+            <p>
+              Alle drei sind Startoptionen mit unterschiedlichen Perspektiven.
+              Ihre Profile verändern die Fahrzeugwerte in dieser
+              Vorbereitungsphase noch nicht.
+            </p>
+            <div id="campaignDrivers" class="campaign-driver-grid"></div>
+            <div class="campaign-actions">
+              <button id="campaignBackTeam" type="button">← Team</button
+              ><button
+                id="campaignShowOverview"
+                class="primary"
+                type="button"
+                disabled
+              >
+                Zur Startübersicht →
+              </button>
+            </div>
+          </section>
+          <section
+            id="campaignOverviewStep"
+            class="campaign-panel"
+            hidden
+            aria-labelledby="campaignOverviewTitle"
+          >
+            <p class="eyebrow">BEREIT FÜR BAHRAIN</p>
+            <h2 id="campaignOverviewTitle" tabindex="-1">Dein erster Start.</h2>
+            <div id="campaignSelection" class="campaign-saved-identity"></div>
+            <p>
+              Jedes Wochenende beginnt mit dem Qualifying. Danach fährst du mit
+              deinem Startplatz gegen zwölf KI-Gegner.
+            </p>
+            <p class="hint">
+              Nach Bahrain wählst du eine der verbleibenden Strecken. Run-Map,
+              Fähigkeiten und Belohnungen kommen später.
+            </p>
+            <div class="campaign-actions">
+              <button id="campaignBackDriver" type="button">← Fahrer</button
+              ><button id="startCampaign" class="primary" type="button">
+                Auswahl sichern & auf Bahrain starten
+              </button>
+            </div>
+            <p class="hint">
+              Die Kampagne hat ihren eigenen Speicher. Einzelrennen und
+              Meisterschaft bleiben erhalten.
+            </p>
+          </section>
+        </section>
       </section>
-      <section
-        class="campaign-panel campaign-pool"
-        aria-labelledby="campaignPoolTitle"
-      >
-        <p class="eyebrow">DER VORBEREITETE STRECKENPOOL</p>
-        <h2 id="campaignPoolTitle">Acht Orte. Viele Möglichkeiten.</h2>
-        <p>
-          Bahrain ist dein erster Grand Prix. Die weiteren Stationen und die
-          Anzahl der Rennen pro Run werden später festgelegt.
+      <section data-campaign-view="results" hidden>
+        <p class="eyebrow">DEINE GRAND PRIX</p>
+        <h2>Rennergebnisse</h2>
+        <p id="campaignArchiveEmpty">Noch kein Grand Prix abgeschlossen.</p>
+        <div id="campaignArchive" class="campaign-archive"></div>
+      </section>
+      <section data-campaign-view="tracks" hidden>
+        <h2>Die acht Kampagnenstrecken</h2>
+        <p class="hint">
+          Bahrain ist der Einstieg. Danach wählst du jeweils eine der noch
+          offenen Strecken. Das ist noch keine festgelegte Roguelite-Run-Länge.
         </p>
         <ol id="campaignTracks" class="campaign-track-grid"></ol>
       </section>
-      <section
-        class="campaign-panel campaign-backup"
-        aria-labelledby="campaignBackupTitle"
-      >
-        <h2 id="campaignBackupTitle">Deine Kampagnensicherung</h2>
-        <p class="hint">
-          Nur Kampagnendaten. Deine bisherigen Spielstände werden hier nicht
-          verändert.
+      <section data-campaign-view="teams" hidden>
+        <h2>Die Rennställe</h2>
+        <p>
+          Redwood GP ist freigeschaltet. Weitere Teams und ihre Fähigkeiten
+          kommen später.
         </p>
-        <button id="exportCampaign" type="button" disabled>
-          Gespeicherte Kampagne als Datei sichern</button
-        ><label for="importCampaign">Kampagnensicherung laden</label
-        ><input
-          id="importCampaign"
-          type="file"
-          accept=".json,application/json"
-        />
+        <div id="campaignTeams" class="campaign-team-grid"></div>
+      </section>
+      <section data-campaign-view="save" hidden>
+        <div class="campaign-panel campaign-backup">
+          <h2>Spielstand</h2>
+          <p class="hint">
+            Eigener Kampagnenspeicher. Einzelrennen und Meisterschaft bleiben
+            erhalten.
+          </p>
+          <button id="saveCampaign" type="button" disabled>
+            Kampagne speichern</button
+          ><button id="exportCampaign" type="button" disabled>
+            Gespeicherte Kampagne als Datei sichern</button
+          ><label for="importCampaign">Kampagnensicherung laden</label
+          ><input
+            id="importCampaign"
+            type="file"
+            accept=".json,application/json"
+          />
+        </div>
       </section>
       <footer>
-        <a href="./play.html">Zurück zum Hauptmenü</a>
         <p class="hint">
-          Kampagnen-Grundlage · Kein festgelegtes Run-Ende, keine Belohnungen
-          oder Items.
+          Run-Map, Fähigkeiten, Items und Belohnungen kommen später.
         </p>
       </footer>
     </main>
@@ -159,9 +198,11 @@
     <script src="./src/racing/ai-difficulty.js?v=pit80-lights-1"></script>
     <script src="./src/persistence/pov-checkpoint.js?v=career-1"></script>
     <script src="./src/data/campaign-config.js?v=campaign-1"></script>
-    <script src="./src/championship/campaign.js?v=campaign-1"></script>
-    <script src="./src/persistence/campaign-store.js?v=campaign-1"></script>
-    <script src="./src/ui/campaign-view.js?v=campaign-1"></script>
-    <script src="./src/ui/campaign-launch.js?v=campaign-1"></script>
+    <script src="./src/persistence/campaign-v1.js?v=hud-2"></script>
+    <script src="./src/championship/campaign.js?v=hud-2"></script>
+    <script src="./src/persistence/campaign-store.js?v=hud-2"></script>
+    <script src="./src/ui/campaign-view.js?v=hud-2"></script>
+    <script src="./src/ui/result-details.js?v=hud-2"></script>
+    <script src="./src/ui/campaign-launch.js?v=hud-2"></script>
   </body>
 </html>

@@ -16,7 +16,7 @@
     if (typeof text !== "string" || text.length > maxBytes)
       throw Error("Kampagnensicherung fehlt oder ist zu groß.");
     const value = JSON.parse(text);
-    if (value?.version > 1 || value?.configVersion > A.CampaignConfig.version)
+    if (value?.version > A.Campaign.version || value?.configVersion > A.CampaignConfig.version)
       throw Error("Diese Kampagnensicherung stammt aus einer neueren Version.");
     return A.Campaign.validate(value, false);
   }

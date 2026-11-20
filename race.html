@@ -3,254 +3,370 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="data:," />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
     <meta name="theme-color" content="#192b33" />
     <title>Carpet Grand Prix · Bahrain-Rennen</title>
     <link rel="stylesheet" href="./styles/arcade.css?v=mobile-settings-1" />
-    <link rel="stylesheet" href="./styles/arcade-race.css?v=steering-settings-1" />
-    <link rel="stylesheet" href="./styles/campaign.css?v=campaign-1">
+    <link
+      rel="stylesheet"
+      href="./styles/arcade-race.css?v=steering-settings-1"
+    />
+    <link rel="stylesheet" href="./styles/campaign.css?v=campaign-1" />
+    <link rel="stylesheet" href="./styles/racing-hud.css?v=hud-2" />
   </head>
-  <body>
-    <main id="arcadeApp" data-renderer="3d" data-mode="race">
-      <header>
-        <a href="./index.html" class="back-link">← Hauptmenü</a
-        ><span class="eyebrow">CARPET GRAND PRIX · RENNEN MIT VOLLEM FELD</span>
-        <a data-track-link href="./arcade3d.html" class="new-view"
-          >Zum freien Fahrtest →</a
-        >
-        <h1>Dein Grand Prix.</h1>
-        <p>
-          <span data-track-name>Bahrain</span> · Du gegen zwölf Gegner ·
-          <span id="raceLength">8 Runden</span> · Ein Fahrzeug pro Team.
-        </p>
-      </header>
+  <body class="racing-page">
+    <main
+      id="arcadeApp"
+      data-renderer="3d"
+      data-mode="race"
+      class="racing-screen"
+    >
       <img
         id="worldAtlas"
         src="./assets/world/arcade-materials.png"
         alt=""
         hidden
       />
-      <div class="race-toolbar" aria-label="Schnellzugriff">
-        <button id="recover" type="button">Auto zurücksetzen <kbd>R</kbd></button>
-        <button id="openSettings" type="button" aria-haspopup="dialog" aria-controls="raceSettings">Einstellungen</button>
-      </div>
-      <dialog id="raceSettings" aria-labelledby="settingsTitle" aria-describedby="settingsHelp">
-        <div class="settings-heading">
-          <h2 id="settingsTitle">Einstellungen</h2>
-          <button id="closeSettings" type="button" autofocus>Schließen</button>
-        </div>
-        <p id="settingsHelp" class="hint">Die Fahrt pausiert beim Öffnen. Danach mit „Fortsetzen“ weiterfahren.</p>
-        <div class="settings-field">
-          <label for="quality">Grafik</label>
-          <select id="quality">
-            <option value="auto">Automatisch</option>
-            <option value="low">Sparsam</option>
-          </select>
-          <button id="fallback" type="button">Zur Draufsicht</button>
-          <p id="renderNote" class="hint" role="status">3D-Verfolgungskamera · Bahrain</p>
-        </div>
-        <div class="settings-field">
-          <label for="difficulty">Schwierigkeit</label>
-          <select id="difficulty" aria-describedby="difficultyNote">
-            <option value="beginner">Anfänger</option>
-            <option value="normal" selected>Normal</option>
-            <option value="hard">Schwer</option>
-            <option value="expert">Experte</option>
-          </select>
-          <p class="hint" id="difficultyNote">Vor dem Start wählen. Für POV-Rennen gespeichert.</p>
-          <label for="catchup">KI-Aufholhilfe</label>
-          <select id="catchup" aria-describedby="catchupNote">
-            <option value="on">Dezent</option>
-            <option value="off">Aus</option>
-          </select>
-          <p class="hint" id="catchupNote">Kleine Hilfe für zurückliegende Gegner. Für deine nächsten POV-Rennen gespeichert.</p>
-        </div>
-        <div class="settings-field">
-          <label for="steeringSensitivity">Lenkempfindlichkeit <output id="steeringSensitivityValue" for="steeringSensitivity">100 %</output></label>
-          <input id="steeringSensitivity" type="range" min="40" max="100" step="5" value="100" aria-describedby="steeringSensitivityHelp">
-          <p class="hint" id="steeringSensitivityHelp">40 %: sanfter · 100 %: bisherige Steuerung. Kurze Lenkimpulse werden sanfter, langes Halten lenkt weiterhin voll ein. Gilt für Tastatur und Touch.</p>
-        </div>
-        <div class="settings-field"><button id="savePOV" type="button">Spielstand speichern</button><button id="exportPOV" type="button">Spielstand als Datei sichern</button><label for="importPOV">POV-Sicherung laden</label><input id="importPOV" type="file" accept=".json,application/json"></div>
-        <p id="preferencesNote" class="hint" role="status"></p>
-        <p class="hint">Schwierigkeit und KI-Aufholhilfe kannst du vor dem Start ändern.</p>
-      </dialog>
-      <section id="campaignRacePanel" hidden aria-label="Deine Kampagne"><div id="campaignRaceIdentity" class="campaign-race-banner"></div><div id="campaignRaceInterim" class="campaign-race-stage"></div></section>
-      <p id="povSaveStatus" class="hint" role="status"></p>
-      <p id="povLoadProblem" class="hint" role="alert" hidden></p>
-      <section class="dashboard" aria-label="Fahrzeug und Rundenzeiten">
-        <div class="metric">
-          <span>Tempo</span
-          ><strong
-            ><b id="speed">0</b> <small>km/h</small>
-            <small id="gear" aria-label="Fahrstufe">N</small></strong
+      <div class="drive-view">
+        <canvas
+          id="arcadeCanvas"
+          tabindex="0"
+          aria-label="Rennstrecke. W gibt Gas, S bremst, A und D lenken. P öffnet das Pausenmenü, R setzt zurück."
+        ></canvas>
+        <section class="relative-hud" aria-label="Relative Platzierung">
+          <p id="hudSession" class="hud-caption">BAHRAIN · QUALIFYING</p>
+          <ol id="relativeOrder"></ol>
+          <p id="hudBest" hidden></p>
+        </section>
+        <div class="hud-right">
+          <button
+            id="openSettings"
+            type="button"
+            aria-label="Pause und Einstellungen"
+            aria-haspopup="dialog"
+            aria-controls="raceSettings"
           >
+            ⚙</button
+          ><strong id="hudLap">Runde 1/8</strong>
         </div>
-        <div class="metric">
-          <span>Position</span><strong id="position">13 / 13</strong>
+        <div class="session-start" id="sessionStart">
+          <p id="sessionPrompt"></p>
+          <button id="startQualifying" type="button">QUALIFYING STARTEN</button
+          ><button id="pause" type="button" hidden>RENNEN STARTEN</button
+          ><button id="acceptQualifying" type="button" hidden>
+            STARTAUFSTELLUNG ÜBERNEHMEN
+          </button>
         </div>
-        <div class="metric">
-          <span>Runde</span><strong id="raceLap">1 / 8</strong>
+        <p id="status" class="hud-status" role="status" aria-live="polite"></p>
+        <div id="raceSignal" class="race-signal" aria-hidden="true" hidden>
+          <span class="start-lamp"></span><span class="start-lamp"></span
+          ><span class="start-lamp"></span><span class="start-lamp"></span
+          ><span class="start-lamp"></span>
         </div>
-        <div class="metric">
-          <span>Rennzeit</span><strong id="raceClock">0:00.000</strong>
+        <div class="hud-speed">
+          <strong id="viewSpeed">0 km/h</strong
+          ><span id="viewDraft" hidden>Windschatten</span>
         </div>
-      </section>
-      <div class="race-layout">
-        <section class="race-panel">
-          <div class="race-heading">
-            <div>
-              <span class="eyebrow" data-track-name>Bahrain</span>
-              <p id="status" role="status" aria-live="polite">
-                Bereit zum Rennen
-              </p>
-            </div>
-            <div class="actions">
-              <button id="startQualifying" type="button">Qualifying starten</button>
-              <button id="acceptQualifying" type="button" hidden>Startaufstellung übernehmen</button>
-              <button id="cancelQualifying" type="button" hidden>Qualifying verwerfen</button>
-              <button id="pause" type="button">Rennen starten</button
-              ><button id="overview" type="button" aria-pressed="false">
-                Gesamtstrecke
-              </button>
-              <a id="showResults" class="result-link" href="#raceResults" hidden
-                >Ergebnis</a
-              >
-            </div>
+        <div class="touch-controls" aria-label="Fahrsteuerung">
+          <div>
+            <button
+              type="button"
+              data-drive="left"
+              aria-label="Nach links lenken"
+            >
+              ←</button
+            ><button
+              type="button"
+              data-drive="right"
+              aria-label="Nach rechts lenken"
+            >
+              →
+            </button>
           </div>
-          <div class="drive-view">
-            <div
-              id="raceSignal"
-              class="race-signal"
-              aria-hidden="true"
-              hidden
-            ><span class="start-lamp"></span><span class="start-lamp"></span><span class="start-lamp"></span><span class="start-lamp"></span><span class="start-lamp"></span></div>
-            <div class="track-hud" aria-hidden="true">
-              <strong id="viewSpeed">0 km/h</strong
-              ><span id="viewTime">0:00.000</span>
-              <span id="viewDraft" hidden>Windschatten</span>
-            </div>
-            <canvas
-              id="arcadeCanvas"
-              tabindex="0"
-              aria-label="Bahrain-Rennen gegen zwölf KI-Fahrzeuge. W oder Pfeil hoch gibt Gas, S oder Pfeil runter bremst und fährt nach kurzem Halten im Stand rückwärts. A und D lenken. P pausiert, R setzt das Auto zurück."
-            ></canvas>
-            <div class="touch-controls" aria-label="Fahrsteuerung">
-              <div>
-                <button
-                  type="button"
-                  data-drive="left"
-                  aria-label="Nach links lenken"
-                >
-                  ←</button
-                ><button
-                  type="button"
-                  data-drive="right"
-                  aria-label="Nach rechts lenken"
-                >
-                  →
-                </button>
-              </div>
-              <div>
-                <button
-                  type="button"
-                  data-drive="brake"
-                  aria-label="Bremsen und im Stand für Rückwärts halten"
-                >
-                  Bremse<br /><small>Rückwärts</small></button
-                ><button type="button" data-drive="throttle" class="gas">
-                  Gas
-                </button>
-              </div>
-            </div>
+          <div>
+            <button
+              type="button"
+              data-drive="brake"
+              aria-label="Bremsen und im Stand für Rückwärts halten"
+            >
+              Bremse<small>Rückwärts</small></button
+            ><button type="button" data-drive="throttle" class="gas">
+              Gas
+            </button>
           </div>
-          <div class="race-footer">
-            <span id="checkpoint">Zur Startlinie fahren</span
-            ><span id="lastLap">Noch keine vollständige Runde</span>
+        </div>
+      </div>
+      <p id="povLoadProblem" role="alert" hidden></p>
+      <dialog
+        id="raceSettings"
+        class="racing-dialog"
+        aria-labelledby="settingsTitle"
+      >
+        <div class="settings-heading">
+          <h2 id="settingsTitle">Rennpause</h2>
+          <button
+            id="closeSettings"
+            type="button"
+            aria-label="Menü schließen, pausiert bleiben"
+          >
+            ✕
+          </button>
+        </div>
+        <section data-menu-screen="home">
+          <p id="settingsHelp" class="hint">
+            Das Rennen bleibt pausiert, bis du fortsetzt.
+          </p>
+          <p class="hint">
+            Position <b id="position"></b> · <span id="raceLength"></span> ·
+            Rennzeit <b id="raceClock"></b>
+          </p>
+          <p class="hint">
+            Rundenzeit <b id="lapTime"></b> · Bestzeit <b id="bestLap"></b>
+          </p>
+          <p id="lastLap" class="hint"></p>
+          <p id="checkpoint" class="hint"></p>
+          <div class="pause-actions">
+            <button id="resumeRace" type="button" class="primary">
+              Fortsetzen</button
+            ><button type="button" data-menu-target="classification">
+              Vollständiges Klassement</button
+            ><button id="showResults" type="button" hidden>
+              Session-Ergebnisse</button
+            ><button id="overview" type="button" aria-pressed="false">
+              Gesamtstrecke anzeigen</button
+            ><button id="recover" type="button">
+              Auto zurücksetzen <kbd>R</kbd></button
+            ><button id="restart" type="button">Rennen neu starten</button
+            ><button id="directRace" type="button">
+              Direkt ins Rennen (ohne Qualifying)</button
+            ><button id="cancelQualifying" type="button" hidden>
+              Qualifying verwerfen</button
+            ><button type="button" data-menu-target="settings">
+              Einstellungen & Steuerung</button
+            ><button
+              id="prepareRace"
+              type="button"
+              data-menu-target="preparation"
+            >
+              Rennvorbereitung</button
+            ><button type="button" data-menu-target="save">
+              Spielstand & Navigation
+            </button>
+          </div>
+          <section id="povCareerPanel" hidden>
+            <h3 id="povCareerTitle"></h3>
+            <p id="povCareerNote"></p>
+            <div class="pause-actions">
+              <button id="commitPOVResult" type="button" hidden>
+                Ergebnis übernehmen</button
+              ><button id="nextPOVRound" type="button" hidden>
+                Zur nächsten Strecke</button
+              ><button id="openWorkshop" type="button">Werkstatt</button>
+            </div>
+            <details>
+              <summary>Teamwertung</summary>
+              <ol id="povTeamStandings"></ol>
+            </details>
+          </section>
+        </section>
+        <section data-menu-screen="classification" hidden>
+          <button type="button" data-menu-back>← Pausenmenü</button>
+          <h3 id="classificationTitle">Vollständiges Klassement</h3>
+          <p id="classificationNote" class="hint"></p>
+          <div
+            class="classification-table"
+            role="table"
+            aria-label="Klassement aller 13 Fahrer"
+          >
+            <div class="classification-head" role="row">
+              <span role="columnheader">Pos.</span
+              ><span role="columnheader">Fahrer / Team</span
+              ><span id="classificationGapTitle" role="columnheader"
+                >Abstand</span
+              ><span role="columnheader">Runden</span
+              ><span role="columnheader">Status</span
+              ><span role="columnheader">Start</span>
+            </div>
+            <ol id="raceOrder" role="rowgroup"></ol>
           </div>
         </section>
-        <aside class="field-panel" aria-label="Rennreihenfolge">
-          <h2>Das Feld · 13 Teams</h2>
-          <ol id="raceOrder"></ol>
-        </aside>
-      </div>
-      <section id="povCareerPanel" class="race-results" hidden><h2 id="povCareerTitle"></h2><p id="povCareerNote"></p>
-        <div class="actions"><button id="commitPOVResult" type="button" hidden>Ergebnis übernehmen</button><button id="nextPOVRound" type="button" hidden>Zur nächsten Strecke</button><button id="openWorkshop" type="button">Werkstatt</button></div>
-        <details><summary>Teamwertung</summary><ol id="povTeamStandings"></ol></details></section>
-      <p id="weekendNote" class="race-lap-details">Fahre zuerst das Qualifying oder starte direkt von Platz 13 ins Rennen.</p>
-      <section id="qualifyingResults" class="race-results" aria-label="Qualifying-Ergebnis und Startaufstellung" hidden>
-        <span class="eyebrow">QUALIFYING</span>
-        <h2>Deine Startaufstellung</h2>
-        <p>Die beste schnelle Runde bestimmt den Startplatz. Ohne Zeit zählt die ursprüngliche Reihenfolge.</p>
-        <div class="result-scroll"><table>
-          <thead><tr><th>Startplatz</th><th>Team</th><th>Bestzeit</th></tr></thead>
-          <tbody id="qualifyingRows"></tbody>
-        </table></div>
-      </section>
-      <p class="race-lap-details">
-        Deine Runde: <b id="lapTime">0:00.000</b> · Bestzeit:
-        <b id="bestLap">—</b> · Beendet: <b id="laps">0</b>
-      </p>
-      <section
-        id="raceResults"
-        class="race-results"
-        aria-label="Rennergebnis"
-        hidden
-      >
-        <span class="eyebrow">ZIELEINLAUF</span>
-        <h2 id="resultHeading"></h2>
-        <p id="resultState"></p>
-        <div class="result-scroll">
-          <table>
-            <thead>
-              <tr>
-                <th>Platz</th>
-                <th>Team</th>
-                <th>Zeit / Rückstand</th>
-              </tr>
-            </thead>
-            <tbody id="resultRows"></tbody>
-          </table>
-        </div>
-      </section>
-      <section class="bottom-panel">
-        <div class="track-choice">
-          <label for="track">Strecke</label
-          ><select id="track" aria-describedby="trackHelp"></select>
-          <p class="hint" id="trackHelp">
-            Streckenwechsel startet eine neue Fahrt. Vor dem Rennstart wählen.
-          </p>
-        </div>
-        <div>
-          <label for="team">Dein Team</label
-          ><select id="team"></select>
+        <section data-menu-screen="settings" hidden>
+          <button type="button" data-menu-back>← Pausenmenü</button>
+          <h3>Einstellungen & Steuerung</h3>
+          <div class="settings-field">
+            <label for="quality">Grafik</label
+            ><select id="quality">
+              <option value="auto">Automatisch</option>
+              <option value="low">Sparsam</option></select
+            ><button id="fallback" type="button">Zur Draufsicht</button>
+            <p id="renderNote" class="hint" role="status"></p>
+          </div>
+          <div class="settings-field">
+            <label for="difficulty">KI-Schwierigkeit</label
+            ><select id="difficulty">
+              <option value="beginner">Anfänger</option>
+              <option value="normal" selected>Normal</option>
+              <option value="hard">Schwer</option>
+              <option value="expert">Experte</option>
+            </select>
+            <p id="difficultyNote" class="hint">
+              Vor Beginn des Wochenendes wählbar.
+            </p>
+            <label for="catchup">KI-Aufholhilfe</label
+            ><select id="catchup">
+              <option value="on">Dezent</option>
+              <option value="off">Aus</option>
+            </select>
+            <p id="catchupNote" class="hint">Vor dem Start wählbar.</p>
+          </div>
+          <div class="settings-field">
+            <label for="steeringSensitivity"
+              >Lenkempfindlichkeit
+              <output id="steeringSensitivityValue">100 %</output></label
+            ><input
+              id="steeringSensitivity"
+              type="range"
+              min="40"
+              max="100"
+              step="5"
+              value="100"
+            />
+            <p class="hint">
+              40 %: sanfter · 100 %: bisherige Steuerung. Langes Halten erreicht
+              weiterhin den vollen Lenkeinschlag.
+            </p>
+          </div>
           <p class="hint">
-            Team vor dem Start wählen. Alle Fahrzeuge nutzen dieselbe
-            Fahrphysik.
+            Tastatur: W / ↑ Gas · S / ↓ Bremse, im Stand halten für Rückwärts ·
+            A / D oder ← / → Lenken · P Pause · R Zurücksetzen.
           </p>
+          <p class="hint">
+            Touch: Gas und Richtung gleichzeitig gedrückt halten. Bremse im
+            Stand halten, um rückwärtszufahren.
+          </p>
+          <p id="preferencesNote" class="hint" role="status"></p>
+          <details hidden id="balancePanel">
+            <summary>KI-Fahrdaten</summary>
+            <select id="balanceTeam"></select>
+            <pre id="balanceReadout"></pre>
+          </details>
+        </section>
+        <section data-menu-screen="preparation" hidden>
+          <button type="button" data-menu-back>← Pausenmenü</button>
+          <h3>Rennvorbereitung</h3>
+          <p class="hint">
+            Nur vor dem Start. Team- oder Streckenwechsel verwirft die aktuelle
+            Vorbereitung.
+          </p>
+          <div class="settings-field">
+            <label for="team">Dein Team</label
+            ><select id="team"></select
+            ><label for="track">Strecke</label
+            ><select id="track"></select>
+            <p id="trackHelp" class="hint"></p>
+            <p id="selectionNote" class="hint" role="status"></p>
+          </div>
+        </section>
+        <section data-menu-screen="save" hidden>
+          <button type="button" data-menu-back>← Pausenmenü</button>
+          <h3>Spielstand & Navigation</h3>
+          <section id="campaignRacePanel" hidden>
+            <div id="campaignRaceIdentity" class="campaign-race-banner"></div>
+            <div id="campaignRaceInterim"></div>
+          </section>
+          <div class="settings-field">
+            <button id="savePOV" type="button">Spielstand speichern</button
+            ><button id="exportPOV" type="button">
+              Spielstand als Datei sichern</button
+            ><label for="importPOV">POV-Sicherung laden</label
+            ><input
+              id="importPOV"
+              type="file"
+              accept=".json,application/json"
+            />
+          </div>
+          <p id="povSaveStatus" class="hint" role="status"></p>
+          <p><a href="./index.html" class="back-link">← Hauptmenü</a></p>
+          <a data-track-link href="./arcade3d.html">Zum freien Fahrtest →</a>
+        </section>
+      </dialog>
+      <dialog
+        id="sessionResults"
+        class="racing-dialog"
+        aria-labelledby="resultHeading"
+      >
+        <div class="settings-heading">
+          <h2 id="resultHeading">Session-Ergebnisse</h2>
+          <button id="closeResults" type="button">Schließen</button>
         </div>
-        <p id="selectionNote" class="hint" role="status"></p>
-        <div class="recovery">
-          <button id="restart" type="button">Neues Rennen</button>
+        <p id="resultState"></p>
+        <div class="result-tabs" role="tablist" aria-label="Session-Ergebnisse">
+          <button
+            id="raceResultTab"
+            type="button"
+            role="tab"
+            data-result-tab="race"
+            aria-selected="true"
+          >
+            Rennergebnis</button
+          ><button
+            id="qualifyingResultTab"
+            type="button"
+            role="tab"
+            data-result-tab="qualifying"
+            aria-selected="false"
+          >
+            Qualifying
+          </button>
         </div>
-      </section>
-      <p class="instructions">
-        <kbd>W</kbd> / <kbd>↑</kbd> Gas · <kbd>S</kbd> / <kbd>↓</kbd> Bremse; im
-        Stand kurz halten für Rückwärts · <kbd>A</kbd> <kbd>D</kbd> /
-        <kbd>←</kbd> <kbd>→</kbd> Lenken · <kbd>P</kbd> Pause. Auf dem
-        Teppichrand verlierst du Tempo. Auch auf dem dunklen Rand bleibt die
-        Rundenzeit gültig. Runden zählen nach beiden Sektoren und Start/Ziel.
-      </p>
-      <details id="balancePanel" hidden>
-        <summary>KI-Fahrdaten</summary>
-        <label for="balanceTeam">Fahrzeug</label>
-        <select id="balanceTeam"></select>
-        <pre id="balanceReadout"></pre>
-      </details>
-      <footer id="weekendFooter">
-        Du startest auf Platz 13. Nach deinem Ziel übernimmt die KI die
-        Auslaufrunde, bis alle im Ziel sind. Dein klassischer Spielstand wird
-        nicht verwendet oder verändert.
-      </footer>
+        <section id="raceResults" role="tabpanel">
+          <div class="result-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pos.</th>
+                  <th>Fahrer</th>
+                  <th>Team</th>
+                  <th>Zeit / Abstand</th>
+                  <th>Start</th>
+                </tr>
+              </thead>
+              <tbody id="resultRows"></tbody>
+            </table>
+          </div>
+        </section>
+        <section id="qualifyingResults" role="tabpanel" hidden>
+          <div class="result-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pos.</th>
+                  <th>Fahrer</th>
+                  <th>Team</th>
+                  <th>Bestzeit</th>
+                </tr>
+              </thead>
+              <tbody id="qualifyingRows"></tbody>
+            </table>
+          </div>
+        </section>
+        <a
+          id="continueCampaignAfterRace"
+          class="primary result-link"
+          href="./campaign.html"
+          hidden
+          >Kampagne fortsetzen</a
+        ><button id="resultsToPause" type="button">Zum Pausenmenü</button>
+      </dialog>
+      <div hidden aria-hidden="true">
+        <span id="speed"></span><span id="gear"></span><span id="laps"></span
+        ><span id="raceLap"></span><span id="viewTime"></span>
+        <p id="weekendNote"></p>
+        <p id="weekendFooter"></p>
+      </div>
     </main>
     <script src="./src/data/arcade-tracks.js?v=bahrain-iteration-2"></script>
     <script src="./src/data/arcade-roster.js"></script>
@@ -270,13 +386,14 @@
     <script src="./src/racing/ai-difficulty.js?v=pit80-lights-1"></script>
     <script src="./src/persistence/pov-preferences.js?v=steering-settings-1"></script>
     <script src="./src/persistence/pov-selection.js?v=pov-menu-1"></script>
-  <script src="./src/persistence/pov-checkpoint.js?v=career-1"></script>
-  <script src="./src/championship/pov-career.js?v=career-1"></script>
-  <script src="./src/management/pov-workshop.js?v=career-1"></script>
-  <script src="./src/persistence/pov-game-store.js?v=career-1"></script>
+    <script src="./src/persistence/pov-checkpoint.js?v=career-1"></script>
+    <script src="./src/championship/pov-career.js?v=career-1"></script>
+    <script src="./src/management/pov-workshop.js?v=career-1"></script>
+    <script src="./src/persistence/pov-game-store.js?v=career-1"></script>
     <script src="./src/data/campaign-config.js?v=campaign-1"></script>
-    <script src="./src/championship/campaign.js?v=campaign-1"></script>
-    <script src="./src/persistence/campaign-store.js?v=campaign-1"></script>
+    <script src="./src/persistence/campaign-v1.js?v=hud-2"></script>
+    <script src="./src/championship/campaign.js?v=hud-2"></script>
+    <script src="./src/persistence/campaign-store.js?v=hud-2"></script>
     <script src="./src/racing/opponent-line.js?v=pit80-lights-1"></script>
     <script src="./src/racing/opponents.js?v=qualifying-drivers-1"></script>
     <script src="./src/racing/slipstream.js?v=draft-start-100-7"></script>
@@ -288,8 +405,12 @@
     <script src="./src/racing/qualifying-drivers.js?v=qualifying-drivers-1"></script>
     <script src="./src/racing/qualifying-session.js?v=career-1"></script>
     <script src="./src/racing/race-weekend.js?v=career-1"></script>
-    <script src="./src/ui/arcade-race-ui.js?v=campaign-1"></script>
-    <script src="./src/ui/qualifying-ui.js?v=campaign-1"></script>
+    <script src="./src/championship/campaign-weekend.js?v=hud-2"></script>
+    <script src="./src/ui/race-presentation.js?v=hud-2"></script>
+    <script src="./src/ui/result-details.js?v=hud-2"></script>
+    <script src="./src/ui/racing-hud.js?v=hud-2"></script>
+    <script src="./src/ui/arcade-race-ui.js?v=hud-2"></script>
+    <script src="./src/ui/qualifying-ui.js?v=hud-2"></script>
     <script src="./src/racing/controls.js?v=steering-settings-1"></script>
     <script src="./src/rendering/wake-visuals.js?v=close-slipstream-5"></script>
     <script src="./src/rendering/arcade2d.js?v=solo-qualifying-1"></script>
@@ -314,11 +435,11 @@
     <script src="./src/rendering/wake3d.js?v=slipstream-1"></script>
     <script src="./src/rendering/arcade3d.js?v=calendar-world-1"></script>
     <script src="./src/racing/track-catalog.js?v=pov-calendar-1"></script>
-    <script src="./src/ui/race-settings.js?v=mobile-settings-1"></script>
-  <script src="./src/ui/pov-workshop-ui.js?v=career-1"></script>
+    <script src="./src/ui/race-settings.js?v=hud-2"></script>
+    <script src="./src/ui/pov-workshop-ui.js?v=career-1"></script>
     <script src="./src/ui/pov-game-ui.js?v=career-1"></script>
     <script src="./src/ui/campaign-view.js?v=campaign-1"></script>
-    <script src="./src/ui/campaign-race-ui.js?v=campaign-1"></script>
-    <script src="./src/arcade-main.js?v=campaign-1"></script>
+    <script src="./src/ui/campaign-race-ui.js?v=hud-2"></script>
+    <script src="./src/arcade-main.js?v=hud-2"></script>
   </body>
 </html>

@@ -1,0 +1,515 @@
+html:has(.racing-page),
+body.racing-page {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+body.racing-page {
+  height: 100dvh;
+  background: #182a30;
+}
+.racing-screen {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+.racing-screen .drive-view {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  border-radius: 0;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+.racing-screen #arcadeCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 0;
+  touch-action: none;
+}
+.racing-screen .relative-hud {
+  position: absolute;
+  left: max(12px, env(safe-area-inset-left));
+  top: max(12px, env(safe-area-inset-top));
+  width: clamp(170px, 54vw, 330px);
+  color: #fff1d4;
+  background: #15282de8;
+  border: 1px solid #c9d7ce59;
+  border-radius: 12px;
+  padding: 10px;
+  pointer-events: none;
+  box-shadow: 0 4px 20px #0003;
+  font-variant-numeric: tabular-nums;
+}
+.hud-caption {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+  margin: 0 0 6px;
+  color: #e8bd6e;
+}
+#relativeOrder {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 4px;
+}
+#relativeOrder li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  gap: 6px;
+  align-items: center;
+  padding: 6px 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  line-height: 1.2;
+}
+#relativeOrder .relative-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#relativeOrder .is-player {
+  border-left: 3px solid #e8bd6e;
+  padding-left: 2px;
+  background: #e8bd6e26;
+}
+#relativeOrder small {
+  font-size: 11px;
+  white-space: nowrap;
+}
+#hudBest {
+  font-size: 11px;
+  margin: 7px 5px 0;
+  color: #d5e3dc;
+}
+.hud-right {
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+.racing-screen #openSettings {
+  pointer-events: auto;
+  width: 48px;
+  height: 48px;
+  min-height: 48px;
+  font-size: 28px;
+  padding: 0;
+  background: #172c32ed;
+  border: 1px solid #d8e0cf80;
+  border-radius: 12px;
+  color: #fff1d4;
+  touch-action: manipulation;
+}
+#hudLap {
+  background: #172c32ed;
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: #fff1d4;
+}
+.hud-speed {
+  position: absolute;
+  left: 50%;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: center;
+  background: #132a31df;
+  padding: 8px 14px;
+  border: 1px solid #e7d6ad60;
+  border-radius: 10px;
+  pointer-events: none;
+  color: #fff5d9;
+  font-variant-numeric: tabular-nums;
+}
+.hud-speed strong {
+  font-size: 24px;
+  white-space: nowrap;
+}
+#viewDraft {
+  font-size: 10px;
+  color: #bce8db;
+}
+.racing-screen .touch-controls {
+  position: absolute;
+  inset: auto max(12px, env(safe-area-inset-right))
+    max(14px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+  margin: 0;
+  gap: 0;
+  padding: 0;
+}
+.racing-screen .touch-controls > div {
+  display: flex;
+  gap: 8px;
+  pointer-events: auto;
+}
+.racing-screen .touch-controls button {
+  width: clamp(50px, 7vw, 82px);
+  height: 72px;
+  min-height: 0;
+  padding: 8px;
+  font-size: 28px;
+  border-radius: 12px;
+  background: #23444de8;
+  color: #fff4d8;
+  border: 2px solid #9eafb09c;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+.racing-screen .touch-controls [data-drive="brake"] {
+  width: 100px;
+  font-size: 17px;
+}
+.racing-screen .touch-controls .gas {
+  background: #e8b968ee;
+  color: #24342f;
+  font-size: 22px;
+}
+.racing-screen .touch-controls small {
+  display: block;
+  font-size: 10px;
+}
+.racing-screen .touch-controls .is-held {
+  background: #567b83;
+  border-color: #fff3d2;
+  transform: translateY(2px);
+}
+.racing-screen .touch-controls .gas.is-held {
+  background: #ffe1a1;
+}
+.session-start {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  width: min(440px, calc(100% - 32px));
+  text-align: center;
+  pointer-events: none;
+}
+.session-start button {
+  pointer-events: auto;
+  min-height: 58px;
+  padding: 16px 26px;
+  color: #172f29;
+  background: #edc271;
+  border: 2px solid #fff0bd;
+  border-radius: 12px;
+  font-size: clamp(14px, 3vw, 21px);
+  font-weight: 900;
+  box-shadow:
+    0 6px 0 #563e20a0,
+    0 8px 30px #0005;
+}
+#sessionPrompt {
+  margin: 0;
+  color: #fff1d4;
+  background: #182d33e8;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+#sessionPrompt:empty {
+  display: none;
+}
+.hud-status {
+  position: absolute;
+  top: calc(max(12px, env(safe-area-inset-top)) + 156px);
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  width: max-content;
+  max-width: 80%;
+  border-radius: 7px;
+  padding: 5px 10px;
+  color: #fff0ca;
+  background: #152c33e8;
+  font-size: 12px;
+  text-align: center;
+  pointer-events: none;
+}
+.racing-screen [hidden] {
+  display: none !important;
+}
+.racing-screen .racing-dialog {
+  box-sizing: border-box;
+  width: min(
+    760px,
+    calc(100% - 24px - env(safe-area-inset-left) - env(safe-area-inset-right))
+  );
+  max-width: 760px;
+  max-height: calc(
+    100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)
+  );
+  margin: auto;
+  padding: 22px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1px solid #95ada1;
+  border-top: 3px solid #e8bd6e;
+  border-radius: 16px;
+  background: #173b35;
+  color: #fff0d4;
+  touch-action: pan-y;
+  user-select: text;
+}
+.racing-dialog::backdrop {
+  background: #071b24b3;
+}
+.racing-dialog .settings-heading {
+  position: sticky;
+  top: -22px;
+  z-index: 2;
+  background: #173b35;
+  padding: 8px 0;
+}
+.racing-dialog .settings-heading h2 {
+  font-family: Georgia, serif;
+}
+.racing-dialog button,
+.racing-dialog select {
+  min-height: 44px;
+  touch-action: manipulation;
+}
+.pause-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 16px 0;
+}
+.pause-actions .primary {
+  grid-column: 1/-1;
+  font-weight: 800;
+}
+.racing-dialog .primary {
+  display: block;
+  padding: 12px 16px;
+  border-radius: 9px;
+  text-align: center;
+  text-decoration: none;
+  background: #e8bd6e;
+  color: #17372d;
+  border: 1px solid #ffdf9f;
+}
+.racing-dialog .result-scroll {
+  max-height: 55dvh;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.racing-dialog table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.racing-dialog td,
+.racing-dialog th {
+  text-align: left;
+  border-bottom: 1px solid #527167;
+  padding: 10px 6px;
+}
+.racing-dialog th {
+  position: sticky;
+  top: 0;
+  background: #173b35;
+  z-index: 1;
+}
+.racing-dialog td:nth-child(4) {
+  white-space: nowrap;
+}
+.result-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 14px 0;
+}
+.result-tabs [aria-selected="true"] {
+  background: #e8bd6e;
+  color: #18362e;
+}
+#raceResults,
+#qualifyingResults {
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+.classification-head,
+#raceOrder li {
+  display: grid;
+  grid-template-columns: 32px minmax(130px, 1fr) 92px 48px 82px 40px;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 4px;
+  font-size: 12px;
+  border-bottom: 1px solid #557268;
+}
+.classification-head {
+  font-size: 11px;
+  color: #b9d1c4;
+}
+#raceOrder {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+#raceOrder li span,
+#raceOrder li strong {
+  min-width: 0;
+}
+#raceOrder li strong,
+#raceOrder li small {
+  display: block;
+}
+#raceOrder li small {
+  color: #b9d1c4;
+  font-size: 10px;
+  margin-top: 3px;
+}
+#raceOrder .driver-meta {
+  display: none;
+}
+#raceOrder .is-player,
+.racing-dialog tr.is-player {
+  background: #e8bd6e25;
+  color: #ffe1a0;
+}
+.racing-screen #povLoadProblem {
+  position: absolute;
+  top: 45%;
+  left: 5%;
+  width: 90%;
+  padding: 24px;
+  border: 2px solid #e8bd6e;
+  background: #153c36;
+  z-index: 5;
+}
+.pov-load-error .session-start,
+.pov-load-error .touch-controls {
+  display: none;
+}
+@media (max-width: 600px) {
+  .racing-screen .racing-dialog {
+    padding: 14px;
+  }
+  .racing-dialog .settings-heading {
+    top: -14px;
+  }
+  .pause-actions {
+    grid-template-columns: 1fr;
+  }
+  .classification-head,
+  #raceOrder li {
+    grid-template-columns: 28px minmax(0, 1fr) 82px;
+    gap: 6px;
+  }
+  .classification-head > :nth-child(n + 4),
+  #raceOrder li > :nth-child(n + 4) {
+    display: none;
+  }
+  #raceOrder .driver-meta {
+    display: block;
+    font-size: 10px;
+  }
+  .racing-dialog table {
+    min-width: 440px;
+  }
+  .racing-screen .touch-controls button {
+    height: 66px;
+    width: 52px;
+  }
+  .racing-screen .touch-controls [data-drive="brake"] {
+    width: 76px;
+    font-size: 14px;
+  }
+  .racing-screen .touch-controls .gas {
+    width: 62px;
+    font-size: 20px;
+  }
+  .hud-speed {
+    bottom: calc(max(14px, env(safe-area-inset-bottom)) + 78px);
+    padding: 5px 10px;
+  }
+  .hud-speed strong {
+    font-size: 20px;
+  }
+}
+@media (max-height: 480px) {
+  .relative-hud {
+    padding: 7px !important;
+  }
+  #relativeOrder li {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .hud-status {
+    top: auto;
+    bottom: 110px;
+  }
+  .racing-screen .touch-controls button {
+    height: 54px;
+  }
+  .racing-screen .touch-controls [data-drive="brake"] {
+    font-size: 14px;
+    width: 86px;
+  }
+  .hud-speed {
+    bottom: max(14px, env(safe-area-inset-bottom));
+  }
+  .session-start {
+    top: 53%;
+  }
+}
+.racing-screen #raceSettings {
+  width: min(
+    760px,
+    calc(100% - 24px - env(safe-area-inset-left) - env(safe-area-inset-right))
+  );
+  max-height: calc(
+    100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom)
+  );
+  background: #173b35;
+  padding: 22px;
+}
+[data-menu-screen="classification"] > h3 {
+  display: none;
+}
+@media (max-width: 600px) {
+  .racing-screen #raceSettings {
+    padding: 14px;
+  }
+}

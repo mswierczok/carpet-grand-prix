@@ -6,7 +6,7 @@
       store = A.CampaignStore,
       V = A.CampaignView;
     let lastSave = 0,
-      resultShown = false,
+      lastSaveOK = false,
       departing = false;
     root.querySelector(".back-link").href = "./campaign.html";
     root.querySelector(".back-link").textContent = "← Kampagne";
@@ -20,7 +20,11 @@
       const driver = A.CampaignConfig.getDriver(game.driverId),
         info = V.node("div");
       info.append(
-        V.node("p", "KAMPAGNE · BAHRAIN", "eyebrow"),
+        V.node(
+          "p",
+          "KAMPAGNE · " + CGPArcadeData.tracks[game.trackId].name.toUpperCase(),
+          "eyebrow",
+        ),
         V.node(
           "h2",
           driver.name + " · " + A.CampaignConfig.getTeam(game.teamId).name,
@@ -47,12 +51,14 @@
         const next = capture(),
           stamp = Date.now(),
           ok = store.save(next, { now: stamp });
+        lastSaveOK = ok;
         if (ok) setGame({ ...next, savedAt: stamp });
         el("povSaveStatus").textContent = ok
           ? "Kampagne gespeichert. Einzelrennen und Meisterschaft bleiben erhalten."
           : "Kampagne konnte nicht gespeichert werden. Bisheriger Stand bleibt erhalten; bitte den aktuellen Stand als Datei sichern.";
         return ok;
       } catch (error) {
+        lastSaveOK = false;
         el("povSaveStatus").textContent =
           "Kampagne nicht gespeichert: " + error.message;
         return false;
@@ -66,19 +72,16 @@
       const interim = getGame()?.stage === "interim";
       el("restart").disabled = !!interim;
       el("startQualifying").disabled = !!interim;
-      if (interim && !resultShown) {
-        resultShown = true;
-        const links = V.node("div", undefined, "campaign-actions");
-        for (const [text, href] of [
-          ["Zur Kampagnenübersicht", "./campaign.html"],
-          ["Zum Hauptmenü", "./play.html"],
-        ]) {
-          const link = V.node("a", text, "result-link");
-          link.href = href;
-          links.append(link);
-        }
-        el("campaignRaceInterim").append(V.result(getGame()), links);
-      }
+      el("continueCampaignAfterRace").hidden = !interim;
+      el("continueCampaignAfterRace").onclick = (event) => {
+        if (
+          !lastSaveOK &&
+          !confirm(
+            "Das Ergebnis konnte noch nicht gespeichert werden. Bitte sichere es als Datei. Trotzdem zur Übersicht wechseln?",
+          )
+        )
+          event.preventDefault();
+      };
     }
     function changed() {
       const ok = save();
