@@ -8,6 +8,7 @@
     <title>Carpet Grand Prix · Bahrain-Rennen</title>
     <link rel="stylesheet" href="./styles/arcade.css?v=mobile-settings-1" />
     <link rel="stylesheet" href="./styles/arcade-race.css?v=steering-settings-1" />
+    <link rel="stylesheet" href="./styles/campaign.css?v=campaign-1">
   </head>
   <body>
     <main id="arcadeApp" data-renderer="3d" data-mode="race">
@@ -73,6 +74,7 @@
         <p id="preferencesNote" class="hint" role="status"></p>
         <p class="hint">Schwierigkeit und KI-Aufholhilfe kannst du vor dem Start ändern.</p>
       </dialog>
+      <section id="campaignRacePanel" hidden aria-label="Deine Kampagne"><div id="campaignRaceIdentity" class="campaign-race-banner"></div><div id="campaignRaceInterim" class="campaign-race-stage"></div></section>
       <p id="povSaveStatus" class="hint" role="status"></p>
       <p id="povLoadProblem" class="hint" role="alert" hidden></p>
       <section class="dashboard" aria-label="Fahrzeug und Rundenzeiten">
@@ -272,6 +274,9 @@
   <script src="./src/championship/pov-career.js?v=career-1"></script>
   <script src="./src/management/pov-workshop.js?v=career-1"></script>
   <script src="./src/persistence/pov-game-store.js?v=career-1"></script>
+    <script src="./src/data/campaign-config.js?v=campaign-1"></script>
+    <script src="./src/championship/campaign.js?v=campaign-1"></script>
+    <script src="./src/persistence/campaign-store.js?v=campaign-1"></script>
     <script src="./src/racing/opponent-line.js?v=pit80-lights-1"></script>
     <script src="./src/racing/opponents.js?v=qualifying-drivers-1"></script>
     <script src="./src/racing/slipstream.js?v=draft-start-100-7"></script>
@@ -283,8 +288,8 @@
     <script src="./src/racing/qualifying-drivers.js?v=qualifying-drivers-1"></script>
     <script src="./src/racing/qualifying-session.js?v=career-1"></script>
     <script src="./src/racing/race-weekend.js?v=career-1"></script>
-    <script src="./src/ui/arcade-race-ui.js?v=calendar-world-1"></script>
-    <script src="./src/ui/qualifying-ui.js?v=pit80-lights-1"></script>
+    <script src="./src/ui/arcade-race-ui.js?v=campaign-1"></script>
+    <script src="./src/ui/qualifying-ui.js?v=campaign-1"></script>
     <script src="./src/racing/controls.js?v=steering-settings-1"></script>
     <script src="./src/rendering/wake-visuals.js?v=close-slipstream-5"></script>
     <script src="./src/rendering/arcade2d.js?v=solo-qualifying-1"></script>
@@ -312,6 +317,8 @@
     <script src="./src/ui/race-settings.js?v=mobile-settings-1"></script>
   <script src="./src/ui/pov-workshop-ui.js?v=career-1"></script>
     <script src="./src/ui/pov-game-ui.js?v=career-1"></script>
-    <script src="./src/arcade-main.js?v=steering-settings-1"></script>
+    <script src="./src/ui/campaign-view.js?v=campaign-1"></script>
+    <script src="./src/ui/campaign-race-ui.js?v=campaign-1"></script>
+    <script src="./src/arcade-main.js?v=campaign-1"></script>
   </body>
 </html>
