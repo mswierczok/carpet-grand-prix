@@ -104,6 +104,8 @@ Die neuen Unit-Prüfungen und die angepasste Kampagnen-Prüfung bestehen mit
 26 Fällen. Sie sichern insbesondere P1/P6/P13, fehlende Passagehistorie,
 Rundendifferenzen, Zielzeitabstände, Qualifying, Pflichtablauf, Restart,
 Migration, acht eindeutige Strecken, eingefrorene Ergebnisse und Speicherfehler.
+Der vollständige Unit-/Integrationslauf besteht mit 241 Prüfungen in 38 Dateien;
+die aufwendigeren POV-Kalenderprüfungen laufen weiterhin in separaten CI-Gruppen.
 
 Echte Browserprüfungen mit Chromium und mobilem Touch-Kontext prüfen:
 

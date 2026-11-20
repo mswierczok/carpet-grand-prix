@@ -340,7 +340,7 @@
         if (!dialog.open) dialog.showModal();
       }
       // Keep the existing optional diagnostic access in the pause menu.
-      const telemetry = s.entries.find((e) => e.telemetry);
+      const telemetry = s.entries.find((e) => Object.hasOwn(e, "telemetry"));
       if (telemetry) {
         el("balancePanel").hidden = false;
         if (!el("balanceTeam").options.length) {
@@ -350,19 +350,38 @@
             option.textContent = e.name;
             el("balanceTeam").append(option);
           }
-          el("balanceTeam").value = telemetry.id;
+          el("balanceTeam").value = s.entries.find((e) => !e.player).id;
         }
         const selected = s.entries.find(
-          (e) => e.id === el("balanceTeam").value,
-        );
+            (e) => e.id === el("balanceTeam").value,
+          ),
+          info = selected?.telemetry,
+          kilometers = A.Physics.parameters.metersPerUnit * 3.6;
         if (el("balancePanel").open)
           set(
             "balanceReadout",
             JSON.stringify(
               {
-                ...(selected.telemetry || { note: "Noch keine KI-Fahrdaten." }),
-                windschatten: selected.slipstream || null,
-                aufholhilfe: selected.catchup || null,
+                ...(info
+                  ? {
+                      reason: info.reason,
+                      speedKmh: +(info.speed * kilometers).toFixed(1),
+                      targetKmh: +(info.desiredSpeed * kilometers).toFixed(1),
+                      freeTargetKmh: +(info.freeTarget * kilometers).toFixed(1),
+                      lineError: +info.pathError.toFixed(2),
+                      headingError: +info.headingError.toFixed(3),
+                      lane: info.lane,
+                      blockerGap:
+                        info.blockerGap === null
+                          ? null
+                          : +info.blockerGap.toFixed(2),
+                      throttle: info.throttle,
+                      brake: info.brake,
+                      steer: +info.steer.toFixed(3),
+                    }
+                  : { note: "Noch keine KI-Fahrdaten für dieses Fahrzeug." }),
+                windschatten: selected?.slipstream || null,
+                aufholhilfe: selected?.catchup || null,
               },
               null,
               2,
