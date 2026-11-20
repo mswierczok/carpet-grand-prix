@@ -84,7 +84,7 @@ html = html
   );
 mkdirSync("dist/calendar-review", { recursive: true });
 writeFileSync("dist/calendar-review/index.html", html);
-for (const name of ["race", "menu", "arcade", "arcade3d", ""]) {
+for (const name of ["race", "menu", "campaign", "arcade", "arcade3d", ""]) {
   const file = `carpet-grand-prix-${name ? name + "-" : ""}offline.html`;
   copyFileSync(`dist/${file}`, `dist/calendar-review/${file}`);
 }

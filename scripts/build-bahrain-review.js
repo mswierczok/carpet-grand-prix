@@ -23,7 +23,7 @@ html = html
   );
 if (/src="\.\.\//.test(html)) throw Error("Missing embedded review image");
 writeFileSync(`${target}/index.html`, html);
-for (const name of ["race", "menu", "arcade", "arcade3d", ""]) {
+for (const name of ["race", "menu", "campaign", "arcade", "arcade3d", ""]) {
   const file = `carpet-grand-prix-${name ? name + "-" : ""}offline.html`;
   if (!existsSync(`dist/${file}`))
     throw Error(`Run both offline builds first: ${file}`);
