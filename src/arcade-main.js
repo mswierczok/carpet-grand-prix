@@ -169,7 +169,9 @@
       updateUI();
       gameUI?.changed();
     },
-    onClose: () => controls.clear(),
+    // Opening already clears and blocks input. A late native close event
+    // must not discard a new press made after the dialog has disappeared.
+    onClose() {},
   });
   function pauseForGame() {
     session.pause(true); controls.clear(); dirty = true; updateUI();

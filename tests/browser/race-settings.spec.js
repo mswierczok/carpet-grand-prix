@@ -119,13 +119,29 @@ test("Lenkempfindlichkeit: verweigerter Speicher erhält die Auswahl beim Start 
   await page.locator("#openSettings").click(); await setSensitivity(page, 40);
   await expect(page.locator("#preferencesNote")).toContainText("nicht gespeichert");
   await page.locator("#closeSettings").click();
-  // The native close event clears held input before returning focus. Wait
-  // for that event, so it cannot clear the next deliberate key press.
-  await expect(page.locator("#openSettings")).toBeFocused();
   await page.keyboard.down("d"); await page.clock.runFor(60);
   const steer = await page.evaluate(() => __input.steer);
   expect(steer).toBeGreaterThan(0); expect(steer).toBeLessThan(0.25);
   await page.keyboard.up("d");
+});
+
+test("Lenkempfindlichkeit: ein spätes Dialog-Schließereignis verwirft keine neue Lenktaste", async ({ page }) => {
+  await page.addInitScript(() => {
+    const add = EventTarget.prototype.addEventListener;
+    EventTarget.prototype.addEventListener = function (type, listener, options) {
+      if (type === "close" && this.id === "raceSettings")
+        return add.call(this, type, event => setTimeout(() => listener.call(this, event), 80), options);
+      return add.call(this, type, listener, options);
+    };
+  });
+  await openRace(page);
+  await page.locator("#openSettings").click(); await setSensitivity(page, 40);
+  await page.locator("#closeSettings").click();
+  await page.keyboard.down("d"); await page.clock.runFor(120);
+  const steer = await page.evaluate(() => __input.steer);
+  expect(steer).toBeGreaterThan(0.25); expect(steer).toBeLessThan(0.5);
+  await page.keyboard.up("d"); await page.clock.runFor(32);
+  expect(await page.evaluate(() => __input)).toEqual(neutral);
 });
 
 test("Einstellungen: kompakter Dialog, Tastaturfokus, Pause und unveränderte Speicherung", async ({ page }) => {
