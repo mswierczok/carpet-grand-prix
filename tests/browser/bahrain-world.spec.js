@@ -54,9 +54,12 @@ test("Bahrain-Welt: echter Renderer, unveränderliche Eingabe und sicherer Wechs
   expect(result.diag.triangles).toBeLessThan(90000);
   await page.locator("#track").selectOption("luxembourg");
   await page.clock.runFor(32);
-  expect(
-    await page.evaluate(() => __inspect3D.diagnostics().world),
-  ).toBeUndefined();
+  const luxembourg = await page.evaluate(() => __inspect3D.diagnostics().world);
+  expect(luxembourg.theme).toBe("luxembourg");
+  expect(luxembourg.area).toBe("wood");
+  expect(luxembourg.passages.map((passage) => passage.type)).toContain(
+    "woodBridge",
+  );
   await page.locator("#track").selectOption("bahrain");
   await page.clock.runFor(32);
   expect(await page.evaluate(() => __inspect3D.diagnostics().world.theme)).toBe(
