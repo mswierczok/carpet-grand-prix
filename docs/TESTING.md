@@ -360,3 +360,10 @@ Die Offline-Builds betten das neue CSS und dieselben Module ein.
 `build-hud-review.js` erstellt die spielbare Abnahmegalerie und das CI-Artefakt
 `carpet-grand-prix-hud-campaign-review`. Echte Screenshots, Reproduktion,
 Migration und Einschränkungen: [RACING_HUD.md](RACING_HUD.md).
+
+Die allgemeine Browserregression läuft pro Desktop-/Mobilprojekt in zwei
+Playwright-Shards. Beide Gruppen zusammen enthalten unverändert sämtliche
+Bestandstests; weder Fahrbudgets noch Zeitgrenzen einzelner Prüfungen werden
+gelockert. Das verhindert einen Abbruch am 25-Minuten-Limit des Gesamtjobs.
+Die Darstellung von Streckenname und Rennlänge wird im aktuellen HUD bzw.
+Pausenmenü geprüft, statt an den entfernten alten Seitenelementen.

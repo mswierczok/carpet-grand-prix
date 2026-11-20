@@ -104,6 +104,7 @@ jobs:
       fail-fast: false
       matrix:
         project: [chromium, mobile-chromium]
+        shard: [1, 2]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -114,11 +115,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:browser -- --project=${{ matrix.project }} --grep-invert 'POV-Kalender:|Qualifying:|POV-Karriere:|Kampagne:|Bahrain-Welt:|Streckenwelten:'
+      - run: npm run test:browser -- --project=${{ matrix.project }} --shard=${{ matrix.shard }}/2 --grep-invert 'POV-Kalender:|Qualifying:|POV-Karriere:|Kampagne:|Bahrain-Welt:|Streckenwelten:'
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: browser-test-diagnostics-${{ matrix.project }}
+          name: browser-test-diagnostics-${{ matrix.project }}-${{ matrix.shard }}
           path: |
             playwright-report/
             test-results/

@@ -1,4 +1,4 @@
-import { driveButton, raceAction, selectRaceOption } from "../helpers/racing-menu.js";
+import { driveButton, raceAction, selectRaceOption, openRaceMenu, closeRaceMenu } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
@@ -18,7 +18,10 @@ test("Rennlänge: zeigt alle 22 echten Standardformate auch offline und erhält 
     await page.clock.runFor(32);
     await expect(page.locator("#raceLap")).toHaveText(`1 / ${format.laps}`);
     await expect(page.locator("#raceLength")).toHaveText(`${format.laps} Runden`);
-    await expect(page.locator("#status")).toContainText(`${format.laps} Runden`);
+    await openRaceMenu(page);
+    await expect(page.locator("#raceLength")).toBeVisible();
+    await expect(page.locator("#raceLength")).toHaveText(`${format.laps} Runden`);
+    await closeRaceMenu(page);
     await expect(page.locator("#team")).toHaveValue("t05");
     await expect(page.locator("#quality")).toHaveValue("low");
     expect(await page.evaluate(() => localStorage.getItem("carpet_gp_v072"))).toBe("duration-sentinel");

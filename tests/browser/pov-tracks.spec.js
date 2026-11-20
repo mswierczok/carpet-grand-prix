@@ -68,10 +68,10 @@ test("wechselt alle vier echten 3D-Strecken, erhält das Team und gibt alte WebG
     expect(result.snapshot.entries[0].car.x).toBeCloseTo(result.expected.x, 8);
     expect(result.snapshot.entries[0].car.y).toBeCloseTo(result.expected.y, 8);
     expect(result.diagnostics.geometries).toBeLessThan(180);
-    await expect(page.locator("[data-track-name]").last()).toHaveText(
+    await expect(page.locator("#hudSession")).toContainText(
       result.name,
     );
-    await expect(page.locator(".new-view")).toHaveAttribute(
+    await expect(page.locator("[data-track-link]")).toHaveAttribute(
       "href",
       new RegExp("track=" + id),
     );
