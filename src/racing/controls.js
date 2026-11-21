@@ -99,7 +99,12 @@
     }
     for (const area of root.querySelectorAll(".drive-view")) {
       for (const type of ["touchstart", "touchmove"])
-        listen(area, type, (event) => event.preventDefault(), { passive: false });
+        listen(area, type, (event) => {
+          // Cancelling touchstart on an overlay button also cancels its native
+          // click. Keep taps on session/menu controls; block driving gestures.
+          if (!event.target.closest?.('button:not([data-drive]),a,input,textarea,select,label,[contenteditable="true"]'))
+            event.preventDefault();
+        }, { passive: false });
     }
     const blur = () => {
       clear();

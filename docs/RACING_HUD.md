@@ -161,3 +161,14 @@ Die Offline-Prüfung führt die erzeugten eingebetteten Dateien ohne Netzwerk
 im Browser aus. Browser-Leistungstests ersetzen keinen physischen Gerätetest.
 Vier bereits bekannte Fahrerporträts bleiben ausdrücklich Platzhalter.
 Die öffentlichen Pages werden vor Freigabe/Merge nicht verändert.
+
+## Korrektur: Touch-Aktivierung der Overlay-Buttons
+
+Die bisherige pauschale Unterdrückung von `touchstart` in `.drive-view`
+verhinderte auch die native Klick-Aktivierung von Startknopf und Zahnrad.
+`controls.js` lässt deshalb die Standardaktivierung normaler Bedienelemente
+durch und unterdrückt weiterhin die Fahrgesten auf Canvas und Fahrbuttons.
+Lenkung, Fahrzeugwerte, Qualifying-Ablauf und Spielstände bleiben unverändert.
+Neue URL-Versionen in den drei Fahrseiten verhindern das Laden des alten
+Eingabemoduls aus dem Cache. Die Regression wird mit echten Fingertipps statt
+Mausklicks im Touch-Kontext geprüft; Details in [TESTING.md](TESTING.md).
