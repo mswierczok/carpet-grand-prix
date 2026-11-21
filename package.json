@@ -21,6 +21,7 @@
     "build:world-review": "node scripts/build-world-review.js",
     "build:uploaded-portraits": "node scripts/build-uploaded-portraits.js",
     "build:arcade-data": "node scripts/export-arcade-data.js",
+    "check:arcade-data": "node scripts/export-arcade-data.js --check",
     "build:arcade-offline": "node scripts/build-arcade-offline.js",
     "build:arcade3d-engine": "node scripts/build-arcade3d-engine.js",
     "check:arcade3d-engine": "node scripts/build-arcade3d-engine.js --check",
