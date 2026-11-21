@@ -1,4 +1,6 @@
 > Historische Referenz zur früheren Anwendung bzw. Stilentwicklung.
+> Die beschriebene klassische UI und ihre Generatorbefehle sind entfernt;
+> verlinkte alte Galerien liegen ausschließlich im Git-Archiv.
 > Aktuelle Architektur: [ARCHITECTURE.md](ARCHITECTURE.md); Archiv und Übernahme: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
 
 # Gezeichneter Pilot und flüssige Darstellung
@@ -22,7 +24,7 @@ Die übrigen 21 Umgebungen und neun Teamillustrationen behalten ihren
 freigegebenen Stand bis zur Stilabnahme. Danach folgen getrennte überprüfbare
 Schritte gemäß [ART_STYLE.md](ART_STYLE.md).
 
-[Galerie](../previews/art-pilot/index.html): vier alte/neue Vergleichspaare,
+[Galerie](https://github.com/mswierczok/carpet-grand-prix/blob/classic-simulation-archive-2026-11-21/previews/art-pilot/index.html): vier alte/neue Vergleichspaare,
 Rennsprites in 16/32/56/160 px, echte Spielaufnahmen von Bahrain, Fahrerkamera
 und Werkstatt. `npm run build:pilot-preview` erzeugt zusätzlich eine komplett
 eingebettete HTML-Galerie. CI liefert sie zusammen mit dem spielbaren Offline-HTML

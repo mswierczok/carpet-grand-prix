@@ -11,11 +11,11 @@
 - Die passive 26-Fahrer-Simulation ist archiviert unter
   `classic-simulation-archive-2026-11-21` (Commit `fc338593c33c8e25063fc5ffd22511f7ded9b3c9`).
   Keine neuen Funktionen darauf aufbauen und keine alten VM-/UI-Testadapter
-  zurückholen. Historische Dokumente unter `docs/history/` und alte
-  Stilgalerien sind keine Grundlage des aktuellen Rennsystems.
-- Cleanup-Fortschritt und bewusst verbleibende Arbeit: `docs/LEGACY_CLEANUP.md`.
-  Die Entfernung nachweislich überflüssiger klassischer Komponenten ist für
-  diesen Auftrag freigegeben. Aktuelle Spielsysteme bleiben geschützt.
+  zurückholen. Historisch gekennzeichnete Dokumente und `docs/history/` sind keine
+  Grundlage des aktuellen Rennsystems. Entfernte klassische Module nicht zurückholen.
+- Abgeschlossener Legacy-Cleanup, Löschbelege und bewusst erhaltene Quellen:
+  `docs/LEGACY_CLEANUP.md`. Keine weiteren kosmetischen Cleanup-Pakete einplanen.
+  Das Roguelite-Run-System benötigt einen eigenen Auftrag.
 - Physik, KI, Balancing, Zufallsaufrufe, Rennlängen, Streckenführung und
   aktuelle Oberfläche nur auf ausdrücklichen Auftrag ändern. Keine neue
   Engine und kein Framework einführen. Darstellung liest Rennzustand.
@@ -31,6 +31,8 @@
 - GitHub Pages muss unter `/carpet-grand-prix/` ohne Anwendungsserver
   funktionieren. Die aktuellen Offline-Ausgaben einschließlich Navigation
   und eingebetteter Assets erhalten.
+- Assetquellen und Generatoren: `docs/ASSETS.md`. Ein historischer Dateiname
+  ist kein Löschgrund; gemeinsame Fahrzeug- und Porträtquellen bleiben aktiv.
 - Passende Tests vor/nach Änderungen ausführen. Referenz-Fixtures nicht
   zum Beseitigen roter Tests überschreiben. Neue Referenzen brauchen einen
   dokumentierten, unveränderten Ausgangsstand. Test-Hooks ausschließlich

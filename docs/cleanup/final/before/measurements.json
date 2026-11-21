@@ -1,0 +1,182 @@
+{
+  "checkoutCommit": "921717c3827948c24af1c26465bb33695b68b4be",
+  "indexSHA256": "66e4016a39262fee1aeb501dccd09ea9b31dbbbcad11c822c0a5396534d75631",
+  "node": "v24.22.1",
+  "project": {
+    "files": 988,
+    "bytes": 222851303,
+    "sourceFiles": 115,
+    "sourceBytes": 2770357,
+    "indexBytes": 528,
+    "jsFiles": 89,
+    "cssFiles": 15,
+    "entrypointJsFiles": 78,
+    "entrypointCssFiles": 5,
+    "entrypointCodeBytes": 2005594,
+    "developmentDependencies": 8
+  },
+  "gitObjects": "count: 2928\nsize: 225412\nin-pack: 0\npacks: 0\nsize-pack: 0\nprune-packable: 0\ngarbage: 1\nsize-garbage: 4",
+  "builds": {
+    "build-offline.js": {
+      "milliseconds": 3498.9667150000005
+    }
+  },
+  "pages": [
+    {
+      "name": "desktop",
+      "kind": "menu",
+      "width": 1280,
+      "height": 720,
+      "samples": [
+        {
+          "readyMilliseconds": 724.6363570000003,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        },
+        {
+          "readyMilliseconds": 512.4725280000002,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        },
+        {
+          "readyMilliseconds": 499.11714200000006,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        }
+      ]
+    },
+    {
+      "name": "desktop",
+      "kind": "race",
+      "width": 1280,
+      "height": 720,
+      "samples": [
+        {
+          "readyMilliseconds": 4401.702843,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        },
+        {
+          "readyMilliseconds": 4722.699103999999,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        },
+        {
+          "readyMilliseconds": 4051.058799000002,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        }
+      ]
+    },
+    {
+      "name": "portrait",
+      "kind": "menu",
+      "width": 390,
+      "height": 844,
+      "samples": [
+        {
+          "readyMilliseconds": 964.4530489999997,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        },
+        {
+          "readyMilliseconds": 516.3379649999988,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        },
+        {
+          "readyMilliseconds": 405.39195299999847,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        }
+      ]
+    },
+    {
+      "name": "portrait",
+      "kind": "race",
+      "width": 390,
+      "height": 844,
+      "samples": [
+        {
+          "readyMilliseconds": 3513.4553180000003,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        },
+        {
+          "readyMilliseconds": 4190.690717000001,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        },
+        {
+          "readyMilliseconds": 3569.4328160000005,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        }
+      ]
+    },
+    {
+      "name": "landscape",
+      "kind": "menu",
+      "width": 844,
+      "height": 390,
+      "samples": [
+        {
+          "readyMilliseconds": 464.12775999999576,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        },
+        {
+          "readyMilliseconds": 412.1373840000015,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        },
+        {
+          "readyMilliseconds": 428.7672519999978,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        }
+      ]
+    },
+    {
+      "name": "landscape",
+      "kind": "race",
+      "width": 844,
+      "height": 390,
+      "samples": [
+        {
+          "readyMilliseconds": 3560.7598389999985,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        },
+        {
+          "readyMilliseconds": 4300.634273999996,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        },
+        {
+          "readyMilliseconds": 4246.613859999998,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        }
+      ]
+    }
+  ]
+}

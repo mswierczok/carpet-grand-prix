@@ -1,0 +1,47 @@
+{
+  "baseline": "921717c3827948c24af1c26465bb33695b68b4be",
+  "outputs": [
+    {
+      "file": "carpet-grand-prix-arcade-offline.html",
+      "beforeSHA256": "cab3d1d73d667e99aca5f8bd746ebdc01f075abb2e742ef646e397adb4ec7dd4",
+      "afterSHA256": "cab3d1d73d667e99aca5f8bd746ebdc01f075abb2e742ef646e397adb4ec7dd4",
+      "identical": true
+    },
+    {
+      "file": "carpet-grand-prix-arcade3d-offline.html",
+      "beforeSHA256": "0ca62ecb9e722e82ddf9d534d0d0285f308bdc11d13cd35a9c942c9a02089b96",
+      "afterSHA256": "0ca62ecb9e722e82ddf9d534d0d0285f308bdc11d13cd35a9c942c9a02089b96",
+      "identical": true
+    },
+    {
+      "file": "carpet-grand-prix-campaign-offline.html",
+      "beforeSHA256": "920daafb9b7fde7f2963f8065e56921aa6abf4b6cde9df548e736feecd9085cc",
+      "afterSHA256": "920daafb9b7fde7f2963f8065e56921aa6abf4b6cde9df548e736feecd9085cc",
+      "identical": true
+    },
+    {
+      "file": "carpet-grand-prix-classic-archive.html",
+      "beforeSHA256": "c7d7ec856461d994c573a1784e315fc74e3b64408ec35a4b550003dfe4fc3f2d",
+      "afterSHA256": "c7d7ec856461d994c573a1784e315fc74e3b64408ec35a4b550003dfe4fc3f2d",
+      "identical": true
+    },
+    {
+      "file": "carpet-grand-prix-menu-offline.html",
+      "beforeSHA256": "c4f2e1454347d81842797933a747342b9aa34bdac3d5216af1d566e7d867858b",
+      "afterSHA256": "c4f2e1454347d81842797933a747342b9aa34bdac3d5216af1d566e7d867858b",
+      "identical": true
+    },
+    {
+      "file": "carpet-grand-prix-offline.html",
+      "beforeSHA256": "c4f2e1454347d81842797933a747342b9aa34bdac3d5216af1d566e7d867858b",
+      "afterSHA256": "c4f2e1454347d81842797933a747342b9aa34bdac3d5216af1d566e7d867858b",
+      "identical": true
+    },
+    {
+      "file": "carpet-grand-prix-race-offline.html",
+      "beforeSHA256": "d0b2da84f325e5ea9e6dff288f93a35841b0f4a6d18ab8f09c701418a96580d1",
+      "afterSHA256": "d0b2da84f325e5ea9e6dff288f93a35841b0f4a6d18ab8f09c701418a96580d1",
+      "identical": true
+    }
+  ]
+}

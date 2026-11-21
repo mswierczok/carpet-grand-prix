@@ -1,91 +1,66 @@
-> Historische Referenz zur früheren Anwendung bzw. Stilentwicklung.
-> Aktuelle Architektur: [ARCHITECTURE.md](ARCHITECTURE.md); Archiv und Übernahme: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
+# Aktive Assets und reproduzierbare Quellen
 
-# CSS, Bilder und Offline-Ausgabe
+Das aktuelle Arcade-Spiel lädt ausschließlich lokale Ressourcen aus seinen
+HTML-Einstiegspunkten. GitHub Pages benötigt dafür keinen Build. Die geordnete
+Scriptfolge und die fünf aktiven Stylesheets bleiben unverändert:
+`arcade.css`, `arcade-race.css`, `campaign.css`, `pov-launch.css`, `racing-hud.css`.
+Die frühere zehnteilige klassische CSS-Kaskade ist entfernt.
 
-Erster Umbau auf Basis von `c418ed576ba9f640b295905539f3675b8513a67c`
-(übernommener Vorbereitungs-PR #1). Spielregeln, Datenmodell und Formeln bleiben erhalten.
+## Erhaltene Quellen
 
-## Bearbeitbare Dateien
+| Quelle | Verbraucher / Zweck |
+| --- | --- |
+| `assets/cars/team-t01.webp` bis `team-t13.webp` | Aktuelle Teamkarten, Kampagne, Offline-Einbettung |
+| `assets/cars/liveries.json`, Referenzbilder und weiße Fahrzeugvorlage | Autorenschaft, Lackierungszuordnung und unabhängige Hash-Prüfung aller Teamidentitäten |
+| `src/rendering/race-sprites.js`, `pilot-vehicles.js` | Gemeinsame Fahrzeuggeometrie, 13 Top-down- und illustrierte SVG-Exporte; bewusst erhaltene Grafikgrundlage |
+| `assets/cars/topdown/`, `assets/cars/illustrated/` | Reproduzierbare Fahrzeugillustrationen; keine Teile der alten Simulation |
+| `assets/drivers/portraits/d001.png` bis `d035.png`, zugehörige WebPs und Manifest | Unveränderte Originalillustrationen, optimierte aktuelle Darstellung und Hash-Schutz |
+| `src/data/driver-identities.js`, `uploaded-portraits.js`, `src/rendering/driver-portraits.js`, 92 Fahrer-SVGs | Historische Identitäten, Portraitzuordnung und reproduzierbare Vektorfallbacks |
+| `assets/tracks/` (22 Bilder) | Bewusst erhaltene Originalzeichnungen aller Strecken, unabhängig vom Acht-Strecken-Kampagnenpool |
+| `assets/world/arcade-materials.png` | Tatsächlich geladener Materialatlas der Miniaturwelt |
+| `src/rendering/*3d*`, Raum-/Kalenderkonfigurationen und Environment-Module | Aktuelle Fahrzeuge, Zimmer, Möbel, Spielzeug, Bahrain und alle Kalenderumgebungen |
 
-Die Online-Startdatei enthält weiterhin das ursprüngliche JavaScript. Sie ist nach
-der Auslagerung 784.095 statt 5.215.314 Bytes groß (rund 85 % kleiner). Die Website
-benötigt die Ordner `styles/`, `assets/` und `src/`. Keine Installation und kein Build für
-GitHub Pages nötig.
+`assets/manifest.json` Version 2 ist ein **Integritätskatalog**, keine Preload-
+oder Offline-Packliste. Er bewahrt die bisherigen 35 Einträge für 13 Team- und
+22 Streckenbilder samt unveränderten Hashes. Der Provenienzblock nennt die
+ursprüngliche HTML-Quelle und den Archiv-Tag. Alte CSS-Reihenfolge, `styleTail`
+und das ausschließlich klassische Studio-Hintergrundbild gehören nicht mehr dazu.
+Die Fahrzeug- und Porträtmanifeste behalten ihre getrennten Aufgaben.
 
-CSS wird in dieser verbindlichen Reihenfolge geladen:
+## Generatoren und Prüfbefehle
 
-1. `styles/base.css`: Grundlagen und ursprüngliche gemeinsame Komponenten.
-2. `styles/race.css`: Live-Timing und Qualifying.
-3. `styles/launch.css`: Startmenü, Podium und erste Teamauswahlregeln.
-4. `styles/studio.css`: einheitliche Studio-Oberfläche.
-5. `styles/live-layout.css`: spätere Anpassungen der Live-Ansicht.
-6. `styles/team-select.css`: spätere Teamauswahl-Anpassungen.
-7. `styles/workshop.css`: Werkstatt und Fahrzeugdarstellung.
-8. `styles/team-driver-hud.css`: eigene Fahreranzeigen unten im Rennfenster.
+- `npm run build:race-preview`: erzeugt alle 13 Basis-SVGs und eine portable
+  Fahrzeuggalerie aus `previews/topdown/index.html`.
+- `npm run build:pilot-art`: erzeugt die 26 illustrierten Renn-/Showroom-SVGs aus
+  gemeinsamen Fahrzeugquellen. Der historische Name bezeichnet keinen Simulator.
+- `npm run build:driver-art` / `check:driver-art`: 92 Vektoridentitäten.
+- `npm run build:uploaded-portraits`: PNG/WebP-Packaging mit ImageMagick;
+  Original-PNGs werden nicht überschrieben.
+- `scripts/optimize-car-image.js`: begrenztes Authoring-Werkzeug für ausdrücklich
+  beauftragte Lackierungen t02–t13; keine automatische Umgestaltung im Spiel.
+- `npm run build:offline` (Alias `build:arcade-offline`): liest die aktiven
+  HTML-Seiten, bettet deren Scripts, CSS, Materialatlas, Teamfahrzeuge und
+  Kampagnenporträts ein. Alle sieben Ausgaben einschließlich Archivinformation
+  bleiben erhalten. Die Kampagnendatei enthält Menü und Rennansicht zusammen.
 
-Die ursprüngliche Kaskade ist absichtlich erhalten. Historische Überschreibungen
-nicht als vermeintlich doppelte Regeln entfernen oder umsortieren. Das wäre ein
-separater, visuell zu prüfender Schritt.
+Die aktuellen Bahrain-/Kalender-/HUD-Reviews, Messskripte und Fahrtests bleiben
+als Entwicklungs- und Debugzugänge erhalten. Historische Vorher-Aufnahmen in
+`docs/` und `previews/` belegen genehmigte Grafik-/Streckenänderungen und sind
+keine Laufzeitressourcen. Die zwei obsoleten klassischen Galerien `art-pilot`
+und `world-and-drivers` einschließlich Pilot-Galeriegenerator sind ausschließlich
+über das [Git-Archiv](LEGACY_CLEANUP.md) wiederherstellbar.
 
-36 Laufzeit-WebP-Dateien liegen unter `assets/cars/` (13), `assets/tracks/` (22) und
-`assets/backgrounds/` (1). Die erste Auslagerung hat sie verlustfrei aus Base64
-dekodiert. Zwölf Teamfahrzeuge erhalten nun ausdrücklich beauftragte neue
-[Lackierungen nach Referenzfotos](CAR_LIVERIES.md); Vauclair bleibt erhalten.
-`assets/manifest.json` dokumentiert Reihenfolge, Herkunft, Größe und SHA-256 jeder
-Datei sowie die Reihenfolge der Stylesheets. HTML-Pfade sind projektbezogen,
-CSS-Pfade relativ zum Stylesheet. Eigene Logos bleiben im Browserspeicher.
+## Abhängigkeiten und Schutz
 
-Die 13 [Top-Down-Rennsprites](TOPDOWN_PREVIEW.md) entstehen gemeinsam in
-`src/rendering/race-sprites.js`. Die SVG-Exporte unter `assets/cars/topdown/`
-dienen der Einzelansicht, der Renn-Canvas nutzt den Renderer direkt. Der
-Offline-Builder bettet auch dieses Script ein. Die historische Größenangabe oben
-bezieht sich auf die erste Auslagerung, vor Lackierungen und Rennsprite-Vorschau.
+Die acht gepinnten Entwicklungsabhängigkeiten bleiben erforderlich:
+Playwright/Vitest für Browser-/Modultests, Three/Rolldown für den lokalen
+Renderer, Clipper/Polygon-Clipping für reproduzierbare Seilbegrenzungen und
+PNGJS/Pixelmatch für echte Bildvergleiche. Es gibt keine neue Abhängigkeit,
+kein CDN und keine zusätzliche Runtime-Paketinstallation für Spieler.
 
-## Offline ohne Programmieren
-
-Die automatische Prüfung stellt das Download-Artefakt **carpet-grand-prix-offline**
-bereit. ZIP entpacken und `carpet-grand-prix-offline.html` im Browser öffnen.
-Die Datei enthält alle Bilder, Styles und das gesamte Spiel; daneben sind keine
-weiteren Dateien erforderlich. Browser unterstützen lokale Speicherung bei lokalen
-Dateien unterschiedlich; wichtige Spielstände wie bisher zusätzlich als JSON sichern.
-
-Alternativ den vollständigen Projektordner mit allen Unterordnern herunterladen.
-Die Einzeldatei aus dem Artefakt ist der einfachste Weg, wenn nur eine Datei
-weitergegeben werden soll. Artefakte bleiben 30 Tage erhalten.
-
-Für Entwickler erzeugt `npm run build:offline` die Einzeldatei unter `dist/`.
-Sie wird nicht von Hand bearbeitet und nicht als zweite Quelldatei eingecheckt.
-Die Webversion funktioniert unabhängig von diesem optionalen Entwicklerbefehl.
-
-## Nachweise und Grenzen
-
-- Vauclair, Strecken und Hintergrund bleiben bytegenau mit den eingebetteten
-  Originalen identisch. Die zwölf beauftragten neuen Fahrzeugbilder besitzen eigene
-  dokumentierte Prüfsummen und Referenzzuordnungen.
-- Bei der ursprünglichen Auslagerung war die Offline-Ausgabe bytegenau identisch mit
-  `ea88f1d`. Für die neuen Lackierungen werden im Rückvergleich ausschließlich die
-  zwölf Fahrzeug-Bilddaten durch die Originaldaten ersetzt. CSS, Spielcode und Daten
-  müssen weiterhin bytegenau übereinstimmen. Für die ausdrücklich beauftragten
-  Rennsprites werden zusätzlich nur die beiden Einbindungsstellen ausgenommen;
-  siehe [Prüfumfang](TOPDOWN_PREVIEW.md#prüfung-und-grenzen).
-- Browserprüfungen vergleichen Original und neue Website im selben Browser mit
-  denselben Spielständen/Zufallsfolgen: Start, Teamauswahl, sechs Ansichten,
-  pausiertes Rennen und Qualifying auf Desktop und im Mobilformat.
-- Die vom Browser gelesenen CSS-Regeln werden ebenfalls verglichen. Bildvergleiche
-  verwenden Pixelmatch mit Farb-Abstandsschwelle 0,05 und ignorieren Kantenglättung;
-  außerhalb dieser engen Toleranz ist kein abweichender Bildpunkt erlaubt. Das
-  vermeidet Fehlalarme an mobilen, abgerundeten Canvas-Kanten. Bildbytes und der
-  vollständige Quelltext-Rückvergleich bleiben ohne Toleranz abgesichert.
-- Die Originalseite stammt aus dem unveränderten Git-Commit mit geprüfter SHA-256.
-  Referenzbilder werden daraus je Lauf erzeugt. Unterschiede liefern beide
-  Screenshots als Fehleranhänge, keine Erwartungen aus der umgebauten Seite.
-- Offline-Tests laden die Einzeldatei über den lokalen Testserver, schalten das
-  Netzwerk ab und prüfen Ansichten, Qualifying, Rennen und Speicherung ohne weitere
-  HTTP-Ressourcen. Das ersetzt keine Prüfung aller Browser beim Öffnen lokaler Dateien.
-  Die historische bytegleiche Einzeldatei sicherte die ursprüngliche Auslagerung ab.
-  Die aktuelle Ausgabe enthält zusätzlich die beauftragten Fahrzeugdarstellungen.
-
-Der vollständige Rückvergleich sichert diese reine Auslagerung ab. Bei später
-genehmigten UI-/Spieländerungen muss er ausdrücklich an den neuen Prüfumfang
-angepasst werden; nicht beiläufig entfernen, um einen roten Test zu umgehen.
+`assets.test.js` vergleicht den bereinigten Katalog mit dem gemergten Stand vor
+diesem Cleanup. `legacy-removal.test.js` schützt alle übrigen Assets und aktuell
+geladenen Quellen byteweise. Ergänzend prüfen Fahrzeug-, Livery-, Fahrer- und
+Porträttests Originalbytes und Reproduzierbarkeit; Browserprüfungen dekodieren
+Team- und Kampagnenbilder online wie offline. Referenzen werden nicht automatisch
+zum Beseitigen von Testfehlern neu erzeugt.
