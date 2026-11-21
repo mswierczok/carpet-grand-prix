@@ -357,10 +357,10 @@ sind Emulation, kein Test auf einem physischen iPhone/Safari.
 | landscape, menu: bereit (Median) | 429 ms | 465 ms |
 | landscape, race: bereit (Median) | 4247 ms | 3584 ms |
 
-86.117 Bytes weniger Anwendungscode (3,1 %). Das Datei-Inventar vor Einchecken
-der Abschlussnachweise enthält 961 Dateien; neun neue Nachweisdateien führen
-zu 970 versionierten Dateien. Die gesamten Projektbytes einschließlich
-Dokumentation/Bildern sind separat in den Rohdaten erfasst (rund 212,5 → 208,5 MiB).
+86.117 Bytes weniger Anwendungscode (3,1 %). Ohne die neun neuen
+Nachweisdateien verbleiben 961 Dateien, einschließlich der Nachweise sind
+es 970 versionierte Dateien. Die gesamten Projektbytes einschließlich
+Dokumentation/Bildern sind separat in den Rohdaten erfasst (rund 212,5 → 209,7 MiB).
 Dieser Bestand ist weder das ausgelieferte Spiel noch die Git-Datenbank.
 <!-- /FINAL_CLEANUP_METRICS -->
 
