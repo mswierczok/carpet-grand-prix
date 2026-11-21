@@ -7,8 +7,14 @@ import { ROOT } from "../helpers/project.js";
 import { createPOVMenuOffline, createArcadeOffline, createCampaignOffline, createClassicArchiveOffline } from "../../scripts/build-arcade-offline.js";
 const hash = data => createHash("sha256").update(data).digest("hex");
 const manifest = JSON.parse(readFileSync(new URL("assets/manifest.json", ROOT), "utf8"));
-it("bewahrt sämtliche historischen Bilder und freigegebenen Lackierungen bytegenau", () => {
-  expect(manifest.images).toHaveLength(36);
+it("bewahrt 13 Teamillustrationen und alle 22 Originalstrecken bytegenau", () => {
+  expect(manifest.version).toBe(2);
+  expect(manifest.images).toHaveLength(35);
+  // Keep the original hashes; only the retired studio background is excluded.
+  const before = JSON.parse(execFileSync("git", ["show", "921717c3827948c24af1c26465bb33695b68b4be:assets/manifest.json"], { cwd: ROOT, encoding: "utf8" }));
+  expect(manifest.images).toEqual(before.images.filter(image => image.path !== "assets/backgrounds/studio-event.webp"));
+  expect(manifest.images.filter(image => image.path.startsWith("assets/cars/"))).toHaveLength(13);
+  expect(manifest.images.filter(image => image.path.startsWith("assets/tracks/"))).toHaveLength(22);
   for (const image of manifest.images) {
     const bytes = readFileSync(new URL(image.path, ROOT));
     expect(bytes.length, image.path).toBe(image.bytes);

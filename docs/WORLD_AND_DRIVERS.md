@@ -1,4 +1,6 @@
 > Historische Referenz zur früheren Anwendung bzw. Stilentwicklung.
+> Die beschriebene klassische UI und ihre Generatorbefehle sind entfernt;
+> verlinkte alte Galerien liegen ausschließlich im Git-Archiv.
 > Aktuelle Architektur: [ARCHITECTURE.md](ARCHITECTURE.md); Archiv und Übernahme: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
 
 # Vollständiger Zeichenstil und Fahrerporträts
@@ -71,7 +73,7 @@ nur bei Bedarf angelegt. Kleine/mittlere/große Ansichten teilen dieselbe SVG-Qu
 
 ## Überprüfbare Dateien
 
-[Gesamtvorschau](../previews/world-and-drivers/index.html): alle 22 Umgebungen,
+[Gesamtvorschau](https://github.com/mswierczok/carpet-grand-prix/blob/classic-simulation-archive-2026-11-21/previews/world-and-drivers/index.html): alle 22 Umgebungen,
 92 Fahrer mit echten Namen/Altersangaben und ein Knopf zum Wechseln der Anzüge.
 Die Wechselvorschau verändert keine Spielstände. Alle transparenten Fahrer-SVGs
 liegen reproduzierbar unter `assets/drivers/dXXX.svg`.
@@ -139,5 +141,5 @@ den bisherigen Fahrzeugbildern; Rennmechanik, Save-Schema und Werte sind unverä
 Zusätzliche Modul- und Desktop-/Mobiltests prüfen alle 35 IDs, Originalhashes,
 Bildgröße/Dateibudget, unveränderte Bildquelle bei Teamwechsel/Alterung,
 Kürzel ROB, aktuellen Teamrahmen, alle 57 Rückfälle und vollständiges Dekodieren
-ohne Netzwerk. Echte Spielaufnahmen: [Profil](../previews/world-and-drivers/profile.png)
-und [erste fünf Fahrer](../previews/world-and-drivers/drivers.png).
+ohne Netzwerk. Echte Spielaufnahmen: [Profil](https://github.com/mswierczok/carpet-grand-prix/blob/classic-simulation-archive-2026-11-21/previews/world-and-drivers/profile.png)
+und [erste fünf Fahrer](https://github.com/mswierczok/carpet-grand-prix/blob/classic-simulation-archive-2026-11-21/previews/world-and-drivers/drivers.png).

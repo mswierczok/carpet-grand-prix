@@ -90,6 +90,7 @@ Teamfahrzeuge und Kampagnenporträts ein. `build-offline.js` ist der kompatible
 Befehl für das aktuelle Hauptmenü, nicht mehr für die klassische Simulation.
 Der portable Kampagneneinstieg hält Menü und Rennen wie bisher in einer Datei.
 
-Die nächsten Cleanup-Schritte betreffen ausschließlich belegte ungenutzte
-Darstellungs-/CSS-/Previewreste und verbleibende Dokumentation. Details und
-Freigabegrenzen: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
+Der Legacy-Cleanup ist abgeschlossen. Klassische Rendering-/UI-/CSS-Module
+und deren zwei alte Vorschaugalerien sind entfernt. Alle aktuellen Einstiegspunkte
+und ihre Abhängigkeiten bleiben unverändert. Assetquellen und Generatoren:
+[ASSETS.md](ASSETS.md). Löschbelege und bewusst erhaltene Quellen: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).

@@ -1,6 +1,14 @@
-# Legacy Cleanup – Stand nach Datenentkopplung und Anwendungsentfernung
+# Legacy Cleanup – Abschluss und Nachweise
 
-## Status und Freigabegrenze
+PR #52 und #53 sind gemergt. Der [abschließende gemeinsame PR 3/4](#abschluss-pr-34--gemeinsamer-final-cleanup)
+entfernt die verbliebenen belegten Altlasten auf Basis von `921717c`.
+Keine weiteren kosmetischen Cleanup-Pakete sind vorgesehen. Alle aktuellen
+Spielsysteme und Originaldaten bleiben erhalten. Kein Merge ohne Freigabe.
+
+Die folgenden Abschnitte dokumentieren die bereits abgeschlossene Entfernung
+in PR #53; der finale Löschumfang, Schutzumfang und Vergleich folgen unten.
+
+## Historischer Abschluss von PR 2
 
 PR #52 ist gemergt. Seine Datenentkopplung wird nicht wiederholt.
 Diese Fortsetzung (Cleanup PR 2) basiert auf
@@ -194,24 +202,193 @@ enthält zusätzlich installierte Pakete und erzeugte Builds. Die historische
 Git-Objektdatenbank ist davon getrennt und wird durch Löschen aktiver Dateien
 nicht kleiner. Es gibt kein History-Rewrite und keine GC als vermeintliches Cleanup.
 
-## Bewusst verbleibend: separat freizugebende PR 3/4
+## Abschluss PR 3/4 – gemeinsamer Final-Cleanup
 
-Die restliche Bereinigung wird erst auf Basis des freigegebenen PR 2 fortgesetzt.
-Nicht als erledigt behauptet werden:
+Ausgangsbasis: gemergtes PR #53, Commit
+`921717c3827948c24af1c26465bb33695b68b4be`. Eigener Branch
+`codex/final-legacy-cleanup`. PR #52/#53, Datenextraktion, Archiv-Tag und
+Anwendungseinstieg werden nicht erneut implementiert. Kein automatischer Merge.
 
-- Unbenutzte klassische Darstellungsreste wie `pilot-world`, `race-camera`,
-  `render-motion`, `driver-profiles`, `live-dom`, `team-driver-hud` und
-  `world-environments`: keine aktuellen HTML-Verbraucher, erneute Prüfung von
-  Stilgalerien/Referenzen vor Entfernung im nächsten Paket.
-- Zehn alte Stylesheets und das historische Assetmanifest: aus der aktuellen
-  Auslieferung entkoppelt, verbleibende Metadaten-/Preview-Verbraucher vor Löschen prüfen.
-- Weitere obsolete statische Preview- und Dokumentationsreste. Die weiterhin
-  brauchbaren gemeinsamen Fahrzeugquellen, SVG-Generatoren und Stilreferenzen
-  werden ausdrücklich erhalten.
-- Abschließende Paket-/Assetbereinigung und vollständige Dokumentationskonsolidierung.
+### Abhängigkeitsprüfung und Entfernung
 
-Alle acht bestehenden Entwicklungsabhängigkeiten haben in diesem Stand noch
-konkrete Verbraucher. `pngjs`/`pixelmatch` prüfen die echten Vorher-/Nachher-Bilder,
-Three/Rolldown den lokalen Renderer, Clipper/Polygon-Clipping die Seilkonturen,
-Playwright/Vitest die aktuelle Anwendung. Keine Laufzeitabhängigkeit kam hinzu.
-Keine zukünftigen Roguelite-Features wurden implementiert.
+Die Prüfung umfasst alle aktiven HTML-Seiten, Script-/CSS-Reihenfolgen,
+Quellmodule, globale Namespaces, Tests, Offline-/Review-Builder, npm-Scripts,
+Workflows, Preview-Seiten und Assetpfade. Die sieben klassischen Module besitzen
+keinen aktuellen HTML-, Modul- oder Testadapter-Verbraucher. Ihr letzter globaler
+Preview-Verbraucher war die eigenständig eingebettete klassische Weltgalerie.
+Nach der Entfernung sind 78 der 82 verbleibenden JS-Dateien direkt in aktiven
+HTML-Seiten referenziert. Die vier übrigen sind `three-entry.js` (lokaler
+Rendererbuild), `driver-identities.js`, `uploaded-portraits.js` und
+`driver-portraits.js` (Porträtgeneratoren, Identitäts-/Originalbildtests).
+Es verbleibt kein ungeklärtes klassisches JS-Modul.
+
+Keines der zehn klassischen Stylesheets wird noch von einem aktuellen
+Einstiegspunkt oder Builder gelesen. Das Studio-Bild war ausschließlich per
+CSS aus `studio.css` referenziert.
+
+Der Pilot-Galeriegenerator verweist ausdrücklich auf Teamchef, das alte
+Qualifying und die klassische Werkstatt; seine vier Team-Vergleichskarten und
+drei Screenshots dokumentieren eine abgelöste UI. Die Welt-/Fahrergalerie bettet
+den alten 2D-Weltrenderer ein, nicht die aktuelle modulare Zimmerwelt. Beide
+Galerien und der obsolete Generator werden entfernt; aktuelle Review-Builder,
+Fahrzeugquellen und Originalporträts bleiben erhalten. Historische Dokumente
+kennzeichnen diese alten Anleitungen und verlinken die Galerien im Archiv-Tag.
+
+Vollständige Liste der entfernten Dateien (27 Dateien):
+
+- `assets/backgrounds/studio-event.webp`
+- `previews/art-pilot/bahrain.png`
+- `previews/art-pilot/follow.png`
+- `previews/art-pilot/index.html`
+- `previews/art-pilot/workshop.png`
+- `previews/world-and-drivers/drivers.png`
+- `previews/world-and-drivers/index.html`
+- `previews/world-and-drivers/profile.png`
+- `previews/world-and-drivers/worlds.png`
+- `scripts/build-pilot-preview.js`
+- `src/data/world-environments.js`
+- `src/rendering/pilot-world.js`
+- `src/rendering/race-camera.js`
+- `src/rendering/render-motion.js`
+- `src/ui/driver-profiles.js`
+- `src/ui/live-dom.js`
+- `src/ui/team-driver-hud.js`
+- `styles/art-pilot.css`
+- `styles/base.css`
+- `styles/driver-portraits.css`
+- `styles/launch.css`
+- `styles/live-layout.css`
+- `styles/race.css`
+- `styles/studio.css`
+- `styles/team-driver-hud.css`
+- `styles/team-select.css`
+- `styles/workshop.css`
+
+Das Assetmanifest bleibt als schmaler Integritätskatalog Version 2 bestehen:
+13 Team- und 22 Streckenbilder mit exakt denselben Daten und Hashes. Entfernt
+sind nur die alte CSS-Ladereihenfolge, der leere Style-Nachspann und der
+Studio-Bildeintrag. Der Herkunftscommit und die Original-HTML-Prüfsumme bleiben
+im Provenienzblock. Kein aktueller Builder benutzt diesen Katalog als Packliste.
+Der zugehörige Test vergleicht alle 35 Einträge gegen den unveränderten
+PR-53-Katalog; dadurch kann das Entfernen des Studio-Eintrags keine geänderten
+Fahrzeug- oder Streckenbilder verdecken.
+
+### Bewusst erhalten – keine weiteren Cleanup-Pakete
+
+| Bestand | Nachgewiesener Nutzen |
+| --- | --- |
+| `race-sprites.js`, `pilot-vehicles.js`, SVG-Exporte und `build-race-preview.js` / `build-pilot-art.js` | Gemeinsame Fahrzeuggeometrie, Lackierungen und reproduzierbare Assetgalerie; kein passiver Simulator |
+| Fahreridentitäten, Vektor-Porträtrenderer, 92 SVGs und Original-PNG/WebP-Manifeste | Eindeutige historische Zuordnung, Kampagnenporträts, passende Fallbacks und unabhängige Assetprüfung |
+| `assets/references/`, weiße Fahrzeugvorlage, `liveries.json`, Bildoptimierer | Konkrete Quellen der freigegebenen Fahrzeuglackierungen mit Hash- und Zuordnungsprüfung |
+| Alle 22 Streckenbilder/-daten, Geometriequellen, Brücken-/Boxenmodule | Aktuelle Fahrtests und acht Kampagnenstrecken; die übrigen 14 sind weiterhin gültiger Inhalt |
+| POV-Werkstatt/-Meisterschaft, Kampagne und sämtliche Persistence-Module | Aktive Spielmodi, getrennte Spielstände, validierte Migration, Fortsetzung und Ergebnisarchiv |
+| Aktuelle 2D-/3D-Fahrtests, Fahrzeuggalerie, Mess-/Review-Skripte und dazugehörige Previews | Reproduzierbare Gameplay-, Grafik-, Geometrie- und Performanceprüfung; kein klassisches Management |
+| Historische JSON-Fixtures und Herkunftsdokumente/-Screenshots | Unveränderte Daten-, Speicher- und Geometriesentinels sowie nachvollziehbare Art Direction; deutlich als historisch gekennzeichnet |
+| `archive.html`, `classic-archive.js`, Offline-Archivinformation und bestehender Git-Tag | Lesender Export alter Browserstände und Wiederherstellungsanleitung, ohne alte Simulation zu laden |
+
+Alle acht Entwicklungsabhängigkeiten besitzen weiter konkrete Verbraucher:
+`@playwright/test` (Browserfahrten), `vitest` (Unit-/Integrationstests),
+`three` + `rolldown` (lokaler Rendererbuild), `clipper-lib` + `polygon-clipping`
+(Seilkonturen), `pngjs` + `pixelmatch` (Vorher-/Nachher-Nachweise).
+Nur der obsolete npm-Befehl `build:pilot-preview` entfällt. Lockdatei, CI-Jobs und
+Testgruppen bleiben unverändert: sie prüfen bereits ausschließlich aktuelle
+Funktionen. Keine verbleibende Softwareabhängigkeit wird künstlich entfernt.
+
+Die vorhandene Verzeichnisstruktur entspricht bereits den fachlichen Grenzen.
+Keine reine Umbenennung oder Verschiebung verbessert hier die Wartbarkeit.
+`AGENTS.md`, `README.md`, Architektur, Asset- und Testanleitung beschreiben jetzt
+den abgeschlossenen Cleanup und den aktuellen Arcade-/Kampagnenkern. Alte
+Dokumente sind als historische Referenz gekennzeichnet; entfernte Galerielinks
+zeigen auf das Git-Archiv. Damit sind die offenen Punkte aus „Bewusst verbleibend“
+abgearbeitet. Das Roguelite-Run-System ist ausdrücklich nicht implementiert.
+
+### Abschließende Prüfungen und Vergleich
+
+<!-- FINAL_CLEANUP_RESULTS -->
+Die lokalen Schutzprüfungen für Assetkatalog, historische Daten, Originalporträts,
+SVG-Exporte und unveränderte aktive Quellen bestehen (13 Tests). Alle Daten-,
+Engine-, Kontur-, Rundenformat-, Fahrzeug- und Offline-/Review-Builds bestehen.
+Alle sieben Offline-Ausgaben sind SHA-256-/bytegleich zur PR-53-Basis;
+[Prüfsummen](cleanup/final/offline-integrity.json).
+
+Die lokale Browsergruppe deckt 54 Fälle auf beiden Profilen ab: 52 bestanden,
+ein reiner Desktop-Touchfall war wie vorgesehen übersprungen. Ein Menüfall
+zeigte einen Navigation-/Testuhr-Wettlauf: Die 64 ms Testzeit wurden vor
+Abschluss der Navigation verbraucht. Nach Umordnung (Renderer abwarten, dann
+dieselben 64 ms) besteht dieser Fall auf beiden Profilen separat. Damit sind
+alle 53 ausführbaren Fälle bestätigt, einschließlich vollständiger Bahrain- und
+Kanada-Wochenenden, Fortsetzung, Archiv, Migration, gesperrtem/defektem Storage,
+Originalbild-Dekodierung, Touch, Pause und 3–2–1. Kein Spielcode und kein Testbudget
+wurden dafür verändert. Testbilder bestehender Nachweise werden nicht überschrieben.
+
+Der lokale zentrale Unit-Lauf wurde durch eine Umgebungsunterbrechung beendet
+und wird ausdrücklich nicht als bestanden gewertet. Die vollständige unveränderte
+23-Job-PR-Pipeline prüft die zentrale Unit-/Integrationsgruppe, alle vier
+Kalendergruppen, sämtliche Browser-Shards, Qualifying, POV-Meisterschaft,
+Kampagne, Bahrain und alle 22 Umgebungen. Abschlussstatus und konkrete
+CI-Testlaufzeiten werden im Freigabe-PR verlinkt. Vorhervergleich: PR-53-Lauf
+[44932044288](https://github.com/mswierczok/carpet-grand-prix/actions/runs/44932044288),
+23 erfolgreiche Jobs; zentraler Unit-Schritt 891 Sekunden. Es wurden keine
+Testfälle oder CI-Gruppen entfernt und keine Zeitgrenzen erhöht.
+
+Desktop, 390×844, 844×390 und kleines Smartphone werden über echte Chromium-
+Browserinteraktionen geprüft. Das mobile Touchprofil und die iPhone-Viewportgrößen
+sind Emulation, kein Test auf einem physischen iPhone/Safari.
+
+<!-- FINAL_CLEANUP_METRICS -->
+| Messgröße | PR-53-Basis | Finaler Cleanup |
+| --- | --- | --- |
+| Versionierte Projektdateien (inkl. neuer Nachweise) | 988 | 970 |
+| Entfernte Dateien / deren Originalgröße | — | 27 / 5.039.795 Bytes |
+| Quellcode (src, styles, Root-HTML) | 2770357 | 2684240 |
+| index.html | 528 | 528 |
+| JS-Dateien in src | 89 | 82 |
+| CSS-Dateien in styles | 15 | 5 |
+| Tatsächlich referenzierte JS-/CSS-Dateien | 78 / 5 | 78 / 5 |
+| Referenzierte JS-/CSS-Bytes | 2005594 | 2005594 |
+| Entwicklungsabhängigkeiten | 8 | 8 |
+| Hauptmenü: Übertragungsbytes / JS-/CSS-Requests | 713.627 / 15 / 3 | 713.627 / 15 / 3 |
+| Rennen: Übertragungsbytes / JS-/CSS-Requests | 4.642.712 / 74 / 4 | 4.642.712 / 74 / 4 |
+| Vollständiger Offline-Build | 3.499 s | 2.726 s |
+| desktop, menu: bereit (Median) | 512 ms | 507 ms |
+| desktop, race: bereit (Median) | 4402 ms | 4713 ms |
+| portrait, menu: bereit (Median) | 516 ms | 496 ms |
+| portrait, race: bereit (Median) | 3569 ms | 3639 ms |
+| landscape, menu: bereit (Median) | 429 ms | 465 ms |
+| landscape, race: bereit (Median) | 4247 ms | 3584 ms |
+
+86.117 Bytes weniger Anwendungscode (3,1 %). Ohne die neun neuen
+Nachweisdateien verbleiben 961 Dateien, einschließlich der Nachweise sind
+es 970 versionierte Dateien. Die gesamten Projektbytes einschließlich
+Dokumentation/Bildern sind separat in den Rohdaten erfasst (rund 212,5 → 209,7 MiB).
+Dieser Bestand ist weder das ausgelieferte Spiel noch die Git-Datenbank.
+<!-- /FINAL_CLEANUP_METRICS -->
+
+Die Messungen verwenden denselben lokalen statischen Servertyp, Node 24.22.1,
+dasselbe installierte Chromium und Software-WebGL. Vorher und nachher werden
+nacheinander ohne konkurrierende Testläufe mit jeweils drei kalten Kontexten
+pro Menü-/Rennansicht erfasst. Zeiten sind Mediane aus drei Stichproben, keine
+belastbare Beschleunigungs- oder FPS-Aussage. Die geladenen Quellen und sieben
+portablen Ausgaben sind unverändert; der Nutzen liegt in weniger ungenutztem
+Code und eindeutigen Abhängigkeiten. Es wird keine höhere Bildrate behauptet.
+
+Die Rohdaten nennen den jeweiligen gemessenen Quellcommit. Projektinventare
+enthalten separate Nachweise/Dokumentation, nicht `node_modules`, `dist`,
+Testberichte oder `.git`. Die Arbeitskopie enthält zusätzlich rund 116 MiB
+installierte Pakete und 405 MiB erzeugte Builds. Die Git-Objektdatenbank bleibt
+separat erhalten; sie wird nicht durch Löschen aktueller Dateien verkleinert.
+Kein History-Rewrite, keine GC und keine Löschung alter Browserspielstände.
+
+Vorher-/Nachher-Aufnahmen aus dem tatsächlichen Spiel, jeweils 0 abweichende
+Pixel (Pixelmatch-Schwelle 0,05):
+
+| Format | Vorher | Nachher |
+| --- | --- | --- |
+| Desktop | [Startaufstellung](cleanup/final/before/desktop-race.png) | [Startaufstellung](cleanup/final/after/desktop-race.png) |
+| Hochformat | [Startaufstellung](cleanup/final/before/portrait-race.png) | [Startaufstellung](cleanup/final/after/portrait-race.png) |
+| Querformat | [Startaufstellung](cleanup/final/before/landscape-race.png) | [Startaufstellung](cleanup/final/after/landscape-race.png) |
+
+[Vorher-Rohdaten](cleanup/final/before/measurements.json) ·
+[Nachher-Rohdaten](cleanup/final/after/measurements.json).
+
+<!-- /FINAL_CLEANUP_RESULTS -->

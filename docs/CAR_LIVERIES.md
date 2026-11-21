@@ -59,7 +59,9 @@ gesperrt. Die Webversion und ihre Tests benötigen ImageMagick nicht.
 
 `assets/cars/liveries.json` dokumentiert Zuordnung, Referenz-Prüfsummen,
 Gestaltungsmerkmale, Sponsoren und Bild-Prüfsummen. `assets/manifest.json` enthält
-die aktualisierten Laufzeitbilder für Prüfung und Offline-Ausgabe.
+die unveränderten Bild-Prüfsummen für 13 Teams und 22 Originalstrecken.
+Der aktuelle Offline-Builder liest seine Assets direkt aus den aktiven Seiten;
+[ASSETS.md](ASSETS.md) beschreibt den heutigen Datenweg.
 
 ## Absicherung
 

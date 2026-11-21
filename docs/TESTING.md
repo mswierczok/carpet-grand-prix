@@ -24,8 +24,8 @@ Ein mobiles Chromium-Profil ersetzt keinen echten iPhone-/Safari-Test.
 `build:pilot-art` und `build:race-preview` erhalten die gemeinsamen
 Fahrzeug-SVGs und die dazugehörige Assetvorschau. Der PNG-/WebP-Encoder
 `build:uploaded-portraits` benötigt zusätzlich ImageMagick; CI/Spiel verwenden
-bereits versionierte WebPs. `build:pilot-preview` bleibt als historische
-Stilgalerie erhalten, nicht als Beweis für die aktuelle Rennwelt.
+bereits versionierte WebPs. Der obsolete klassische Pilot-Galeriegenerator ist
+entfernt. Historische Voransichten sind über den Archiv-Tag wiederherstellbar.
 
 ## CI-Aufteilung
 
@@ -82,8 +82,10 @@ unter anderem als Speicher-Sentinel und historische Referenz. Keinen Generator
 und keine Referenz automatisch zum Beheben roter Tests überschreiben.
 
 `legacy-removal.test.js` schützt sämtliche tatsächlich geladenen Spielmodule,
-Daten, Modelle, Assets und ursprünglichen Fixtures byteweise gegen den Stand
-vor der Entfernung. Alle 22 Zeichnungen, acht Kampagnenstrecken und IDs werden
+Daten, Modelle, Originalbilder und ursprünglichen Fixtures byteweise gegen den
+Stand vor der Entfernung. Einzige Asset-Ausnahmen sind das entfernte Studio-Bild
+und der bereinigte Katalog: `assets.test.js` vergleicht dessen 35 verbleibende
+Bildeinträge einschließlich Hashes unverändert mit dem gemergten PR-53-Stand. Alle 22 Zeichnungen, acht Kampagnenstrecken und IDs werden
 zusätzlich unabhängig geprüft. Keine Produktions-Testhooks oder Sonderphysik.
 
 ## Vorher-/Nachher-Messung
@@ -95,7 +97,7 @@ CDP-Übertragungsbytes und erstellt echte Screenshots. Vergleich der statischen
 Rennaufnahmen mit `pngjs`/`pixelmatch`, ohne veränderte Spielparameter.
 
 ```sh
-npm run measure:cleanup -- --root /pfad/zum/checkout --url http://127.0.0.1:4173/carpet-grand-prix/ --output dist/cleanup/measurements.json
+npm run measure:cleanup -- --root /pfad/zum/checkout --url http://127.0.0.1:4173/carpet-grand-prix/ --output dist/cleanup/measurements.json --single-offline-build
 ```
 
 Mit `--compare /pfad/zu/vorherbildern` werden die drei Rennbilder verglichen.

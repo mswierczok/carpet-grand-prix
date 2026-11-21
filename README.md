@@ -34,7 +34,7 @@ Kalender-/Browserfahrten auf eigene Gruppen, ohne deren Inhalt zu verkürzen.
 
 ```sh
 npm run build:offline
-npm run build:arcade-offline
+# build:arcade-offline ist ein kompatibler Alias für dasselbe vollständige Paket.
 ```
 
 Die Ausgaben in `dist/` enthalten das aktuelle Hauptmenü, Kampagne, Rennen,
@@ -49,6 +49,7 @@ spielbare Offline-/Review-Pakete bereit. Alle benötigten Assets sind eingebette
 - [Speicherbereiche](docs/SAVE_FORMAT.md)
 - [Vollbild-HUD und Pause](docs/RACING_HUD.md)
 - [Modulare Welt aller 22 Strecken](docs/CALENDAR_ENVIRONMENTS.md)
+- [Aktive Assets, Generatoren und Prüfsummen](docs/ASSETS.md)
 - [Unabhängige Stammdaten](src/data/historical/README.md)
 - [Cleanup, Archivierung und Messungen](docs/LEGACY_CLEANUP.md)
 - [Entwicklerregeln](AGENTS.md)
@@ -61,5 +62,7 @@ archiviert. [Archivzugang und Export alter Browserstände](archive.html).
 Es gibt keine automatische Migration in die Kampagne und keine Löschung alter
 Speicherbereiche. Wiederherstellung: [Cleanup-Dokumentation](docs/LEGACY_CLEANUP.md).
 
-Run-Map, Items, Crew, Teamfähigkeiten, Freischaltbedingungen und endgültige
-Run-Längen sind noch nicht implementiert. Sie werden nach dem Cleanup separat entwickelt.
+Der Legacy-Cleanup ist abgeschlossen. Gemeinsame Fahrzeug-/Porträtquellen und
+historische Stammdaten bleiben bewusst erhalten; die alte Anwendung ist nur im
+Git-Archiv wiederherstellbar. Run-Map, Items, Crew, Teamfähigkeiten,
+Freischaltbedingungen und endgültige Run-Längen benötigen eigene Entwicklungsaufträge.

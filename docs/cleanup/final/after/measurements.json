@@ -1,0 +1,194 @@
+{
+  "checkoutCommit": "25260bd527deeebdb8d02dae407c98391e3824cd",
+  "indexSHA256": "66e4016a39262fee1aeb501dccd09ea9b31dbbbcad11c822c0a5396534d75631",
+  "node": "v24.22.1",
+  "project": {
+    "files": 970,
+    "bytes": 219844793,
+    "sourceFiles": 98,
+    "sourceBytes": 2684240,
+    "indexBytes": 528,
+    "jsFiles": 82,
+    "cssFiles": 5,
+    "entrypointJsFiles": 78,
+    "entrypointCssFiles": 5,
+    "entrypointCodeBytes": 2005594,
+    "developmentDependencies": 8
+  },
+  "gitObjects": "count: 2928\nsize: 225412\nin-pack: 0\npacks: 0\nsize-pack: 0\nprune-packable: 0\ngarbage: 0\nsize-garbage: 0",
+  "builds": {
+    "build-offline.js": {
+      "milliseconds": 2726.030608
+    }
+  },
+  "pages": [
+    {
+      "name": "desktop",
+      "kind": "menu",
+      "width": 1280,
+      "height": 720,
+      "samples": [
+        {
+          "readyMilliseconds": 487.3658949999999,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        },
+        {
+          "readyMilliseconds": 513.7594079999999,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        },
+        {
+          "readyMilliseconds": 506.7663109999994,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        }
+      ]
+    },
+    {
+      "comparison": "desktop-race",
+      "changedPixels": 0
+    },
+    {
+      "name": "desktop",
+      "kind": "race",
+      "width": 1280,
+      "height": 720,
+      "samples": [
+        {
+          "readyMilliseconds": 4999.417571999999,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        },
+        {
+          "readyMilliseconds": 4712.9476890000005,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        },
+        {
+          "readyMilliseconds": 3974.7477470000013,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        }
+      ]
+    },
+    {
+      "name": "portrait",
+      "kind": "menu",
+      "width": 390,
+      "height": 844,
+      "samples": [
+        {
+          "readyMilliseconds": 795.2152429999987,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        },
+        {
+          "readyMilliseconds": 448.2297949999993,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        },
+        {
+          "readyMilliseconds": 495.9043339999989,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        }
+      ]
+    },
+    {
+      "comparison": "portrait-race",
+      "changedPixels": 0
+    },
+    {
+      "name": "portrait",
+      "kind": "race",
+      "width": 390,
+      "height": 844,
+      "samples": [
+        {
+          "readyMilliseconds": 3461.058377000001,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        },
+        {
+          "readyMilliseconds": 3741.461779999998,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        },
+        {
+          "readyMilliseconds": 3639.143999,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        }
+      ]
+    },
+    {
+      "name": "landscape",
+      "kind": "menu",
+      "width": 844,
+      "height": 390,
+      "samples": [
+        {
+          "readyMilliseconds": 1354.1912430000011,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        },
+        {
+          "readyMilliseconds": 464.87483999999677,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        },
+        {
+          "readyMilliseconds": 426.98158200000034,
+          "transferredBytes": 713627,
+          "jsRequests": 15,
+          "cssRequests": 3
+        }
+      ]
+    },
+    {
+      "comparison": "landscape-race",
+      "changedPixels": 0
+    },
+    {
+      "name": "landscape",
+      "kind": "race",
+      "width": 844,
+      "height": 390,
+      "samples": [
+        {
+          "readyMilliseconds": 3583.5692710000003,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        },
+        {
+          "readyMilliseconds": 3662.709173000003,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        },
+        {
+          "readyMilliseconds": 3471.0458660000004,
+          "transferredBytes": 4642712,
+          "jsRequests": 74,
+          "cssRequests": 4
+        }
+      ]
+    }
+  ]
+}

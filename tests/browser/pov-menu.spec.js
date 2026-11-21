@@ -56,8 +56,10 @@ test("POV-Menü: ersetzt den normalen Simulationseinstieg, erhält alle Teamfahr
   await page.locator("#menuTrack").selectOption("france");
   await page.screenshot({ path: info.outputPath("team-selection.png") });
   await page.locator("#startDrive").click();
-  await page.clock.runFor(64);
+  // Navigation can finish after the click resolves. Advance the new document's
+  // frozen clock only once its renderer exists, otherwise no frame is observed.
   await expect(page.locator("#arcadeApp")).toHaveAttribute("data-rendering", "3d");
+  await page.clock.runFor(64);
   const snapshot = await page.evaluate(() => __driveSnapshot);
   expect(snapshot.race.playerTeam).toBe("t05"); expect(snapshot.race.difficulty).toBe("expert");
   expect(snapshot.entries.every(e => !Object.hasOwn(e, "catchup"))).toBe(true); expect(snapshot.race.phase).toBe("grid");

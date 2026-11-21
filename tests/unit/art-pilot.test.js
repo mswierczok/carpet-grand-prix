@@ -3,13 +3,16 @@ import { readFileSync } from 'node:fs';
 import { createContext, Script } from 'node:vm';
 import { ROOT } from '../helpers/project.js';
 const scope = createContext({});
-for (const file of ['race-sprites', 'pilot-vehicles']) new Script(readFileSync(new URL(`src/rendering/${file}.js`, ROOT), 'utf8')).runInContext(scope);
+new Script(readFileSync(new URL('src/rendering/race-sprites.js', ROOT), 'utf8')).runInContext(scope);
+const baseSprites = scope.CGPRaceSprites;
+new Script(readFileSync(new URL('src/rendering/pilot-vehicles.js', ROOT), 'utf8')).runInContext(scope);
 
-it('erzeugt vier transparente Illustrationen reproduzierbar und erhält alle gemeinsamen Geometriepfade', () => {
+it('erzeugt 13 transparente Illustrationen reproduzierbar und erhält alle gemeinsamen Geometriepfade', () => {
   const api = scope.CGPPilotVehicles;
   expect(api.ids).toHaveLength(13);
   for (const id of api.ids) {
     const top = api.svg(id), showroom = api.showroomSvg(id);
+    expect(baseSprites.svg(id) + '\n').toBe(readFileSync(new URL(`assets/cars/topdown/team-${id}.svg`, ROOT), 'utf8'));
     expect(top + '\n').toBe(readFileSync(new URL(`assets/cars/illustrated/topdown-${id}.svg`, ROOT), 'utf8'));
     expect(showroom + '\n').toBe(readFileSync(new URL(`assets/cars/illustrated/team-${id}.svg`, ROOT), 'utf8'));
     for (const d of Object.values(scope.CGPRaceSprites.geometry)) expect(top).toContain(`d="${d}"`);
@@ -19,6 +22,6 @@ it('erzeugt vier transparente Illustrationen reproduzierbar und erhält alle gem
   }
   for (const id of Object.keys(scope.CGPRaceSprites.teams).filter(id => !api.ids.includes(id))) {
     expect(api.svg(id)).toBeNull();
-    expect(scope.CGPRaceSprites.svg(id) + '\n').toBe(readFileSync(new URL(`assets/cars/topdown/team-${id}.svg`, ROOT), 'utf8'));
+    expect(baseSprites.svg(id) + '\n').toBe(readFileSync(new URL(`assets/cars/topdown/team-${id}.svg`, ROOT), 'utf8'));
   }
 });
