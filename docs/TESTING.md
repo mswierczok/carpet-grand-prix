@@ -371,6 +371,9 @@ Pausenmenü geprüft, statt an den entfernten alten Seitenelementen.
 `touch-session-start.spec.js` verwendet ausdrücklich native Fingertipps
 (`locator.tap()`) für Qualifying-/Rennstart, Zahnrad und Fortsetzen. Ein mobiler
 Browserkontext mit `locator.click()` allein deckt die Touch-Aktivierung nicht ab.
+Das Zahnrad wird vor dem Start und während der Fahrt bis in die Grafik- und
+Lenkeinstellungen bedient; dabei muss die Rennzeit stehen bleiben und erst
+nach ausdrücklichem Fortsetzen weiterlaufen.
 Die Prüfung wurde auf dem veröffentlichten Stand vor dem Fix reproduziert:
 Ein Fingertipp ließ die Session in der Aufstellung stehen. Nach dem Fix müssen
 Countdown, Auslaufrunde und tatsächliche Bewegung durch gehaltenes Touch-Gas

@@ -90,7 +90,7 @@ for (const campaign of [false, true])
       expect(errors).toEqual([]);
     });
 
-test("Touch-Start: der zentrale Rennstart und das Zahnrad bleiben per Fingertipp bedienbar", async ({
+test("Touch-Start: Rennstart und Zahnrad öffnen Pause/Einstellungen per Fingertipp vor und während der Fahrt", async ({
   page,
 }) => {
   test.setTimeout(120000);
@@ -98,6 +98,12 @@ test("Touch-Start: der zentrale Rennstart und das Zahnrad bleiben per Fingertipp
   await page.goto("race.html?new=single&team=t13");
   await page.clock.runFor(64);
   await page.locator("#openSettings").tap();
+  await expect(page.locator("#raceSettings")).toBeVisible();
+  await page.locator('[data-menu-target="settings"]').tap();
+  await expect(page.locator("#settingsTitle")).toHaveText("Einstellungen");
+  await expect(page.locator("#quality")).toBeVisible();
+  await expect(page.locator("#steeringSensitivity")).toBeVisible();
+  await page.locator('[data-menu-screen="settings"] [data-menu-back]').tap();
   await page.locator("#directRace").tap();
   await page.locator("#pause").tap();
   await page.clock.runFor(64);
@@ -110,4 +116,19 @@ test("Touch-Start: der zentrale Rennstart und das Zahnrad bleiben per Fingertipp
   expect(await page.evaluate(() => __driveSnapshot.race.phase)).toBe("racing");
   await page.locator("#openSettings").tap();
   await expect(page.locator("#raceSettings")).toBeVisible();
+  await page.clock.runFor(32);
+  const elapsed = await page.evaluate(() => __driveSnapshot.race.elapsed);
+  expect(await page.evaluate(() => __driveSnapshot.paused)).toBe(true);
+  await page.locator('[data-menu-target="settings"]').tap();
+  await expect(page.locator("#settingsTitle")).toHaveText("Einstellungen");
+  await expect(page.locator("#quality")).toBeVisible();
+  await expect(page.locator("#steeringSensitivity")).toBeVisible();
+  await page.clock.runFor(500);
+  expect(await page.evaluate(() => __driveSnapshot.race.elapsed)).toBe(elapsed);
+  await page.locator('[data-menu-screen="settings"] [data-menu-back]').tap();
+  await page.locator("#resumeRace").tap();
+  await page.clock.runFor(500);
+  expect(
+    await page.evaluate(() => __driveSnapshot.race.elapsed),
+  ).toBeGreaterThan(elapsed);
 });
