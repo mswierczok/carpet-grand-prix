@@ -1,12 +1,11 @@
 import { withoutBahrainIteration2 } from "../helpers/bahrain-layout-source.js";
 import { withoutEnvironmentCameraOptions } from "../helpers/environment-camera.js";
-import { withoutMainEntry } from "../helpers/legacy-entry.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { loadArcade } from "../helpers/arcade.js";
-import { ROOT } from "../helpers/game.js";
+import { ROOT } from "../helpers/project.js";
 const baseline = "c2e90fa61c18506d6832f1c22b6aadacc4d16b0f";
 const read = (path) => readFileSync(new URL(path, ROOT), "utf8");
 
@@ -84,9 +83,8 @@ it("erhält Neustart, Teamwechsel und explizite Test-Rundenzahlen ohne Speicherz
     expect(() => api.RaceSession.create(track, { laps })).toThrow("Rundenzahl");
 });
 
-it("schützt Physik, Grafik, Daten und Originalspiel trotz freigegebener KI-Änderungen bytegenau", () => {
+it("schützt Physik, Grafik und Daten trotz freigegebener KI-Änderungen bytegenau", () => {
   const files = [
-    "index.html",
     "src/racing/physics.js",
     "src/racing/bridge-physics.js",
     "src/racing/vehicle-contacts.js",
@@ -108,9 +106,7 @@ it("schützt Physik, Grafik, Daten und Originalspiel trotz freigegebener KI-Änd
         maxBuffer: 16 * 1024 * 1024,
       });
     expect(
-      file === "index.html"
-        ? withoutMainEntry(current)
-        : file === "src/rendering/camera3d.js"
+      file === "src/rendering/camera3d.js"
           ? withoutEnvironmentCameraOptions(current)
           : current,
     ).toBe(original);

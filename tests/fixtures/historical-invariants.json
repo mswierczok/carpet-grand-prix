@@ -1,0 +1,420 @@
+{
+  "sourceCommit": "fc338593c33c8e25063fc5ffd22511f7ded9b3c9",
+  "sourceHTMLSHA256": "f22b21c3f2c3bd41a74aec4125767b806b4486e25fed5d42d904e95246d313ec",
+  "geometry": [
+    {
+      "name": "Bahrain",
+      "length": 2755.2947650191,
+      "width": 32.84212987766387,
+      "sectors": [
+        0.25792431877955485,
+        0.533640302564284
+      ],
+      "pointsHash": "3f4e759f804fa24562523eff4478592599fdd37c55d97cf5d1b8bcfd4dcb2297",
+      "cumulativeHash": "a5e579b395eeb80b1b3b449aab8ecf18c8a583c2a4cdd74d8ba43a5f676d2e96",
+      "pitHash": "b5cc5e087c017ad0c39733a46dc738df271f85b4bc676a002cb7b641cef124aa"
+    },
+    {
+      "name": "Luxemburg",
+      "length": 4089.8459907640117,
+      "width": 35.595943924197925,
+      "sectors": [
+        0.3026568016420152,
+        0.5041198043919765
+      ],
+      "pointsHash": "778acb5cda9a3159aee56b4a3251233eeb218e706b00c073a860bad68fd5e807",
+      "cumulativeHash": "a42fd6ac1b6fa8e454ae7c794e9c1a15a30b09e0ca66eacc890a777da6598f1c",
+      "pitHash": "1fa29c0298ad6dd7d07c7eb3d43b4394319c084a240f669e8fad2d34ae9c5df7"
+    },
+    {
+      "name": "Kanada",
+      "length": 3269.519889221092,
+      "width": 38.39407115215085,
+      "sectors": [
+        0.2831981032810789,
+        0.7628327015979619
+      ],
+      "pointsHash": "980200731d7883b1defc9f7f1873309d1b598015ea0531d9285c3a2cfa9184e5",
+      "cumulativeHash": "86331d0fd1cc3a8b52b056a9daf440351012df66021457f978d4f6e00e62753d",
+      "pitHash": "8c0d7e2545b5bb58e597bec5c363f4a69a6a600db279103e864fef2385ac2f0d"
+    },
+    {
+      "name": "Frankreich",
+      "length": 2731.6608377927946,
+      "width": 24.82895172384472,
+      "sectors": [
+        0.38264369494463285,
+        0.645096542722867
+      ],
+      "pointsHash": "eee0099e9d7b6bb728118693be51857f7def284affa46850eef2711f746d739c",
+      "cumulativeHash": "726e753a2f5059b3d054e7392f4b3d635a1a90e249ccb59c0c9b722f50977a65",
+      "pitHash": "098f35f70cf316c3535556cc896f61b55629eb0750b7dc452785b7686ece1a2f"
+    },
+    {
+      "name": "Schweiz",
+      "length": 3312.0493448194793,
+      "width": 40.95049160862451,
+      "sectors": [
+        0.25557725062455744,
+        0.6054647228892364
+      ],
+      "pointsHash": "a63b1375c50bc9da4a639d0db549f568bf0eca1e7ea237a342d87f9851aaeb23",
+      "cumulativeHash": "4b822058021f6ab9be3c98d2779e1363ddb9c01d9087379b27d0365efc89f379",
+      "pitHash": "9ade6b20fed6ab5f1a63ce2058b2c0d22b2800f6cf769aa2009aad8f08e0c139"
+    },
+    {
+      "name": "Portugal",
+      "length": 1809.2947924134155,
+      "width": 29.307705818884397,
+      "sectors": [
+        0.407605187715921,
+        0.6810372743362775
+      ],
+      "pointsHash": "8b5ce5f4e63894f15a12da6e3118c0b402ac30b0b85fc444a160a3d724c3f5bf",
+      "cumulativeHash": "f01bb7b5c03c40c2c8355dca9122bc14aa995c8fca97c82373ffbd61ff34751e",
+      "pitHash": "c995116d7ed5fd50758ca6c0e6ba83db8399e05f59862648099d4fc714e23162"
+    },
+    {
+      "name": "Indien",
+      "length": 3848.240192960691,
+      "width": 36.60376513777897,
+      "sectors": [
+        0.35117163297303994,
+        0.6684106587600679
+      ],
+      "pointsHash": "ce89c9bdcdf17428edae559abb5b0529828a6cd8a749b6dd66553feb0a734a92",
+      "cumulativeHash": "aaf624fd280f3545e108ae0bf661361c37c7328cd584dd279ded9d90105640fc",
+      "pitHash": "265fd88c28ef84840226abab5366b73c5306adac6eefe205d6842540b58f413a"
+    },
+    {
+      "name": "Brasilien",
+      "length": 2343.4261555949206,
+      "width": 26.047092480558664,
+      "sectors": [
+        0.44443349237110485,
+        0.695708915224712
+      ],
+      "pointsHash": "1483c8e7c378474bf712d3ce40985b559e7c152f867fb2ad3cf43170b5edaec0",
+      "cumulativeHash": "68a1cd663be021658429b97e8e4b0dd0b62b2a92bcc696f9414bc7643fb84daa",
+      "pitHash": "7c66d36afd894ba6a4dad9365b3f20a2dbfb11a82d12540d1c266ba50cd4ca03"
+    },
+    {
+      "name": "Südafrika",
+      "length": 3023.940177664184,
+      "width": 33.961950652155856,
+      "sectors": [
+        0.21542408284452108,
+        0.6126734972569366
+      ],
+      "pointsHash": "df73aefafc1effb8a46178bbebd7e8d5399249a43e04c8d16d42dc7befad6ffe",
+      "cumulativeHash": "d0375e335840750ae62af6f15d02e779175995fbf2fd56f9c3589d662900a35b",
+      "pitHash": "846ec376c62132b26b554d2b94648b921f20ce09ff3310728377cd25e606c4b4"
+    },
+    {
+      "name": "Korea",
+      "length": 2838.084766250075,
+      "width": 31.44022857230753,
+      "sectors": [
+        0.5282600946195961,
+        0.7928597288824587
+      ],
+      "pointsHash": "1691b4306af5259cda781e243522158415ad845e1bf865ad0d966546e4143b61",
+      "cumulativeHash": "855e1fe6400dbe3bd8a8667ea4bc35e5354a98d9e2efe9d1673ea699fd9f5008",
+      "pitHash": "9603858811924d832344caaedc7240eff7c472838f1794e9d68fd5666bd0b0ad"
+    },
+    {
+      "name": "USA",
+      "length": 3033.0321675548157,
+      "width": 47.88772462187663,
+      "sectors": [
+        0.379553293362025,
+        0.5644815698238315
+      ],
+      "pointsHash": "71520fd3052d491f87acb584d2acba282ac4cc46b9e66413ce0241995b5f3040",
+      "cumulativeHash": "3e7f2dd3804b2bd4ce6f2e9832b1e5be8fbe8ef75fc884bde6c66304f3e3db59",
+      "pitHash": "1b6b7bea329fb03d0dc93a1e5bf8ad768c990a556fd35ec5c04825377a2a8f83"
+    },
+    {
+      "name": "Belgien",
+      "length": 1977.846699664465,
+      "width": 29.873650826129207,
+      "sectors": [
+        0.19421813375291352,
+        0.610891429496714
+      ],
+      "pointsHash": "fd79a55dacbfb5a95091214e6a96b12d69d0b1e22db579fe6f888744dc67dc80",
+      "cumulativeHash": "c037f965f684beca390a85a5e3c5f9ffe297e5d19998b83a5852c5faf35c9d5f",
+      "pitHash": "c4ba157ad424f50026fb8b53d89d5f098c7b5a214d5164b88fd106b4821aaa64"
+    },
+    {
+      "name": "Schweden",
+      "length": 2138.863371831985,
+      "width": 32.03799417704753,
+      "sectors": [
+        0.23640187904147117,
+        0.6831253238556317
+      ],
+      "pointsHash": "cc33e07a4951dbb34d45fa1d42c95f013c7323ca42e6cc1961a7645216a56f0e",
+      "cumulativeHash": "385c66f53c7f63263b405cda0c1fa73dd6e9e238c6d072ffc63a7149ece23ccd",
+      "pitHash": "e1589a142664478bbdb07dd2e7c6c237c7320afb876a060d5d1757910e936bc3"
+    },
+    {
+      "name": "Deutschland",
+      "length": 2393.1145007507803,
+      "width": 26.060376179745198,
+      "sectors": [
+        0.3191995143948438,
+        0.6450346961886991
+      ],
+      "pointsHash": "b660e21ea6f18a34c4c8b0b8699886309ef305364afbb94135a7a48da59c7430",
+      "cumulativeHash": "a53010a94c8f6fdf71b69657cacc65d38f955976cb74b4e8f8b38713c60aba7a",
+      "pitHash": "350cfd46e204fa3976f1b98c8bd453a3b90adbd4d4a789bb81bc22f390e4f3cc"
+    },
+    {
+      "name": "Japan",
+      "length": 3542.6634037458048,
+      "width": 36.363994053696494,
+      "sectors": [
+        0.283807187171675,
+        0.5716809415450518
+      ],
+      "pointsHash": "2b147c0b0678468b96c99718b57dacb1deafe03197da5da7f0369aba68a41caa",
+      "cumulativeHash": "1aec5f258c01b706b25b150ca2856f0628881a651dfead060ba3f239a8f18546",
+      "pitHash": "c60352fa720d62ff19936e88e18ad1c04329ecc6302bbb11c056f1da23d4b9c2"
+    },
+    {
+      "name": "China",
+      "length": 2339.5699834667976,
+      "width": 28.197284424931972,
+      "sectors": [
+        0.22999828468717087,
+        0.6244994105582143
+      ],
+      "pointsHash": "0cd55628c2dcef16c3e5aaa6abfadb32748e3d2d69e881989bc1197600b378aa",
+      "cumulativeHash": "921985af827b54f8ac10bad0540242266d381c33b5ff233f515da5603465fcbc",
+      "pitHash": "84b32dbd4df09269d05b17c37938386083b7838569e5991d0d594c03abdfa3df"
+    },
+    {
+      "name": "Russland",
+      "length": 2982.851119703618,
+      "width": 41.317725713417445,
+      "sectors": [
+        0.2823903364553004,
+        0.6810652054704862
+      ],
+      "pointsHash": "6fbb3ac7b1e7e0f47ab4d0697fc5147480c3bab367036d4bd9cf3c8a4efce1e6",
+      "cumulativeHash": "3d7223b67cea4ebbd43fd4b9c618d1c5724635671e2e3a6cac4e4837a31ab361",
+      "pitHash": "c4fce46b2ce93706f034955c630568d544dcbb2edf546c3877557d8a65a0064b"
+    },
+    {
+      "name": "Australien",
+      "length": 2854.057276768521,
+      "width": 26.886953776538373,
+      "sectors": [
+        0.23327173620214722,
+        0.6825759642993312
+      ],
+      "pointsHash": "5fd8d01e8a9a71da20707e95761189a548a75579c1a5ef3685f98428a339673d",
+      "cumulativeHash": "d03ca1bd31a66dedd3c4911f664ad6e9eecd4fe8e54c31e0c239fb29ab6b8cf1",
+      "pitHash": "5dcf21e2cbc0d81d20cf03f974b6ae78990f3f1bc37081dff99a41b4108476ac"
+    },
+    {
+      "name": "England",
+      "length": 2209.8004880578274,
+      "width": 30.582320904901547,
+      "sectors": [
+        0.37811643433299735,
+        0.8097882285015952
+      ],
+      "pointsHash": "40ad9253635999b33020546daf897510d47675b94f2fcb3d1ab127f57baade17",
+      "cumulativeHash": "b0c5c52ec651326df7ddfbcf888dc0eb57537ced83e1fdfc2c6267b5ad0b7a2d",
+      "pitHash": "6d97167abec487a0267d80e146cbe531d8ec9e48a5c3ea6c23162ab454777ced"
+    },
+    {
+      "name": "Italien",
+      "length": 2790.119754126679,
+      "width": 35.7395766853466,
+      "sectors": [
+        0.3097768494603716,
+        0.5818041992580806
+      ],
+      "pointsHash": "4a96ec188538bbcec1e2a7b33c5e205061db2d9ab6ab3281ee04a3c4c02e1b65",
+      "cumulativeHash": "b2404208bb9893a4e307091974191f30f739c4374ca9a569f75c86362e38ad88",
+      "pitHash": "173bad4b8dc159d26c885306136e97c55f6bf4eeef3d4ebfee15532cb3999736"
+    },
+    {
+      "name": "Ungarn",
+      "length": 2816.008553932914,
+      "width": 34.52270851114615,
+      "sectors": [
+        0.43775154981945863,
+        0.6781464914384691
+      ],
+      "pointsHash": "150226726828476a0af816391e0b9eda3f9eded5aecd979893648fd67abf85c6",
+      "cumulativeHash": "28b5609f5ab0b5e258d6248ff9700a6938e6e2629d2e3ad5676aeba0d48c7588",
+      "pitHash": "de2a9b88e14cc451f1251d205aa5df7382429d6c3ff799ae4ce04bfb3ac4bad0"
+    },
+    {
+      "name": "Abu Dhabi",
+      "length": 2991.6834283444573,
+      "width": 33.06025733302064,
+      "sectors": [
+        0.3949365510993975,
+        0.7109508416233337
+      ],
+      "pointsHash": "d093929921e51250451328972cac59897cd42d7cd0e02d242ce420db0e345507",
+      "cumulativeHash": "84393311777d7408393669c43d4e1dbcfc7a3cdc6427ab0d2e22d4b59de3755f",
+      "pitHash": "022ba84f60f053986346cbeca78a93b0249aaca556559cb47e4ce7ba6c5426bd"
+    }
+  ],
+  "workshop": {
+    "costs": [
+      {
+        "credits": 60,
+        "research": 40
+      },
+      {
+        "credits": 87,
+        "research": 56
+      },
+      {
+        "credits": 114,
+        "research": 72
+      },
+      {
+        "credits": 141,
+        "research": 88
+      },
+      {
+        "credits": 168,
+        "research": 104
+      },
+      {
+        "credits": 195,
+        "research": 120
+      },
+      {
+        "credits": 222,
+        "research": 136
+      },
+      {
+        "credits": 249,
+        "research": 152
+      },
+      {
+        "credits": 276,
+        "research": 168
+      },
+      {
+        "credits": 303,
+        "research": 184
+      },
+      {
+        "credits": 330,
+        "research": 200
+      },
+      {
+        "credits": 357,
+        "research": 216
+      },
+      {
+        "credits": 384,
+        "research": 232
+      },
+      {
+        "credits": 411,
+        "research": 248
+      },
+      {
+        "credits": 438,
+        "research": 264
+      },
+      {
+        "credits": 465,
+        "research": 280
+      },
+      {
+        "credits": 492,
+        "research": 296
+      },
+      {
+        "credits": 519,
+        "research": 312
+      },
+      {
+        "credits": 546,
+        "research": 328
+      },
+      {
+        "credits": 573,
+        "research": 344
+      },
+      {
+        "credits": 600,
+        "research": 360
+      }
+    ],
+    "gains": [
+      {
+        "value": 0,
+        "gain": 4.1
+      },
+      {
+        "value": 65,
+        "gain": 4.1
+      },
+      {
+        "value": 69.999,
+        "gain": 4.1
+      },
+      {
+        "value": 70,
+        "gain": 3.5
+      },
+      {
+        "value": 75,
+        "gain": 3.5
+      },
+      {
+        "value": 81.999,
+        "gain": 3.5
+      },
+      {
+        "value": 82,
+        "gain": 2.8
+      },
+      {
+        "value": 85,
+        "gain": 2.8
+      },
+      {
+        "value": 89.999,
+        "gain": 2.8
+      },
+      {
+        "value": 90,
+        "gain": 1.4
+      },
+      {
+        "value": 92,
+        "gain": 1.4
+      },
+      {
+        "value": 93.999,
+        "gain": 1.4
+      },
+      {
+        "value": 94,
+        "gain": 0.8
+      },
+      {
+        "value": 95,
+        "gain": 0.8
+      },
+      {
+        "value": 100,
+        "gain": 0.8
+      }
+    ]
+  }
+}

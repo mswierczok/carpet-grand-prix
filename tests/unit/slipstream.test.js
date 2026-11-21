@@ -5,7 +5,7 @@ import { execFileSync } from "node:child_process";
 import { runInNewContext } from "node:vm";
 import * as THREE from "three";
 import { loadArcade } from "../helpers/arcade.js";
-import { ROOT, plain } from "../helpers/game.js";
+import { ROOT, plain } from "../helpers/project.js";
 
 export function straight() {
   return { g: { len: 100000, width: 40 }, roadRadius: 20,

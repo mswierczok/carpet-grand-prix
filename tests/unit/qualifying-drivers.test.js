@@ -1,6 +1,6 @@
 import { it, expect } from "vitest";
 import { loadArcade } from "../helpers/arcade.js";
-import { plain } from "../helpers/game.js";
+import { plain } from "../helpers/project.js";
 
 it("erzeugt feste individuelle Fahrstile aus Team-IDs, lässt Stammdaten unverändert und variiert die Kurvenausführung über Runden", () => {
   const { api, data } = loadArcade({ race: true }), teams = data.roster.teams,

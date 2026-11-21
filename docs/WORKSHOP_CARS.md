@@ -1,3 +1,6 @@
+> Historische Referenz zur früheren Anwendung bzw. Stilentwicklung.
+> Aktuelle Architektur: [ARCHITECTURE.md](ARCHITECTURE.md); Archiv und Übernahme: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
+
 # Gemeinsame Top-Down-Fahrzeuge in der Werkstatt
 
 Die Werkstatt zeigt für alle 13 Teams dieselben Formen und Lackierungen wie die

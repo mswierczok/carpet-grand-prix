@@ -1,22 +1,22 @@
 # Referenzdaten
 
-Quelle: unveränderte `index.html` aus Commit
-`ea88f1daf238431a1dbac540df7e452dd2a44e54`.
-SHA-256: `b35c4fa0f2170df77597979c1a8fdf11bda9ef1fe306401b7151a6bfc1e5c4d1`.
+Die bisherigen Dateien `initial`, `qualified`, `activeQualifying`, `activeRace`,
+`completedWeekend` und `reference` stammen aus der unveränderten ursprünglichen
+`index.html` (`ea88f1daf238431a1dbac540df7e452dd2a44e54`, SHA-256
+`b35c4fa0f2170df77597979c1a8fdf11bda9ef1fe306401b7151a6bfc1e5c4d1`).
+Sie sind künstliche Teststände, keine privaten Nutzerspielstände. Ihre Bytes
+bleiben beim Cleanup unverändert. Aktuelle Tests verwenden sie als historische
+Beispiele und Speicher-Sentinels; sie starten daraus keine passive Simulation.
+Der frühere Generator und die zugehörige Saisonprüfung befinden sich nur noch
+im [Git-Archiv](../../docs/LEGACY_CLEANUP.md).
 
-Die JSON-Dateien sind künstliche Testspielstände aus dem Originalspiel, keine
-privaten Nutzerspielstände. `npm run fixtures:generate` erzeugt sie mit dokumentierten
-Zufallsfolgen und verweigert sowohl ein abweichendes Original als auch das
-Überschreiben bestehender Dateien. Der Generator wird nicht in CI ausgeführt.
+`historical-invariants.json` wurde vor der Entfernung aus dem geprüften Stand
+`fc338593c33c8e25063fc5ffd22511f7ded9b3c9` erfasst. Es hält exakte SHA-256-Werte
+aller 22 ursprünglichen Geometrie-/Bogenlängen-/Boxenarrays, Breiten, Längen,
+Sektoren sowie bisherige Werkstattkosten und Entwicklungszuwächse fest. Die
+Herkunftsprüfung schützt den Ausgangs-HTML-Hash. Damit bleiben diese relevanten
+Aussagen ohne den alten Spieladapter überprüfbar.
 
-- `initial.json`: Saison 1 vor dem Qualifying.
-- `qualified.json`: vollständiges Q1/Q2/Q3 samt Startaufstellung.
-- `activeQualifying.json`: pausiertes Q1 nach 90 Schritten.
-- `activeRace.json`: pausiertes Bahrain-Rennen nach 300 Schritten.
-- `completedWeekend.json`: erstes Rennen beendet und genau einmal gewertet.
-- `reference.json`: Herkunft, Seeds, Geometrien und gerundete Rennvergleichswerte.
-
-Referenzen bei einem strukturellen Umbau beibehalten. Der Testadapter muss später
-an die Modulstruktur angepasst werden; die erwarteten Spielwerte bleiben gleich.
-Rennvergleichswerte werden auf sechs Nachkommastellen gerundet, um unbedeutende
-plattformabhängige Rundungsreste nicht als Spieländerung zu behandeln.
+Referenzen nicht automatisch in CI erzeugen und nicht zum Beseitigen roter
+Tests überschreiben. Änderungen brauchen einen belegten Ausgangsstand und
+bei geändertem Spielverhalten eine ausdrückliche Freigabe.

@@ -1,9 +1,7 @@
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { execFileSync } from "node:child_process";
 import { runInNewContext } from "node:vm";
-import { ROOT } from "../helpers/game.js";
-import { withoutMainEntry } from "../helpers/legacy-entry.js";
+import { ROOT } from "../helpers/project.js";
 const read = path => readFileSync(new URL(path, ROOT), "utf8");
 function setup(initial = {}) {
   const context = {};
@@ -50,9 +48,14 @@ it("ergänzt Grafik und Aufholhilfe kompatibel zur bisherigen POV-Schwierigkeit 
     expect(() => p.update(patch, storage)).toThrow();
   expect(storage.getItem(p.key)).toBe(before);
 });
-it("ändert am alten Spiel ausschließlich die genehmigte Weiterleitung zum POV-Hauptmenü", () => {
-  expect(withoutMainEntry(read("index.html"))).toBe(execFileSync("git", ["show", "590f57a14328e9b7ab505b6f7e125705b63446ad:index.html"], { cwd: ROOT, encoding: "utf8", maxBuffer: 8 * 1024 * 1024 }));
+it("verwendet einen schlanken Einstieg ohne eingebettete Simulation oder alte Styles", () => {
+  const html = read("index.html");
+  expect(Buffer.byteLength(html)).toBeLessThan(1000);
+  expect(html).toContain("./play.html");
+  expect(html).toContain("./archive.html");
+  expect(html).not.toMatch(/const MASTER|digitizedTracks|createRace|stylesheet/);
 });
+
 it("ergänzt die Lenkempfindlichkeit ohne Spielstandmigration und verwirft ungültige Prozentwerte", () => {
   const { POVPreferences: p, storage } = setup();
   const old = { version: 1, difficulty: "expert", quality: "low", catchup: false, future: "keep" };

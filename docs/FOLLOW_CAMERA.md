@@ -1,3 +1,6 @@
+> Historische Referenz zur früheren Anwendung bzw. Stilentwicklung.
+> Aktuelle Architektur: [ARCHITECTURE.md](ARCHITECTURE.md); Archiv und Übernahme: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
+
 # Fahrer mit der Kamera verfolgen
 
 Entwicklungsbranch `codex/driver-follow-camera`, Ausgangspunkt `2c3f998` auf `main`.

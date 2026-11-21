@@ -3,7 +3,7 @@ import { it, expect } from "vitest";
 import { execFileSync } from "node:child_process";
 import { runInNewContext } from "node:vm";
 import { loadArcade } from "../helpers/arcade.js";
-import { ROOT, plain } from "../helpers/game.js";
+import { ROOT, plain } from "../helpers/project.js";
 
 function straight() {
   return { g: { len: 100000, width: 40 }, roadRadius: 20,

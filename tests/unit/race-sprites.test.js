@@ -1,7 +1,7 @@
 import { it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { Script, createContext } from 'node:vm';
-import { ROOT } from '../helpers/game.js';
+import { ROOT } from '../helpers/project.js';
 
 const source = readFileSync(new URL('src/rendering/race-sprites.js', ROOT), 'utf8');
 function renderer() {

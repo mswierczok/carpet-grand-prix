@@ -1,3 +1,6 @@
+> Historische Referenz zur früheren Anwendung bzw. Stilentwicklung.
+> Aktuelle Architektur: [ARCHITECTURE.md](ARCHITECTURE.md); Archiv und Übernahme: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
+
 # Vollständiger Zeichenstil und Fahrerporträts
 
 Der Nutzer hat die Stilprobe aus PR #11 für den weiteren Rollout freigegeben.

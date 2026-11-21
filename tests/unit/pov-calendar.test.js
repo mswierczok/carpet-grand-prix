@@ -1,12 +1,11 @@
 import { withoutStartLights } from "../helpers/start-lights.js";
-import { withoutMainEntry } from "../helpers/legacy-entry.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { runInNewContext } from "node:vm";
 import * as THREE from "three";
 import { loadArcade } from "../helpers/arcade.js";
-import { ROOT, plain, createGame } from "../helpers/game.js";
+import { ROOT, plain, historicalTracks } from "../helpers/project.js";
 import { povIds, newPovIds } from "../helpers/pov-catalog.js";
 const baseline = "57fb54422c0f70eb032bd82b85ab828a4e1e3dc8";
 const published = (path) =>
@@ -54,7 +53,6 @@ it.each(newPovIds.filter((id) => id === "korea" || id === "russia"))(
 
 it("enthält alle 22 Kalenderstrecken, unveränderte Originalzeichnungen und die vier historischen Geometriereferenzen", () => {
   const { api, data } = loadArcade({historicalBahrain:true}),
-    { game } = createGame(),
     scope = {};
   for (const name of ["arcade-tracks", "arcade-boundaries", "arcade-roster"])
     runInNewContext(published(`src/data/${name}.js`), scope);
@@ -63,7 +61,7 @@ it("enthält alle 22 Kalenderstrecken, unveränderte Originalzeichnungen und die
     const t = api.TrackCatalog.get(id);
     expect(t.index).toBe(index);
     for (const key of ["points", "width", "pit", "sectorU", "bridgeU"])
-      expect(plain(t[key])).toEqual(plain(game.digitizedTracks[index][key]));
+      expect(plain(t[key])).toEqual(plain(historicalTracks[index][key]));
     expect(Object.isFrozen(t.points[0])).toBe(true);
     if (index < 4) {
       expect(plain(t)).toEqual(plain(scope.CGPArcadeData.tracks[id]));
@@ -73,9 +71,6 @@ it("enthält alle 22 Kalenderstrecken, unveränderte Originalzeichnungen und die
     }
   }
   expect(plain(data.roster)).toEqual(plain(scope.CGPArcadeData.roster));
-  expect(withoutMainEntry(readFileSync(new URL("index.html", ROOT), "utf8"))).toBe(
-    published("index.html"),
-  );
 });
 
 it("liefert auf den vier abgenommenen Strecken dieselben Rennen trotz optionaler Brückenunterstützung", () => {

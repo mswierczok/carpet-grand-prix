@@ -1,11 +1,10 @@
 import { withoutEnvironmentCameraOptions } from "../helpers/environment-camera.js";
-import { withoutMainEntry } from "../helpers/legacy-entry.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { runInNewContext } from "node:vm";
 import { loadArcade } from "../helpers/arcade.js";
-import { ROOT, plain } from "../helpers/game.js";
+import { ROOT, plain } from "../helpers/project.js";
 
 const baseline = "31003409aa5af06939e352a72bad1b823c1a3106";
 const published = (path) =>
@@ -27,7 +26,7 @@ function before() {
   return { api: scope.CGPArcade, data: scope.CGPArcadeData };
 }
 
-it("südliche Verlängerungen erhalten die anderen 20 Strecken samt Seilen sowie Originalspiel, Fahrer und Fahrphysik exakt", () => {
+it("südliche Verlängerungen erhalten die anderen 20 Strecken samt Seilen sowie Fahrer, Fahrzeuge und Fahrphysik exakt", () => {
   const old = before(),
     current = loadArcade({historicalBahrain:true});
   for (const id of Object.keys(old.data.tracks)) {
@@ -42,7 +41,6 @@ it("südliche Verlängerungen erhalten die anderen 20 Strecken samt Seilen sowie
   }
   expect(plain(current.data.roster)).toEqual(plain(old.data.roster));
   for (const path of [
-    "index.html",
     "src/racing/physics.js",
     "src/racing/bridge-physics.js",
     "src/racing/timing.js",
@@ -51,9 +49,7 @@ it("südliche Verlängerungen erhalten die anderen 20 Strecken samt Seilen sowie
   ]) {
     const current = readFileSync(new URL(path, ROOT), "utf8");
     expect(
-      path === "index.html"
-        ? withoutMainEntry(current)
-        : path === "src/rendering/camera3d.js"
+      path === "src/rendering/camera3d.js"
           ? withoutEnvironmentCameraOptions(current)
           : current,
     ).toBe(published(path));

@@ -29,4 +29,5 @@ for (const name of ["race", "menu", "campaign", "arcade", "arcade3d", ""]) {
     throw Error(`Run both offline builds first: ${file}`);
   copyFileSync(`dist/${file}`, `${target}/${file}`);
 }
+copyFileSync("dist/carpet-grand-prix-classic-archive.html", `${target}/carpet-grand-prix-classic-archive.html`);
 console.log("Playable offline Bahrain review: dist/bahrain-review/index.html");

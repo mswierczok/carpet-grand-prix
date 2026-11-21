@@ -1,7 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { createContext, Script } from "node:vm";
-import { ROOT } from "./game.js";
+import { ROOT } from "./project.js";
 export function loadArcade({
   race = false,
   formats = true,

@@ -1,35 +1,39 @@
-# Carpet Grand Prix: verbindliche Entwicklungsregeln
+# Carpet Grand Prix: Entwicklungsregeln
 
-- Hauptprodukt ist das Arcade-Racing-Roguelite mit `play.html`, `campaign.html`
-  und `race.html`. Aktueller Cleanup-Plan: `docs/LEGACY_CLEANUP.md`.
-  Historische Datenquellen liegen unter `src/data/historical/`; Arcade-Builds
-  dürfen weder `index.html` noch den klassischen Testadapter als Datenquelle nutzen.
-  Die ausdrücklich beauftragte Legacy-Bereinigung erfolgt in einzeln freizugebenden
-  PRs. PR 1 entkoppelt nur Daten; Löschungen und Archivierung folgen erst nach Freigabe.
-
-- Ausgangsbasis ist die funktionsfähige Version auf `main`. Referenz vor dem
-  Umbau: `ea88f1daf238431a1dbac540df7e452dd2a44e54`.
-- Auf einem eigenen `codex/*`- oder Feature-Zweig arbeiten. Keine direkten
-  Änderungen auf `main`, kein automatisches Zusammenführen. Vor einem Merge
-  ist die ausdrückliche Freigabe des Nutzers für den konkreten PR nötig.
-- Keine Funktionen entfernen. Spielmechaniken, Formeln, Balancing, Zufallsaufrufe
-  und Stammdaten nur nach ausdrücklicher Zustimmung verändern. Fehlerbehebungen
-  mit Verhaltensänderung getrennt vom rein strukturellen Umbau behandeln.
-- Spielstände erhalten: IDs, Streckenreihenfolge, Speicherkennungen und
-  Datenbank-Prüfsumme nicht beiläufig ändern. Migrationen separat dokumentieren
-  und mit bestehenden Dateien testen. Ungültige Importe dürfen den bisherigen
-  Spielstand nicht überschreiben.
-- GitHub Pages muss unter `/carpet-grand-prix/` ohne Anwendungsserver funktionieren.
-  Entwicklungswerkzeuge dürfen keine Laufzeitvoraussetzung für Spieler werden.
-- Umbau in kleinen PRs: Referenz/Tests, CSS/Bilder, Daten/Speicherung,
-  Management/Meisterschaft, Geometrie/Zeit, Simulation/KI, Oberfläche.
-- Vor Änderungen `docs/BASELINE.md`, `docs/ARCHITECTURE.md` und `docs/TESTING.md`
-  lesen. Passende Tests ausführen und Ergebnisse samt Grenzen im PR nennen.
-- Referenzdateien unter `tests/fixtures/` nicht bloß aktualisieren, um rote Tests
-  zu beseitigen. Jede Abweichung zuerst erklären. Neue Referenzen benötigen einen
-  nachvollziehbaren Ausgangsstand und bei Spieländerungen Nutzerfreigabe.
-- Der Testadapter darf Interna nur in einer temporären Testkopie zugänglich machen.
-  Keine Test-Hooks oder abweichenden Zufallsquellen ins veröffentlichte Spiel bauen.
-- Mit dem Nutzer verständlich auf Deutsch kommunizieren. Programmierung,
-  Tests, Branches und PRs übernimmt der Entwickler; Nutzerfreigaben beziehen
-  sich auf konkrete, verständlich beschriebene Ergebnisse.
+- Hauptprodukt ist das statische Arcade-Rennspiel mit Roguelite-Kampagne.
+  `index.html` führt zu `play.html`; `campaign.html` verwaltet die Kampagne,
+  `race.html` das gemeinsame Rennwochenende. `arcade.html` / `arcade3d.html`
+  sind technische Fahrtests. Orientierung: `docs/ARCHITECTURE.md`,
+  `docs/TESTING.md`, `docs/CAMPAIGN.md`, `docs/SAVE_FORMAT.md`.
+- Auf einem neuen `codex/*`-Branch vom aktuellen `main` arbeiten.
+  Keine direkten Änderungen auf `main`. Jeder PR benötigt vor dem Merge
+  die ausdrückliche Nutzerfreigabe für diesen konkreten PR.
+- Die passive 26-Fahrer-Simulation ist archiviert unter
+  `classic-simulation-archive-2026-11-21` (Commit `fc338593c33c8e25063fc5ffd22511f7ded9b3c9`).
+  Keine neuen Funktionen darauf aufbauen und keine alten VM-/UI-Testadapter
+  zurückholen. Historische Dokumente unter `docs/history/` und alte
+  Stilgalerien sind keine Grundlage des aktuellen Rennsystems.
+- Cleanup-Fortschritt und bewusst verbleibende Arbeit: `docs/LEGACY_CLEANUP.md`.
+  Die Entfernung nachweislich überflüssiger klassischer Komponenten ist für
+  diesen Auftrag freigegeben. Aktuelle Spielsysteme bleiben geschützt.
+- Physik, KI, Balancing, Zufallsaufrufe, Rennlängen, Streckenführung und
+  aktuelle Oberfläche nur auf ausdrücklichen Auftrag ändern. Keine neue
+  Engine und kein Framework einführen. Darstellung liest Rennzustand.
+- Alle 13 Teams, 92 historischen Fahrer, 39 Kampagnenfahrerplätze,
+  22 Strecken, acht Kampagnenstrecken und Originalillustrationen erhalten.
+  Datenquelle: `src/data/historical/`; versionierte Exporte mit
+  `npm run check:arcade-data` prüfen. Kein Build liest Simulations-HTML.
+- Kampagne, POV-Meisterschaft, POV-Werkstatt und freies Rennen getrennt
+  erhalten. Speicherkennungen, IDs, Datenbank-Prüfsumme und validierte
+  Migrationen nicht beiläufig ändern. Fehlerhafte/neuere Importe dürfen
+  gültige Daten nicht überschreiben. Klassische Browserschlüssel niemals
+  löschen oder umwidmen; `archive.html` darf sie nur lesend exportieren.
+- GitHub Pages muss unter `/carpet-grand-prix/` ohne Anwendungsserver
+  funktionieren. Die aktuellen Offline-Ausgaben einschließlich Navigation
+  und eingebetteter Assets erhalten.
+- Passende Tests vor/nach Änderungen ausführen. Referenz-Fixtures nicht
+  zum Beseitigen roter Tests überschreiben. Neue Referenzen brauchen einen
+  dokumentierten, unveränderten Ausgangsstand. Test-Hooks ausschließlich
+  in temporären Testkopien; keine Sonderphysik oder Testzufälle im Spiel.
+- Auf Deutsch kommunizieren. Änderungen, Prüfergebnisse und Grenzen im PR
+  nennen; mobile Chromium-Emulation ausdrücklich von echtem Safari trennen.

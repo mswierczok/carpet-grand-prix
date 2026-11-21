@@ -1,5 +1,5 @@
 import { it, expect } from "vitest";
-import { createGame } from "../helpers/game.js";
+import { historicalInvariants } from "../helpers/project.js";
 import { loadArcade } from "../helpers/arcade.js";
 function result(data, player = "t01") {
   return { race: { phase: "finished", finished: 13, playerTeam: player,
@@ -72,7 +72,7 @@ it("schreibt POV-Spielstände atomar und bewahrt klassische Daten sowie beschäd
 });
 
 it("verwendet genau die vorhandenen Kosten- und Entwicklungsformeln des ursprünglichen Spiels", () => {
-  const { api } = loadArcade({ race: true }), { game } = createGame();
-  for (let n = 0; n < 4; n++) expect(api.POVWorkshop.cost(n)).toEqual(game.upgradeCost(n));
-  for (const value of [65, 75, 85, 92, 95]) expect(api.POVWorkshop.gain(value)).toBe(game.developGain(value));
+  const { api } = loadArcade({ race: true });
+  for (const [n, cost] of historicalInvariants.workshop.costs.entries()) expect(api.POVWorkshop.cost(n)).toEqual(cost);
+  for (const { value, gain } of historicalInvariants.workshop.gains) expect(api.POVWorkshop.gain(value)).toBe(gain);
 });

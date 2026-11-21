@@ -16,8 +16,9 @@ erhalten und wird nicht durch einen Hash der neuen JSON-Datei ersetzt.
 Eigenschaften, Zahlenwerte, IDs, Array- und Eigenschaftsreihenfolge sind erhalten.
 Nur JSON-Einrückung und die Schreibweise gleichwertiger Zahlen (`800.0` → `800`)
 ändern sich gegenüber den HTML-Literalen. Die Quelldateien sind keine zusätzlichen
-Browser-Downloads. Die klassische Simulation liest in PR 1 weiterhin ihre bisherigen
-eingebetteten Kopien; diese werden nicht nachträglich umgebaut.
+Browser-Downloads. Die frühere Simulation mit ihren eingebetteten Kopien bleibt im Tag
+`classic-simulation-archive-2026-11-21` erhalten; die aktuelle Anwendung liest nur
+die unabhängigen Datenexporte.
 
 `npm run build:arcade-data` erzeugt daraus die vorhandenen schreibgeschützten
 Browserdateien `../arcade-roster.js` und `../arcade-tracks.js`.

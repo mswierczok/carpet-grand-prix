@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Carpet Grand Prix · Klassisches Archiv</title>
+  <link rel="stylesheet" href="./styles/arcade.css?v=mobile-settings-1">
+</head>
+<body>
+  <main class="shell">
+    <p class="kicker">CARPET GRAND PRIX · ARCHIV</p>
+    <h1>Die klassische Simulation ist archiviert</h1>
+    <p>Carpet Grand Prix ist jetzt ein selbst spielbares Arcade-Rennspiel. Deine alten klassischen Browser-Spielstände bleiben erhalten.</p>
+    <p><a href="./play.html">Zum aktuellen Hauptmenü</a></p>
+    <h2>Alten Spielstand sichern</h2>
+    <p>Exportiere den klassischen Spielstand aus diesem Browser. Dabei werden keine gespeicherten Daten verändert. Kampagne und POV-Meisterschaft haben eigene Speicherbereiche.</p>
+    <button id="exportClassicSave" type="button">Klassischen Spielstand exportieren</button>
+    <p id="archiveStatus" role="status" aria-live="polite"></p>
+    <h2>Archivierte Version verwenden</h2>
+    <p>Der geprüfte Stand ist unter <a href="https://github.com/mswierczok/carpet-grand-prix/tree/classic-simulation-archive-2026-11-21">classic-simulation-archive-2026-11-21</a> gesichert.</p>
+    <ol>
+      <li>Den verlinkten Git-Stand auschecken oder als ZIP herunterladen.</li>
+      <li>Im entpackten Ordner mit Node.js 24 <code>npm ci</code> und <code>npm run build:offline</code> ausführen.</li>
+      <li>Die erzeugte <code>dist/carpet-grand-prix-offline.html</code> öffnen und deinen JSON-Spielstand importieren.</li>
+    </ol>
+    <p>Alternativ kann die archivierte Website lokal bereitgestellt und über <code>index.html?legacy=1</code> geöffnet werden. Ein anderer Browser, Port oder Dateipfad kann einen eigenen Speicherbereich besitzen; deshalb zuerst exportieren.</p>
+  </main>
+  <script src="./src/ui/classic-archive.js?v=legacy-archive-1"></script>
+</body>
+</html>
