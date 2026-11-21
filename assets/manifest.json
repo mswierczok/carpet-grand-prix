@@ -1,26 +1,12 @@
 {
-  "referenceCommit": "ea88f1daf238431a1dbac540df7e452dd2a44e54",
-  "referenceHTMLSHA256": "b35c4fa0f2170df77597979c1a8fdf11bda9ef1fe306401b7151a6bfc1e5c4d1",
-  "styles": [
-    "styles/base.css",
-    "styles/race.css",
-    "styles/launch.css",
-    "styles/studio.css",
-    "styles/live-layout.css",
-    "styles/team-select.css",
-    "styles/workshop.css",
-    "styles/team-driver-hud.css",
-    "styles/art-pilot.css",
-    "styles/driver-portraits.css"
-  ],
+  "version": 2,
+  "purpose": "Integrity catalog of 13 preserved team illustrations and 22 original track drawings; not a runtime preload list.",
+  "provenance": {
+    "sourceCommit": "ea88f1daf238431a1dbac540df7e452dd2a44e54",
+    "sourceHTMLSHA256": "b35c4fa0f2170df77597979c1a8fdf11bda9ef1fe306401b7151a6bfc1e5c4d1",
+    "archiveTag": "classic-simulation-archive-2026-11-21"
+  },
   "images": [
-    {
-      "path": "assets/backgrounds/studio-event.webp",
-      "label": "Studio-Veranstaltungsbild",
-      "mime": "image/webp",
-      "bytes": 69252,
-      "sha256": "8a521376801de055665612273d3395e81ef3a7884c503a40cf6b84078105b115"
-    },
     {
       "path": "assets/cars/team-t01.webp",
       "label": "t01",
@@ -181,8 +167,8 @@
       "sha256": "c55b4af46b62af3c5dac1048b92642bb82edd3eb337585a4cfe0b5c13882f3df"
     },
     {
-      "path": "assets/tracks/09-s\u00fcdafrika.webp",
-      "label": "S\u00fcdafrika",
+      "path": "assets/tracks/09-südafrika.webp",
+      "label": "Südafrika",
       "mime": "image/webp",
       "bytes": 85132,
       "sha256": "0b8da1c4127e7c46260010b2e369eb415680b1f548e5d4acfa5ab70ab8552126"
@@ -278,6 +264,5 @@
       "bytes": 130474,
       "sha256": "0df7378dd596973166d0c3bbe093c1fe16dc1f3f02495527eba863634c41c00b"
     }
-  ],
-  "styleTail": "\n"
+  ]
 }
