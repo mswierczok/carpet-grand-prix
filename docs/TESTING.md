@@ -373,10 +373,21 @@ Pausenmenü geprüft, statt an den entfernten alten Seitenelementen.
 Browserkontext mit `locator.click()` allein deckt die Touch-Aktivierung nicht ab.
 Das Zahnrad wird vor dem Start und während der Fahrt bis in die Grafik- und
 Lenkeinstellungen bedient; dabei muss die Rennzeit stehen bleiben und erst
-nach ausdrücklichem Fortsetzen weiterlaufen.
+nach Verlassen des Menüs und dem dreisekündigen Countdown weiterlaufen.
 Die Prüfung wurde auf dem veröffentlichten Stand vor dem Fix reproduziert:
 Ein Fingertipp ließ die Session in der Aufstellung stehen. Nach dem Fix müssen
 Countdown, Auslaufrunde und tatsächliche Bewegung durch gehaltenes Touch-Gas
 funktionieren, online/offline in Kampagne und freiem Rennen. Der Scrollschutz
 bleibt während der Fahrt erhalten. Chromium emuliert Touch und iPhone-Abmessungen;
 ein physischer Safari-Gerätetest ist damit nicht nachgewiesen.
+
+`resume-countdown.spec.js` prüft 3–2–1 und die volle Wartezeit in Rennen und
+Qualifying, einschließlich Kampagne sowie Online-/Offlinebetrieb. Alle 13
+Fahrzeuge, Rennzeit und Rundenzeit müssen während des Countdowns unverändert
+bleiben. Auch ein verspäteter Frame darf keine pausierte Zeit aufschlagen.
+Frische Eingaben dürfen erst nach Ablauf wirken. Menü erneut öffnen,
+Fokusverlust, Neuladen, Klassement-Rücknavigation und ungestartete Aufstellungen
+sichern die Abbruch- und Pauseregeln. Echte WebGL-Aufnahmen zeigen die Anzeige
+auf Desktop und im mobilen Touch-Kontext. Bestandshelfer warten beim Fortsetzen
+denselben sichtbaren Countdown ab; Fahrbudgets und Referenz-Fixtures bleiben
+unverändert.

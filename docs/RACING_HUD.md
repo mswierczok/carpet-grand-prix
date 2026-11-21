@@ -56,9 +56,19 @@ vorhandenen UI-Takt (etwa 80 ms), nicht in jedem Physikschritt.
 ## Pausenmenü und vollständiges Klassement
 
 Zahnrad oder P öffnet das Menü, pausiert sofort und setzt Steuerungseingaben
-zurück. Schließen bedeutet weiterhin Pause. Nur **Fortsetzen** startet eine
-bereits laufende Session erneut. Bei einer ungestarteten Aufstellung führt
-Fortsetzen zum zentralen Sessionstart, ohne den Start zu automatisieren.
+zurück. **Fortsetzen**, X oder Escape beim Verlassen des Menüs starten während
+einer laufenden Session einen sichtbaren Countdown **3–2–1**. Für die vollen
+drei Sekunden bleiben Rennzeit, Rundenzeit und alle Fahrzeuge pausiert.
+Bei einer ungestarteten Aufstellung führt Fortsetzen zum zentralen Sessionstart,
+ohne den Start zu automatisieren. Nach Sessionende startet kein Countdown.
+
+`resume-countdown.js` verwendet ausschließlich die UI-Zeit aus dem vorhandenen
+Animationszyklus. Die native Rennsimulation, Startampel und Speicherformate
+bleiben unverändert. Neue Eingaben während des Countdowns bereiten die
+Steuerung vor und wirken erst beim Fortsetzen. Ein erneutes Öffnen des Menüs,
+Fokusverlust oder Tabwechsel bricht den Countdown ab. Die Session bleibt dann
+pausiert. Neuladen speichert keinen UI-Timer und setzt stets pausiert fort.
+Interne Menüwechsel lösen keinen Countdown aus.
 
 Das Menü enthält:
 
@@ -80,6 +90,10 @@ Zurück, X und Escape führen aus dem Klassement zum Pausenmenü, ohne Fortsetze
 Die Ergebnisansicht nach Sessionabschluss ist ebenfalls ein eigener Dialog;
 ihr Schließen führt zurück ins Pausenmenü. Fokus und native Dialognavigation
 bleiben erhalten.
+
+Die tatsächliche POV-Darstellung des Countdowns ist in
+[Desktop](racing-hud/chromium-resume-countdown.png) und
+[Touch-Ansicht](racing-hud/mobile-chromium-resume-countdown.png) aufgenommen.
 
 ## Kampagne und historische Daten
 

@@ -252,6 +252,11 @@ Die 22-Rennen-Meisterschaft und der klassische Modus bleiben unabhängig.
 Umfang, Zuordnungen, Speicherregeln und offene Roguelite-Entscheidungen:
 [CAMPAIGN.md](CAMPAIGN.md).
 
+`resume-countdown.js` ergänzt einen UI-seitigen Drei-Sekunden-
+Timer beim Verlassen des Rennmenüs. Er läuft im bestehenden Animationszyklus,
+während die native Session pausiert bleibt. Menüöffnung, Fokusverlust und
+Sessionwechsel verwerfen den Timer; er gehört nicht zum Spielstandformat.
+
 ## Vollbild-HUD und fortsetzbare Kampagnenwochenenden
 
 `race-presentation` bereitet die nativen Standings für das relative HUD und

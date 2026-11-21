@@ -81,7 +81,8 @@ for (const campaign of [false, true])
         elapsed,
       );
       await page.locator("#resumeRace").tap();
-      await page.clock.runFor(500);
+      await expect(page.locator("#resumeCountdownNumber")).toHaveText("3");
+      await page.clock.runFor(3500);
       expect(
         await page.evaluate(() => __driveSnapshot.race.elapsed),
       ).toBeGreaterThan(elapsed);
@@ -127,7 +128,8 @@ test("Touch-Start: Rennstart und Zahnrad öffnen Pause/Einstellungen per Fingert
   expect(await page.evaluate(() => __driveSnapshot.race.elapsed)).toBe(elapsed);
   await page.locator('[data-menu-screen="settings"] [data-menu-back]').tap();
   await page.locator("#resumeRace").tap();
-  await page.clock.runFor(500);
+  await expect(page.locator("#resumeCountdownNumber")).toHaveText("3");
+  await page.clock.runFor(3500);
   expect(
     await page.evaluate(() => __driveSnapshot.race.elapsed),
   ).toBeGreaterThan(elapsed);

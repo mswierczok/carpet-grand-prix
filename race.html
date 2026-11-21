@@ -15,7 +15,10 @@
       href="./styles/arcade-race.css?v=steering-settings-1"
     />
     <link rel="stylesheet" href="./styles/campaign.css?v=hud-2" />
-    <link rel="stylesheet" href="./styles/racing-hud.css?v=hud-2" />
+    <link
+      rel="stylesheet"
+      href="./styles/racing-hud.css?v=resume-countdown-1"
+    />
   </head>
   <body class="racing-page">
     <main
@@ -61,6 +64,18 @@
           </button>
         </div>
         <p id="status" class="hud-status" role="status" aria-live="polite"></p>
+        <div
+          id="resumeCountdown"
+          class="resume-countdown"
+          role="status"
+          aria-live="assertive"
+          aria-atomic="true"
+          hidden
+        >
+          <div>
+            <span>Weiter in</span><strong id="resumeCountdownNumber">3</strong>
+          </div>
+        </div>
         <div id="raceSignal" class="race-signal" aria-hidden="true" hidden>
           <span class="start-lamp"></span><span class="start-lamp"></span
           ><span class="start-lamp"></span><span class="start-lamp"></span
@@ -107,17 +122,13 @@
       >
         <div class="settings-heading">
           <h2 id="settingsTitle">Rennpause</h2>
-          <button
-            id="closeSettings"
-            type="button"
-            aria-label="Menü schließen, pausiert bleiben"
-          >
+          <button id="closeSettings" type="button" aria-label="Menü schließen">
             ✕
           </button>
         </div>
         <section data-menu-screen="home">
           <p id="settingsHelp" class="hint">
-            Das Rennen bleibt pausiert, bis du fortsetzt.
+            Beim Schließen im laufenden Rennen oder Qualifying geht es nach 3–2–1 weiter.
           </p>
           <p class="hint">
             Position <b id="position"></b> · <span id="raceLength"></span> ·
@@ -140,7 +151,9 @@
             ><button id="recover" type="button">
               Auto zurücksetzen <kbd>R</kbd></button
             ><button id="restart" type="button">Rennen neu starten</button
-            ><button id="repeatQualifying" type="button">Qualifying (erneut) starten</button><button id="directRace" type="button">
+            ><button id="repeatQualifying" type="button">
+              Qualifying (erneut) starten</button
+            ><button id="directRace" type="button">
               Direkt ins Rennen (ohne Qualifying)</button
             ><button id="cancelQualifying" type="button" hidden>
               Qualifying verwerfen</button
@@ -353,7 +366,14 @@
             </table>
           </div>
         </section>
-        <button id="acceptResultsQualifying" type="button" class="primary" hidden>Startaufstellung übernehmen</button>
+        <button
+          id="acceptResultsQualifying"
+          type="button"
+          class="primary"
+          hidden
+        >
+          Startaufstellung übernehmen
+        </button>
         <a
           id="continueCampaignAfterRace"
           class="primary result-link"
@@ -436,11 +456,12 @@
     <script src="./src/rendering/wake3d.js?v=slipstream-1"></script>
     <script src="./src/rendering/arcade3d.js?v=calendar-world-1"></script>
     <script src="./src/racing/track-catalog.js?v=pov-calendar-1"></script>
-    <script src="./src/ui/race-settings.js?v=hud-2"></script>
+    <script src="./src/ui/race-settings.js?v=resume-countdown-1"></script>
+    <script src="./src/ui/resume-countdown.js?v=resume-countdown-1"></script>
     <script src="./src/ui/pov-workshop-ui.js?v=career-1"></script>
     <script src="./src/ui/pov-game-ui.js?v=career-1"></script>
     <script src="./src/ui/campaign-view.js?v=hud-2"></script>
     <script src="./src/ui/campaign-race-ui.js?v=hud-2"></script>
-    <script src="./src/arcade-main.js?v=hud-2"></script>
+    <script src="./src/arcade-main.js?v=resume-countdown-1"></script>
   </body>
 </html>

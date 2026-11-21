@@ -41,14 +41,22 @@
       }
       if (dialog.open) dialog.close();
     }
-    dialog.addEventListener("cancel", (event) => {
+    function dismiss() {
       if (fullscreen && currentScreen === "classification") {
-        event.preventDefault();
         screen();
+        return;
+      }
+      close();
+      if (fullscreen) onResume();
+    }
+    dialog.addEventListener("cancel", (event) => {
+      if (fullscreen) {
+        event.preventDefault();
+        dismiss();
       }
     });
     opener.addEventListener("click", open);
-    root.querySelector("#closeSettings").addEventListener("click", close);
+    root.querySelector("#closeSettings").addEventListener("click", dismiss);
     for (const button of dialog.querySelectorAll("[data-menu-target]"))
       button.onclick = () => screen(button.dataset.menuTarget);
     for (const button of dialog.querySelectorAll("[data-menu-back]"))

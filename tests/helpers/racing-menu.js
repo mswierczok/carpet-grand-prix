@@ -21,9 +21,17 @@ export async function closeRaceMenu(page) {
   if (await page.locator("#raceSettings[open]").count())
     await page.locator("#closeSettings").click();
 }
+export async function finishResumeCountdown(page) {
+  if (await page.locator("#resumeCountdown").isVisible())
+    await page.clock.runFor(3040);
+}
 export async function driveButton(page) {
   if (!(await page.locator(".racing-screen").count())) {
     await page.locator("#pause").click();
+    return;
+  }
+  if (await page.locator("#resumeCountdown").isVisible()) {
+    await finishResumeCountdown(page);
     return;
   }
   const paused = await page.locator("#status").textContent();
@@ -46,6 +54,7 @@ export async function driveButton(page) {
   ) {
     await openRaceMenu(page);
     await page.locator("#resumeRace").click();
+    await finishResumeCountdown(page);
   } else await openRaceMenu(page);
 }
 export async function raceAction(page, id, { close = true } = {}) {
