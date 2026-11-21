@@ -1,3 +1,6 @@
+> Historische Referenz zur früheren Anwendung bzw. Stilentwicklung.
+> Aktuelle Architektur: [ARCHITECTURE.md](ARCHITECTURE.md); Archiv und Übernahme: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
+
 # Gezeichneter Pilot und flüssige Darstellung
 
 Historische Dokumentation des ersten Piloten. Der aktuelle vollständige Ausbau

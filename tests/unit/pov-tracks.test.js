@@ -4,7 +4,7 @@ import { execFileSync } from "node:child_process";
 import { runInNewContext } from "node:vm";
 import * as THREE from "three";
 import { loadArcade } from "../helpers/arcade.js";
-import { createGame, ROOT, plain } from "../helpers/game.js";
+import { ROOT, plain, historicalTracks, historicalInvariants, digest } from "../helpers/project.js";
 
 const baseline = "6348eb32e6c8acc403829f3c083c23adcfc45166";
 const ids = ["bahrain", "luxembourg", "canada", "france"];
@@ -37,25 +37,24 @@ it("lädt veränderte Laufzeitmodule unter neuen URLs statt alte Bahrain-Module 
 });
 
 it("erhält Originalzeichnungen, Kalender und Sektoren; entzerrt nur die freigegebenen POV-Geometrien", () => {
-  const { api, data } = loadArcade({historicalBahrain:true}),
-    { game } = createGame();
+  const { api, data } = loadArcade({historicalBahrain:true});
   expect(api.TrackCatalog.tracks.slice(0, 4).map((t) => t.id)).toEqual(ids);
   for (const [index, id] of ids.entries()) {
     const track = api.TrackCatalog.get(id),
       surface = api.Surface.create(track),
-      classic = game.makeGeometry(game.trackDefs[index]);
+      classic = historicalInvariants.geometry[index];
     expect(track.index).toBe(index);
     expect(surface.id).toBe(id);
     expect(plain(surface.g.sectors)).toEqual(plain(classic.sectors));
-    const original = game.digitizedTracks[index];
+    const original = historicalTracks[index];
     // Raw drawings stay untouched, including pit and sector fractions.
     for (const key of ["points", "pit", "width", "sectorU", "bridgeU"])
       expect(plain(track[key])).toEqual(plain(original[key]));
     if (id === "bahrain" || id === "canada") {
-      expect(plain(surface.g.pts)).toEqual(plain(classic.pts));
-      expect(plain(surface.g.cum)).toEqual(plain(classic.cum));
+      expect(digest(surface.g.pts)).toBe(classic.pointsHash);
+      expect(digest(surface.g.cum)).toBe(classic.cumulativeHash);
       expect(surface.g.width).toBe(classic.width);
-      expect(plain(surface.g.pit)).toEqual(plain(classic.pit));
+      expect(digest(surface.g.pit)).toBe(classic.pitHash);
     }
     expect(Object.isFrozen(data.tracks[id].points[0])).toBe(true);
     expect(Object.isFrozen(data.boundaries[id].polygons[0][0][0])).toBe(true);

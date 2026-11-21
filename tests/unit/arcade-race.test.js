@@ -2,7 +2,7 @@ import { it, expect } from "vitest";
 import { execFileSync } from "node:child_process";
 import { runInNewContext } from "node:vm";
 import { loadArcade } from "../helpers/arcade.js";
-import { ROOT, plain } from "../helpers/game.js";
+import { ROOT, plain } from "../helpers/project.js";
 
 const zero = { throttle: 0, brake: 0, steer: 0 };
 function setup(options) {

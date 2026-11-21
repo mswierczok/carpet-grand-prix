@@ -119,10 +119,9 @@ test("POV-Menü: verweigerter Speicher blockiert den Start nicht und alte Spiels
   await expect(page.locator("#quality")).toHaveValue("low");
   expect(await page.evaluate(() => localStorage.getItem("carpet_gp_v072"))).toBe(classic);
   await backToMenu(page);
-  await page.getByRole("link", { name: "Bisherigen Spielstand öffnen" }).click();
-  await expect(page).toHaveURL(/index.html\?legacy=1$/);
-  await page.locator('[data-launch="load-view"]').click();
-  await expect(page.locator("#launchResume")).toBeEnabled();
+  await page.getByRole("link", { name: "Klassische Version · Archiv" }).click();
+  await expect(page).toHaveURL(/archive.html$/);
+  await expect(page.locator("#exportClassicSave")).toBeEnabled();
   expect(await page.evaluate(() => localStorage.getItem("carpet_gp_v072"))).toBe(classic);
 });
 test("POV-Menü: Offline-Ausgabe startet ohne externe Ressourcen und führt ins eigenständige Rennen", async ({ page, context }, info) => {

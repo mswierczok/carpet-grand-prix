@@ -1,3 +1,6 @@
+> Historische Referenz zur früheren Anwendung bzw. Stilentwicklung.
+> Aktuelle Architektur: [ARCHITECTURE.md](ARCHITECTURE.md); Archiv und Übernahme: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
+
 # Rennansicht fast bis zum Rand
 
 Entwicklungsbranch `codex/race-edge-to-edge`, Ausgangspunkt `3d36927` auf `main`.

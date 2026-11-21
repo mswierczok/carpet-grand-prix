@@ -38,5 +38,6 @@ if (!process.argv.includes("--gallery-only")) {
     const file = `carpet-grand-prix-${name ? name + "-" : ""}offline.html`;
     copyFileSync("dist/" + file, "dist/hud-review/" + file);
   }
+  copyFileSync("dist/carpet-grand-prix-classic-archive.html", "dist/hud-review/carpet-grand-prix-classic-archive.html");
   console.log("Spielbare HUD-/Kampagnen-Abnahme: dist/hud-review/index.html");
 }

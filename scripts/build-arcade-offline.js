@@ -77,7 +77,15 @@ export function createPOVMenuOffline() {
   }
   return html.replaceAll("./race.html", "./carpet-grand-prix-race-offline.html")
     .replaceAll("./campaign.html", "./carpet-grand-prix-campaign-offline.html")
-    .replaceAll("./index.html?legacy=1", "./carpet-grand-prix-offline.html");
+    .replaceAll("./archive.html", "./carpet-grand-prix-classic-archive.html");
+}
+export function createClassicArchiveOffline() {
+  return readFileSync(new URL("archive.html", root), "utf8")
+    .replace(/<link\s+rel="stylesheet"\s+href="\.\/(styles\/[^"?]+)(?:\?[^" ]*)?"\s*\/?>/g,
+      (_, file) => `<style>${readFileSync(new URL(file, root), "utf8")}</style>`)
+    .replace(/<script src="\.\/(src\/[^"?]+)(?:\?[^" ]*)?"><\/script>/g,
+      (_, file) => `<script>${readFileSync(new URL(file, root), "utf8")}</script>`)
+    .replaceAll("./play.html", "./carpet-grand-prix-menu-offline.html");
 }
 export function createCampaignOffline() {
   let html = readFileSync(new URL("campaign.html", root), "utf8");
@@ -96,10 +104,7 @@ export function createCampaignOffline() {
   const literal = value => JSON.stringify(value).replaceAll("<", "\\u003c");
   return `<!doctype html><html lang="de"><meta charset="utf-8"><title>Carpet Grand Prix · Kampagne offline</title><script>document.write(new URLSearchParams(location.search).get("mode")==="campaign"?${literal(race)}:${literal(html)});</script></html>`;
 }
-if (
-  process.argv[1] &&
-  resolve(process.argv[1]) === fileURLToPath(import.meta.url)
-) {
+export function writeArcadeOffline() {
   mkdirSync(new URL("dist/", root), { recursive: true });
   writeFileSync(
     new URL("dist/carpet-grand-prix-arcade-offline.html", root),
@@ -113,7 +118,11 @@ if (
     new URL("dist/carpet-grand-prix-race-offline.html", root),
     createArcadeOffline({ race: true }),
   );
-  writeFileSync(new URL("dist/carpet-grand-prix-menu-offline.html", root), createPOVMenuOffline());
+  const menu = createPOVMenuOffline();
+  writeFileSync(new URL("dist/carpet-grand-prix-menu-offline.html", root), menu);
+  writeFileSync(new URL("dist/carpet-grand-prix-offline.html", root), menu);
   writeFileSync(new URL("dist/carpet-grand-prix-campaign-offline.html", root), createCampaignOffline());
+  writeFileSync(new URL("dist/carpet-grand-prix-classic-archive.html", root), createClassicArchiveOffline());
   console.log("Eigenständiger Arcade-Fahrtest und Kampagne exportiert.");
 }
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) writeArcadeOffline();

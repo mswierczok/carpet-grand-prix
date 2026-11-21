@@ -1,21 +1,20 @@
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { loadArcade, driveBahrain } from "../helpers/arcade.js";
-import { createGame, ROOT, plain } from "../helpers/game.js";
+import { ROOT, plain, historicalMaster, historicalInvariants, digest } from "../helpers/project.js";
 import { arcadeScripts } from "../../scripts/export-arcade-data.js";
 it("exportiert Bahrain und die 13/92 Identitäten exakt, ohne Testadapter im Fahrspiel", () => {
   const { api, data } = loadArcade(),
-    { game } = createGame(),
     surface = api.Surface.create({...data.tracks.bahrain, pov:undefined}),
-    classic = game.makeGeometry(game.trackDefs[0]);
-  expect(plain(surface.g.pts)).toEqual(plain(classic.pts));
-  expect([...surface.g.cum]).toEqual([...classic.cum]);
+    classic = historicalInvariants.geometry[0];
+  expect(digest(surface.g.pts)).toBe(classic.pointsHash);
+  expect(digest(surface.g.cum)).toBe(classic.cumulativeHash);
   expect(surface.g.width).toBe(classic.width);
-  expect(surface.g.len).toBe(classic.len);
-  expect(plain(surface.g.pit)).toEqual(plain(classic.pit));
+  expect(surface.g.len).toBe(classic.length);
+  expect(digest(surface.g.pit)).toBe(classic.pitHash);
   expect(plain(surface.g.sectors)).toEqual(plain(classic.sectors));
-  expect(plain(data.roster.teams)).toEqual(plain(game.MASTER.teams));
-  expect(plain(data.roster.drivers)).toEqual(plain(game.MASTER.drivers));
+  expect(plain(data.roster.teams)).toEqual(historicalMaster.teams);
+  expect(plain(data.roster.drivers)).toEqual(historicalMaster.drivers);
   for (const [name, source] of Object.entries(arcadeScripts()))
     expect(readFileSync(new URL(`src/data/${name}.js`, ROOT), "utf8")).toBe(
       source,

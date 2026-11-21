@@ -1,3 +1,6 @@
+> Historische Referenz zur früheren Anwendung bzw. Stilentwicklung.
+> Aktuelle Architektur: [ARCHITECTURE.md](ARCHITECTURE.md); Archiv und Übernahme: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
+
 # Technische Bestandsaufnahme
 
 Untersuchung: 4. November 2026. Ausgangsbasis:

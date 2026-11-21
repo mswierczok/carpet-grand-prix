@@ -1,3 +1,6 @@
+> Historische Referenz zur früheren Anwendung bzw. Stilentwicklung.
+> Aktuelle Architektur: [ARCHITECTURE.md](ARCHITECTURE.md); Archiv und Übernahme: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
+
 # CSS, Bilder und Offline-Ausgabe
 
 Erster Umbau auf Basis von `c418ed576ba9f640b295905539f3675b8513a67c`

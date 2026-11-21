@@ -1,7 +1,7 @@
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
-import { ROOT } from "../helpers/game.js";
+import { ROOT } from "../helpers/project.js";
 import { loadArcade } from "../helpers/arcade.js";
 import {
   measureField,

@@ -1,3 +1,6 @@
+> Historische Referenz zur früheren Anwendung bzw. Stilentwicklung.
+> Aktuelle Architektur: [ARCHITECTURE.md](ARCHITECTURE.md); Archiv und Übernahme: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
+
 # Eigene Fahrer unten im Rennfenster
 
 Entwicklungsbranch `codex/team-driver-cards`, Ausgangspunkt `2695f42` auf `main`.

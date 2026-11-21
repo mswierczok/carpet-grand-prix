@@ -2,7 +2,7 @@ import { it, expect } from "vitest";
 import { execFileSync } from "node:child_process";
 import { runInNewContext } from "node:vm";
 import { loadArcade } from "../helpers/arcade.js";
-import { ROOT } from "../helpers/game.js";
+import { ROOT } from "../helpers/project.js";
 
 const baselineSource = execFileSync(
   "git",

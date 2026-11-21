@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { runInNewContext } from "node:vm";
 import { loadArcade } from "../helpers/arcade.js";
-import { ROOT } from "../helpers/game.js";
+import { ROOT } from "../helpers/project.js";
 const baseline = "d6cd3a05bacfe2e0c401f0101a4bfc6fa2ce643a";
 function crossing(gate, lane = 0, reverse = false) {
   const dx = Math.cos(gate.ang),

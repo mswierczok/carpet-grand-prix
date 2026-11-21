@@ -20,17 +20,14 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check:arcade-data
+      - run: npm run check:driver-art
       - run: npm run check:arcade3d-engine
       - run: npm run check:arcade-boundaries
       - run: npm test -- --exclude tests/unit/pov-calendar.test.js
       - run: npm run build:offline
-      - run: npm run build:arcade-offline
       - run: node scripts/build-bahrain-review.js
       - run: node scripts/build-calendar-review.js
       - run: node scripts/build-hud-review.js
-      - run: npm run build:race-preview
-      - run: npm run build:pilot-preview
-      - run: npm run build:world-review
       - uses: actions/upload-artifact@v4
         with:
           name: carpet-grand-prix-hud-campaign-review
@@ -59,35 +56,15 @@ jobs:
             dist/carpet-grand-prix-campaign-offline.html
             dist/carpet-grand-prix-menu-offline.html
             dist/carpet-grand-prix-offline.html
-          if-no-files-found: error
-          retention-days: 30
-      - uses: actions/upload-artifact@v4
-        with:
-          name: carpet-grand-prix-world-and-drivers
-          path: |
-            dist/carpet-grand-prix-world-and-drivers.html
-            dist/carpet-grand-prix-offline.html
-          retention-days: 30
-      - uses: actions/upload-artifact@v4
-        with:
-          name: carpet-grand-prix-art-pilot
-          path: |
-            dist/carpet-grand-prix-art-pilot.html
-            dist/carpet-grand-prix-offline.html
-          if-no-files-found: error
-          retention-days: 30
-      - uses: actions/upload-artifact@v4
-        with:
-          name: carpet-grand-prix-topdown-preview
-          path: |
-            dist/carpet-grand-prix-topdown-preview.html
-            dist/carpet-grand-prix-offline.html
+            dist/carpet-grand-prix-classic-archive.html
           if-no-files-found: error
           retention-days: 30
       - uses: actions/upload-artifact@v4
         with:
           name: carpet-grand-prix-offline
-          path: dist/carpet-grand-prix-offline.html
+          path: |
+            dist/carpet-grand-prix*offline.html
+            dist/carpet-grand-prix-classic-archive.html
           if-no-files-found: error
           retention-days: 30
       - uses: actions/upload-artifact@v4
@@ -250,7 +227,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: npm run build:offline && npm run build:arcade-offline && npm run build:calendar-review
+      - run: npm run build:offline && npm run build:calendar-review
         if: matrix.group == 0
       - run: npx playwright test tests/browser/calendar-environments.spec.js --project=${{ matrix.project }}
       - uses: actions/upload-artifact@v4

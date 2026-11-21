@@ -1,6 +1,6 @@
 import { it, expect } from "vitest";
 import { loadArcade } from "../helpers/arcade.js";
-import { plain } from "../helpers/game.js";
+import { plain } from "../helpers/project.js";
 
 it("validiert und kopiert Startlisten, hält Teams und KI-Profile stabil und stellt auch auf Brückenstrecken kollisionsfrei auf", () => {
   const { api, data } = loadArcade({ race: true }), ids = data.roster.teams.map((t) => t.id),

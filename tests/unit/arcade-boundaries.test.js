@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
 import * as THREE from "three";
 import { loadArcade } from "../helpers/arcade.js";
-import { ROOT } from "../helpers/game.js";
+import { ROOT } from "../helpers/project.js";
 import { boundaryScript } from "../../scripts/build-arcade-boundaries.js";
 function setup() {
   const { api, data } = loadArcade();

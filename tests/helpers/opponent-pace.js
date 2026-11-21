@@ -1,6 +1,6 @@
 import { execFileSync } from "node:child_process";
 import { runInNewContext } from "node:vm";
-import { ROOT } from "./game.js";
+import { ROOT } from "./project.js";
 import { loadArcade } from "./arcade.js";
 
 export const paceBaseline = "3cba63b997218d2d2e55988bcd76048d5c40cf75";

@@ -1,3 +1,6 @@
+> Historische Referenz zur früheren Anwendung bzw. Stilentwicklung.
+> Aktuelle Architektur: [ARCHITECTURE.md](ARCHITECTURE.md); Archiv und Übernahme: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
+
 # Top-Down-Rennfahrzeuge für alle 13 Teams
 
 Entwicklungsbranch `codex/topdown-all-teams`, Ausgangspunkt `38c0dbc` auf `main`.

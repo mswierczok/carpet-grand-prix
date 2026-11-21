@@ -1,3 +1,6 @@
+> Historische Referenz zur früheren Anwendung bzw. Stilentwicklung.
+> Aktuelle Architektur: [ARCHITECTURE.md](ARCHITECTURE.md); Archiv und Übernahme: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
+
 # Fahrzeuglackierungen nach Originalfotos
 
 Entwicklungszweig: `codex/reference-car-liveries`. Ausgangsbasis ist der

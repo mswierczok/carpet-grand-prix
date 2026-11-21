@@ -88,6 +88,7 @@ for (const name of ["race", "menu", "campaign", "arcade", "arcade3d", ""]) {
   const file = `carpet-grand-prix-${name ? name + "-" : ""}offline.html`;
   copyFileSync(`dist/${file}`, `dist/calendar-review/${file}`);
 }
+copyFileSync("dist/carpet-grand-prix-classic-archive.html", "dist/calendar-review/carpet-grand-prix-classic-archive.html");
 console.log(
   "Spielbare Abnahme aller 21 Umgebungen: dist/calendar-review/index.html",
 );

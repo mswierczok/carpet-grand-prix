@@ -1,8 +1,7 @@
 import { it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { ROOT, createGame } from '../helpers/game.js';
-import { originalHTML } from '../helpers/original-html.js';
+import { ROOT, historicalMaster } from '../helpers/project.js';
 
 const liveries = JSON.parse(readFileSync(new URL('assets/cars/liveries.json', ROOT)));
 const mapping = {
@@ -17,21 +16,19 @@ const bytes = path => readFileSync(new URL(path, ROOT));
 const hash = data => createHash('sha256').update(data).digest('hex');
 
 it('ordnet jedes der zwölf Fotos dem richtigen unveränderten Team zu', () => {
-  const { game } = createGame();
+
   expect(liveries.entries.map(entry => entry.id).sort()).toEqual(Object.keys(mapping));
   for (const entry of liveries.entries) {
     expect(entry.team).toBe(mapping[entry.id][0]);
     expect(entry.reference).toBe(`assets/references/${mapping[entry.id][1]}`);
-    expect(game.MASTER.teams.find(team => team.id === entry.id).name).toBe(entry.team);
+    expect(historicalMaster.teams.find(team => team.id === entry.id).name).toBe(entry.team);
     expect(entry.asset).toBe(`assets/cars/team-${entry.id}.webp`);
     expect(hash(bytes(entry.reference))).toBe(entry.referenceSHA256);
   }
 });
 
 it('bewahrt Vauclair und das ursprüngliche weiße Basismodell unverändert', () => {
-  const originals = [...originalHTML().matchAll(/data:image\/[\w+.-]+;base64,([A-Za-z0-9+/=]+)/g)];
-  expect(bytes('assets/cars/team-t01.webp').equals(Buffer.from(originals[1][1], 'base64'))).toBe(true);
-  expect(bytes(liveries.base.path).equals(Buffer.from(originals[2][1], 'base64'))).toBe(true);
+  expect(hash(bytes('assets/cars/team-t01.webp'))).toBe(liveries.preservedVauclair.sha256);
   expect(hash(bytes(liveries.base.path))).toBe(liveries.base.sha256);
 });
 

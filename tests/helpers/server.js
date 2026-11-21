@@ -2,9 +2,8 @@
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { resolve, extname } from 'node:path';
-import { originalHTML } from './original-html.js';
 import { createOfflineHTML } from '../../scripts/build-offline.js';
-import { createArcadeOffline, createPOVMenuOffline, createCampaignOffline } from '../../scripts/build-arcade-offline.js';
+import { createArcadeOffline, createPOVMenuOffline, createCampaignOffline, createClassicArchiveOffline } from '../../scripts/build-arcade-offline.js';
 
 const root = resolve('.');
 const prefix = '/carpet-grand-prix/';
@@ -19,7 +18,8 @@ const server = createServer(async (req, res) => {
       ? () => createPOVMenuOffline()
       : (relative === '__campaign_offline__/index.html' || offlineName === 'carpet-grand-prix-campaign-offline.html') ? () => createCampaignOffline()
       : offlineName === 'carpet-grand-prix-race-offline.html' ? () => createArcadeOffline({ race: true })
-      : offlineName === 'carpet-grand-prix-offline.html' ? () => createOfflineHTML() : null;
+      : offlineName === 'carpet-grand-prix-offline.html' ? () => createOfflineHTML()
+      : offlineName === 'carpet-grand-prix-classic-archive.html' ? () => createClassicArchiveOffline() : null;
     if (offlineOutput) {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
       res.end(offlineOutput()); return;
@@ -36,8 +36,8 @@ const server = createServer(async (req, res) => {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
       res.end(createArcadeOffline()); return;
     }
-    if (relative === '__reference__/index.html' || relative === '__offline__/index.html') {
-      const html = relative.startsWith('__reference__') ? originalHTML() : createOfflineHTML();
+    if (relative === '__offline__/index.html') {
+      const html = createOfflineHTML();
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' });
       res.end(html); return;
     }
@@ -50,5 +50,7 @@ const server = createServer(async (req, res) => {
     res.end(bytes);
   } catch { res.writeHead(404).end(); }
 });
-server.listen(4173, '127.0.0.1');
+const port = Number(process.env.CGP_TEST_PORT || 4173);
+if (!Number.isInteger(port) || port < 1024 || port > 65535) throw Error('Ungültiger Testserver-Port.');
+server.listen(port, '127.0.0.1');
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => server.close(() => process.exit(0)));

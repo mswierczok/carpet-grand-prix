@@ -1,69 +1,65 @@
 # Carpet Grand Prix
 
-Browserbasiertes Arcade-Racing-Roguelite in einer illustrierten Spielzeugwelt.
-Das [Hauptmenü](play.html) bietet Kampagne, freies Rennen und die eigenständige
-POV-Meisterschaft. 13 Teams und 22 Strecken bleiben verfügbar; die Kampagne
-verwendet acht Strecken, Redwood als Startteam und drei feste Startfahrer.
+Ein selbst spielbares Arcade-Rennspiel in einer illustrierten Miniaturwelt.
+Die eigenständige Kampagne ist die Grundlage des künftigen Motorsport-Roguelites.
 
-Der Legacy-Cleanup beginnt mit unabhängigen historischen Datenquellen für alle
-13 Teams, 92 Fahrer und 22 Originalstrecken. Der klassische Simulationsmodus
-bleibt während PR 1 unverändert über `index.html?legacy=1` erreichbar.
-[Abhängigkeiten, geprüfte Datenidentität und weitere Freigabeschritte](docs/LEGACY_CLEANUP.md).
+[Spiel öffnen](https://mswierczok.github.io/carpet-grand-prix/)
 
-[Spiel auf GitHub Pages](https://mswierczok.github.io/carpet-grand-prix/)
+Im [Hauptmenü](play.html) stehen Kampagne, freies Rennen, die POV-Meisterschaft
+und Einstellungen bereit. Die Kampagne startet mit Redwood GP und einem von
+drei festen Fahrern. Sie verwendet acht Strecken; alle 22 Originalstrecken,
+13 Teams und 92 historischen Fahreridentitäten bleiben technisch erhalten.
 
-Zusätzlich gibt es einen [freien 3D-Fahrtest](arcade3d.html) und
-ein [Rennen mit 13 Fahrzeugen](race.html) auf allen 22 Strecken, einschließlich
-der Brücken in Korea und Russland. Das Rennen nutzt einen eigenen Zustand; bestehende
-Meisterschaftsspielstände bleiben erhalten.
-Umfang und Prüfung: [vollständiger POV-Kalender](docs/POV_CALENDAR.md).
+`race.html` nutzt eine gemeinsame Engine für Qualifying und Rennen mit
+13 Fahrzeugen, manueller Steuerung, Verfolgungskamera und Touchbedienung.
+`arcade.html` und `arcade3d.html` sind zusätzliche technische Fahrtests.
+Das Spiel läuft statisch auf GitHub Pages; Spieler benötigen keine Installation.
 
-`index.html` führt normalerweise zum aktuellen Hauptmenü `play.html`.
-Das Spiel verwendet `styles/`, `assets/` und `src/`, ohne
-Installation oder Build. Node-Werkzeuge dienen ausschließlich Entwicklung und Tests.
-Für die bisherige Nutzung als einzelne Offline-Datei stellt die automatische Prüfung
-das Download-Artefakt **carpet-grand-prix-offline** bereit: entpacken und die enthaltene
-HTML-Datei öffnen. [Dateiaufteilung und Offline-Ausgabe](docs/ASSETS.md)
+## Entwicklung
 
-## Entwicklung durch natürlichsprachliche Aufträge
-
-Gewünschte Änderung auf Deutsch beschreiben. Der Entwickler bereitet sie auf einem
-eigenen Zweig vor, prüft sie und erläutert das Ergebnis im Pull Request. Erst nach
-ausdrücklicher Freigabe wird nach `main` übernommen. Änderungen an Mechaniken oder
-Balancing benötigen eine vorherige Zustimmung.
-
-- [Bestand und Referenz](docs/BASELINE.md)
-- [Zielstruktur, Umbauplan und Risiken](docs/ARCHITECTURE.md)
-- [Tests](docs/TESTING.md)
-- [CSS, Bilder und Offline-Ausgabe](docs/ASSETS.md)
-- [Fahrzeuglackierungen und Fotovergleich](docs/CAR_LIVERIES.md)
-- [Alle 13 Top-Down-Rennfahrzeuge: Vorschau und Einbindung](docs/TOPDOWN_PREVIEW.md)
-- [Dieselben Top-Down-Fahrzeuge in der Werkstatt](docs/WORKSHOP_CARS.md)
-- [Größerer Streckenzoom in der Rennansicht](docs/RACE_CAMERA.md)
-- [Eigene Fahreranzeigen mit Position, Abständen und Kameraauswahl](docs/TEAM_DRIVER_HUD.md)
-- [Fahrer-Verfolgungskamera statt Fahrzeug-Markierung](docs/FOLLOW_CAMERA.md)
-- [Spielstandformat](docs/SAVE_FORMAT.md)
-- [Kampagne, getrennter Speicher und Ergebnisarchiv](docs/CAMPAIGN.md)
-- [Unabhängige historische Datenquellen](src/data/historical/README.md)
-- [Arbeitsablauf und Freigabe](docs/WORKFLOW.md)
-- [Verbindliche Entwicklerregeln](AGENTS.md)
-
-## Prüfungen
-
-Node.js 24 LTS verwenden.
+Node.js 24 LTS verwenden:
 
 ```sh
 npm ci
-npm run check:arcade-data
 npx playwright install --with-deps chromium
+npm run check:arcade-data
+npm run check:driver-art
 npm test
 npm run test:browser
-npm run test:extended
 ```
 
-Der Testserver stellt das Spiel unter
-`http://127.0.0.1:4173/carpet-grand-prix/` bereit.
+Der Testserver (`npm run serve:test`) stellt ausschließlich
+`http://127.0.0.1:4173/carpet-grand-prix/` bereit. Die CI verteilt längere
+Kalender-/Browserfahrten auf eigene Gruppen, ohne deren Inhalt zu verkürzen.
 
-`npm run build:arcade-data` erzeugt die versionierten Browserdaten aus statischem
-JSON, ohne die alte Simulation zu laden. GitHub Pages benötigt keinen Build zur
-Laufzeit. Run-Map, Items, Teamfähigkeiten, Crew und Belohnungen sind noch offen.
+```sh
+npm run build:offline
+npm run build:arcade-offline
+```
+
+Die Ausgaben in `dist/` enthalten das aktuelle Hauptmenü, Kampagne, Rennen,
+freie Fahrtests und eine portable Archivinformationsseite. Die CI stellt
+spielbare Offline-/Review-Pakete bereit. Alle benötigten Assets sind eingebettet.
+
+## Orientierung
+
+- [Architektur und aktive Einstiegspunkte](docs/ARCHITECTURE.md)
+- [Tests und reproduzierbare Builds](docs/TESTING.md)
+- [Kampagne und Ergebnisarchiv](docs/CAMPAIGN.md)
+- [Speicherbereiche](docs/SAVE_FORMAT.md)
+- [Vollbild-HUD und Pause](docs/RACING_HUD.md)
+- [Modulare Welt aller 22 Strecken](docs/CALENDAR_ENVIRONMENTS.md)
+- [Unabhängige Stammdaten](src/data/historical/README.md)
+- [Cleanup, Archivierung und Messungen](docs/LEGACY_CLEANUP.md)
+- [Entwicklerregeln](AGENTS.md)
+
+## Klassische Simulation
+
+Die frühere passive Managementsimulation ist unter dem Git-Tag
+[`classic-simulation-archive-2026-11-21`](https://github.com/mswierczok/carpet-grand-prix/tree/classic-simulation-archive-2026-11-21)
+archiviert. [Archivzugang und Export alter Browserstände](archive.html).
+Es gibt keine automatische Migration in die Kampagne und keine Löschung alter
+Speicherbereiche. Wiederherstellung: [Cleanup-Dokumentation](docs/LEGACY_CLEANUP.md).
+
+Run-Map, Items, Crew, Teamfähigkeiten, Freischaltbedingungen und endgültige
+Run-Längen sind noch nicht implementiert. Sie werden nach dem Cleanup separat entwickelt.
