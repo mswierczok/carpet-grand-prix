@@ -1,4 +1,26 @@
-# Zielstruktur und Umbauplan
+# Architektur
+
+Das aktuelle Hauptprodukt ist das selbst spielbare Arcade-Racing-Roguelite.
+`play.html` startet freies Rennen / POV-Meisterschaft, `campaign.html` die getrennte
+Kampagne; beide verwenden `race.html` mit derselben Renn-Engine. `arcade.html` und
+`arcade3d.html` bleiben technische Fahrtests. Klassische Simulation und ihre
+Spielstände werden im ersten Cleanup-Schritt noch erhalten.
+
+## Unabhängige Stammdaten
+
+`src/data/historical/{master,tracks}.json` → `scripts/export-arcade-data.js` →
+`src/data/{arcade-roster,arcade-tracks}.js` → Menü, Kampagne, Fahrtests und Rennen.
+Der Export liest kein HTML und keinen Testadapter. Original-Kalender-Tupel bleiben
+zusätzlich in `historical/track-defs.json` erhalten. Alle bisherigen generierten
+Browserbytes bleiben identisch. POV-Layoutprofile, Bahrain-Unterbett/Boxengasse,
+generierte Seilkonturen und Kampagnenkonfiguration behalten ihre eigenen Grenzen.
+
+Analyse, vollständige Klassifikation, verbleibende Testkopplungen und Freigabefolge:
+[LEGACY_CLEANUP.md](LEGACY_CLEANUP.md). Die eigentliche Bereinigung der alten
+Simulation ist ein späterer PR; die folgende ursprüngliche Planung dokumentiert
+den historischen Umbau und ist keine Aufforderung, die Simulation weiter auszubauen.
+
+## Historischer Umbauplan
 
 Status: Vorbereitung übernommen; erster Umbau trennt CSS und Bilder ab.
 Die Spielsysteme bleiben im ursprünglichen JavaScript. Details in [ASSETS.md](ASSETS.md).

@@ -19,6 +19,7 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
+      - run: npm run check:arcade-data
       - run: npm run check:arcade3d-engine
       - run: npm run check:arcade-boundaries
       - run: npm test -- --exclude tests/unit/pov-calendar.test.js
