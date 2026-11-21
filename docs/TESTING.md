@@ -367,3 +367,13 @@ Bestandstests; weder Fahrbudgets noch Zeitgrenzen einzelner Prüfungen werden
 gelockert. Das verhindert einen Abbruch am 25-Minuten-Limit des Gesamtjobs.
 Die Darstellung von Streckenname und Rennlänge wird im aktuellen HUD bzw.
 Pausenmenü geprüft, statt an den entfernten alten Seitenelementen.
+
+`touch-session-start.spec.js` verwendet ausdrücklich native Fingertipps
+(`locator.tap()`) für Qualifying-/Rennstart, Zahnrad und Fortsetzen. Ein mobiler
+Browserkontext mit `locator.click()` allein deckt die Touch-Aktivierung nicht ab.
+Die Prüfung wurde auf dem veröffentlichten Stand vor dem Fix reproduziert:
+Ein Fingertipp ließ die Session in der Aufstellung stehen. Nach dem Fix müssen
+Countdown, Auslaufrunde und tatsächliche Bewegung durch gehaltenes Touch-Gas
+funktionieren, online/offline in Kampagne und freiem Rennen. Der Scrollschutz
+bleibt während der Fahrt erhalten. Chromium emuliert Touch und iPhone-Abmessungen;
+ein physischer Safari-Gerätetest ist damit nicht nachgewiesen.
