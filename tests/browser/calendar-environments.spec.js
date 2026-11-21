@@ -1,3 +1,4 @@
+import { driveButton, raceAction, selectRaceOption, openRaceMenu } from "../helpers/racing-menu.js";
 import { resolve } from "node:path";
 import { test, expect } from "@playwright/test";
 import { mkdirSync, writeFileSync, readFileSync } from "node:fs";
@@ -26,7 +27,7 @@ test("Streckenwelten: 21 Themen in echtem WebGL, Übersicht und Startansicht", a
   await page.clock.runFor(64);
   const rows = [];
   for (const id of ids) {
-    await page.locator("#track").selectOption(id);
+    await selectRaceOption(page, "track", id);
     await page.clock.runFor(64);
     await expect(page.locator("#arcadeApp")).toHaveAttribute(
       "data-rendering",
@@ -107,13 +108,13 @@ test("Streckenwelten: 21 Themen in echtem WebGL, Übersicht und Startansicht", a
         1 / 60,
       );
     });
-    await page.locator("#overview").click();
+    await raceAction(page, "overview");
     await page.clock.runFor(64);
     await page.locator("#arcadeCanvas").screenshot({
       path: `${output}/${info.project.name}-${id}-overview.png`,
     });
     rows.push({ id, ...s.d });
-    await page.locator("#overview").click();
+    await raceAction(page, "overview");
     await page.clock.runFor(32);
   }
   writeFileSync(
@@ -158,7 +159,7 @@ for (const id of ids)
     let captured = false,
       entered = false,
       near = false;
-    await page.locator("#pause").click();
+    await driveButton(page);
     await page.evaluate(pilotRace);
     for (let i = 0; i < 360; i++) {
       await page.clock.runFor(near ? 125 : 500);
@@ -286,7 +287,7 @@ if (group === undefined || group === "0")
       await page.evaluate(() => __inspect3D.diagnostics().world.theme),
     ).toBe("italy");
     for (const id of ["india", "china", "bahrain", "luxembourg"]) {
-      await page.locator("#track").selectOption(id);
+      await selectRaceOption(page, "track", id);
       await page.clock.runFor(64);
       expect(await page.evaluate(() => __driveSnapshot.entries.length)).toBe(
         13,
@@ -296,6 +297,7 @@ if (group === undefined || group === "0")
           await page.evaluate(() => __inspect3D.diagnostics().world.theme),
         ).toBe(id);
     }
+    await openRaceMenu(page, "save");
     await page
       .locator('a[href*="carpet-grand-prix-menu-offline.html"]')
       .first()

@@ -1,3 +1,4 @@
+import { driveButton } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { capture2D } from "../helpers/arcade-browser.js";
 import { sectorShoulderPilot } from "../helpers/sector-shoulder-browser.js";
@@ -47,7 +48,7 @@ test("zählt eine echte Tastaturrunde mit beiden Sektoren und Start/Ziel auf dem
   await capture2D(page);
   await page.goto("arcade.html");
   await page.clock.runFor(32);
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.evaluate(sectorShoulderPilot);
   for (let step = 0; step < 9; step++) {
     await page.clock.runFor(20000);

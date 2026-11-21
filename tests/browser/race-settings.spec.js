@@ -1,3 +1,5 @@
+import { openLegacySettings, backToMenu } from "../helpers/racing-menu.js";
+import { driveButton, pauseControl, raceAction } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { capture2D } from "../helpers/arcade-browser.js";
 
@@ -35,10 +37,10 @@ async function setSensitivity(page, value) {
 test("Lenkempfindlichkeit: sanfte Tastaturtipps, voller Einschlag, sofortige Freigabe und Richtungswechsel", async ({ page }) => {
   await openRace(page);
   async function sample(value) {
-    await page.locator("#openSettings").click();
+    await openLegacySettings(page, "settings");
     await setSensitivity(page, value);
     await page.locator("#closeSettings").click();
-    await page.locator("#pause").click();
+    await driveButton(page);
     await page.clock.runFor(3200);
     await page.keyboard.down("w");
     await page.clock.runFor(800);
@@ -70,7 +72,7 @@ test("Lenkempfindlichkeit: sanfte Tastaturtipps, voller Einschlag, sofortige Fre
   await page.keyboard.up("a"); await page.keyboard.up("d"); await page.keyboard.up("w");
   await page.clock.runFor(32);
   expect(await page.evaluate(() => __input)).toEqual(neutral);
-  await page.locator("#openSettings").click();
+  await openLegacySettings(page, "settings");
   await expect(page.locator("#steeringSensitivity")).toBeEnabled();
   await setSensitivity(page, 70);
   await page.clock.runFor(200);
@@ -80,22 +82,22 @@ test("Lenkempfindlichkeit: sanfte Tastaturtipps, voller Einschlag, sofortige Fre
 test("Lenkempfindlichkeit: Hauptmenü, Rennen, Neuladen und alte Speicher bleiben kompatibel", async ({ page }, info) => {
   await openRace(page);
   await page.goto("play.html");
-  await page.locator("#openSettings").click();
+  await openLegacySettings(page, "settings");
   await setSensitivity(page, 60);
   await page.screenshot({ path: info.outputPath("steering-settings.png") });
   await page.locator("#closeSettings").click();
   await page.reload();
-  await page.locator("#openSettings").click();
+  await openLegacySettings(page, "settings");
   await expect(page.locator("#steeringSensitivity")).toHaveValue("60");
   await page.locator("#closeSettings").click();
   await page.locator("#newDrive").click(); await page.locator("#startDrive").click();
   await page.clock.runFor(32);
   await expect(page.locator("#steeringSensitivity")).toHaveValue("60");
-  await page.locator("#openSettings").click(); await setSensitivity(page, 75);
+  await openLegacySettings(page, "settings"); await setSensitivity(page, 75);
   await page.locator("#closeSettings").click(); await page.reload(); await page.clock.runFor(32);
   await expect(page.locator("#steeringSensitivity")).toHaveValue("75");
-  await page.getByRole("link", { name: "← Hauptmenü" }).click();
-  await page.locator("#openSettings").click();
+  await backToMenu(page);
+  await openLegacySettings(page, "settings");
   await expect(page.locator("#steeringSensitivity")).toHaveValue("75");
   expect(await page.evaluate(() => localStorage.getItem("carpet_gp_v072"))).toBe("settings-classic-sentinel");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
@@ -110,13 +112,13 @@ test("Lenkempfindlichkeit: verweigerter Speicher erhält die Auswahl beim Start 
     };
   });
   await openRace(page);
-  await page.goto("play.html"); await page.locator("#openSettings").click();
+  await page.goto("play.html"); await openLegacySettings(page, "settings");
   await setSensitivity(page, 65);
   await expect(page.locator("#menuPreferenceNote")).toContainText("nicht gespeichert");
   await page.locator("#closeSettings").click(); await page.locator("#newDrive").click();
   await page.locator("#startDrive").click(); await page.clock.runFor(32);
   await expect(page.locator("#steeringSensitivity")).toHaveValue("65");
-  await page.locator("#openSettings").click(); await setSensitivity(page, 40);
+  await openLegacySettings(page, "settings"); await setSensitivity(page, 40);
   await expect(page.locator("#preferencesNote")).toContainText("nicht gespeichert");
   await page.locator("#closeSettings").click();
   await page.keyboard.down("d"); await page.clock.runFor(60);
@@ -135,7 +137,7 @@ test("Lenkempfindlichkeit: ein spätes Dialog-Schließereignis verwirft keine ne
     };
   });
   await openRace(page);
-  await page.locator("#openSettings").click(); await setSensitivity(page, 40);
+  await openLegacySettings(page, "settings"); await setSensitivity(page, 40);
   await page.locator("#closeSettings").click();
   await page.keyboard.down("d"); await page.clock.runFor(120);
   const steer = await page.evaluate(() => __input.steer);
@@ -152,8 +154,9 @@ test("Einstellungen: kompakter Dialog, Tastaturfokus, Pause und unveränderte Sp
   await expect(page.locator("#raceSettings")).not.toBeVisible();
   await expect(page.locator("#difficulty")).not.toBeVisible();
   await expect(page.locator(".bottom-panel #recover")).toHaveCount(0);
-  await expect(page.locator(".race-toolbar #recover")).toHaveCount(1);
-  await page.locator("#openSettings").click();
+  await expect(page.locator("#raceSettings #recover")).toHaveCount(1);
+  await expect(page.locator("#recover")).toBeHidden();
+  await openLegacySettings(page, "settings");
   await expect(page.getByRole("dialog", { name: "Einstellungen" })).toBeVisible();
   await expect(page.locator("#closeSettings")).toBeFocused();
   await page.locator("#difficulty").selectOption("expert");
@@ -162,11 +165,11 @@ test("Einstellungen: kompakter Dialog, Tastaturfokus, Pause und unveränderte Sp
   await page.keyboard.press("Escape");
   await expect(page.locator("#raceSettings")).not.toBeVisible();
   await expect(page.locator("#openSettings")).toBeFocused();
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.keyboard.down("w");
   await page.clock.runFor(3500);
   expect(await page.evaluate(() => __driveSnapshot.car.speed)).toBeGreaterThan(0);
-  await page.locator("#openSettings").click();
+  await openLegacySettings(page, "settings");
   await page.clock.runFor(32);
   const stopped = await page.evaluate(() => __driveSnapshot);
   expect(stopped.paused).toBe(true);
@@ -180,36 +183,37 @@ test("Einstellungen: kompakter Dialog, Tastaturfokus, Pause und unveränderte Sp
   expect(await page.evaluate(() => __input)).toEqual(neutral);
   await page.keyboard.up("w"); await page.keyboard.up("d");
   await page.locator("#closeSettings").click();
-  await expect(page.locator("#pause")).toHaveText("Fortsetzen");
-  await page.locator("#recover").click();
+  await expect(pauseControl(page)).toHaveText("Fortsetzen");
+  await raceAction(page, "recover");
   await page.clock.runFor(32);
   expect(await page.evaluate(() => __driveSnapshot.car.speed)).toBe(0);
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.clock.runFor(400);
   expect(await page.evaluate(() => __input)).toEqual(neutral);
   expect(await page.evaluate(() => localStorage.getItem("carpet_gp_v072"))).toBe(saved.carpet_gp_v072);
   expect(errors).toEqual([]);
 });
 
-test("Einstellungen: offline bedienbar, mobil ohne Überbreite und Reset bleibt am oberen Rand", async ({ page, context }, info) => {
+test("Einstellungen: offline bedienbar, mobil ohne Überbreite und Reset im Pausenmenü", async ({ page, context }, info) => {
   await openRace(page, true);
   await context.setOffline(true);
   const requests = [];
   page.on("request", r => requests.push(r.url()));
-  await page.locator("#openSettings").click();
+  await openLegacySettings(page, "settings");
   await page.locator("#difficulty").selectOption("hard");
   await page.locator("#catchup").selectOption("off");
   await setSensitivity(page, 55);
   await page.screenshot({ path: info.outputPath("settings.png") });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.locator("#closeSettings").click();
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.clock.runFor(3200);
   await page.locator(".drive-view").scrollIntoViewIfNeeded();
+  await openLegacySettings(page, "home");
   const bounds = await page.locator("#recover").boundingBox();
   expect(bounds.y).toBeGreaterThanOrEqual(0);
   expect(bounds.y + bounds.height).toBeLessThanOrEqual(await page.evaluate(() => innerHeight));
-  await page.locator("#recover").click();
+  await raceAction(page, "recover");
   await page.clock.runFor(32);
   expect(await page.evaluate(() => __driveSnapshot.car.speed)).toBe(0);
   expect(requests).toEqual([]);
@@ -220,7 +224,7 @@ test("Touch: Gas und Lenken gleichzeitig, Loslassen außerhalb, Abbruch und erne
   const errors = [];
   page.on("pageerror", e => errors.push(e.message));
   await openRace(page);
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.clock.runFor(3200);
   await page.locator(".touch-controls").scrollIntoViewIfNeeded();
   const point = async (selector, id) => {
@@ -257,15 +261,15 @@ test("Touch: Gas und Lenken gleichzeitig, Loslassen außerhalb, Abbruch und erne
   await send("touchEnd", []);
   await page.clock.runFor(32);
   expect(await page.evaluate(() => __input)).toEqual(neutral);
-  await expect(page.locator("#pause")).toHaveText("Fortsetzen");
-  await page.locator("#pause").click();
+  await expect(pauseControl(page)).toHaveText("Fortsetzen");
+  await driveButton(page);
   await page.locator(".touch-controls").scrollIntoViewIfNeeded();
   const again = await point('[data-drive="throttle"]', 3);
   await send("touchStart", [again]);
   await page.clock.runFor(100);
   expect(await page.evaluate(() => __input.throttle)).toBe(1);
   await send("touchEnd", []);
-  await page.locator("#openSettings").click();
+  await openLegacySettings(page, "settings");
   await setSensitivity(page, 40);
   await page.locator("#closeSettings").click();
   await page.locator(".touch-controls").scrollIntoViewIfNeeded();

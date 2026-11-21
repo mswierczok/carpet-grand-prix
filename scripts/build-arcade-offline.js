@@ -28,7 +28,7 @@ export function createArcadeOffline({ threeD = false, race = false } = {}) {
         `src="data:image/png;base64,${readFileSync(new URL("assets/world/arcade-materials.png", root)).toString("base64")}"`,
     );
   html = html.replace(
-    /<link rel="stylesheet" href="\.\/(styles\/(?:arcade(?:-race)?|campaign)\.css)(?:\?[^" ]*)?"\s*\/?>/g,
+    /<link\s+rel="stylesheet"\s+href="\.\/(styles\/(?:arcade(?:-race)?|campaign|racing-hud)\.css)(?:\?[^" ]*)?"\s*\/?>/g,
     (_, file) => `<style>${readFileSync(new URL(file, root), "utf8")}</style>`,
   );
   for (const match of [
@@ -67,7 +67,7 @@ export function createArcadeOffline({ threeD = false, race = false } = {}) {
 }
 export function createPOVMenuOffline() {
   let html = readFileSync(new URL("play.html", root), "utf8");
-  html = html.replace(/<link rel="stylesheet" href="\.\/(styles\/[^"?]+)(?:\?[^" ]*)?"\s*\/?>/g,
+  html = html.replace(/<link\s+rel="stylesheet"\s+href="\.\/(styles\/[^"?]+)(?:\?[^" ]*)?"\s*\/?>/g,
     (_, path) => `<style>${readFileSync(new URL(path, root), "utf8")}</style>`);
   for (const match of [...html.matchAll(/<script src="\.\/(src\/[^"?]+)(?:\?[^" ]*)?"><\/script>/g)])
     html = html.replace(match[0], () => `<script>\n${source(match[1]).replace(/<\/script/gi, "<\\/script")}\n</script>`);
@@ -81,7 +81,7 @@ export function createPOVMenuOffline() {
 }
 export function createCampaignOffline() {
   let html = readFileSync(new URL("campaign.html", root), "utf8");
-  html = html.replace(/<link rel="stylesheet" href="\.\/(styles\/[^"?]+)(?:\?[^" ]*)?"\s*\/?>/g,
+  html = html.replace(/<link\s+rel="stylesheet"\s+href="\.\/(styles\/[^"?]+)(?:\?[^" ]*)?"\s*\/?>/g,
     (_, file) => `<style>${readFileSync(new URL(file, root), "utf8")}</style>`);
   for (const match of [...html.matchAll(/<script src="\.\/(src\/[^"?]+)(?:\?[^" ]*)?"><\/script>/g)])
     html = html.replace(match[0], () => `<script>\n${source(match[1]).replace(/<\/script/gi, "<\\/script")}\n</script>`);

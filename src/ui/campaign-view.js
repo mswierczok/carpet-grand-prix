@@ -52,18 +52,18 @@
     const box = node("section", undefined, "campaign-panel campaign-interim");
     box.append(
       node("p", "KAMPAGNEN-ZWISCHENSTAND", "eyebrow"),
-      node("h2", "Dein erster Grand Prix."),
+      node("h2", CGPArcadeData.tracks[game.result.trackId].name),
     );
     const own = game.result.order.find((r) => r.teamId === game.teamId);
     box.append(
       node(
         "p",
-        `Bahrain abgeschlossen · Platz ${own.position} · ${format(own.finishTime)}`,
+        `${CGPArcadeData.tracks[game.result.trackId].name} abgeschlossen · Platz ${own.position} · ${format(own.finishTime)}`,
         "campaign-result-lead",
       ),
       node(
         "p",
-        "Dein Ergebnis ist gesichert. Weitere Stationen, Run-Länge und Belohnungen werden später ergänzt.",
+        "Deine vollständigen Ergebnisse bleiben im Kampagnenarchiv abrufbar.",
         "hint",
       ),
     );
@@ -81,8 +81,8 @@
       if (e.teamId === game.teamId) tr.className = "is-player";
       const name = node("td");
       name.append(
-        node("strong", C.getDriver(e.driverId).name),
-        node("small", C.getTeam(e.teamId).name),
+        node("strong", e.driverName || C.getDriver(e.driverId).name),
+        node("small", e.teamName || C.getTeam(e.teamId).name),
       );
       tr.append(
         node("td", String(e.position)),

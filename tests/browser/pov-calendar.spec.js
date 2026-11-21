@@ -1,3 +1,4 @@
+import { driveButton, selectRaceOption } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace, threeLapRegression } from "../helpers/arcade-race-browser.js";
@@ -27,7 +28,7 @@ test("POV-Kalender: lädt neue Strecken im echten 3D-Modus und gibt die vorherig
       .locator("#track option")
       .evaluateAll((nodes) => nodes.map((n) => n.value)),
   ).toEqual(povIds);
-  await page.locator("#team").selectOption("t05");
+  await selectRaceOption(page, "team", "t05");
   await selectDriveSetting(page, "quality", "low");
   for (const id of newPovIds) {
     await page.evaluate(
@@ -36,7 +37,7 @@ test("POV-Kalender: lädt neue Strecken im echten 3D-Modus und gibt die vorherig
           .getElementById("arcadeCanvas")
           .getContext("webgl2")),
     );
-    await page.locator("#track").selectOption(id);
+    await selectRaceOption(page, "track", id);
     await page.clock.runFor(64);
     await expect(page.locator("#arcadeApp")).toHaveAttribute(
       "data-rendering",
@@ -68,7 +69,7 @@ test("POV-Kalender: enthält die neuen Strecken samt Brücken ohne Netzwerkzugri
   });
   page.on("pageerror", (e) => errors.push(e.message));
   for (const id of newPovIds) {
-    await page.locator("#track").selectOption(id);
+    await selectRaceOption(page, "track", id);
     await page.clock.runFor(32);
     await expect(page.locator("#arcadeApp")).toHaveAttribute("data-track", id);
     expect(await page.evaluate(() => __driveSnapshot.entries.length)).toBe(13);
@@ -93,7 +94,7 @@ for (const id of newPovIds)
     await page.goto(`race.html?track=${id}`);
     await page.clock.runFor(32);
     const before = await page.evaluate(() => ({ ...localStorage }));
-    await page.locator("#pause").click();
+    await driveButton(page);
     await page.evaluate(pilotRace);
     for (let n = 0; n < 15; n++) {
       await page.clock.runFor(20000);
@@ -139,7 +140,7 @@ for (const id of newPovIds.filter((id) => id === "korea" || id === "russia"))
     await page.goto(`race.html?track=${id}`);
     await selectDriveSetting(page, "quality", "low");
     await page.clock.runFor(64);
-    await page.locator("#pause").click();
+    await driveButton(page);
     await page.evaluate(pilotRace);
     for (let n = 0; n < 15; n++) {
       await page.clock.runFor(5000);

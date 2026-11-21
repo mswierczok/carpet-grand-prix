@@ -1,3 +1,4 @@
+import { driveButton, raceAction } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { capture2D, capture3D } from "../helpers/arcade-browser.js";
 
@@ -28,7 +29,7 @@ for (const entry of ["arcade.html", "arcade3d.html"]) {
     await open(page);
     const before = await page.evaluate(() => ({ ...localStorage })),
       initial = await page.evaluate(() => __driveSnapshot.car);
-    await page.locator("#pause").click();
+    await driveButton(page);
     await page.keyboard.down("s");
     await page.clock.runFor(200);
     await expect(page.locator("#speed")).toHaveText("0");
@@ -55,7 +56,7 @@ for (const entry of ["arcade.html", "arcade3d.html"]) {
     await page.evaluate(() => window.dispatchEvent(new Event("blur")));
     await expect(page.locator("#pause")).toHaveText("▶ Fahren");
     await page.keyboard.up("s");
-    await page.locator("#pause").click();
+    await driveButton(page);
     await page.clock.runFor(500);
     await expect(page.locator("#speed")).toHaveText("0");
     await expect(page.locator("#gear")).toHaveText("N");
@@ -78,7 +79,7 @@ for (const entry of ["arcade.html", "arcade3d.html"]) {
     page,
   }) => {
     await open(page);
-    await page.locator("#pause").click();
+    await driveButton(page);
     const button = page.locator('[data-drive="brake"]');
     await button.scrollIntoViewIfNeeded();
     const box = await button.boundingBox();
@@ -88,8 +89,8 @@ for (const entry of ["arcade.html", "arcade3d.html"]) {
     await page.mouse.up();
     await expect(page.locator("#gear")).toHaveText("R");
     await expect(button).not.toHaveClass(/is-held/);
-    await page.locator("#restart").click();
-    await page.locator("#pause").click();
+    await raceAction(page, "restart");
+    await driveButton(page);
     await page.keyboard.down("w");
     await page.clock.runFor(1000);
     const heading = await page.evaluate(() => __driveSnapshot.car.heading);

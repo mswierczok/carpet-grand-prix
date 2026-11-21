@@ -1,3 +1,4 @@
+import { driveButton, raceAction } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import {
   capture2D,
@@ -28,7 +29,7 @@ test("zeigt alle früheren Seil-Engstellen und die Übersicht mit demselben fehl
       ),
     ).toBe(0);
   }
-  await page.locator("#overview").click();
+  await raceAction(page, "overview");
   expect(await page.evaluate(() => __inspect3D.diagnostics().lost)).toBe(false);
   expect(
     await page.evaluate(
@@ -58,7 +59,7 @@ for (const entry of ["arcade.html", "arcade3d.html"])
       );
       await page.locator("#quality").selectOption("low");
     }
-    await page.locator("#pause").click();
+    await driveButton(page);
     await page.evaluate(keyboardPilot, { tryShortcut: true });
     await page.clock.runFor(22000);
     const result = await page.evaluate(() => ({

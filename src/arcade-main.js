@@ -21,6 +21,7 @@
     };
   let canvas = document.getElementById("arcadeCanvas"),
     gameUI = null,
+    raceMenu = null,
     loadError = campaignMode && !bootCampaign ? (requestedCampaign.message + " Bitte über die Kampagnenübersicht starten oder eine Sicherung laden.") : requestedSave && !bootGame ? requestedSave.message : "",
     campaign = bootCampaign,
     resumePending = !!(bootCampaign || bootGame)?.weekend,
@@ -50,8 +51,9 @@
     const node = el(id);
     if (node.textContent !== text) node.textContent = text;
   };
-  const raceUI = racing ? A.QualifyingUI.attach(root, format, entry => campaign ? A.CampaignView.label(campaign, entry) : entry.name) : null;
+  const raceUI = racing ? A.QualifyingUI.attach(root, format, entry => campaign ? A.CampaignView.label(campaign, entry) : entry.name, { getSurface: () => session.surface, isCampaign: campaignMode, getCampaign: () => campaign, onInspect: pauseForGame, onResultsClose: () => raceMenu?.open() }) : null;
   function createSession() {
+    if (campaignMode && campaign) { resumePending = false; try { return A.CampaignWeekend.create(campaign, { diagnostics: query.has("balance") }); } catch (error) { loadError = error.message; campaign = null; } }
     if (resumePending) {
       resumePending = false;
       try { return A.RaceWeekend.restore((campaign || game).weekend); }
@@ -165,7 +167,7 @@
       savePreference({ steeringSensitivity: value });
     };
   }
-  if (racing) A.RaceSettings.attach(root, {
+  if (racing) raceMenu = A.RaceSettings.attach(root, {
     onOpen() {
       session.pause(true);
       controls.clear();
@@ -176,6 +178,7 @@
     // Opening already clears and blocks input. A late native close event
     // must not discard a new press made after the dialog has disappeared.
     onClose() {},
+    onResume() { if (session.snapshot().race.phase !== "grid" && session.snapshot().race.phase !== "finished") startOrResume(); },
   });
   function pauseForGame() {
     session.pause(true); controls.clear(); dirty = true; updateUI();
@@ -186,6 +189,7 @@
     trackId = next.trackId; teamId = next.teamId; difficultyId = next.options.difficulty;
     catchupEnabled = next.options.catchup;
     session = next.weekend ? A.RaceWeekend.restore(next.weekend) : createSession();
+    raceUI?.reset();
     freshCanvas(); createRenderer(threeD); renderer.resetCamera?.(); lastRacePhase = null;
     el("team").value = teamId; updateTrack(); lastFrame = performance.now(); dirty = true; updateUI();
   }
@@ -296,17 +300,17 @@
         : "Noch keine vollständige Runde",
     );
   }
+  function startOrResume() {
+    if (loadError) return;
+    session.pause(false); controls.clear();
+    lastFrame = performance.now(); dirty = true; updateUI(); gameUI?.changed();
+  }
   function togglePause() {
     if (loadError) return;
-    session.pause(!session.snapshot().paused);
-    controls.clear();
-    if (!session.snapshot().paused && matchMedia("(pointer: coarse)").matches) {
-      canvas.scrollIntoView({ block: "center" });
-    }
-    lastFrame = performance.now();
-    dirty = true;
-    updateUI();
-    gameUI?.changed();
+    if (racing) { raceMenu?.open(); return; }
+    session.pause(!session.snapshot().paused); controls.clear();
+    if (!session.snapshot().paused && matchMedia("(pointer: coarse)").matches) canvas.scrollIntoView({ block: "center" });
+    lastFrame = performance.now(); dirty = true; updateUI();
   }
   function recover() {
     if (loadError) return;
@@ -317,11 +321,14 @@
     updateUI();
     gameUI?.changed();
   }
-  el("pause").onclick = togglePause;
+  el("pause").onclick = racing ? startOrResume : togglePause;
   el("recover").onclick = recover;
   el("restart").onclick = () => {
     if (loadError || campaign?.stage === "interim" || (game?.mode === "championship" && A.POVCareer.recorded(game))) return;
+    if (racing && !confirm("Das aktuelle Rennwochenende neu starten? In der Kampagne beginnt es wieder mit dem Qualifying. Gesicherte Ergebnisse bleiben erhalten.")) return;
     session.restart();
+    raceUI?.reset();
+    raceMenu?.close();
     renderer.resetCamera?.();
     controls.clear();
     dirty = true;
@@ -351,6 +358,7 @@
   if (racing) {
     const changeStage = (action) => {
       if (loadError || campaign?.stage === "interim" || !action()) return;
+      raceMenu?.close();
       controls.clear();
       renderer.resetCamera?.();
       lastRacePhase = null;
@@ -358,9 +366,17 @@
       dirty = true;
       updateUI();
       gameUI?.changed();
-      el("pause").focus({ preventScroll: true });
+      canvas.focus({ preventScroll: true });
     };
-    el("startQualifying").onclick = () => changeStage(() => session.startQualifying());
+    el("startQualifying").onclick = () => changeStage(() => { raceUI.setDirectStart(false); return session.startQualifying(); });
+    el("directRace").onclick = () => {
+      if (campaignMode || loadError || session.snapshot().qualifying || session.snapshot().qualifyingResult || session.snapshot().race.phase !== "grid") return;
+      raceUI.setDirectStart(true); raceMenu.close(); updateUI();
+    };
+    el("repeatQualifying").onclick = () => {
+      if (campaignMode) return;
+      changeStage(() => { raceUI.setDirectStart(false); return session.startQualifying(); });
+    };
     el("acceptQualifying").onclick = () => changeStage(() => session.acceptQualifying());
     el("cancelQualifying").onclick = () => changeStage(() => session.cancelQualifying());
     el("catchup").value = catchupEnabled ? "on" : "off";
@@ -410,6 +426,7 @@
     trackId = next;
     saveSelection();
     session = createSession();
+    raceUI?.reset();
     freshCanvas();
     createRenderer(threeD);
     lastRacePhase = null;
@@ -450,6 +467,10 @@
     const delta = Math.max(0, (now - lastFrame) / 1000);
     lastFrame = now;
     if (!document.hidden) session.advance(controls.read(), delta);
+    if (campaignMode && session.takeTransition?.()) {
+      controls.clear(); renderer.resetCamera?.(); dirty = true;
+      gameUI?.changed(); updateUI();
+    }
     gameUI?.autosave(now);
     const snapshot = session.snapshot();
     if (racing && snapshot.race.phase !== lastRacePhase) {

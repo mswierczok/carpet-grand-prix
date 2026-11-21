@@ -1,3 +1,4 @@
+import { driveButton, selectRaceOption } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { createHash } from "node:crypto";
 import {
@@ -23,7 +24,7 @@ test("zeichnet echte 3D-Geometrie, folgt dem Auto und erhält alle 13 Lackierung
   await page.locator("#quality").selectOption("low");
   await page.clock.runFor(32);
   const initial = await page.evaluate(() => __driveSnapshot.car);
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.keyboard.down("w");
   await page.clock.runFor(650);
   await page.keyboard.down("d");
@@ -41,7 +42,7 @@ test("zeichnet echte 3D-Geometrie, folgt dem Auto und erhält alle 13 Lackierung
   for (const id of await page
     .locator("#team option")
     .evaluateAll((nodes) => nodes.map((n) => n.value))) {
-    await page.locator("#team").selectOption(id);
+    await selectRaceOption(page, "team", id);
     await page.clock.runFor(32);
     images.push(
       createHash("sha256")
@@ -68,7 +69,7 @@ test("pausiert bei echtem Kontextverlust, stellt WebGL wieder her und wechselt s
   await capture3D(page);
   await page.goto("arcade3d.html");
   await page.locator("#quality").selectOption("low");
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.keyboard.down("w");
   await page.clock.runFor(300);
   await page.evaluate(() => {
@@ -94,7 +95,7 @@ test("pausiert bei echtem Kontextverlust, stellt WebGL wieder her und wechselt s
     "data-rendering",
     "2d",
   );
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.keyboard.down("w");
   await page.clock.runFor(500);
   await page.keyboard.up("w");
@@ -115,7 +116,7 @@ test("bleibt ohne WebGL 2 als Fahrtest bedienbar", async ({ page }) => {
     "2d",
   );
   await expect(page.locator("#renderNote")).toContainText("nicht verfügbar");
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.keyboard.down("w");
   await page.clock.runFor(500);
   await page.keyboard.up("w");
@@ -144,7 +145,7 @@ test("fährt offline zwei vollständige gültige Bahrain-Runden durch die 3D-Wel
   );
   await context.setOffline(true);
   await page.locator("#quality").selectOption("low");
-  await page.locator("#pause").click();
+  await driveButton(page);
   await driveDarkShoulder(page);
   await expect(page.locator("#status")).toContainText("Dunkler Teppich");
   expect(await page.evaluate(() => __driveSnapshot.car.offroad)).toBe(true);

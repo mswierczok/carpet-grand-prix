@@ -141,7 +141,7 @@ it("prüft Zuordnungen, Fahrer, Version und JSON ohne Abhängigkeit von Schlüss
     (v) => (v.rosters.t01[0] = v.rosters.t02[0]),
     (v) => (v.lineup.t01 = "d035"),
     (v) => (v.driverId = "d001"),
-    (v) => (v.version = 2),
+    (v) => (v.version = 3),
     (v) => (v.result = {}),
   ]) {
     const bad = JSON.parse(JSON.stringify(g));
@@ -203,7 +203,7 @@ it("erhält beschädigte und neuere Daten und verhindert Überschreiben durch ei
     }).status,
   ).toBe("unavailable");
 });
-it("setzt ein natives Rennfeld und Qualifying pausiert fort, ohne eigene Physik oder Tempoboni", () => {
+it("setzt das verpflichtende native Qualifying pausiert fort, ohne eigene Physik oder Tempoboni", () => {
   const { A, g } = setup(),
     track = A.TrackCatalog.get(g.trackId),
     p = { ...A.Physics.parameters };
@@ -211,6 +211,7 @@ it("setzt ein natives Rennfeld und Qualifying pausiert fort, ohne eigene Physik 
   expect(w.snapshot().entries).toHaveLength(13);
   w.selectDifficulty("expert");
   w.selectCatchup(false);
+  w.startQualifying();
   w.pause(false);
   for (let i = 0; i < 160; i++)
     w.advance({ throttle: 1, brake: 0, steer: 0 }, 1 / 30);
@@ -233,8 +234,8 @@ it("setzt ein natives Rennfeld und Qualifying pausiert fort, ohne eigene Physik 
   expect(qualifying.result).toBeNull();
   expect(A.Physics.parameters).toEqual(p);
 });
-it("leitet aus einem vollständig gefahrenen 13er-Feld einen wiederholbaren Zwischenstand ohne Belohnungen ab", () => {
-  const { A, g } = setup(),
+it("migriert ein vollständig gefahrenes älteres 13er-Feld in einen wiederholbaren Zwischenstand ohne Belohnungen", () => {
+  const { A } = setup(), g = A.CampaignV1.create({driverId:"d012"}),
     w = A.RaceWeekend.create(A.TrackCatalog.get(g.trackId), {
       playerTeam: g.teamId,
       ...g.options,
@@ -252,7 +253,7 @@ it("leitet aus einem vollständig gefahrenen 13er-Feld einen wiederholbaren Zwis
     w.advance(driver.input(car, traffic, memory), 1 / 30);
   }
   expect(w.snapshot().race.phase).toBe("finished");
-  const next = A.Campaign.capture(g, w.exportState());
+  const next = A.Campaign.validate(A.CampaignV1.capture(g, w.exportState()));
   expect(next.stage).toBe("interim");
   expect(next.result.order).toHaveLength(13);
   expect(new Set(next.result.order.map((e) => e.driverId)).size).toBe(13);

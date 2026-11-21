@@ -1,3 +1,5 @@
+import { openLegacySettings, backToMenu } from "../helpers/racing-menu.js";
+import { driveButton, selectRaceOption } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { createPOVMenuOffline, createArcadeOffline } from "../../scripts/build-arcade-offline.js";
@@ -12,7 +14,7 @@ async function noWebGL(page) {
   });
 }
 async function settings(page) {
-  await page.locator("#openSettings").click();
+  await openLegacySettings(page, "settings");
   await page.locator("#quality").selectOption("low");
   await page.locator("#difficulty").selectOption("expert");
   await page.locator("#catchup").selectOption("off");
@@ -63,7 +65,7 @@ test("POV-Menü: ersetzt den normalen Simulationseinstieg, erhält alle Teamfahr
   await expect(page.locator("#team")).toHaveValue("t05");
   await expect(page.locator("#quality")).toHaveValue("low");
   expect(await page.evaluate(() => __inspect3D.diagnostics().quality)).toBe("low");
-  await page.locator("#pause").click(); await page.clock.runFor(3200);
+  await driveButton(page); await page.clock.runFor(3200);
   expect(await page.evaluate(() => __driveSnapshot.race.phase)).toBe("racing");
   expect(await page.evaluate(() => localStorage.getItem("carpet_gp_v072"))).toBe(classic);
   expect(errors).toEqual([]);
@@ -83,13 +85,13 @@ test("POV-Menü: gemeinsame Einstellungen und Auswahl bleiben bei Rückkehr und 
   await selectDriveSetting(page, "difficulty", "hard");
   await selectDriveSetting(page, "catchup", "on");
   // Graphics is disabled in the 2D fallback; change only the available controls.
-  await page.locator("#team").selectOption("t02"); await page.locator("#track").selectOption("bahrain");
+  await selectRaceOption(page, "team", "t02"); await selectRaceOption(page, "track", "bahrain");
   await page.reload(); await page.clock.runFor(32);
   await expect(page.locator("#difficulty")).toHaveValue("hard"); await expect(page.locator("#catchup")).toHaveValue("on");
   await expect(page.locator("#team")).toHaveValue("t02"); await expect(page.locator("#track")).toHaveValue("bahrain");
-  await page.getByRole("link", { name: "← Hauptmenü" }).click();
+  await backToMenu(page);
   await expect(page).toHaveURL(/play.html$/);
-  await page.locator("#openSettings").click();
+  await openLegacySettings(page, "settings");
   await expect(page.locator("#difficulty")).toHaveValue("hard"); await expect(page.locator("#catchup")).toHaveValue("on");
   await expect(page.locator("#quality")).toHaveValue("low");
   await page.locator("#closeSettings").click(); await page.locator("#loadSelection").click();
@@ -116,7 +118,7 @@ test("POV-Menü: verweigerter Speicher blockiert den Start nicht und alte Spiels
   expect(await page.evaluate(() => __driveSnapshot.entries.every(e => !Object.hasOwn(e, "catchup")))).toBe(true);
   await expect(page.locator("#quality")).toHaveValue("low");
   expect(await page.evaluate(() => localStorage.getItem("carpet_gp_v072"))).toBe(classic);
-  await page.getByRole("link", { name: "← Hauptmenü" }).click();
+  await backToMenu(page);
   await page.getByRole("link", { name: "Bisherigen Spielstand öffnen" }).click();
   await expect(page).toHaveURL(/index.html\?legacy=1$/);
   await page.locator('[data-launch="load-view"]').click();
@@ -142,7 +144,7 @@ test("POV-Menü: Offline-Ausgabe startet ohne externe Ressourcen und führt ins 
   await page.clock.runFor(64);
   expect(await page.evaluate(() => __driveSnapshot.race.playerTeam)).toBe("t10");
   await expect(page.locator("#track")).toHaveValue("canada");
-  await page.locator("#pause").click(); await page.clock.runFor(3200);
+  await driveButton(page); await page.clock.runFor(3200);
   expect(await page.evaluate(() => __driveSnapshot.race.phase)).toBe("racing");
   expect(requests).toHaveLength(2); expect(requests.every(url => /\/[^/]+\.html(?:\?|$)/.test(url))).toBe(true);
   expect(errors).toEqual([]);

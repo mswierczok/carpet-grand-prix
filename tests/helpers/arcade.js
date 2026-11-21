@@ -50,8 +50,11 @@ export function loadArcade({
           "management/pov-workshop",
           "persistence/pov-game-store",
           "data/campaign-config",
+          "persistence/campaign-v1",
           "championship/campaign",
+          "championship/campaign-weekend",
           "persistence/campaign-store",
+          "ui/race-presentation",
         ]
       : []),
   ])

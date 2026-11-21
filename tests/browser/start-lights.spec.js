@@ -1,3 +1,4 @@
+import { driveButton } from "../helpers/racing-menu.js";
 import {test,expect} from '@playwright/test';
 import {pilotPit} from '../helpers/pitlane-browser.js';
 import {capture3D} from '../helpers/arcade-browser.js';
@@ -8,7 +9,7 @@ test('große Startampel: fünf rote Lichter, Grün, Pause und freies mobiles Sic
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto('race.html?track=bahrain');await page.clock.runFor(64);
   const poses=await page.evaluate(()=>__driveSnapshot.entries.map(e=>[e.car.x,e.car.y]));
-  await page.locator('#pause').click();await page.clock.runFor(128);
+  await driveButton(page);await page.clock.runFor(128);
   await page.keyboard.down('w');
   for(let n=1;n<=5;n++){
     await expect(page.locator('#raceSignal .is-red')).toHaveCount(n);
@@ -22,7 +23,7 @@ test('große Startampel: fünf rote Lichter, Grün, Pause und freies mobiles Sic
   await page.screenshot({path:`docs/race-pace-startlights/${info.project.name}-red.png`});
   await page.keyboard.press('p');await page.clock.runFor(800);
   await expect(page.locator('#raceSignal .is-red')).toHaveCount(5);
-  await page.locator('#pause').click();await page.keyboard.down('w');await page.clock.runFor(650);
+  await driveButton(page);await page.keyboard.down('w');await page.clock.runFor(650);
   await expect(page.locator('#raceSignal .is-green')).toHaveCount(5);
   await expect(page.locator('#raceSignal .is-red')).toHaveCount(0);
   await page.screenshot({path:`docs/race-pace-startlights/${info.project.name}-green.png`});
@@ -35,7 +36,7 @@ test('fährt die Boxengasse mit 80 km/h durch reale Tastaturbefehle und zählt d
   test.setTimeout(180000);
   await capture3D(page,{renderEvery:90});
   await page.goto('arcade3d.html?track=bahrain');await page.clock.runFor(64);
-  await page.locator('#pause').click();await page.evaluate(pilotPit,{fast:true});
+  await driveButton(page);await page.evaluate(pilotPit,{fast:true});
   for(let i=0;i<300;i++){
     await page.clock.runFor(500);
     if(await page.evaluate(()=>__pitDrive.done))break;

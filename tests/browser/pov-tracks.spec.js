@@ -1,3 +1,4 @@
+import { driveButton, raceAction, selectRaceOption } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
 import { selectDriveSetting, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace, threeLapRegression } from "../helpers/arcade-race-browser.js";
@@ -23,7 +24,7 @@ test("wechselt alle vier echten 3D-Strecken, erhält das Team und gibt alte WebG
   await page.clock.runFor(64);
   await expect(page.locator("#track option")).toHaveCount(22);
   await selectDriveSetting(page, "quality", "low");
-  await page.locator("#team").selectOption("t05");
+  await selectRaceOption(page, "team", "t05");
   for (const id of ["canada", "france", "bahrain", "luxembourg"]) {
     await page.evaluate(
       () =>
@@ -31,7 +32,7 @@ test("wechselt alle vier echten 3D-Strecken, erhält das Team und gibt alte WebG
           .getElementById("arcadeCanvas")
           .getContext("webgl2")),
     );
-    await page.locator("#track").selectOption(id);
+    await selectRaceOption(page, "track", id);
     await page.clock.runFor(100);
     await expect(page.locator("#arcadeApp")).toHaveAttribute("data-track", id);
     await expect(page.locator("#arcadeApp")).toHaveAttribute(
@@ -67,10 +68,10 @@ test("wechselt alle vier echten 3D-Strecken, erhält das Team und gibt alte WebG
     expect(result.snapshot.entries[0].car.x).toBeCloseTo(result.expected.x, 8);
     expect(result.snapshot.entries[0].car.y).toBeCloseTo(result.expected.y, 8);
     expect(result.diagnostics.geometries).toBeLessThan(180);
-    await expect(page.locator("[data-track-name]").last()).toHaveText(
+    await expect(page.locator("#hudSession")).toContainText(
       result.name,
     );
-    await expect(page.locator(".new-view")).toHaveAttribute(
+    await expect(page.locator("[data-track-link]")).toHaveAttribute(
       "href",
       new RegExp("track=" + id),
     );
@@ -85,7 +86,7 @@ test("sperrt den Rennstreckenwechsel nach dem Start und startet nach Neustart sa
   await noWebGL(page);
   await page.goto("race.html?track=france");
   await page.clock.runFor(32);
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.keyboard.down("w");
   await page.clock.runFor(4500);
   await page.keyboard.up("w");
@@ -105,9 +106,9 @@ test("sperrt den Rennstreckenwechsel nach dem Start und startet nach Neustart sa
   expect(
     await page.evaluate(() => __driveSnapshot.race.elapsed),
   ).toBeGreaterThanOrEqual(before);
-  await page.locator("#restart").click();
+  await raceAction(page, "restart");
   await expect(page.locator("#track")).toBeEnabled();
-  await page.locator("#track").selectOption("canada");
+  await selectRaceOption(page, "track", "canada");
   await page.clock.runFor(32);
   await expect(page.locator("#raceClock")).toHaveText("0:00.000");
   expect(
@@ -130,18 +131,18 @@ test("wechselt im freien POV-Fahren sicher die Strecke und löst gehaltene Einga
   await page.goto("arcade3d.html?track=canada");
   await page.clock.runFor(32);
   await selectDriveSetting(page, "quality", "low");
-  await page.locator("#team").selectOption("t10");
-  await page.locator("#pause").click();
+  await selectRaceOption(page, "team", "t10");
+  await driveButton(page);
   await page.keyboard.down("w");
   await page.clock.runFor(400);
   expect(await page.evaluate(() => __driveSnapshot.car.speed)).toBeGreaterThan(
     5,
   );
-  await page.locator("#track").selectOption("france");
+  await selectRaceOption(page, "track", "france");
   await page.clock.runFor(64);
   await expect(page.locator("#team")).toHaveValue("t10");
   expect(await page.evaluate(() => __driveSnapshot.paused)).toBe(true);
-  await page.locator("#pause").click();
+  await driveButton(page);
   await page.clock.runFor(300);
   expect(await page.evaluate(() => __driveSnapshot.car.speed)).toBe(0);
   await page.keyboard.up("w");
@@ -194,7 +195,7 @@ test("enthält alle vier POV-Strecken samt Auswahl und Seilen in der netzwerkfre
   });
   await selectDriveSetting(page, "quality", "low");
   for (const id of ["luxembourg", "canada", "bahrain", "france"]) {
-    await page.locator("#track").selectOption(id);
+    await selectRaceOption(page, "track", id);
     await page.clock.runFor(64);
     await expect(page.locator("#arcadeApp")).toHaveAttribute("data-track", id);
     await expect(page.locator("#arcadeApp")).toHaveAttribute(
@@ -220,7 +221,7 @@ for (const id of ["luxembourg", "canada", "france"])
     await page.goto(`race.html?track=${id}`);
     await page.clock.runFor(32);
     const storage = await page.evaluate(() => ({ ...localStorage }));
-    await page.locator("#pause").click();
+    await driveButton(page);
     await page.evaluate(pilotRace);
     for (let i = 0; i < 15; i++) {
       await page.clock.runFor(20000);
