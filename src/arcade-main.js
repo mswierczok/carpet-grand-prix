@@ -22,6 +22,7 @@
   let canvas = document.getElementById("arcadeCanvas"),
     gameUI = null,
     raceMenu = null,
+    resumeCountdown = null,
     loadError = campaignMode && !bootCampaign ? (requestedCampaign.message + " Bitte über die Kampagnenübersicht starten oder eine Sicherung laden.") : requestedSave && !bootGame ? requestedSave.message : "",
     campaign = bootCampaign,
     resumePending = !!(bootCampaign || bootGame)?.weekend,
@@ -100,6 +101,7 @@
             dirty = true;
           },
           onContextLost: () => {
+            resumeCountdown?.cancel();
             session.pause(true);
             controls.clear();
             renderNote(
@@ -148,6 +150,7 @@
     pause: () => togglePause(),
     recover: () => recover(),
     onBlur: () => {
+      resumeCountdown?.cancel();
       session.pause(true);
       dirty = true;
       updateUI();
@@ -167,8 +170,12 @@
       savePreference({ steeringSensitivity: value });
     };
   }
+  if (racing) resumeCountdown = A.ResumeCountdown.attach(root, {
+    onResume() { if (canResumeAfterMenu()) startOrResume({ keepInput: true }); },
+  });
   if (racing) raceMenu = A.RaceSettings.attach(root, {
     onOpen() {
+      resumeCountdown.cancel();
       session.pause(true);
       controls.clear();
       dirty = true;
@@ -178,9 +185,14 @@
     // Opening already clears and blocks input. A late native close event
     // must not discard a new press made after the dialog has disappeared.
     onClose() {},
-    onResume() { if (session.snapshot().race.phase !== "grid" && session.snapshot().race.phase !== "finished") startOrResume(); },
+    onResume() {
+      if (!canResumeAfterMenu()) return;
+      controls.clear();
+      resumeCountdown.start(performance.now());
+    },
   });
   function pauseForGame() {
+    resumeCountdown?.cancel();
     session.pause(true); controls.clear(); dirty = true; updateUI();
   }
   function loadGame(next) {
@@ -300,9 +312,17 @@
         : "Noch keine vollständige Runde",
     );
   }
-  function startOrResume() {
+  function canResumeAfterMenu() {
+    const s = session.snapshot();
+    return !loadError && !document.hidden && !raceMenu?.isOpen() && s.paused &&
+      s.race.phase !== "grid" && s.race.phase !== "finished";
+  }
+  function startOrResume({ keepInput = false } = {}) {
     if (loadError) return;
-    session.pause(false); controls.clear();
+    session.pause(false);
+    // Opening the menu cleared old input. New presses during the resume
+    // countdown can prepare the controls without moving the paused cars.
+    if (!keepInput) controls.clear();
     lastFrame = performance.now(); dirty = true; updateUI(); gameUI?.changed();
   }
   function togglePause() {
@@ -321,11 +341,12 @@
     updateUI();
     gameUI?.changed();
   }
-  el("pause").onclick = racing ? startOrResume : togglePause;
+  el("pause").onclick = racing ? () => startOrResume() : togglePause;
   el("recover").onclick = recover;
   el("restart").onclick = () => {
     if (loadError || campaign?.stage === "interim" || (game?.mode === "championship" && A.POVCareer.recorded(game))) return;
     if (racing && !confirm("Das aktuelle Rennwochenende neu starten? In der Kampagne beginnt es wieder mit dem Qualifying. Gesicherte Ergebnisse bleiben erhalten.")) return;
+    resumeCountdown?.cancel();
     session.restart();
     raceUI?.reset();
     raceMenu?.close();
@@ -358,6 +379,7 @@
   if (racing) {
     const changeStage = (action) => {
       if (loadError || campaign?.stage === "interim" || !action()) return;
+      resumeCountdown?.cancel();
       raceMenu?.close();
       controls.clear();
       renderer.resetCamera?.();
@@ -446,6 +468,7 @@
   };
   if (el("fallback"))
     el("fallback").onclick = () => {
+      resumeCountdown?.cancel();
       session.pause(true);
       controls.clear();
       fallbackTo2D();
@@ -466,7 +489,9 @@
   function frame(now) {
     const delta = Math.max(0, (now - lastFrame) / 1000);
     lastFrame = now;
-    if (!document.hidden) session.advance(controls.read(), delta);
+    const resumed = resumeCountdown?.tick(now);
+    // This frame's delta was spent paused, including after a delayed paint.
+    if (!document.hidden) session.advance(controls.read(), resumed ? 0 : delta);
     if (campaignMode && session.takeTransition?.()) {
       controls.clear(); renderer.resetCamera?.(); dirty = true;
       gameUI?.changed(); updateUI();

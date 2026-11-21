@@ -114,7 +114,8 @@ test("Racing-HUD: Pause, 13 Fahrer, Zurück-Navigation, Einstellungen und bewuss
   await closeRaceMenu(page);
   await openRaceMenu(page);
   await page.locator("#resumeRace").click();
-  await page.clock.runFor(500);
+  await expect(page.locator("#resumeCountdownNumber")).toHaveText("3");
+  await page.clock.runFor(3500);
   expect(
     await page.evaluate(() => __driveSnapshot.race.elapsed),
   ).toBeGreaterThan(before);
