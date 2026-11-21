@@ -1,3 +1,19 @@
+# Datenentkopplung – Cleanup PR 1
+
+`npm run check:arcade-data` prüft den Export ohne Dateien zu verändern und läuft
+vor den bisherigen CI-Prüfungen. `historical-data.test.js` benötigt keinen
+klassischen Spieladapter: Es vergleicht alle drei extrahierten JSON-Konstanten
+mit dem unveränderlichen Ausgangscommit `f24cd7481bf474fa42dda6b9bdfe1088d633c16f`,
+alle 13/92/22 Identitäten sowie die vollständigen generierten Browserbytes.
+Ein isolierter CLI-Build ohne `index.html` / Simulation prüft zusätzlich Erzeugung,
+Check-Modus, abweichende Exporte und defekte/fehlende Eingaben ohne Überschreiben.
+Die Git-Historie bleibt für den Herkunftsnachweis und bestehende Referenztests
+erforderlich; sie ist keine Abhängigkeit des Datenexports.
+
+Keine Bestandsprüfung und keine Referenz-Fixture werden in PR 1 entfernt.
+Die später nötige Trennung klassischer Tests von aktiven Geometrie-, Speicher-
+und Assetprüfungen beschreibt [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
+
 # Aktueller Bahrain-Zimmerausbau
 
 Der Master-Kinderzimmer-Ausbau ergänzt `master-bedroom.test.js`: unabhängiger

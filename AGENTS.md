@@ -1,5 +1,12 @@
 # Carpet Grand Prix: verbindliche Entwicklungsregeln
 
+- Hauptprodukt ist das Arcade-Racing-Roguelite mit `play.html`, `campaign.html`
+  und `race.html`. Aktueller Cleanup-Plan: `docs/LEGACY_CLEANUP.md`.
+  Historische Datenquellen liegen unter `src/data/historical/`; Arcade-Builds
+  dürfen weder `index.html` noch den klassischen Testadapter als Datenquelle nutzen.
+  Die ausdrücklich beauftragte Legacy-Bereinigung erfolgt in einzeln freizugebenden
+  PRs. PR 1 entkoppelt nur Daten; Löschungen und Archivierung folgen erst nach Freigabe.
+
 - Ausgangsbasis ist die funktionsfähige Version auf `main`. Referenz vor dem
   Umbau: `ea88f1daf238431a1dbac540df7e452dd2a44e54`.
 - Auf einem eigenen `codex/*`- oder Feature-Zweig arbeiten. Keine direkten

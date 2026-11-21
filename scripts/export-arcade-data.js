@@ -57,16 +57,12 @@ const povTracks = [
   { id: "abu-dhabi", index: 21, pov: { layoutScale: 1.2, roadScale: 1 } },
 ];
 export function arcadeData() {
-  const html = readFileSync(new URL("index.html", root), "utf8");
-  const read = (name) => {
-    const prefix = `const ${name}=`;
-    const line = html.split("\n").find((line) => line.startsWith(prefix));
-    if (!line || !line.endsWith(";"))
-      throw Error(`Statische Quelle ${name} fehlt`);
-    return JSON.parse(line.slice(prefix.length, -1));
-  };
-  const master = read("MASTER"),
-    originals = read("digitizedTracks"),
+  // Independent, immutable historical inputs; never read/evaluate the legacy UI.
+  const read = (name) => JSON.parse(readFileSync(
+    new URL(`src/data/historical/${name}.json`, root), "utf8",
+  ));
+  const master = read("master"),
+    originals = read("tracks"),
     tracks = Object.fromEntries(
       povTracks.map(({ id, index, pov }) => {
         const track = originals[index];
@@ -103,9 +99,15 @@ if (
   process.argv[1] &&
   resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
-  for (const [name, source] of Object.entries(arcadeScripts()))
-    writeFileSync(new URL(`src/data/${name}.js`, root), source);
+  const check = process.argv.includes("--check");
+  for (const [name, source] of Object.entries(arcadeScripts())) {
+    const path = new URL(`src/data/${name}.js`, root);
+    if (check) {
+      if (readFileSync(path, "utf8") !== source)
+        throw Error(`Datenexport ${name} weicht von der statischen Quelle ab.`);
+    } else writeFileSync(path, source);
+  }
   console.log(
-    `${povTracks.length} POV-Strecken, 13 Teams und 92 Fahrer schreibgeschützt exportiert.`,
+    `${povTracks.length} POV-Strecken, 13 Teams und 92 Fahrer ${check ? "geprüft" : "schreibgeschützt exportiert"}.`,
   );
 }
