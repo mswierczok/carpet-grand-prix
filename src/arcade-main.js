@@ -6,8 +6,11 @@
     teams = CGPArcadeData.roster.teams,
     catalog = A.TrackCatalog,
     query = new URLSearchParams(location.search),
-    campaignMode = racing && query.get("mode") === "campaign",
-    requestedCampaign = campaignMode ? A.CampaignStore.load() : null,
+    runMode = racing && query.get("mode") === "run",
+    requestedRun = runMode ? A.RunStore.load() : null,
+    bootRun = requestedRun?.status === "valid" ? requestedRun.game : null,
+    campaignMode = racing && (query.get("mode") === "campaign" || runMode),
+    requestedCampaign = runMode ? { ...requestedRun, game: bootRun?.campaign } : campaignMode ? A.CampaignStore.load() : null,
     bootCampaign = requestedCampaign?.status === "valid" ? requestedCampaign.game : null,
     requestedTrack = query.get("track"),
     preferences = racing ? A.POVPreferences.load() : null,
@@ -23,7 +26,8 @@
     gameUI = null,
     raceMenu = null,
     resumeCountdown = null,
-    loadError = campaignMode && !bootCampaign ? (requestedCampaign.message + " Bitte über die Kampagnenübersicht starten oder eine Sicherung laden.") : requestedSave && !bootGame ? requestedSave.message : "",
+    loadError = runMode && (!bootRun || !A.RogueliteRun.canOpenWeekend(bootRun)) ? "Dieses Run-Wochenende ist nicht verfügbar. Bitte zur Run-Map zurückkehren." : campaignMode && !bootCampaign ? (requestedCampaign.message + " Bitte über die Kampagnenübersicht starten oder eine Sicherung laden.") : requestedSave && !bootGame ? requestedSave.message : "",
+    run = bootRun,
     campaign = bootCampaign,
     resumePending = !!(bootCampaign || bootGame)?.weekend,
     steeringSensitivity = racing ? (A.POVPreferences.isSteeringSensitivity(Number(query.get("steeringSensitivity")))
@@ -52,9 +56,9 @@
     const node = el(id);
     if (node.textContent !== text) node.textContent = text;
   };
-  const raceUI = racing ? A.QualifyingUI.attach(root, format, entry => campaign ? A.CampaignView.label(campaign, entry) : entry.name, { getSurface: () => session.surface, isCampaign: campaignMode, getCampaign: () => campaign, onInspect: pauseForGame, onResultsClose: () => raceMenu?.open() }) : null;
+  const raceUI = racing ? A.QualifyingUI.attach(root, format, entry => campaign ? A.CampaignView.label(campaign, entry) : entry.name, { getSurface: () => session.surface, isCampaign: campaignMode, getCampaign: () => campaign, getRun: () => run, onInspect: pauseForGame, onResultsClose: () => raceMenu?.open() }) : null;
   function createSession() {
-    if (campaignMode && campaign) { resumePending = false; try { return A.CampaignWeekend.create(campaign, { diagnostics: query.has("balance") }); } catch (error) { loadError = error.message; campaign = null; } }
+    if (campaignMode && campaign) { resumePending = false; try { return runMode ? A.RunWeekend.create(run, { diagnostics: query.has("balance") }) : A.CampaignWeekend.create(campaign, { diagnostics: query.has("balance") }); } catch (error) { loadError = error.message; campaign = null; } }
     if (resumePending) {
       resumePending = false;
       try { return A.RaceWeekend.restore((campaign || game).weekend); }
@@ -205,7 +209,10 @@
     freshCanvas(); createRenderer(threeD); renderer.resetCamera?.(); lastRacePhase = null;
     el("team").value = teamId; updateTrack(); lastFrame = performance.now(); dirty = true; updateUI();
   }
-  if (campaignMode) gameUI = A.CampaignRaceUI.attach(root, {
+  if (runMode) gameUI = A.RunRaceUI.attach(root, {
+    getRun: () => run, setRun: value => { run = value; campaign = value.campaign; }, getSession: () => session, onPause: pauseForGame,
+  });
+  else if (campaignMode) gameUI = A.CampaignRaceUI.attach(root, {
     getGame: () => campaign, setGame: value => { campaign = value; }, getSession: () => session, onPause: pauseForGame,
   });
   else if (racing) gameUI = A.POVGameUI.attach(root, {
@@ -323,7 +330,15 @@
     // Opening the menu cleared old input. New presses during the resume
     // countdown can prepare the controls without moving the paused cars.
     if (!keepInput) controls.clear();
-    lastFrame = performance.now(); dirty = true; updateUI(); gameUI?.changed();
+    // A scored run may advance only after its start/checkpoint is durable.
+    // The pause happens synchronously, before any animation/physics frame.
+    if (runMode && !gameUI?.changed()) {
+      session.pause(true); controls.clear(); dirty = true; updateUI();
+      raceMenu?.open(); raceMenu?.screen("save");
+      return;
+    }
+    lastFrame = performance.now(); dirty = true; updateUI();
+    if (!runMode) gameUI?.changed();
   }
   function togglePause() {
     if (loadError) return;
@@ -344,10 +359,11 @@
   el("pause").onclick = racing ? () => startOrResume() : togglePause;
   el("recover").onclick = recover;
   el("restart").onclick = () => {
-    if (loadError || campaign?.stage === "interim" || (game?.mode === "championship" && A.POVCareer.recorded(game))) return;
+    if (loadError || (runMode && !session.canRestart?.()) || campaign?.stage === "interim" || (game?.mode === "championship" && A.POVCareer.recorded(game))) return;
     if (racing && !confirm("Das aktuelle Rennwochenende neu starten? In der Kampagne beginnt es wieder mit dem Qualifying. Gesicherte Ergebnisse bleiben erhalten.")) return;
     resumeCountdown?.cancel();
-    session.restart();
+    const restarted = session.restart();
+    if (runMode && restarted === false) return;
     raceUI?.reset();
     raceMenu?.close();
     renderer.resetCamera?.();

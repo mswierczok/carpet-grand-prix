@@ -9,6 +9,7 @@
       getSurface,
       isCampaign = false,
       getCampaign = () => null,
+      getRun = () => null,
       onInspect = () => {},
       onResultsClose = () => {},
     } = {},
@@ -22,6 +23,7 @@
       presentation = A.RacePresentation.create({
         track: getSurface,
         getCampaign,
+        getRun,
       }),
       relative = new Map(),
       field = new Map(),
@@ -123,6 +125,7 @@
           relative.set(e.id, row);
         }
         row.classList.toggle("is-player", e.player);
+        row.classList.toggle("is-eliminated", !!e.eliminated);
         write(
           row.children[0],
           q && e.bestLap === null ? "—" : "P" + e.position,
@@ -179,6 +182,7 @@
           field.set(e.id, row);
         }
         row.classList.toggle("is-player", e.player);
+        row.classList.toggle("is-eliminated", !!e.eliminated);
         write(row.children[0], "P" + e.position);
         write(
           row.children[1].children[0],
@@ -312,6 +316,7 @@
           model.rows,
           "race",
           r.playerTeam,
+          A.RogueliteRun?.cutoff(getRun()),
         );
         set("resultHeading", `P${player.position} · ${getSurface().name}`);
         set(
