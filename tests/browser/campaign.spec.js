@@ -6,6 +6,7 @@ import { openRaceMenu, closeRaceMenu } from "../helpers/racing-menu.js";
 import { loadArcade } from "../helpers/arcade.js";
 import {
   createCampaignOffline,
+  createRunOffline,
   createPOVMenuOffline,
 } from "../../scripts/build-arcade-offline.js";
 const key = "carpet_gp_campaign_v1",
@@ -91,6 +92,8 @@ test("Kampagne: kompakter Einstieg, 13 Teams, drei Fahrer, Pflichtqualifying und
   await prepare(page);
   await page.goto("play.html");
   await page.locator("#openCampaign").click();
+  await page.locator('[data-run-tab="save"]').click();
+  await page.locator("#openPreviousCampaign").click();
   await page.locator('[data-campaign-tab="teams"]').click();
   await expect(page.locator("#campaignTeams button")).toHaveCount(13);
   await expect(page.locator("#campaignTeams button:disabled")).toHaveCount(12);
@@ -410,10 +413,11 @@ test("Kampagne: Vollbild, Pflichtqualifying und pausiertes Fortsetzen in der vol
   const files = {
       menu: createPOVMenuOffline(),
       campaign: createCampaignOffline(),
+      run: createRunOffline(),
     },
     requests = [];
   await context.route("**/*", async (route) => {
-    const id = /carpet-grand-prix-(menu|campaign)-offline\.html/.exec(
+    const id = /carpet-grand-prix-(menu|campaign|run)-offline\.html/.exec(
       route.request().url(),
     )?.[1];
     if (id)
@@ -430,6 +434,8 @@ test("Kampagne: Vollbild, Pflichtqualifying und pausiertes Fortsetzen in der vol
     "http://127.0.0.1:4173/carpet-grand-prix/carpet-grand-prix-menu-offline.html",
   );
   await page.locator("#openCampaign").click();
+  await page.locator('[data-run-tab="save"]').click();
+  await page.locator("#openPreviousCampaign").click();
   await start(page);
   await page.locator("#startQualifying").click();
   await page.clock.runFor(5400);

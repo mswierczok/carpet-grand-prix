@@ -12,7 +12,8 @@ Laufzeitserver oder CDN ist notwendig. Relative URLs erhalten den Pages-Pfad
 | --- | --- |
 | `index.html` + `src/ui/main-entry.js` | Schlanker Einstieg ins Hauptmenü; `?legacy=1` führt zur Archivinformation |
 | `play.html` + `pov-launch.js` | Hauptmenü, freies Rennen, Team-/Streckenauswahl, POV-Spielstand, Einstellungen |
-| `campaign.html` + `campaign-launch.js` | Team-/Fahrerwahl, Kampagnenfortschritt und Ergebnisarchiv |
+| `run.html` + `run-launch.js` | Aktuelle Roguelite-Run-Kampagne: Auswahl, feste Karte, Events, Abschluss und Archiv |
+| `campaign.html` + `campaign-launch.js` | Erhaltener Zugang zu früheren Kampagnenspielständen mit freier Streckenwahl |
 | `race.html` + `arcade-main.js` | Gemeinsames fahrbares Rennwochenende aller aktuellen Modi |
 | `arcade.html`, `arcade3d.html` | Technische 2D-/3D-Fahrtests für alle 22 Strecken |
 | `archive.html` + `classic-archive.js` | Nur Information und unveränderter Export klassischer Browserstände |
@@ -94,3 +95,14 @@ Der Legacy-Cleanup ist abgeschlossen. Klassische Rendering-/UI-/CSS-Module
 und deren zwei alte Vorschaugalerien sind entfernt. Alle aktuellen Einstiegspunkte
 und ihre Abhängigkeiten bleiben unverändert. Assetquellen und Generatoren:
 [ASSETS.md](ASSETS.md). Löschbelege und bewusst erhaltene Quellen: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
+
+## Run Phase 1
+
+Die Run-Kampagne setzt sich um den bestehenden Kampagnen-/Wochenendkontext.
+`RunMap` definiert die feste Topologie und Ziele, `RogueliteRun` den validierten
+Fortschritt, `RunWeekend` ausschließlich Sessionzugang und Neustartsperre.
+`RunStore` speichert aktive und archivierte Runs in einem neuen Bereich.
+Physik, KI, Rendering und alle historischen Daten bleiben gemeinsam und unverändert.
+Start-/Eventangebote werden einmal pro Run erzeugt, Fähigkeiten bleiben Platzhalter.
+Team, Fahrer und Build-Slots liegen außerhalb der Phase; Phasenabschluss und
+Prototyp-Abschluss sind getrennte Metadaten. Details: [ROGUELITE_RUN_SYSTEM.md](ROGUELITE_RUN_SYSTEM.md).

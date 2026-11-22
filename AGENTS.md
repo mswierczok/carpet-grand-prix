@@ -1,7 +1,8 @@
 # Carpet Grand Prix: Entwicklungsregeln
 
 - Hauptprodukt ist das statische Arcade-Rennspiel mit Roguelite-Kampagne.
-  `index.html` führt zu `play.html`; `campaign.html` verwaltet die Kampagne,
+  `index.html` führt zu `play.html`; `run.html` verwaltet die Run-Kampagne,
+  `campaign.html` erhält frühere Kampagnenspielstände,
   `race.html` das gemeinsame Rennwochenende. `arcade.html` / `arcade3d.html`
   sind technische Fahrtests. Orientierung: `docs/ARCHITECTURE.md`,
   `docs/TESTING.md`, `docs/CAMPAIGN.md`, `docs/SAVE_FORMAT.md`.
@@ -15,7 +16,8 @@
   Grundlage des aktuellen Rennsystems. Entfernte klassische Module nicht zurückholen.
 - Abgeschlossener Legacy-Cleanup, Löschbelege und bewusst erhaltene Quellen:
   `docs/LEGACY_CLEANUP.md`. Keine weiteren kosmetischen Cleanup-Pakete einplanen.
-  Das Roguelite-Run-System benötigt einen eigenen Auftrag.
+  Run Phase 1 ist unter `docs/ROGUELITE_RUN_SYSTEM.md` dokumentiert. Weitere
+  Phasen, echte Fähigkeiten, Items, Crew und Meta-Systeme benötigen eigene Aufträge.
 - Physik, KI, Balancing, Zufallsaufrufe, Rennlängen, Streckenführung und
   aktuelle Oberfläche nur auf ausdrücklichen Auftrag ändern. Keine neue
   Engine und kein Framework einführen. Darstellung liest Rennzustand.
@@ -23,6 +25,9 @@
   22 Strecken, acht Kampagnenstrecken und Originalillustrationen erhalten.
   Datenquelle: `src/data/historical/`; versionierte Exporte mit
   `npm run check:arcade-data` prüfen. Kein Build liest Simulations-HTML.
+- Run-Speicher (`carpet_gp_roguelite_run_v1`) und frühere Kampagne niemals
+  automatisch ineinander migrieren. Gespeicherte Angebote/Route/Ergebnisse und
+  Niederlagen schützen; gewertete Run-Rennen können nicht neu gestartet werden.
 - Kampagne, POV-Meisterschaft, POV-Werkstatt und freies Rennen getrennt
   erhalten. Speicherkennungen, IDs, Datenbank-Prüfsumme und validierte
   Migrationen nicht beiläufig ändern. Fehlerhafte/neuere Importe dürfen
