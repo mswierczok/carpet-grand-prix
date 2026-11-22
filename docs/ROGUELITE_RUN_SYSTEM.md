@@ -34,6 +34,13 @@ beim Öffnen in den sichtbaren Bereich gescrollt; die Karte bleibt auch auf klei
 Smartphones ohne horizontales Seitenscrolling lesbar. Die Bereichsnavigation
 bleibt beim Scrollen erreichbar.
 
+Die nachgereichte Kartenreferenz bestimmt die Darstellung: große Symbole mit
+außenstehenden Ländernamen, gerade gestrichelte Wege, vier beschriftete
+Rennebenen, Pokale an den Finalknoten und eine Startmarkierung unter Bahrain.
+Die Startmarkierung bestätigt die bereits gewählte Fähigkeit und ist kein
+zusätzlicher Graphknoten. Event-Typen bleiben entgegen den Fragezeichen der
+Vorlage sichtbar, damit die vorgegebene Event-Vorschau erhalten bleibt.
+
 | Rennebene | Knoten | Mindestplatzierung |
 | --- | --- | --- |
 | 1 | Bahrain | P10 |
