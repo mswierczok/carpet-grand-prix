@@ -34,7 +34,7 @@ writeFileSync("previews/racing-hud/index.html", html());
 if (!process.argv.includes("--gallery-only")) {
   mkdirSync("dist/hud-review", { recursive: true });
   writeFileSync("dist/hud-review/index.html", html(true));
-  for (const name of ["campaign", "race", "menu", "arcade", "arcade3d", ""]) {
+  for (const name of ["campaign", "run", "race", "menu", "arcade", "arcade3d", ""]) {
     const file = `carpet-grand-prix-${name ? name + "-" : ""}offline.html`;
     copyFileSync("dist/" + file, "dist/hud-review/" + file);
   }

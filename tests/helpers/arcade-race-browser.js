@@ -23,14 +23,14 @@ export async function threeLapRegression(page) {
     });
   });
 }
-export function pilotRace({ stopOnQualifiedGrid = false } = {}) {
+export function pilotRace({ stopOnQualifiedGrid = false, difficulty = "normal" } = {}) {
   globalThis.__racePilotPeakSpeeds = {};
   const A = CGPArcade,
     surface = A.Surface.create(
       A.TrackCatalog.get(document.getElementById("track").value),
     ),
     p = A.Physics.parameters,
-    driver = A.Opponents.create(surface, p),
+    driver = A.Opponents.create(surface, p, { difficulty }),
     memory = driver.memory(0, -6),
     held = new Set();
   const key = (code, down) => {

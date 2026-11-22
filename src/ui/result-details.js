@@ -14,7 +14,7 @@
       A.RacePresentation
         ? A.RacePresentation.format(seconds)
         : A.CampaignView.format(seconds);
-  function fill(body, rows, kind, playerTeam) {
+  function fill(body, rows, kind, playerTeam, cutoff = null) {
     const existing = new Map(
       [...body.children].map((el) => [el.dataset.team, el]),
     );
@@ -26,6 +26,7 @@
         for (let c = 0; c < (kind === "race" ? 5 : 4); c++) tr.append(n("td"));
       }
       tr.classList.toggle("is-player", tr.dataset.team === playerTeam);
+      tr.classList.toggle("is-eliminated", kind === "race" && cutoff !== null && row.position > cutoff);
       const value =
         kind === "qualifying"
           ? row.bestLap === null
@@ -147,13 +148,13 @@
     dialog.addEventListener("close", () =>
       prior?.focus?.({ preventScroll: true }),
     );
-    function open(record, playerTeam) {
+    function open(record, playerTeam, cutoff = null) {
       prior = document.activeElement;
       const own = record.order.find((r) => r.teamId === playerTeam),
         q = record.qualifying?.find((r) => r.teamId === playerTeam);
       title.textContent = CGPArcadeData.tracks[record.trackId].name;
       summary.textContent = `${own.driverName} · ${own.teamName} · Qualifying ${q ? "P" + q.position : "nicht gespeichert"} · Rennen P${own.position} · ${format(own.finishTime)} · ${record.recordedAt ? new Date(record.recordedAt).toLocaleDateString("de-DE") : record.id}`;
-      fill(sections.race.body, record.order, "race", playerTeam);
+      fill(sections.race.body, record.order, "race", playerTeam, cutoff);
       fill(
         sections.qualifying.body,
         record.qualifying || [],

@@ -5,7 +5,7 @@
     const ms = Math.max(0, Math.round(seconds * 1000));
     return `${Math.floor(ms / 60000)}:${String(Math.floor(ms / 1000) % 60).padStart(2, "0")}.${String(ms % 1000).padStart(3, "0")}`;
   };
-  function create({ track, getCampaign = () => null } = {}) {
+  function create({ track, getCampaign = () => null, getRun = () => null } = {}) {
     let history = A.RaceGaps.create(),
       previousTime = -1,
       context = "";
@@ -54,6 +54,7 @@
     function update(s) {
       const q = s.qualifying,
         r = s.race,
+        eliminationLimit = !q && s.campaignPhase !== "qualifying-ready" ? A.RogueliteRun?.cutoff(getRun()) : null,
         key = track().id + ":" + !!q + ":" + r.playerTeam;
       if (
         key !== context ||
@@ -99,6 +100,7 @@
         return {
           ...e,
           ...identity(e.id, s),
+          eliminated: Number.isInteger(eliminationLimit) && e.position > eliminationLimit,
           gap: gap.text,
           gapData: gap,
           startPosition: start,

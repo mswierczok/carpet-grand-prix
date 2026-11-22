@@ -1,11 +1,13 @@
 # Speicherbereiche des aktuellen Spiels
 
-Der Cleanup verändert keinen aktiven Validator, Schlüssel, Checkpoint oder
-Datenbankhash. Kampagne, freie/Meisterschafts-POV-Spielstände und Einstellungen
-bleiben getrennt. Nur der Zugang zur archivierten passiven Simulation ändert sich.
+Run-Kampagne, frühere Kampagne, freie/Meisterschafts-POV-Spielstände und
+Einstellungen besitzen getrennte Speicherbereiche. Der Run erhält einen neuen
+Schlüssel; bestehende Validatoren, Checkpoints und die historische Datenbank-
+Prüfsumme bleiben erhalten. Die archivierte passive Simulation bleibt getrennt.
 
 | Browser-Schlüssel | Inhalt |
 | --- | --- |
+| `carpet_gp_roguelite_run_v1` | Run-Hülle 1: aktiver Run und Archiv, Seed/Angebote, feste Route, Entscheidungen, Phasenstatus, native Session und vollständige Ergebnisse; keine Migration alter Kampagnenfolgen |
 | `carpet_gp_campaign_v1` | Kampagnenformat 2: Team/Fahrer, 39er-Zuordnung, Wochenende, Fortschritt und eingefrorene Ergebnisse; validierte Migration aus Format 1 |
 | `carpet_gp_pov_game_v1` | POV-Format 1: freies Rennen oder 22-Rennen-Meisterschaft, Wochenende und Fahrzeugentwicklung |
 | `carpet_gp_pov_preferences_v1` | Gemeinsame POV-Einstellungen einschließlich Lenkempfindlichkeit |
@@ -39,3 +41,12 @@ Export deshalb im bisherigen Browser/Origin vornehmen.
 Die historische Stammdaten-Prüfsumme bleibt
 `17f3949b0fe047658af79ff4b95de1363ce5471b13fe4f3b05457eb277135946`.
 Es gibt keine automatische Übertragung in die Kampagne.
+
+## Roguelite-Run
+
+[Run-Format und Fortschrittsschutz](ROGUELITE_RUN_SYSTEM.md#speicherung-und-frühere-kampagne).
+Die Run-Hülle speichert aktive und frühere Runs atomar unter einem neuen Schlüssel.
+CAS-Prüfung verhindert konkurrierende Überschreibungen. Angebote, gewählte Fähigkeit,
+Route, Ergebnisse und terminale Zustände desselben Run-IDs dürfen nicht zurückgesetzt
+werden. Ein gewerteter Rennstart benötigt einen dauerhaft gesicherten Checkpoint.
+Die frühere Kampagne bleibt in ihrem ursprünglichen Schlüssel unverändert erhalten.

@@ -54,6 +54,10 @@ export function loadArcade({
           "championship/campaign",
           "championship/campaign-weekend",
           "persistence/campaign-store",
+          "data/run-map",
+          "championship/roguelite-run",
+          "persistence/run-store",
+          "championship/run-weekend",
           "ui/race-presentation",
         ]
       : []),

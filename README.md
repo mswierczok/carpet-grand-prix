@@ -1,14 +1,19 @@
 # Carpet Grand Prix
 
 Ein selbst spielbares Arcade-Rennspiel in einer illustrierten Miniaturwelt.
-Die eigenständige Kampagne ist die Grundlage des künftigen Motorsport-Roguelites.
+Die Roguelite-Kampagne besitzt eine feste verzweigte Run-Map mit verbindlichen Platzierungszielen.
 
 [Spiel öffnen](https://mswierczok.github.io/carpet-grand-prix/)
 
 Im [Hauptmenü](play.html) stehen Kampagne, freies Rennen, die POV-Meisterschaft
 und Einstellungen bereit. Die Kampagne startet mit Redwood GP und einem von
-drei festen Fahrern. Sie verwendet acht Strecken; alle 22 Originalstrecken,
+drei festen Fahrern. Phase 1 führt über vier Rennen und drei Events durch einen
+Pool von acht Strecken. Bahrain ist der Einstieg; im Finale zählt nur P1.
+Fähigkeiten und Events sind klar markierte Platzhalter ohne Gameplay-Effekte.
+Alle 22 Originalstrecken,
 13 Teams und 92 historischen Fahreridentitäten bleiben technisch erhalten.
+Frühere Kampagnenspielstände und Ergebnisse bleiben über einen getrennten
+Kompatibilitätszugang lesbar und fortsetzbar; sie werden nicht in Runs umgerechnet.
 
 `race.html` nutzt eine gemeinsame Engine für Qualifying und Rennen mit
 13 Fahrzeugen, manueller Steuerung, Verfolgungskamera und Touchbedienung.
@@ -45,7 +50,8 @@ spielbare Offline-/Review-Pakete bereit. Alle benötigten Assets sind eingebette
 
 - [Architektur und aktive Einstiegspunkte](docs/ARCHITECTURE.md)
 - [Tests und reproduzierbare Builds](docs/TESTING.md)
-- [Kampagne und Ergebnisarchiv](docs/CAMPAIGN.md)
+- [Run-System, feste Karte und Ergebnisarchiv](docs/ROGUELITE_RUN_SYSTEM.md)
+- [Frühere Kampagne und ihr Ergebnisarchiv](docs/CAMPAIGN.md)
 - [Speicherbereiche](docs/SAVE_FORMAT.md)
 - [Vollbild-HUD und Pause](docs/RACING_HUD.md)
 - [Modulare Welt aller 22 Strecken](docs/CALENDAR_ENVIRONMENTS.md)
@@ -64,5 +70,5 @@ Speicherbereiche. Wiederherstellung: [Cleanup-Dokumentation](docs/LEGACY_CLEANUP
 
 Der Legacy-Cleanup ist abgeschlossen. Gemeinsame Fahrzeug-/Porträtquellen und
 historische Stammdaten bleiben bewusst erhalten; die alte Anwendung ist nur im
-Git-Archiv wiederherstellbar. Run-Map, Items, Crew, Teamfähigkeiten,
-Freischaltbedingungen und endgültige Run-Längen benötigen eigene Entwicklungsaufträge.
+Git-Archiv wiederherstellbar. Weitere Run-Phasen, echte Fähigkeiten, Items, Crew,
+Freischaltbedingungen und die endgültige mehrphasige Run-Länge benötigen eigene Entwicklungsaufträge.

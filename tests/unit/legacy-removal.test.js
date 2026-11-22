@@ -17,9 +17,14 @@ it("bewahrt das aktuelle Rennspiel samt 3D-Welt, Daten, Assets, Speicher und bes
   // consumer has been removed. The catalog is validated against its original
   // entries in assets.test.js. All other art, game code and fixtures stay exact.
   // The only earlier view changes were index.html and the menu archive link.
+  const runHosts = new Set(["race.html", "src/arcade-main.js", "src/ui/racing-hud.js", "src/ui/race-presentation.js", "src/ui/result-details.js", "styles/racing-hud.css"]);
+  const existing = new Set(execFileSync("git", ["ls-tree", "-r", "--name-only", baseline], { cwd: ROOT, encoding: "utf8" }).trim().split("\n"));
+  const protectedPaths = [...new Set(paths)].filter(path => !runHosts.has(path) && (existing.has(path) || path.startsWith(":(") || ["assets", "scripts/lib"].includes(path)));
+  // Phase 1 explicitly authorizes run-only integration and elimination colors in
+  // these hosts. Their free/career/old-campaign behavior is covered by regressions.
   const fixtures = execFileSync("git", ["ls-tree", "-r", "--name-only", baseline, "--", "tests/fixtures"], { cwd: ROOT, encoding: "utf8" })
     .trim().split("\n").filter(path => path.endsWith(".json"));
-  expect(() => execFileSync("git", ["diff", "--exit-code", baseline, "--", ...new Set(paths), ...fixtures], { cwd: ROOT, stdio: "pipe" })).not.toThrow();
+  expect(() => execFileSync("git", ["diff", "--exit-code", baseline, "--", ...protectedPaths, ...fixtures], { cwd: ROOT, stdio: "pipe" })).not.toThrow();
 });
 it("hält das entfernte klassische Spiel im Archiv-Tag statt in aktuellen Testadaptern", () => {
   expect(execFileSync("git", ["rev-parse", "classic-simulation-archive-2026-11-21^{}"], { cwd: ROOT, encoding: "utf8" }).trim()).toBe(baseline);

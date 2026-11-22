@@ -563,3 +563,11 @@ body.racing-page {
     padding: 14px;
   }
 }
+
+/* Run placement targets color names/positions only; gaps retain their colors. */
+#relativeOrder .is-eliminated > b,
+#relativeOrder .is-eliminated > .relative-name,
+#raceOrder .is-eliminated > b,
+#raceOrder .is-eliminated > span:nth-child(2) > strong,
+.racing-dialog tr.is-eliminated > td:nth-child(1),
+.racing-dialog tr.is-eliminated > td:nth-child(2) { color: #ff9083; }

@@ -37,7 +37,8 @@ auf beiden Profilen. Das ist eine Aufteilung, keine Kürzung der Abdeckung.
 
 Allgemeine Browserprüfungen sind pro Geräteprofil in zwei Shards aufgeteilt.
 Qualifying, POV-Meisterschaft, Kampagne, Bahrain und die übrigen Umgebungen
-haben eigene Jobs. Keine Testzeitgrenzen oder Fahrbudgets wurden im Cleanup
+haben eigene Jobs. Die Run-Kampagne besitzt zwei zusätzliche Roguelite-Jobs;
+ihre Fälle werden aus den allgemeinen Browser-Shards ausgenommen und dort vollständig gefahren. Keine Testzeitgrenzen oder Fahrbudgets wurden im Cleanup
 angehoben. Der reine klassische Mehrsaison-Workflow ist mit seiner entfernten
 Simulation im Git-Tag archiviert; aktuelle Kampagnen-/POV-Fortsetzung bleibt geprüft.
 
@@ -105,3 +106,18 @@ Das Werkzeug benötigt den laufenden Testserver. Messbedingungen, Rohwerte,
 getrennte Quell-/Repositorygrößen und Ergebnisse: [LEGACY_CLEANUP.md](LEGACY_CLEANUP.md).
 Die erste Datenentkopplung und frühere Testbeschreibung stehen unter
 [history/](history/TESTING_PRE_CLEANUP.md).
+
+## Roguelite Phase 1
+
+```sh
+npx vitest run tests/unit/roguelite-run.test.js
+npx playwright test tests/browser/roguelite-run.spec.js
+```
+
+Sechs gültige Routen und exakte Platzierungsgrenzen werden mit ausdrücklich
+markierten Ergebnis-/Speicher-DTOs geprüft. Die Browser fahren getrennt davon
+vier tatsächliche Wochenenden und einen echten P13-Ausscheidungsfall mit der
+nativen Engine und normalen Eingaben. Pflichtqualifying und alle 13 Zieleinläufe
+bleiben vollständig; nur die vorhandene Ein-Runden-Option verkürzt lange Testfälle.
+Kein Test setzt Fahrzeugpositionen, Geschwindigkeiten oder Zielzeiten im Spiel.
+Abnahme und tatsächliche Screenshots: [ROGUELITE_RUN_SYSTEM.md](ROGUELITE_RUN_SYSTEM.md).

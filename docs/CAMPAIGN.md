@@ -1,4 +1,8 @@
-# Kampagne: Wochenenden, Fortschritt und Ergebnisarchiv
+# Frühere Kampagne: Wochenenden, Fortschritt und Ergebnisarchiv
+
+Der aktuelle Hauptmenüpunkt startet jetzt die [Run-Kampagne](ROGUELITE_RUN_SYSTEM.md).
+Dieser frühere Acht-Strecken-Stand bleibt unter `campaign.html` über den Bereich
+„Spielstand“ des Run-Menüs erreichbar. Seine Daten werden nicht automatisch migriert.
 
 Aktueller Ausbau auf Basis von `df1e716` (gemergte Kampagnen-Grundlage).
 Die [historische Version 1](CAMPAIGN_FOUNDATION.md) dokumentiert den ersten

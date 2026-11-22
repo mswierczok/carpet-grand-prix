@@ -28,7 +28,7 @@ export function createArcadeOffline({ threeD = false, race = false } = {}) {
         `src="data:image/png;base64,${readFileSync(new URL("assets/world/arcade-materials.png", root)).toString("base64")}"`,
     );
   html = html.replace(
-    /<link\s+rel="stylesheet"\s+href="\.\/(styles\/(?:arcade(?:-race)?|campaign|racing-hud)\.css)(?:\?[^" ]*)?"\s*\/?>/g,
+    /<link\s+rel="stylesheet"\s+href="\.\/(styles\/(?:arcade(?:-race)?|campaign|racing-hud|run)\.css)(?:\?[^" ]*)?"\s*\/?>/g,
     (_, file) => `<style>${readFileSync(new URL(file, root), "utf8")}</style>`,
   );
   for (const match of [
@@ -59,7 +59,7 @@ export function createArcadeOffline({ threeD = false, race = false } = {}) {
       'href="./arcade3d.html"',
       'href="./carpet-grand-prix-arcade3d-offline.html"',
     );
-  html = html.replaceAll("./campaign.html", "./carpet-grand-prix-campaign-offline.html").replaceAll("./play.html", "./carpet-grand-prix-menu-offline.html").replaceAll("./race.html?mode=campaign", "./carpet-grand-prix-race-offline.html?mode=campaign");
+  html = html.replaceAll("./run.html", "./carpet-grand-prix-run-offline.html").replaceAll("./campaign.html", "./carpet-grand-prix-campaign-offline.html").replaceAll("./play.html", "./carpet-grand-prix-menu-offline.html").replaceAll("./race.html?mode=campaign", "./carpet-grand-prix-race-offline.html?mode=campaign");
   return html.replace(
     'href="./index.html"',
     'href="./carpet-grand-prix-menu-offline.html"',
@@ -77,6 +77,7 @@ export function createPOVMenuOffline() {
   }
   return html.replaceAll("./race.html", "./carpet-grand-prix-race-offline.html")
     .replaceAll("./campaign.html", "./carpet-grand-prix-campaign-offline.html")
+    .replaceAll("./run.html", "./carpet-grand-prix-run-offline.html")
     .replaceAll("./archive.html", "./carpet-grand-prix-classic-archive.html");
 }
 export function createClassicArchiveOffline() {
@@ -104,6 +105,19 @@ export function createCampaignOffline() {
   const literal = value => JSON.stringify(value).replaceAll("<", "\\u003c");
   return `<!doctype html><html lang="de"><meta charset="utf-8"><title>Carpet Grand Prix · Kampagne offline</title><script>document.write(new URLSearchParams(location.search).get("mode")==="campaign"?${literal(race)}:${literal(html)});</script></html>`;
 }
+export function createRunOffline() {
+  let html = readFileSync(new URL("run.html", root), "utf8");
+  html = html.replace(/<link\s+rel="stylesheet"\s+href="\.\/(styles\/[^"?]+)(?:\?[^" ]*)?"\s*\/?>/g,
+    (_, file) => `<style>${readFileSync(new URL(file, root), "utf8")}</style>`);
+  for (const match of [...html.matchAll(/<script src="\.\/(src\/[^"?]+)(?:\?[^" ]*)?"><\/script>/g)])
+    html = html.replace(match[0], () => `<script>\n${source(match[1]).replace(/<\/script/gi, "<\\/script")}\n</script>`);
+  html = html.replaceAll("./race.html", "./carpet-grand-prix-run-offline.html")
+    .replaceAll("./campaign.html", "./carpet-grand-prix-campaign-offline.html")
+    .replaceAll("./play.html", "./carpet-grand-prix-menu-offline.html");
+  const race = createArcadeOffline({ race: true }).replaceAll("./carpet-grand-prix-race-offline.html?mode=run", "./carpet-grand-prix-run-offline.html?mode=run");
+  const literal = value => JSON.stringify(value).replaceAll("<", "\\u003c");
+  return `<!doctype html><html lang="de"><meta charset="utf-8"><title>Carpet Grand Prix · Run offline</title><script>document.write(new URLSearchParams(location.search).get("mode")==="run"?${literal(race)}:${literal(html)});</script></html>`;
+}
 export function writeArcadeOffline() {
   mkdirSync(new URL("dist/", root), { recursive: true });
   writeFileSync(
@@ -118,6 +132,7 @@ export function writeArcadeOffline() {
     new URL("dist/carpet-grand-prix-race-offline.html", root),
     createArcadeOffline({ race: true }),
   );
+  writeFileSync(new URL("dist/carpet-grand-prix-run-offline.html", root), createRunOffline());
   const menu = createPOVMenuOffline();
   writeFileSync(new URL("dist/carpet-grand-prix-menu-offline.html", root), menu);
   writeFileSync(new URL("dist/carpet-grand-prix-offline.html", root), menu);
