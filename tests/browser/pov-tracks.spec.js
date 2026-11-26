@@ -253,7 +253,10 @@ for (const id of ["luxembourg", "canada", "france"])
     expect(
       snapshot.entries
         .filter((e) => !e.player)
-        .every((e) => Math.round(peaks[e.id]) >= 119),
+        .every((e) => {
+          const p = e.performance.parameters;
+          return peaks[e.id] >= p.maxSpeed * p.metersPerUnit * 3.6 * .99;
+        }),
     ).toBe(true);
     await expect(page.locator("#resultRows tr")).toHaveCount(13);
     expect(await page.evaluate(() => ({ ...localStorage }))).toEqual(storage);

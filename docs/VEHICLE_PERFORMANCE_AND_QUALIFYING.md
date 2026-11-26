@@ -213,6 +213,8 @@ Rohdaten: [baseline.json](vehicle-performance/baseline.json), [vehicles.json](ve
 
 19 finale Kernprüfungen einschließlich echter alter Checkpoints und des alten Sieger-Runs sind bestanden. 16 neue Qualifying-Browserfahrten (acht Strecken auf Desktop und mobilem Chromium) sind bestanden. Daten-, Fahrerart-, Seil-, Rundentabellen- und Renderer-Prüfungen sowie der Offline-Build sind bestanden. Die endgültige vollständige CI und die weiteren Regressionsergebnisse werden im Pull Request dokumentiert. Die Browserprüfungen fahren alle acht Qualifyings auf Desktop und mobilem Chromium, einschließlich Reload während der schnellen Runde, Autoübernahme, vollständigem Klassement und Hoch-/Querformat. Ein echter iPhone-/Safari-Test ist hier nicht verfügbar.
 
+Die längere Abschlussanzeige wird innerhalb der rechten HUD-Spalte umgebrochen, damit sie auf schmalen Bildschirmen die relative Platzierung nicht verdeckt. Ein Browsercheck prüft die getrennten Flächen.
+
 Die folgenden POV-Aufnahmen stammen aus freien Rennen mit historischem Redwood 72 (rund 113 km/h). Die Kampagne verwendet Redwood 64 (rund 109 km/h).
 
 ![Anfahrt im echten Spiel](vehicle-performance/screenshots/chromium-approach.png)

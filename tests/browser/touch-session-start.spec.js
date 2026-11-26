@@ -51,7 +51,7 @@ for (const campaign of [false, true])
       expect(await page.evaluate(() => __driveSnapshot.race.phase)).toBe(
         "racing",
       );
-      await expect(page.locator("#hudLap")).toHaveText("Auslaufrunde");
+      await expect(page.locator("#hudLap")).toHaveText("ANFAHRT");
 
       const cdp = await context.newCDPSession(page),
         gas = await page.locator('[data-drive="throttle"]').boundingBox();

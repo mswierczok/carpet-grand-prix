@@ -183,7 +183,10 @@ test("fährt ausschließlich über Tastatur ein vollständiges Rennen bis zu 13 
   expect(
     s.entries
       .filter((e) => !e.player)
-      .every((e) => Math.round(peaks[e.id]) >= 119),
+      .every((e) => {
+          const p = e.performance.parameters;
+          return peaks[e.id] >= p.maxSpeed * p.metersPerUnit * 3.6 * .99;
+        }),
   ).toBe(true);
   await expect(page.locator("#raceResults")).toBeVisible();
   await expect(page.locator("#resultRows tr")).toHaveCount(13);

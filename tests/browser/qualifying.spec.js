@@ -111,7 +111,7 @@ for (const offline of [false, true]) test(`Qualifying: echte Bestzeiten und Star
   const opponentTimes = q.qualifyingResult.filter((e) => !e.player).map((e) => e.bestLap);
   expect(new Set(opponentTimes.map((t) => t.toFixed(3))).size).toBeGreaterThanOrEqual(10);
   expect(Math.max(...opponentTimes) - Math.min(...opponentTimes)).toBeGreaterThan(0.3);
-  await raceAction(page,"showResults");
+  await raceAction(page,"showResults",{close:false});
   await expect(page.locator("#qualifyingResults")).toBeVisible();
   await expect(page.locator("#qualifyingRows tr")).toHaveCount(13);
   await expect(page.locator("#acceptQualifying")).toBeHidden();
@@ -192,9 +192,10 @@ for(const track of ['bahrain','canada','korea','france','england','russia','ital
   expect(grid.entries.every(e=>e.car.speed===0&&e.timing.completed===0)).toBe(true);
   expect(grid.entries.find(e=>e.player).performance).toEqual(profile);
   await expect(page.locator('#pause')).toBeVisible();await expect(page.locator('#startQualifying')).toBeHidden();await expect(page.locator('#hudLap')).toHaveText('QUALIFYING ABGESCHLOSSEN');
+  expect(await page.evaluate(()=>{const a=document.querySelector('.relative-hud').getBoundingClientRect(),b=document.querySelector('#hudLap').getBoundingClientRect();return b.left>=a.right&&b.right<=innerWidth;})).toBe(true);
   await openRaceMenu(page,'classification');await expect(page.locator('#raceOrder li')).toHaveCount(13);await expect(page.locator('#classificationTitle')).toHaveText('Qualifying-Klassement');
   await expect(page.locator('#raceOrder .is-eliminated')).toHaveCount(0);
-  if(track==='bahrain'){await page.screenshot({path:`docs/vehicle-performance/screenshots/${info.project.name}-classification.png`});await closeRaceMenu(page);await page.screenshot({path:`docs/vehicle-performance/screenshots/${info.project.name}-qualifying-grid.png`});await page.setViewportSize({width:844,height:390});await page.screenshot({path:`docs/vehicle-performance/screenshots/${info.project.name}-landscape.png`});}
+  if(track==='bahrain'){await page.screenshot({path:`docs/vehicle-performance/screenshots/${info.project.name}-classification.png`});await closeRaceMenu(page);await closeRaceMenu(page);await expect(page.locator('#raceSettings')).not.toBeVisible();await page.screenshot({path:`docs/vehicle-performance/screenshots/${info.project.name}-qualifying-grid.png`});await page.setViewportSize({width:844,height:390});await page.screenshot({path:`docs/vehicle-performance/screenshots/${info.project.name}-landscape.png`});}
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth&&document.documentElement.scrollHeight<=innerHeight)).toBe(true);
   expect(await page.evaluate(()=>localStorage.getItem('carpet_gp_v072'))).toBe('legacy-sentinel');expect(await page.evaluate(()=>localStorage.getItem('carpet_gp_campaign_v1'))).toBe('campaign-sentinel');expect(await page.evaluate(()=>localStorage.getItem('carpet_gp_roguelite_run_v1'))).toBe('run-sentinel');expect(errors).toEqual([]);
 });

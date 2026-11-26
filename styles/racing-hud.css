@@ -108,6 +108,7 @@ body.racing-page {
   align-items: flex-end;
   flex-direction: column;
   gap: 8px;
+  max-width: calc(100% - clamp(170px, 54vw, 330px) - max(12px, env(safe-area-inset-left)) - max(12px, env(safe-area-inset-right)) - 12px);
   pointer-events: none;
 }
 .racing-screen #openSettings {
@@ -124,6 +125,10 @@ body.racing-page {
   touch-action: manipulation;
 }
 #hudLap {
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-align: right;
   background: #172c32ed;
   padding: 7px 10px;
   border-radius: 7px;

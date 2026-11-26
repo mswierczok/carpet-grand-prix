@@ -27,10 +27,10 @@ async function ready(page) {
   await expect(page.locator("#arcadeApp")).toHaveAttribute("data-rendering", "2d"); await page.clock.runFor(32);
 }
 async function finish(page) {
-  await page.evaluate(pilotRace);
+  await page.evaluate(pilotRace, { stopOnQualifiedGrid: true });
   for (let i = 0; i < 130; i++) {
     await page.clock.runFor(1000);
-    if (await page.evaluate(() => __driveSnapshot.race.phase === "finished")) return;
+    if (await page.evaluate(() => __driveSnapshot.race.phase === "finished" || (__driveSnapshot.race.phase === "grid" && !!__driveSnapshot.qualifyingResult))) return;
   }
   throw Error("Rennwochenende nicht beendet");
 }
@@ -58,11 +58,14 @@ test("POV-Karriere: erhält Qualifying-Bestzeiten und übernommene Startaufstell
   test.setTimeout(240000); await prepare(page,true);
   await page.goto("race.html?new=single"); await ready(page);
   await raceAction(page, "startQualifying"); await finish(page);
-  const result = await page.evaluate(() => __driveSnapshot.qualifying.standings);
+  const result = await page.evaluate(() => __driveSnapshot.qualifyingResult);
+  expect(result).toHaveLength(13);
+  expect(result.every(e => e.laps.length === 1)).toBe(true);
+  expect(await page.evaluate(() => __driveSnapshot.race.phase)).toBe("grid");
   await openLegacySettings(page, "save"); await page.locator("#closeSettings").click();
   await page.reload(); await ready(page);
-  expect(await page.evaluate(() => __driveSnapshot.qualifying.standings)).toEqual(result);
-  await raceAction(page, "acceptQualifying"); await page.clock.runFor(32);
+  expect(await page.evaluate(() => __driveSnapshot.qualifyingResult)).toEqual(result);
+  await expect(page.locator("#acceptQualifying")).toBeHidden();
   const grid = await page.evaluate(() => __driveSnapshot.entries.map(e => e.id));
   await page.reload(); await ready(page);
   expect(await page.evaluate(() => __driveSnapshot.entries.map(e => e.id))).toEqual(grid);
