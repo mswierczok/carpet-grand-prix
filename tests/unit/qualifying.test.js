@@ -45,7 +45,7 @@ it("erhält den Direktstart samt Physik, Windschatten, Aufholhilfe und Neustart 
   expect(plain(weekend.snapshot())).toEqual(plain(direct.snapshot()));
 });
 
-it("verwirft die Auslaufrunde, wertet nur echte positive schnelle Runden und ordnet Gleichstand/fehlende Zeiten stabil", () => {
+it("erhält im Legacy-Format die Auslaufrunde, wertet nur echte positive schnelle Runden und ordnet Gleichstand/fehlende Zeiten stabil", () => {
   const { api } = loadArcade({ race: true });
   let completed = 0, seconds = 1, options;
   const entries = () => Array.from({ length: 13 }, (_, i) => ({ id: "t" + i, name: "Team " + i,
@@ -55,7 +55,7 @@ it("verwirft die Auslaufrunde, wertet nur echte positive schnelle Runden und ord
     return { surface: {}, parameters: {}, pause() {}, recover() {}, restart() { completed = 0; },
       advance() { completed++; }, snapshot: () => ({ entries: entries(), race: { phase: completed >= 3 ? "finished" : "racing" } }) };
   } };
-  const q = api.QualifyingSession.create({});
+  const q = api.QualifyingSession.create({}, { qualifyingFormat:null, performance:null });
   expect(options).toMatchObject({ laps: 3, isolated: true, slipstream: false, catchup: false });
   q.advance({}, 1 / 30);
   expect(q.snapshot().qualifying.standings.every((e) => e.bestLap === null)).toBe(true);
@@ -76,6 +76,7 @@ it("fährt Qualifying und Rennen mit echten Sektoren, übernimmt die Bestzeitenr
   const { api } = loadArcade({ race: true }), track = api.TrackCatalog.get("bahrain"),
     weekend = api.RaceWeekend.create(track, { laps: 1, playerTeam: "t05", difficulty: "normal" });
   const drive = () => {
+    const inQualifying = !!weekend.snapshot().qualifying;
     const driver = api.Opponents.create(weekend.surface, weekend.parameters), memory = driver.memory(0, -6),
       recorded = new Map();
     for (let frame = 0; frame < 200 * 30; frame++) {
@@ -89,7 +90,7 @@ it("fährt Qualifying und Rennen mit echten Sektoren, übernimmt die Bestzeitenr
         if (e.timing.completed > row.length) row.push(e.timing.lastLap.seconds);
         recorded.set(e.id, row);
       }
-      if (after.race.phase === "finished") return { snapshot: after, recorded };
+      if (after.race.phase === "finished" || (inQualifying && after.qualifyingResult)) return { snapshot: after, recorded };
     }
     throw Error("Session did not finish");
   };
@@ -98,19 +99,18 @@ it("fährt Qualifying und Rennen mit echten Sektoren, übernimmt die Bestzeitenr
   expect(weekend.selectDifficulty("expert")).toBe(false);
   expect(weekend.startQualifying()).toBe(false);
   const { snapshot: q, recorded } = drive();
-  expect(q.visibleEntries).toHaveLength(1);
-  expect(q.visibleEntries[0].player).toBe(true);
-  expect(q.race.finished).toBe(13);
-  expect(q.entries.every((e) => !e.slipstream && !e.catchup && e.timing.completed === 3)).toBe(true);
-  for (const row of q.qualifying.standings) {
-    expect(row.laps).toEqual(recorded.get(row.id).slice(1));
-    expect(row.bestLap).toBe(Math.min(...recorded.get(row.id).slice(1)));
+  expect(q.visibleEntries).toBeUndefined();
+  expect(q.race.phase).toBe("grid");expect(q.paused).toBe(true);
+  expect(q.qualifyingResult).toHaveLength(13);
+  for (const row of q.qualifyingResult) {
+    expect(row.completed).toBe(1);expect(row.laps).toHaveLength(1);expect(row.bestLap).toBe(row.laps[0]);
+    if(recorded.get(row.id).length)expect(row.laps).toEqual(recorded.get(row.id));
   }
-  const grid = q.qualifying.standings.map((e) => e.id);
-  expect(weekend.acceptQualifying()).toBe(true);
+  const grid = q.qualifyingResult.map((e) => e.id);
+  expect(weekend.acceptQualifying()).toBe(false);
   const start = weekend.snapshot();
   expect(start.race).toMatchObject({ phase: "grid", elapsed: 0, laps: 1, playerTeam: "t05" });
-  expect(start.race.position).toBe(q.qualifying.player.position);
+  expect(start.race.position).toBe(q.qualifyingResult.find(e=>e.player).position);
   expect(start.entries.map((e) => e.id)).toEqual(grid);
   expect(start.visibleEntries).toBeUndefined();
   expect(start.entries.every((e) => e.timing.completed === 0 && e.car.speed === 0)).toBe(true);

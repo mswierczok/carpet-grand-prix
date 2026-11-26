@@ -1,0 +1,2340 @@
+{
+  "stage": "vehicles",
+  "baseCommit": "b4a797c7b9b390243db6b72213e99fffb081e876",
+  "difficulty": "expert",
+  "hz": 120,
+  "hashes": {
+    "src/racing/physics.js": "932d4c840fe3e21f1611ab8392b80a7a0d30bd22a7ed1bf4e2717a81aa433ef2",
+    "src/racing/vehicle-performance.js": "14bccf0444bec1fcb285e644acf1908a78115dce20267948293736f5764015ac",
+    "src/racing/qualifying-approach.js": "7d6ec3ae2a6026f2d5c104a083ad623a73ba38ff1886fb41460730b48a38cfee",
+    "src/racing/opponents.js": "fcbb071f7289f5e5d9dd7726d826d8d0059b52b104e4fca362ac2adb73a47e2a",
+    "src/racing/qualifying-drivers.js": "b283a5cb0d61b8dac1664f465795e3582c418d9feff3cae1c8a09517de340daf",
+    "src/racing/qualifying-session.js": "f86334ae03e17d747e808cb4a3e724ce340854bffae909063bd247d6184625b5",
+    "src/racing/race-session.js": "755a962d8c88b21bc86a7c88593e2a8e905378380088fb9e3aaee79dd710e8e7",
+    "src/racing/race-weekend.js": "b0b383849109bda90d407f361b213bab746930a12835e163646d61e97f17a27f",
+    "src/racing/slipstream.js": "9732cde2de282f47e8545698af908edb691c1f95ecc4383e46560b152c98ca37",
+    "src/racing/catchup.js": "de512d62d18328762223637b5895a16ae6625495d578b8f87aefa05a3f3c88b9",
+    "src/data/arcade-roster.js": "9e64b6cc8693a96a4cdd6924200055bb4840adde58b13c8f117bc476142b0920",
+    "src/data/arcade-tracks.js": "af32cf5939d3dc1b1c7cd0a93a01e3e782db8eb7e7be66203cfe2fbd8414677b"
+  },
+  "protocol": "Native Physics.step, ordinary 30Hz inputs, 120Hz fixed steps. Solo: identical expert controller, no execution variation, no traffic/wake/catchup, two full laps after standing launch (second measured). Bench: flat straight, ordinary acceleration to 100km/h then ordinary full brake. Traffic: all 13 native vehicles and normal race lengths, catchup off/on. Qualifying: actual isolated sessions; player reference uses ordinary expert inputs. First crossing speeds interpolate native velocity components at the exact Timing crossing fraction, before any entrant finishes. Timing observer returns the unmodified original Timing result. No pose/speed/gate/time writes.",
+  "teams": [
+    {
+      "id": "t01",
+      "name": "Vauclair Motorsport",
+      "historicalStrength": 87,
+      "developmentPotential": 95,
+      "focus": "power",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t01",
+        "strength": 87,
+        "focus": "power",
+        "developmentPotential": 95,
+        "factors": {
+          "acceleration": 1.025,
+          "topSpeed": 1.008,
+          "braking": 0.995,
+          "handling": 0.995,
+          "grip": 0.995,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 110.88,
+          "acceleration": 56.37499999999999,
+          "braking": 144.275,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.98,
+          "steerReturnResponse": 8.955,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 208.95,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 110.88
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.425,
+        "zeroTo100Seconds": 1.841667,
+        "topKmh": 119.7504,
+        "brakeStartKmh": 100.069099,
+        "brakeMeters": 8.343251
+      }
+    },
+    {
+      "id": "t02",
+      "name": "Alderwick Racing",
+      "historicalStrength": 86,
+      "developmentPotential": 95,
+      "focus": "aero",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t02",
+        "strength": 86,
+        "focus": "aero",
+        "developmentPotential": 95,
+        "factors": {
+          "acceleration": 0.9921739130434782,
+          "topSpeed": 0.9980869565217392,
+          "braking": 0.9956521739130435,
+          "handling": 1.0006521739130434,
+          "grip": 0.9947826086956522,
+          "highSpeedGrip": 0.04
+        },
+        "parameters": {
+          "maxSpeed": 109.78956521739131,
+          "acceleration": 54.5695652173913,
+          "braking": 144.3695652173913,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 4.002608695652174,
+          "steerReturnResponse": 9.00586956521739,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 208.90434782608696,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0.04,
+          "gripSpeedReference": 109.78956521739131
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.475,
+        "zeroTo100Seconds": 1.916667,
+        "topKmh": 118.57273,
+        "brakeStartKmh": 100.326295,
+        "brakeMeters": 8.379527
+      }
+    },
+    {
+      "id": "t03",
+      "name": "Falkenheim GP",
+      "historicalStrength": 85,
+      "developmentPotential": 94,
+      "focus": "power",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t03",
+        "strength": 85,
+        "focus": "power",
+        "developmentPotential": 94,
+        "factors": {
+          "acceleration": 1.0093478260869564,
+          "topSpeed": 1.0001739130434781,
+          "braking": 0.986304347826087,
+          "handling": 0.986304347826087,
+          "grip": 0.9845652173913043,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 110.0191304347826,
+          "acceleration": 55.5141304347826,
+          "braking": 143.01413043478263,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.945217391304348,
+          "steerReturnResponse": 8.876739130434784,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 206.7586956521739,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 110.0191304347826
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.45,
+        "zeroTo100Seconds": 1.875,
+        "topKmh": 118.820661,
+        "brakeStartKmh": 100.115101,
+        "brakeMeters": 8.421597
+      }
+    },
+    {
+      "id": "t04",
+      "name": "Scuderia Bellarossa",
+      "historicalStrength": 84,
+      "developmentPotential": 96,
+      "focus": "handling",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t04",
+        "strength": 84,
+        "focus": "handling",
+        "developmentPotential": 96,
+        "factors": {
+          "acceleration": 0.9765217391304347,
+          "topSpeed": 0.9842608695652174,
+          "braking": 1.0119565217391304,
+          "handling": 1.0319565217391304,
+          "grip": 1.0023478260869565,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 108.26869565217392,
+          "acceleration": 53.70869565217391,
+          "braking": 146.7336956521739,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 4.127826086956522,
+          "steerReturnResponse": 9.287608695652175,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 210.49304347826086,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 108.26869565217392
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.508333,
+        "zeroTo100Seconds": 1.95,
+        "topKmh": 116.930191,
+        "brakeStartKmh": 100.25812,
+        "brakeMeters": 8.23851
+      }
+    },
+    {
+      "id": "t05",
+      "name": "Eisenbach Motorsport",
+      "historicalStrength": 76,
+      "developmentPotential": 92,
+      "focus": "power",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t05",
+        "strength": 76,
+        "focus": "power",
+        "developmentPotential": 92,
+        "factors": {
+          "acceleration": 0.9389130434782609,
+          "topSpeed": 0.9649565217391305,
+          "braking": 0.9471739130434783,
+          "handling": 0.9471739130434783,
+          "grip": 0.9376086956521739,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 106.14521739130436,
+          "acceleration": 51.64021739130435,
+          "braking": 137.34021739130435,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.7886956521739132,
+          "steerReturnResponse": 8.524565217391304,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 196.8978260869565,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 106.14521739130436
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.566667,
+        "zeroTo100Seconds": 2.033333,
+        "topKmh": 114.636835,
+        "brakeStartKmh": 100.015717,
+        "brakeMeters": 8.738765
+      }
+    },
+    {
+      "id": "t06",
+      "name": "Orange",
+      "historicalStrength": 67,
+      "developmentPotential": 89,
+      "focus": "handling",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t06",
+        "strength": 67,
+        "focus": "handling",
+        "developmentPotential": 89,
+        "factors": {
+          "acceleration": 0.8434782608695651,
+          "topSpeed": 0.9177391304347826,
+          "braking": 0.9380434782608696,
+          "handling": 0.9580434782608697,
+          "grip": 0.9136521739130435,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 100.95130434782608,
+          "acceleration": 46.39130434782608,
+          "braking": 136.0163043478261,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.8321739130434787,
+          "steerReturnResponse": 8.622391304347827,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 191.86695652173916,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 100.95130434782608
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.766667,
+        "zeroTo100Seconds": 2.308333,
+        "topKmh": 109.027409,
+        "brakeStartKmh": 100.265021,
+        "brakeMeters": 8.862684
+      }
+    },
+    {
+      "id": "t07",
+      "name": "Ragos Racing",
+      "historicalStrength": 69,
+      "developmentPotential": 93,
+      "focus": "handling",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t07",
+        "strength": 69,
+        "focus": "handling",
+        "developmentPotential": 93,
+        "factors": {
+          "acceleration": 0.8591304347826086,
+          "topSpeed": 0.9255652173913044,
+          "braking": 0.9467391304347826,
+          "handling": 0.9667391304347827,
+          "grip": 0.9240869565217391,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 101.81217391304348,
+          "acceleration": 47.25217391304348,
+          "braking": 137.27717391304347,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.8669565217391306,
+          "steerReturnResponse": 8.700652173913044,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 194.0582608695652,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 101.81217391304348
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.733333,
+        "zeroTo100Seconds": 2.258333,
+        "topKmh": 109.957148,
+        "brakeStartKmh": 100.22569,
+        "brakeMeters": 8.777846
+      }
+    },
+    {
+      "id": "t08",
+      "name": "Mugan",
+      "historicalStrength": 78,
+      "developmentPotential": 95,
+      "focus": "power",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t08",
+        "strength": 78,
+        "focus": "power",
+        "developmentPotential": 95,
+        "factors": {
+          "acceleration": 0.9545652173913043,
+          "topSpeed": 0.9727826086956523,
+          "braking": 0.9558695652173913,
+          "handling": 0.9558695652173913,
+          "grip": 0.9480434782608695,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 107.00608695652174,
+          "acceleration": 52.50108695652174,
+          "braking": 138.60108695652173,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.823478260869565,
+          "steerReturnResponse": 8.602826086956522,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 199.08913043478262,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 107.00608695652174
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.541667,
+        "zeroTo100Seconds": 2,
+        "topKmh": 115.566574,
+        "brakeStartKmh": 100.20948,
+        "brakeMeters": 8.694648
+      }
+    },
+    {
+      "id": "t09",
+      "name": "Lincoln",
+      "historicalStrength": 65,
+      "developmentPotential": 88,
+      "focus": "power",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t09",
+        "strength": 65,
+        "focus": "power",
+        "developmentPotential": 88,
+        "factors": {
+          "acceleration": 0.8528260869565217,
+          "topSpeed": 0.9219130434782609,
+          "braking": 0.8993478260869565,
+          "handling": 0.8993478260869565,
+          "grip": 0.8802173913043478,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 101.41043478260869,
+          "acceleration": 46.905434782608694,
+          "braking": 130.4054347826087,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.597391304347826,
+          "steerReturnResponse": 8.094130434782608,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 184.84565217391304,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 101.41043478260869
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.741667,
+        "zeroTo100Seconds": 2.275,
+        "topKmh": 109.52327,
+        "brakeStartKmh": 100.128697,
+        "brakeMeters": 9.203142
+      }
+    },
+    {
+      "id": "t10",
+      "name": "Panther Racing",
+      "historicalStrength": 70,
+      "developmentPotential": 90,
+      "focus": "handling",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t10",
+        "strength": 70,
+        "focus": "handling",
+        "developmentPotential": 90,
+        "factors": {
+          "acceleration": 0.8669565217391304,
+          "topSpeed": 0.9294782608695652,
+          "braking": 0.9510869565217391,
+          "handling": 0.9710869565217392,
+          "grip": 0.929304347826087,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 102.24260869565217,
+          "acceleration": 47.68260869565217,
+          "braking": 137.9076086956522,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.8843478260869566,
+          "steerReturnResponse": 8.739782608695652,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 195.15391304347827,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 102.24260869565217
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.716667,
+        "zeroTo100Seconds": 2.233333,
+        "topKmh": 110.422017,
+        "brakeStartKmh": 100.177312,
+        "brakeMeters": 8.731405
+      }
+    },
+    {
+      "id": "t11",
+      "name": "Rivage Racing",
+      "historicalStrength": 74,
+      "developmentPotential": 89,
+      "focus": "aero",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t11",
+        "strength": 74,
+        "focus": "aero",
+        "developmentPotential": 89,
+        "factors": {
+          "acceleration": 0.8982608695652173,
+          "topSpeed": 0.9511304347826087,
+          "braking": 0.9434782608695652,
+          "handling": 0.9484782608695652,
+          "grip": 0.9321739130434783,
+          "highSpeedGrip": 0.04
+        },
+        "parameters": {
+          "maxSpeed": 104.62434782608696,
+          "acceleration": 49.404347826086955,
+          "braking": 136.80434782608697,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.793913043478261,
+          "steerReturnResponse": 8.536304347826087,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 195.75652173913045,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0.04,
+          "gripSpeedReference": 104.62434782608696
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.65,
+        "zeroTo100Seconds": 2.141667,
+        "topKmh": 112.994296,
+        "brakeStartKmh": 100.104887,
+        "brakeMeters": 8.786337
+      }
+    },
+    {
+      "id": "t12",
+      "name": "Scuderia Vespera",
+      "historicalStrength": 64,
+      "developmentPotential": 92,
+      "focus": "handling",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t12",
+        "strength": 72,
+        "focus": "handling",
+        "developmentPotential": 92,
+        "factors": {
+          "acceleration": 0.8826086956521738,
+          "topSpeed": 0.937304347826087,
+          "braking": 0.9597826086956522,
+          "handling": 0.9797826086956523,
+          "grip": 0.9397391304347826,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 103.10347826086957,
+          "acceleration": 48.54347826086956,
+          "braking": 139.16847826086956,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.919130434782609,
+          "steerReturnResponse": 8.81804347826087,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 197.34521739130435,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 103.10347826086957
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.683333,
+        "zeroTo100Seconds": 2.183333,
+        "topKmh": 111.351757,
+        "brakeStartKmh": 100.022412,
+        "brakeMeters": 8.629683
+      }
+    },
+    {
+      "id": "t13",
+      "name": "Redwood GP",
+      "historicalStrength": 72,
+      "developmentPotential": 93,
+      "focus": "power",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t13",
+        "strength": 64,
+        "focus": "power",
+        "developmentPotential": 93,
+        "factors": {
+          "acceleration": 0.845,
+          "topSpeed": 0.918,
+          "braking": 0.895,
+          "handling": 0.895,
+          "grip": 0.875,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 100.98,
+          "acceleration": 46.475,
+          "braking": 129.775,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.58,
+          "steerReturnResponse": 8.055,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 183.75,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 100.98
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.766667,
+        "zeroTo100Seconds": 2.3,
+        "topKmh": 109.0584,
+        "brakeStartKmh": 100.144161,
+        "brakeMeters": 9.248429
+      }
+    }
+  ],
+  "tracks": [
+    {
+      "id": "bahrain",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            31.618421,
+            31.634653
+          ],
+          "flyingSeconds": 31.634653,
+          "peakKmh": 119.7504,
+          "firstCrossingKmh": 119.7504,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.197879,
+          "exitKmh": 118.195968,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            31.887859,
+            31.866294
+          ],
+          "flyingSeconds": 31.866294,
+          "peakKmh": 118.57273,
+          "firstCrossingKmh": 118.57273,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.392591,
+          "exitKmh": 117.254353,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            31.862538,
+            31.864938
+          ],
+          "flyingSeconds": 31.864938,
+          "peakKmh": 118.820661,
+          "firstCrossingKmh": 118.820661,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.350838,
+          "exitKmh": 117.418324,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            32.255983,
+            32.259005
+          ],
+          "flyingSeconds": 32.259005,
+          "peakKmh": 116.930191,
+          "firstCrossingKmh": 116.930191,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 111.100523,
+          "exitKmh": 115.726914,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            32.965452,
+            32.966507
+          ],
+          "flyingSeconds": 32.966507,
+          "peakKmh": 114.636835,
+          "firstCrossingKmh": 114.636835,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.897971,
+          "exitKmh": 113.17885,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            34.490161,
+            34.479978
+          ],
+          "flyingSeconds": 34.479978,
+          "peakKmh": 109.027409,
+          "firstCrossingKmh": 109.027409,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 104.253695,
+          "exitKmh": 107.965075,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            34.233574,
+            34.233351
+          ],
+          "flyingSeconds": 34.233351,
+          "peakKmh": 109.957148,
+          "firstCrossingKmh": 109.957148,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 104.907905,
+          "exitKmh": 108.783481,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            32.689962,
+            32.70038
+          ],
+          "flyingSeconds": 32.70038,
+          "peakKmh": 115.566574,
+          "firstCrossingKmh": 115.566574,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.704989,
+          "exitKmh": 114.181295,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            34.433496,
+            34.433351
+          ],
+          "flyingSeconds": 34.433351,
+          "peakKmh": 109.52327,
+          "firstCrossingKmh": 109.52327,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 104.386757,
+          "exitKmh": 108.396079,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            34.081887,
+            34.098522
+          ],
+          "flyingSeconds": 34.098522,
+          "peakKmh": 110.422017,
+          "firstCrossingKmh": 110.422017,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 105.324556,
+          "exitKmh": 109.24512,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            33.336798,
+            33.333297
+          ],
+          "flyingSeconds": 33.333297,
+          "peakKmh": 112.994296,
+          "firstCrossingKmh": 112.994296,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.817104,
+          "exitKmh": 111.867929,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            33.832821,
+            33.756726
+          ],
+          "flyingSeconds": 33.756726,
+          "peakKmh": 111.351757,
+          "firstCrossingKmh": 111.351757,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 106.562463,
+          "exitKmh": 110.309963,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            34.605124,
+            34.596185
+          ],
+          "flyingSeconds": 34.596185,
+          "peakKmh": 109.0584,
+          "firstCrossingKmh": 109.0584,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 103.787177,
+          "exitKmh": 107.871465,
+          "bridgeTicks": 0
+        }
+      ]
+    },
+    {
+      "id": "canada",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            29.433442,
+            29.43341
+          ],
+          "flyingSeconds": 29.43341,
+          "peakKmh": 119.7504,
+          "firstCrossingKmh": 119.7504,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.730679,
+          "exitKmh": 118.690915,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            29.599987,
+            29.599983
+          ],
+          "flyingSeconds": 29.599983,
+          "peakKmh": 118.57273,
+          "firstCrossingKmh": 118.57273,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.356913,
+          "exitKmh": 117.965993,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            29.633833,
+            29.633349
+          ],
+          "flyingSeconds": 29.633349,
+          "peakKmh": 118.820661,
+          "firstCrossingKmh": 118.820661,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 114.927849,
+          "exitKmh": 117.682446,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            29.992979,
+            29.99729
+          ],
+          "flyingSeconds": 29.99729,
+          "peakKmh": 116.930191,
+          "firstCrossingKmh": 116.930191,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.657321,
+          "exitKmh": 116.175933,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            30.654526,
+            30.663562
+          ],
+          "flyingSeconds": 30.663562,
+          "peakKmh": 114.636835,
+          "firstCrossingKmh": 114.636835,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 111.275649,
+          "exitKmh": 113.81831,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            32.082423,
+            32.068434
+          ],
+          "flyingSeconds": 32.068434,
+          "peakKmh": 109.027409,
+          "firstCrossingKmh": 109.027409,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 106.679064,
+          "exitKmh": 108.342005,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            31.788555,
+            31.791089
+          ],
+          "flyingSeconds": 31.791089,
+          "peakKmh": 109.957148,
+          "firstCrossingKmh": 109.957148,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.411279,
+          "exitKmh": 109.407829,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            30.451182,
+            30.398055
+          ],
+          "flyingSeconds": 30.398055,
+          "peakKmh": 115.566574,
+          "firstCrossingKmh": 115.566574,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 111.757385,
+          "exitKmh": 114.725919,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            32.000124,
+            32.000048
+          ],
+          "flyingSeconds": 32.000048,
+          "peakKmh": 109.52327,
+          "firstCrossingKmh": 109.52327,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 106.314519,
+          "exitKmh": 108.816812,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            31.677322,
+            31.665432
+          ],
+          "flyingSeconds": 31.665432,
+          "peakKmh": 110.422017,
+          "firstCrossingKmh": 110.422017,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.766141,
+          "exitKmh": 109.825774,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            30.973852,
+            30.94291
+          ],
+          "flyingSeconds": 30.94291,
+          "peakKmh": 112.994296,
+          "firstCrossingKmh": 112.994296,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 110.132405,
+          "exitKmh": 112.352571,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            31.390236,
+            31.385902
+          ],
+          "flyingSeconds": 31.385902,
+          "peakKmh": 111.351757,
+          "firstCrossingKmh": 111.351757,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.660758,
+          "exitKmh": 110.645152,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            32.152285,
+            32.18287
+          ],
+          "flyingSeconds": 32.18287,
+          "peakKmh": 109.0584,
+          "firstCrossingKmh": 109.0584,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 106.112746,
+          "exitKmh": 108.459347,
+          "bridgeTicks": 0
+        }
+      ]
+    },
+    {
+      "id": "korea",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            33.744566,
+            33.734751
+          ],
+          "flyingSeconds": 33.734751,
+          "peakKmh": 119.7504,
+          "firstCrossingKmh": 119.7504,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.546302,
+          "exitKmh": 114.089359,
+          "bridgeTicks": 602
+        },
+        {
+          "id": "t02",
+          "laps": [
+            33.729375,
+            33.730907
+          ],
+          "flyingSeconds": 33.730907,
+          "peakKmh": 118.57273,
+          "firstCrossingKmh": 118.57273,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.781047,
+          "exitKmh": 113.928057,
+          "bridgeTicks": 583
+        },
+        {
+          "id": "t03",
+          "laps": [
+            33.910742,
+            33.968348
+          ],
+          "flyingSeconds": 33.968348,
+          "peakKmh": 118.820661,
+          "firstCrossingKmh": 118.820661,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 111.85708,
+          "exitKmh": 113.358034,
+          "bridgeTicks": 604
+        },
+        {
+          "id": "t04",
+          "laps": [
+            34.141076,
+            34.141282
+          ],
+          "flyingSeconds": 34.141282,
+          "peakKmh": 116.930191,
+          "firstCrossingKmh": 116.930191,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 111.288912,
+          "exitKmh": 112.092931,
+          "bridgeTicks": 594
+        },
+        {
+          "id": "t05",
+          "laps": [
+            35.015975,
+            35.033203
+          ],
+          "flyingSeconds": 35.033203,
+          "peakKmh": 114.636835,
+          "firstCrossingKmh": 114.636835,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.718247,
+          "exitKmh": 109.586816,
+          "bridgeTicks": 613
+        },
+        {
+          "id": "t06",
+          "laps": [
+            36.413342,
+            36.400079
+          ],
+          "flyingSeconds": 36.400079,
+          "peakKmh": 109.027409,
+          "firstCrossingKmh": 109.027409,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 104.500042,
+          "exitKmh": 105.022394,
+          "bridgeTicks": 624
+        },
+        {
+          "id": "t07",
+          "laps": [
+            36.165296,
+            36.169153
+          ],
+          "flyingSeconds": 36.169153,
+          "peakKmh": 109.957148,
+          "firstCrossingKmh": 109.957148,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 105.440415,
+          "exitKmh": 106.324777,
+          "bridgeTicks": 620
+        },
+        {
+          "id": "t08",
+          "laps": [
+            34.759886,
+            34.755322
+          ],
+          "flyingSeconds": 34.755322,
+          "peakKmh": 115.566574,
+          "firstCrossingKmh": 115.566574,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.568046,
+          "exitKmh": 110.952055,
+          "bridgeTicks": 608
+        },
+        {
+          "id": "t09",
+          "laps": [
+            36.522386,
+            36.537109
+          ],
+          "flyingSeconds": 36.537109,
+          "peakKmh": 109.52327,
+          "firstCrossingKmh": 109.52327,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 104.42198,
+          "exitKmh": 105.510311,
+          "bridgeTicks": 633
+        },
+        {
+          "id": "t10",
+          "laps": [
+            35.98777,
+            36.01198
+          ],
+          "flyingSeconds": 36.01198,
+          "peakKmh": 110.422017,
+          "firstCrossingKmh": 110.422017,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 105.830884,
+          "exitKmh": 106.637285,
+          "bridgeTicks": 618
+        },
+        {
+          "id": "t11",
+          "laps": [
+            35.246659,
+            35.263537
+          ],
+          "flyingSeconds": 35.263537,
+          "peakKmh": 112.994296,
+          "firstCrossingKmh": 112.994296,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.766512,
+          "exitKmh": 108.351591,
+          "bridgeTicks": 605
+        },
+        {
+          "id": "t12",
+          "laps": [
+            35.707794,
+            35.728117
+          ],
+          "flyingSeconds": 35.728117,
+          "peakKmh": 111.351757,
+          "firstCrossingKmh": 111.351757,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 106.467433,
+          "exitKmh": 107.344729,
+          "bridgeTicks": 614
+        },
+        {
+          "id": "t13",
+          "laps": [
+            36.667022,
+            36.669885
+          ],
+          "flyingSeconds": 36.669885,
+          "peakKmh": 109.0584,
+          "firstCrossingKmh": 109.0584,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 103.922646,
+          "exitKmh": 104.900076,
+          "bridgeTicks": 634
+        }
+      ]
+    },
+    {
+      "id": "france",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            35.428957,
+            35.432278
+          ],
+          "flyingSeconds": 35.432278,
+          "peakKmh": 119.7504,
+          "firstCrossingKmh": 119.7504,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.636664,
+          "exitKmh": 113.443434,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            35.619502,
+            35.50797
+          ],
+          "flyingSeconds": 35.50797,
+          "peakKmh": 118.57273,
+          "firstCrossingKmh": 118.57273,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.393042,
+          "exitKmh": 112.655099,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            35.630322,
+            35.632604
+          ],
+          "flyingSeconds": 35.632604,
+          "peakKmh": 118.820661,
+          "firstCrossingKmh": 118.820661,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.019859,
+          "exitKmh": 112.910613,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            35.935557,
+            35.965625
+          ],
+          "flyingSeconds": 35.965625,
+          "peakKmh": 116.930191,
+          "firstCrossingKmh": 116.930191,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.907371,
+          "exitKmh": 111.352845,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            36.827087,
+            36.799866
+          ],
+          "flyingSeconds": 36.799866,
+          "peakKmh": 114.636835,
+          "firstCrossingKmh": 114.636835,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 105.589099,
+          "exitKmh": 109.255134,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            38.315498,
+            38.334133
+          ],
+          "flyingSeconds": 38.334133,
+          "peakKmh": 109.027409,
+          "firstCrossingKmh": 109.027409,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 101.377025,
+          "exitKmh": 104.090331,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            37.970872,
+            37.961476
+          ],
+          "flyingSeconds": 37.961476,
+          "peakKmh": 109.957148,
+          "firstCrossingKmh": 109.957148,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 102.310487,
+          "exitKmh": 105.3363,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            36.573232,
+            36.597837
+          ],
+          "flyingSeconds": 36.597837,
+          "peakKmh": 115.566574,
+          "firstCrossingKmh": 115.566574,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 106.072343,
+          "exitKmh": 109.632019,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            38.332445,
+            38.368305
+          ],
+          "flyingSeconds": 38.368305,
+          "peakKmh": 109.52327,
+          "firstCrossingKmh": 109.52327,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 101.334751,
+          "exitKmh": 104.229176,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            37.850224,
+            37.824113
+          ],
+          "flyingSeconds": 37.824113,
+          "peakKmh": 110.422017,
+          "firstCrossingKmh": 110.422017,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 102.82555,
+          "exitKmh": 105.591836,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            37.104731,
+            37.101008
+          ],
+          "flyingSeconds": 37.101008,
+          "peakKmh": 112.994296,
+          "firstCrossingKmh": 112.994296,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 104.740403,
+          "exitKmh": 107.873384,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            37.506271,
+            37.530262
+          ],
+          "flyingSeconds": 37.530262,
+          "peakKmh": 111.351757,
+          "firstCrossingKmh": 111.351757,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 103.537524,
+          "exitKmh": 106.30476,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            38.553508,
+            38.524601
+          ],
+          "flyingSeconds": 38.524601,
+          "peakKmh": 109.0584,
+          "firstCrossingKmh": 109.0584,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 100.964436,
+          "exitKmh": 103.974291,
+          "bridgeTicks": 0
+        }
+      ]
+    },
+    {
+      "id": "england",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            27.222434,
+            27.209769
+          ],
+          "flyingSeconds": 27.209769,
+          "peakKmh": 119.7504,
+          "firstCrossingKmh": 119.7504,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.877032,
+          "exitKmh": 112.059854,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            27.301817,
+            27.333299
+          ],
+          "flyingSeconds": 27.333299,
+          "peakKmh": 118.57273,
+          "firstCrossingKmh": 118.57273,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.571834,
+          "exitKmh": 111.729068,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            27.419545,
+            27.404544
+          ],
+          "flyingSeconds": 27.404544,
+          "peakKmh": 118.820661,
+          "firstCrossingKmh": 118.820661,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.187781,
+          "exitKmh": 111.689818,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            27.613145,
+            27.666349
+          ],
+          "flyingSeconds": 27.666349,
+          "peakKmh": 116.930191,
+          "firstCrossingKmh": 116.930191,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 106.257379,
+          "exitKmh": 109.639184,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            28.402954,
+            28.399956
+          ],
+          "flyingSeconds": 28.399956,
+          "peakKmh": 114.636835,
+          "firstCrossingKmh": 114.636835,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 103.341312,
+          "exitKmh": 106.849907,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            29.432282,
+            29.433348
+          ],
+          "flyingSeconds": 29.433348,
+          "peakKmh": 109.027409,
+          "firstCrossingKmh": 109.027409,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 100.393873,
+          "exitKmh": 103.330819,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            29.220144,
+            29.170239
+          ],
+          "flyingSeconds": 29.170239,
+          "peakKmh": 109.957148,
+          "firstCrossingKmh": 109.957148,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 101.294797,
+          "exitKmh": 104.27492,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            28.089179,
+            28.154908
+          ],
+          "flyingSeconds": 28.154908,
+          "peakKmh": 115.566574,
+          "firstCrossingKmh": 115.566574,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 104.343501,
+          "exitKmh": 108.264206,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            29.535986,
+            29.534653
+          ],
+          "flyingSeconds": 29.534653,
+          "peakKmh": 109.52327,
+          "firstCrossingKmh": 109.52327,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 99.804098,
+          "exitKmh": 103.171594,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            29.093874,
+            29.107205
+          ],
+          "flyingSeconds": 29.107205,
+          "peakKmh": 110.422017,
+          "firstCrossingKmh": 110.422017,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 101.502334,
+          "exitKmh": 104.376336,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            28.569981,
+            28.587256
+          ],
+          "flyingSeconds": 28.587256,
+          "peakKmh": 112.994296,
+          "firstCrossingKmh": 112.994296,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 103.098605,
+          "exitKmh": 106.260398,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            28.899395,
+            28.924127
+          ],
+          "flyingSeconds": 28.924127,
+          "peakKmh": 111.351757,
+          "firstCrossingKmh": 111.351757,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 101.88011,
+          "exitKmh": 104.98917,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            29.642309,
+            29.692755
+          ],
+          "flyingSeconds": 29.692755,
+          "peakKmh": 109.0584,
+          "firstCrossingKmh": 109.0584,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 99.219221,
+          "exitKmh": 102.257881,
+          "bridgeTicks": 0
+        }
+      ]
+    },
+    {
+      "id": "russia",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            37.209398,
+            37.200993
+          ],
+          "flyingSeconds": 37.200993,
+          "peakKmh": 119.7504,
+          "firstCrossingKmh": 119.7504,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 119.340649,
+          "exitKmh": 119.7504,
+          "bridgeTicks": 1307
+        },
+        {
+          "id": "t02",
+          "laps": [
+            37.545626,
+            37.543854
+          ],
+          "flyingSeconds": 37.543854,
+          "peakKmh": 118.57273,
+          "firstCrossingKmh": 118.57273,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.302469,
+          "exitKmh": 118.57273,
+          "bridgeTicks": 1321
+        },
+        {
+          "id": "t03",
+          "laps": [
+            37.490245,
+            37.491998
+          ],
+          "flyingSeconds": 37.491998,
+          "peakKmh": 118.820661,
+          "firstCrossingKmh": 118.820661,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.391128,
+          "exitKmh": 118.79344,
+          "bridgeTicks": 1318
+        },
+        {
+          "id": "t04",
+          "laps": [
+            38.066857,
+            38.066863
+          ],
+          "flyingSeconds": 38.066863,
+          "peakKmh": 116.930191,
+          "firstCrossingKmh": 116.930191,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 116.681677,
+          "exitKmh": 116.930191,
+          "bridgeTicks": 1340
+        },
+        {
+          "id": "t05",
+          "laps": [
+            38.853942,
+            38.853095
+          ],
+          "flyingSeconds": 38.853095,
+          "peakKmh": 114.636835,
+          "firstCrossingKmh": 114.636835,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 114.193411,
+          "exitKmh": 114.426689,
+          "bridgeTicks": 1366
+        },
+        {
+          "id": "t06",
+          "laps": [
+            40.813454,
+            40.813105
+          ],
+          "flyingSeconds": 40.813105,
+          "peakKmh": 109.027409,
+          "firstCrossingKmh": 109.027409,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.857103,
+          "exitKmh": 109.027409,
+          "bridgeTicks": 1436
+        },
+        {
+          "id": "t07",
+          "laps": [
+            40.467088,
+            40.4671
+          ],
+          "flyingSeconds": 40.4671,
+          "peakKmh": 109.957148,
+          "firstCrossingKmh": 109.957148,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.784974,
+          "exitKmh": 109.957148,
+          "bridgeTicks": 1423
+        },
+        {
+          "id": "t08",
+          "laps": [
+            38.537722,
+            38.539188
+          ],
+          "flyingSeconds": 38.539188,
+          "peakKmh": 115.566574,
+          "firstCrossingKmh": 115.566574,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.265078,
+          "exitKmh": 115.566574,
+          "bridgeTicks": 1355
+        },
+        {
+          "id": "t09",
+          "laps": [
+            40.651883,
+            40.650002
+          ],
+          "flyingSeconds": 40.650002,
+          "peakKmh": 109.52327,
+          "firstCrossingKmh": 109.52327,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.272307,
+          "exitKmh": 109.52327,
+          "bridgeTicks": 1433
+        },
+        {
+          "id": "t10",
+          "laps": [
+            40.299969,
+            40.299967
+          ],
+          "flyingSeconds": 40.299967,
+          "peakKmh": 110.422017,
+          "firstCrossingKmh": 110.422017,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 110.231008,
+          "exitKmh": 110.422017,
+          "bridgeTicks": 1418
+        },
+        {
+          "id": "t11",
+          "laps": [
+            39.387826,
+            39.387355
+          ],
+          "flyingSeconds": 39.387355,
+          "peakKmh": 112.994296,
+          "firstCrossingKmh": 112.994296,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.770109,
+          "exitKmh": 112.994296,
+          "bridgeTicks": 1386
+        },
+        {
+          "id": "t12",
+          "laps": [
+            39.962296,
+            39.962961
+          ],
+          "flyingSeconds": 39.962961,
+          "peakKmh": 111.351757,
+          "firstCrossingKmh": 111.351757,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 111.158524,
+          "exitKmh": 111.351757,
+          "bridgeTicks": 1406
+        },
+        {
+          "id": "t13",
+          "laps": [
+            40.825486,
+            40.823937
+          ],
+          "flyingSeconds": 40.823937,
+          "peakKmh": 109.0584,
+          "firstCrossingKmh": 109.0584,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.826194,
+          "exitKmh": 109.0584,
+          "bridgeTicks": 1434
+        }
+      ]
+    },
+    {
+      "id": "italy",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            30.069141,
+            30.067288
+          ],
+          "flyingSeconds": 30.067288,
+          "peakKmh": 119.7504,
+          "firstCrossingKmh": 119.7504,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 114.143932,
+          "exitKmh": 119.448576,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            30.256841,
+            30.251608
+          ],
+          "flyingSeconds": 30.251608,
+          "peakKmh": 118.57273,
+          "firstCrossingKmh": 118.57273,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.869509,
+          "exitKmh": 118.382281,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            30.296585,
+            30.299354
+          ],
+          "flyingSeconds": 30.299354,
+          "peakKmh": 118.820661,
+          "firstCrossingKmh": 118.820661,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.487658,
+          "exitKmh": 118.656011,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            30.661459,
+            30.664196
+          ],
+          "flyingSeconds": 30.664196,
+          "peakKmh": 116.930191,
+          "firstCrossingKmh": 116.930191,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.666897,
+          "exitKmh": 116.930191,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            31.335051,
+            31.338912
+          ],
+          "flyingSeconds": 31.338912,
+          "peakKmh": 114.636835,
+          "firstCrossingKmh": 114.636835,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.811386,
+          "exitKmh": 114.543986,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            32.777377,
+            32.766909
+          ],
+          "flyingSeconds": 32.766909,
+          "peakKmh": 109.027409,
+          "firstCrossingKmh": 109.027409,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 105.567074,
+          "exitKmh": 109.027409,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            32.504336,
+            32.505533
+          ],
+          "flyingSeconds": 32.505533,
+          "peakKmh": 109.957148,
+          "firstCrossingKmh": 109.957148,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 106.286245,
+          "exitKmh": 109.913653,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            31.096159,
+            31.09523
+          ],
+          "flyingSeconds": 31.09523,
+          "peakKmh": 115.566574,
+          "firstCrossingKmh": 115.566574,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 110.823087,
+          "exitKmh": 115.501954,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            32.74476,
+            32.764479
+          ],
+          "flyingSeconds": 32.764479,
+          "peakKmh": 109.52327,
+          "firstCrossingKmh": 109.52327,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 105.116991,
+          "exitKmh": 109.294154,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            32.369815,
+            32.365931
+          ],
+          "flyingSeconds": 32.365931,
+          "peakKmh": 110.422017,
+          "firstCrossingKmh": 110.422017,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 106.978355,
+          "exitKmh": 110.422017,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            31.693668,
+            31.700311
+          ],
+          "flyingSeconds": 31.700311,
+          "peakKmh": 112.994296,
+          "firstCrossingKmh": 112.994296,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.895504,
+          "exitKmh": 112.780752,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            32.108752,
+            32.102134
+          ],
+          "flyingSeconds": 32.102134,
+          "peakKmh": 111.351757,
+          "firstCrossingKmh": 111.351757,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.750972,
+          "exitKmh": 111.351757,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            32.874779,
+            32.887611
+          ],
+          "flyingSeconds": 32.887611,
+          "peakKmh": 109.0584,
+          "firstCrossingKmh": 109.0584,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 104.73336,
+          "exitKmh": 108.91665,
+          "bridgeTicks": 0
+        }
+      ]
+    },
+    {
+      "id": "japan",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            38.839354,
+            38.839147
+          ],
+          "flyingSeconds": 38.839147,
+          "peakKmh": 119.7504,
+          "firstCrossingKmh": 119.7504,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.561984,
+          "exitKmh": 114.469322,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            39.002371,
+            39.019386
+          ],
+          "flyingSeconds": 39.019386,
+          "peakKmh": 118.57273,
+          "firstCrossingKmh": 118.57273,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.737406,
+          "exitKmh": 113.6128,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            39.164803,
+            39.166149
+          ],
+          "flyingSeconds": 39.166149,
+          "peakKmh": 118.820661,
+          "firstCrossingKmh": 118.820661,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.850525,
+          "exitKmh": 113.388084,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            39.47903,
+            39.522177
+          ],
+          "flyingSeconds": 39.522177,
+          "peakKmh": 116.930191,
+          "firstCrossingKmh": 116.930191,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.247743,
+          "exitKmh": 112.156906,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            40.450395,
+            40.480068
+          ],
+          "flyingSeconds": 40.480068,
+          "peakKmh": 114.636835,
+          "firstCrossingKmh": 114.636835,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 105.656416,
+          "exitKmh": 109.515562,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            42.157761,
+            42.171304
+          ],
+          "flyingSeconds": 42.171304,
+          "peakKmh": 109.027409,
+          "firstCrossingKmh": 109.027409,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 102.21781,
+          "exitKmh": 105.154039,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            41.8332,
+            41.833308
+          ],
+          "flyingSeconds": 41.833308,
+          "peakKmh": 109.957148,
+          "firstCrossingKmh": 109.957148,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 102.90394,
+          "exitKmh": 105.996324,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            40.160648,
+            40.199722
+          ],
+          "flyingSeconds": 40.199722,
+          "peakKmh": 115.566574,
+          "firstCrossingKmh": 115.566574,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 106.183994,
+          "exitKmh": 109.818699,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            42.180558,
+            42.167926
+          ],
+          "flyingSeconds": 42.167926,
+          "peakKmh": 109.52327,
+          "firstCrossingKmh": 109.52327,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 101.688259,
+          "exitKmh": 105.475749,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            41.647179,
+            41.635251
+          ],
+          "flyingSeconds": 41.635251,
+          "peakKmh": 110.422017,
+          "firstCrossingKmh": 110.422017,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 103.439286,
+          "exitKmh": 106.857426,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            40.796497,
+            40.796214
+          ],
+          "flyingSeconds": 40.796214,
+          "peakKmh": 112.994296,
+          "firstCrossingKmh": 112.994296,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 105.406834,
+          "exitKmh": 108.896259,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            41.34214,
+            41.362805
+          ],
+          "flyingSeconds": 41.362805,
+          "peakKmh": 111.351757,
+          "firstCrossingKmh": 111.351757,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 104.160429,
+          "exitKmh": 107.387516,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            42.336879,
+            42.333719
+          ],
+          "flyingSeconds": 42.333719,
+          "peakKmh": 109.0584,
+          "firstCrossingKmh": 109.0584,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 101.285928,
+          "exitKmh": 104.920628,
+          "bridgeTicks": 0
+        }
+      ]
+    }
+  ]
+}

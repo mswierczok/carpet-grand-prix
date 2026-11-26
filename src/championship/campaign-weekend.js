@@ -3,8 +3,9 @@
   const A = globalThis.CGPArcade;
   // Campaign flow around the native weekend; no simulation, forces or clocks.
   function create(game, { diagnostics = false } = {}) {
+    game = A.Campaign.validate(game, false);
     const track = A.TrackCatalog.get(game.trackId),
-      options = { playerTeam: game.teamId, ...game.options, diagnostics };
+      options = { playerTeam: game.teamId, ...game.options, diagnostics, performance: A.VehiclePerformance.campaign };
     let weekend = game.weekend
         ? A.RaceWeekend.restore(game.weekend)
         : A.RaceWeekend.create(track, options),
@@ -14,8 +15,8 @@
     function settle() {
       if (
         qualifyingActive &&
-        weekend.snapshot().qualifying?.finished &&
-        weekend.acceptQualifying()
+        ((weekend.snapshot().qualifying?.finished && weekend.acceptQualifying()) ||
+          (!weekend.snapshot().qualifying && weekend.snapshot().qualifyingResult))
       ) {
         weekend.pause(true);
         qualifyingActive = false;
@@ -87,7 +88,7 @@
         )
           return false;
         const config = weekend.exportState().config;
-        weekend = A.RaceWeekend.create(track, config);
+        weekend = A.RaceWeekend.create(track, { ...config, performance: config.performance || null, qualifyingFormat: config.qualifyingFormat || null });
         legacy = false;
         qualifyingActive = false;
         transitioned = true;

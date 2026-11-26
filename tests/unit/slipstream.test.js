@@ -314,7 +314,7 @@ it("reproduziert ohne Windschatten das veröffentlichte 13er-Feld exakt", () => 
   const { data } = loadArcade({ race: true });
   scope.CGPArcadeData = data;
   const track = api.TrackCatalog.get("bahrain"),
-    a = api.RaceSession.create(track, { laps: 3, slipstream: false, catchup: false }),
+    a = api.RaceSession.create(track, { laps: 3, slipstream: false, catchup: false, performance:null }),
     b = scope.CGPArcade.RaceSession.create(track, { laps: 3 });
   a.pause(false); b.pause(false);
   for (let i = 0; i < 30 * 20; i++) {

@@ -27,7 +27,7 @@ export function measureField(published = false) {
   // This historical test isolates the AI competence improvement against a
   // controller that predates aerodynamic headroom. Do not mix the newly
   // authorized wind mechanic into either side; its A/B races live separately.
-  const race = api.RaceSession.create(data.tracks.bahrain, { laps: 3, slipstream: false, catchup: false }),
+  const race = api.RaceSession.create(data.tracks.bahrain, { laps: 3, slipstream: false, catchup: false, performance:null }),
     playerDriver = reference.create(race.surface, race.parameters),
     memory = playerDriver.memory(0, -6),
     peaks = {},

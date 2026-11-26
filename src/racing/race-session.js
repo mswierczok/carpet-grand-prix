@@ -8,11 +8,16 @@
       parameters = A.Physics.parameters,
       teams = options.teams || CGPArcadeData.roster.teams,
       laps = options.laps ?? A.RaceFormats.get(track.id).laps;
+    const performance = options.performance === null ? null : A.VehiclePerformance.validate(options.performance ?? A.VehiclePerformance.historical),
+      profilesByTeam = Object.freeze(Object.fromEntries(teams.map(t => [t.id, A.VehiclePerformance.get(t.id, performance)]))),
+      parametersByTeam = Object.freeze(Object.fromEntries(teams.map(t => [t.id, profilesByTeam[t.id].parameters])));
+    const qualifyingFormat = options.qualifyingFormat || null,
+      qualifyingStartS = options.qualifyingDrivers && qualifyingFormat === "flying-one-v1"
+        ? options.qualifyingStartS ?? A.QualifyingApproach.select(surface, parametersByTeam).s : null;
     const isolated = options.isolated === true,
       slipstreamEnabled = !isolated && options.slipstream !== false;
     let catchupEnabled = !isolated && options.catchup !== false, gapHistory;
-    let difficulty = A.AIDifficulty.get(options.difficulty),
-      controller = A.Opponents.create(surface, parameters, { difficulty: difficulty.id, diagnostics: !!options.diagnostics });
+    let difficulty = A.AIDifficulty.get(options.difficulty), controller;
     if (!Number.isInteger(laps) || laps < 1)
       throw Error("Ungültige Rundenzahl.");
     if (teams.length !== 13 || new Set(teams.map((t) => t.id)).size !== 13)
@@ -24,6 +29,17 @@
       new Set(gridOrder).size !== 13 || gridOrder.some((id) => !teams.some((t) => t.id === id))))
       throw Error("Die Startaufstellung muss alle 13 Teams genau einmal enthalten.");
     const grid = gridOrder ? [...gridOrder] : null;
+    if (options.restore) {
+      const saved = A.POVCheckpoint.race(options.restore, false), c = saved.config;
+      if (saved.trackId !== track.id || c.playerTeam !== (options.playerTeam || teams[0].id) ||
+        c.laps !== laps || c.isolated !== isolated || c.catchup !== catchupEnabled ||
+        c.slipstream !== slipstreamEnabled || c.difficulty !== difficulty.id ||
+        (c.performance?.version || null) !== (performance?.version || null) ||
+        (c.performance?.context || null) !== (performance?.context || null) ||
+        (c.qualifyingFormat || null) !== qualifyingFormat ||
+        (c.qualifyingStartS ?? null) !== qualifyingStartS || JSON.stringify(c.gridOrder) !== JSON.stringify(grid))
+        throw Error("Die Wiederherstellung darf das gespeicherte Renn- oder Fahrzeugmodell nicht ändern.");
+    }
     let playerTeam = options.playerTeam || teams[0].id,
       driverSeeds,
       entries,
@@ -37,6 +53,7 @@
       playerContacts;
     if (!teams.some((t) => t.id === playerTeam))
       throw Error("Unbekanntes Spielerteam.");
+    controller = A.Opponents.create(surface, parameters, { difficulty: difficulty.id, diagnostics: !!options.diagnostics, parametersByTeam });
     function pose(s, lane) {
       const car = A.Physics.spawn(surface, s),
         at = surface.at(s, lane);
@@ -63,7 +80,7 @@
       const order = grid ? grid.map((id) => teams.find((t) => t.id === id)) : defaultOrder;
       entries = order.map((team, i) => {
         const lane = isolated ? 0 : i % 2 ? 6 : -6,
-          car = pose(isolated ? -22 : -22 - Math.floor(i / 2) * 16 - (i % 2) * 3, lane);
+          car = pose(isolated ? qualifyingStartS ?? -22 : -22 - Math.floor(i / 2) * 16 - (i % 2) * 3, lane);
         return {
           id: team.id,
           team,
@@ -99,7 +116,7 @@
     function selectDifficulty(id) {
       if (phase !== "grid" || !A.AIDifficulty.profiles.some((p) => p.id === id)) return false;
       difficulty = A.AIDifficulty.get(id);
-      controller = A.Opponents.create(surface, parameters, { difficulty: id, diagnostics: !!options.diagnostics });
+      controller = A.Opponents.create(surface, parameters, { difficulty: id, diagnostics: !!options.diagnostics, parametersByTeam });
       restart();
       return true;
     }
@@ -142,7 +159,7 @@
       const wakes = slipstreamEnabled
         ? (elapsed + 1e-9 < A.Slipstream.settings.startSeconds
           ? entries.map(() => A.Slipstream.empty())
-          : A.Slipstream.update(entries, surface, parameters, fixedStep))
+          : A.Slipstream.update(entries, surface, parameters, fixedStep, e => parametersByTeam[e.id]))
         : null;
       if (wakes) entries.forEach((entry, i) => { entry.slipstream = wakes[i]; });
       const previous = entries.map((e) => e.car),
@@ -151,7 +168,7 @@
             e.car,
             e.player && e.finishTime === null ? input : e.command,
             surface,
-            parameters,
+            parametersByTeam[e.id],
             fixedStep,
             catchupEnabled ? { ...(wakes?.[i] || { strength: 0 }), catchup: e.catchup.pace } : wakes?.[i] || null,
           ),
@@ -260,6 +277,7 @@
             teamId: e.id,
             name: e.team.name,
             player: e.player,
+            ...(performance ? { performance: profilesByTeam[e.id] } : {}),
             car: { ...e.car },
             visual: {
               ...e.car,
@@ -338,7 +356,10 @@
       return A.POVCheckpoint.copy({ kind: "race", version: 1, trackId: track.id,
         signature: A.POVCheckpoint.signature(track.id),
         config: { playerTeam, difficulty: difficulty.id, catchup: catchupEnabled, slipstream: slipstreamEnabled,
-          isolated, qualifying: !!options.qualifyingDrivers, laps, gridOrder: grid, diagnostics: !!options.diagnostics },
+          isolated, qualifying: !!options.qualifyingDrivers, laps, gridOrder: grid, diagnostics: !!options.diagnostics,
+          ...(performance ? { performance } : {}),
+          ...(qualifyingFormat ? { qualifyingFormat } : {}),
+          ...(qualifyingStartS !== null ? { qualifyingStartS } : {}) },
         state: { phase, countdown, elapsed, accumulator, paused, tick, pairs: [...pairs], playerContacts,
           gaps: gapHistory ? gapHistory.exportState() : null,
           entries: entries.map(e => ({ id: e.id, car: e.car, previous: e.previous, timing: e.timing,
@@ -361,7 +382,8 @@
     return Object.freeze({
       exportState,
       surface,
-      parameters,
+      get parameters() { return parametersByTeam[playerTeam]; },
+      parametersFor: id => parametersByTeam[id],
       advance,
       pause,
       recover,
@@ -375,8 +397,9 @@
   function restore(value) {
     const saved = A.POVCheckpoint.race(value), config = saved.config;
     return create(A.TrackCatalog.get(saved.trackId), { ...config,
+      performance: config.performance || null,
       gridOrder: config.gridOrder === null ? undefined : config.gridOrder,
-      ...(config.qualifying ? { qualifyingDrivers: A.QualifyingDrivers.create(CGPArcadeData.roster.teams) } : {}),
+      ...(config.qualifying ? { qualifyingDrivers: A.QualifyingDrivers.create(CGPArcadeData.roster.teams, { technical: !!config.performance }) } : {}),
       restore: saved });
   }
   A.RaceSession = Object.freeze({ create, restore, fixedStep });

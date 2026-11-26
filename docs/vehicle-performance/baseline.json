@@ -1,0 +1,3218 @@
+{
+  "stage": "baseline",
+  "baseCommit": "b4a797c7b9b390243db6b72213e99fffb081e876",
+  "difficulty": "expert",
+  "hz": 120,
+  "hashes": {
+    "src/racing/physics.js": "082782a78df28b280f7d38b23d41a5df03ba7e06153e737f22a055a3badd9764",
+    "src/racing/opponents.js": "ca6db01c6a2a1f88ff1a98385cad533151b432db673b3c39346c59f2922213dc",
+    "src/racing/qualifying-drivers.js": "2af8b5aaa6f9f45e10dd4c4897388b2d416cb9a5368ba4fd5d10bbe4d56e2ade",
+    "src/racing/qualifying-session.js": "4f7e32bfbdb71df913d8fbc709493a4d05694dcbe8eab6c74422c5a82ff1b22f",
+    "src/racing/race-session.js": "f326a0f7ca1d06c2c93936f4d5418a94971ce5862096fc3218b625287e33fb7d",
+    "src/racing/race-weekend.js": "0009b4dd79bf15e61955b58b64b5d50bc5b0ce2c1e0f96d88ba0d7b299a5679e",
+    "src/racing/slipstream.js": "7086647f010b6ef41b5da8d7593dd197625cec58a27f81b27c653e22b1f14a0f",
+    "src/racing/catchup.js": "de512d62d18328762223637b5895a16ae6625495d578b8f87aefa05a3f3c88b9",
+    "src/data/arcade-roster.js": "9e64b6cc8693a96a4cdd6924200055bb4840adde58b13c8f117bc476142b0920",
+    "src/data/arcade-tracks.js": "af32cf5939d3dc1b1c7cd0a93a01e3e782db8eb7e7be66203cfe2fbd8414677b"
+  },
+  "protocol": "Native Physics.step, ordinary 30Hz inputs, 120Hz fixed steps. Solo: identical expert controller, no execution variation, no traffic/wake/catchup, two full laps after standing launch (second measured). Bench: flat straight, ordinary acceleration to 100km/h then ordinary full brake. Traffic: all 13 native vehicles and normal race lengths, catchup off/on. Qualifying: actual isolated sessions; player reference uses ordinary expert inputs. First crossing speeds interpolate native velocity components at the exact Timing crossing fraction, before any entrant finishes. Timing observer returns the unmodified original Timing result. No pose/speed/gate/time writes.",
+  "teams": [
+    {
+      "id": "t01",
+      "name": "Vauclair Motorsport",
+      "historicalStrength": 87,
+      "developmentPotential": 95,
+      "focus": "power",
+      "profile": null,
+      "bench": {
+        "zeroTo80Seconds": 1.466667,
+        "zeroTo100Seconds": 1.9,
+        "topKmh": 118.8,
+        "brakeStartKmh": 100.340957,
+        "brakeMeters": 8.346658
+      }
+    },
+    {
+      "id": "t02",
+      "name": "Alderwick Racing",
+      "historicalStrength": 86,
+      "developmentPotential": 95,
+      "focus": "aero",
+      "profile": null,
+      "bench": {
+        "zeroTo80Seconds": 1.466667,
+        "zeroTo100Seconds": 1.9,
+        "topKmh": 118.8,
+        "brakeStartKmh": 100.340957,
+        "brakeMeters": 8.346658
+      }
+    },
+    {
+      "id": "t03",
+      "name": "Falkenheim GP",
+      "historicalStrength": 85,
+      "developmentPotential": 94,
+      "focus": "power",
+      "profile": null,
+      "bench": {
+        "zeroTo80Seconds": 1.466667,
+        "zeroTo100Seconds": 1.9,
+        "topKmh": 118.8,
+        "brakeStartKmh": 100.340957,
+        "brakeMeters": 8.346658
+      }
+    },
+    {
+      "id": "t04",
+      "name": "Scuderia Bellarossa",
+      "historicalStrength": 84,
+      "developmentPotential": 96,
+      "focus": "handling",
+      "profile": null,
+      "bench": {
+        "zeroTo80Seconds": 1.466667,
+        "zeroTo100Seconds": 1.9,
+        "topKmh": 118.8,
+        "brakeStartKmh": 100.340957,
+        "brakeMeters": 8.346658
+      }
+    },
+    {
+      "id": "t05",
+      "name": "Eisenbach Motorsport",
+      "historicalStrength": 76,
+      "developmentPotential": 92,
+      "focus": "power",
+      "profile": null,
+      "bench": {
+        "zeroTo80Seconds": 1.466667,
+        "zeroTo100Seconds": 1.9,
+        "topKmh": 118.8,
+        "brakeStartKmh": 100.340957,
+        "brakeMeters": 8.346658
+      }
+    },
+    {
+      "id": "t06",
+      "name": "Orange",
+      "historicalStrength": 67,
+      "developmentPotential": 89,
+      "focus": "handling",
+      "profile": null,
+      "bench": {
+        "zeroTo80Seconds": 1.466667,
+        "zeroTo100Seconds": 1.9,
+        "topKmh": 118.8,
+        "brakeStartKmh": 100.340957,
+        "brakeMeters": 8.346658
+      }
+    },
+    {
+      "id": "t07",
+      "name": "Ragos Racing",
+      "historicalStrength": 69,
+      "developmentPotential": 93,
+      "focus": "handling",
+      "profile": null,
+      "bench": {
+        "zeroTo80Seconds": 1.466667,
+        "zeroTo100Seconds": 1.9,
+        "topKmh": 118.8,
+        "brakeStartKmh": 100.340957,
+        "brakeMeters": 8.346658
+      }
+    },
+    {
+      "id": "t08",
+      "name": "Mugan",
+      "historicalStrength": 78,
+      "developmentPotential": 95,
+      "focus": "power",
+      "profile": null,
+      "bench": {
+        "zeroTo80Seconds": 1.466667,
+        "zeroTo100Seconds": 1.9,
+        "topKmh": 118.8,
+        "brakeStartKmh": 100.340957,
+        "brakeMeters": 8.346658
+      }
+    },
+    {
+      "id": "t09",
+      "name": "Lincoln",
+      "historicalStrength": 65,
+      "developmentPotential": 88,
+      "focus": "power",
+      "profile": null,
+      "bench": {
+        "zeroTo80Seconds": 1.466667,
+        "zeroTo100Seconds": 1.9,
+        "topKmh": 118.8,
+        "brakeStartKmh": 100.340957,
+        "brakeMeters": 8.346658
+      }
+    },
+    {
+      "id": "t10",
+      "name": "Panther Racing",
+      "historicalStrength": 70,
+      "developmentPotential": 90,
+      "focus": "handling",
+      "profile": null,
+      "bench": {
+        "zeroTo80Seconds": 1.466667,
+        "zeroTo100Seconds": 1.9,
+        "topKmh": 118.8,
+        "brakeStartKmh": 100.340957,
+        "brakeMeters": 8.346658
+      }
+    },
+    {
+      "id": "t11",
+      "name": "Rivage Racing",
+      "historicalStrength": 74,
+      "developmentPotential": 89,
+      "focus": "aero",
+      "profile": null,
+      "bench": {
+        "zeroTo80Seconds": 1.466667,
+        "zeroTo100Seconds": 1.9,
+        "topKmh": 118.8,
+        "brakeStartKmh": 100.340957,
+        "brakeMeters": 8.346658
+      }
+    },
+    {
+      "id": "t12",
+      "name": "Scuderia Vespera",
+      "historicalStrength": 64,
+      "developmentPotential": 92,
+      "focus": "handling",
+      "profile": null,
+      "bench": {
+        "zeroTo80Seconds": 1.466667,
+        "zeroTo100Seconds": 1.9,
+        "topKmh": 118.8,
+        "brakeStartKmh": 100.340957,
+        "brakeMeters": 8.346658
+      }
+    },
+    {
+      "id": "t13",
+      "name": "Redwood GP",
+      "historicalStrength": 72,
+      "developmentPotential": 93,
+      "focus": "power",
+      "profile": null,
+      "bench": {
+        "zeroTo80Seconds": 1.466667,
+        "zeroTo100Seconds": 1.9,
+        "topKmh": 118.8,
+        "brakeStartKmh": 100.340957,
+        "brakeMeters": 8.346658
+      }
+    }
+  ],
+  "tracks": [
+    {
+      "id": "bahrain",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            31.82904,
+            31.832103
+          ],
+          "flyingSeconds": 31.832103,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.609281,
+          "exitKmh": 117.20547,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            31.82904,
+            31.832103
+          ],
+          "flyingSeconds": 31.832103,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.609281,
+          "exitKmh": 117.20547,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            31.82904,
+            31.832103
+          ],
+          "flyingSeconds": 31.832103,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.609281,
+          "exitKmh": 117.20547,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            31.82904,
+            31.832103
+          ],
+          "flyingSeconds": 31.832103,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.609281,
+          "exitKmh": 117.20547,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            31.82904,
+            31.832103
+          ],
+          "flyingSeconds": 31.832103,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.609281,
+          "exitKmh": 117.20547,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            31.82904,
+            31.832103
+          ],
+          "flyingSeconds": 31.832103,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.609281,
+          "exitKmh": 117.20547,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            31.82904,
+            31.832103
+          ],
+          "flyingSeconds": 31.832103,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.609281,
+          "exitKmh": 117.20547,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            31.82904,
+            31.832103
+          ],
+          "flyingSeconds": 31.832103,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.609281,
+          "exitKmh": 117.20547,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            31.82904,
+            31.832103
+          ],
+          "flyingSeconds": 31.832103,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.609281,
+          "exitKmh": 117.20547,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            31.82904,
+            31.832103
+          ],
+          "flyingSeconds": 31.832103,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.609281,
+          "exitKmh": 117.20547,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            31.82904,
+            31.832103
+          ],
+          "flyingSeconds": 31.832103,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.609281,
+          "exitKmh": 117.20547,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            31.82904,
+            31.832103
+          ],
+          "flyingSeconds": 31.832103,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.609281,
+          "exitKmh": 117.20547,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            31.82904,
+            31.832103
+          ],
+          "flyingSeconds": 31.832103,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.609281,
+          "exitKmh": 117.20547,
+          "bridgeTicks": 0
+        }
+      ],
+      "qualifying": {
+        "format": "legacy-two-v1",
+        "spawnS": -22,
+        "rows": [
+          {
+            "id": "t01",
+            "position": 1,
+            "laps": [
+              31.824517,
+              31.799977
+            ],
+            "bestLap": 31.799977,
+            "firstCrossingKmh": 51.462913,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t03",
+            "position": 2,
+            "laps": [
+              31.844645,
+              31.889061
+            ],
+            "bestLap": 31.844645,
+            "firstCrossingKmh": 51.462913,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t04",
+            "position": 3,
+            "laps": [
+              31.886065,
+              31.845956
+            ],
+            "bestLap": 31.845956,
+            "firstCrossingKmh": 51.462913,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t02",
+            "position": 4,
+            "laps": [
+              31.852268,
+              31.868402
+            ],
+            "bestLap": 31.852268,
+            "firstCrossingKmh": 51.462913,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t08",
+            "position": 5,
+            "laps": [
+              31.990906,
+              32.045995
+            ],
+            "bestLap": 31.990906,
+            "firstCrossingKmh": 51.462913,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t05",
+            "position": 6,
+            "laps": [
+              32.052501,
+              32.049398
+            ],
+            "bestLap": 32.049398,
+            "firstCrossingKmh": 51.462913,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t11",
+            "position": 7,
+            "laps": [
+              32.146942,
+              32.108543
+            ],
+            "bestLap": 32.108543,
+            "firstCrossingKmh": 51.462913,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t13",
+            "position": 8,
+            "laps": [
+              32.119584,
+              32.129698
+            ],
+            "bestLap": 32.119584,
+            "firstCrossingKmh": 51.462913,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t10",
+            "position": 9,
+            "laps": [
+              32.176846,
+              32.189934
+            ],
+            "bestLap": 32.176846,
+            "firstCrossingKmh": 51.462913,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t07",
+            "position": 10,
+            "laps": [
+              32.230388,
+              32.230789
+            ],
+            "bestLap": 32.230388,
+            "firstCrossingKmh": 51.462913,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t06",
+            "position": 11,
+            "laps": [
+              32.271092,
+              32.312466
+            ],
+            "bestLap": 32.271092,
+            "firstCrossingKmh": 51.462913,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t12",
+            "position": 12,
+            "laps": [
+              32.366608,
+              32.391824
+            ],
+            "bestLap": 32.366608,
+            "firstCrossingKmh": 51.462913,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t09",
+            "position": 13,
+            "laps": [
+              32.412305,
+              32.378541
+            ],
+            "bestLap": 32.378541,
+            "firstCrossingKmh": 51.462913,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          }
+        ]
+      }
+    },
+    {
+      "id": "canada",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            29.633978,
+            29.633812
+          ],
+          "flyingSeconds": 29.633812,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.216792,
+          "exitKmh": 117.931616,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            29.633978,
+            29.633812
+          ],
+          "flyingSeconds": 29.633812,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.216792,
+          "exitKmh": 117.931616,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            29.633978,
+            29.633812
+          ],
+          "flyingSeconds": 29.633812,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.216792,
+          "exitKmh": 117.931616,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            29.633978,
+            29.633812
+          ],
+          "flyingSeconds": 29.633812,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.216792,
+          "exitKmh": 117.931616,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            29.633978,
+            29.633812
+          ],
+          "flyingSeconds": 29.633812,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.216792,
+          "exitKmh": 117.931616,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            29.633978,
+            29.633812
+          ],
+          "flyingSeconds": 29.633812,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.216792,
+          "exitKmh": 117.931616,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            29.633978,
+            29.633812
+          ],
+          "flyingSeconds": 29.633812,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.216792,
+          "exitKmh": 117.931616,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            29.633978,
+            29.633812
+          ],
+          "flyingSeconds": 29.633812,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.216792,
+          "exitKmh": 117.931616,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            29.633978,
+            29.633812
+          ],
+          "flyingSeconds": 29.633812,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.216792,
+          "exitKmh": 117.931616,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            29.633978,
+            29.633812
+          ],
+          "flyingSeconds": 29.633812,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.216792,
+          "exitKmh": 117.931616,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            29.633978,
+            29.633812
+          ],
+          "flyingSeconds": 29.633812,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.216792,
+          "exitKmh": 117.931616,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            29.633978,
+            29.633812
+          ],
+          "flyingSeconds": 29.633812,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.216792,
+          "exitKmh": 117.931616,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            29.633978,
+            29.633812
+          ],
+          "flyingSeconds": 29.633812,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 115.216792,
+          "exitKmh": 117.931616,
+          "bridgeTicks": 0
+        }
+      ],
+      "qualifying": {
+        "format": "legacy-two-v1",
+        "spawnS": -22,
+        "rows": [
+          {
+            "id": "t01",
+            "position": 1,
+            "laps": [
+              29.536647,
+              29.601379
+            ],
+            "bestLap": 29.536647,
+            "firstCrossingKmh": 51.443961,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t03",
+            "position": 2,
+            "laps": [
+              29.549075,
+              29.565612
+            ],
+            "bestLap": 29.549075,
+            "firstCrossingKmh": 51.443961,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t04",
+            "position": 3,
+            "laps": [
+              29.551435,
+              29.565321
+            ],
+            "bestLap": 29.551435,
+            "firstCrossingKmh": 51.443961,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t02",
+            "position": 4,
+            "laps": [
+              29.558363,
+              29.56156
+            ],
+            "bestLap": 29.558363,
+            "firstCrossingKmh": 51.443961,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t08",
+            "position": 5,
+            "laps": [
+              29.644879,
+              29.596664
+            ],
+            "bestLap": 29.596664,
+            "firstCrossingKmh": 51.443961,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t05",
+            "position": 6,
+            "laps": [
+              29.64952,
+              29.661653
+            ],
+            "bestLap": 29.64952,
+            "firstCrossingKmh": 51.443961,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t11",
+            "position": 7,
+            "laps": [
+              29.672581,
+              29.694641
+            ],
+            "bestLap": 29.672581,
+            "firstCrossingKmh": 51.443961,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t13",
+            "position": 8,
+            "laps": [
+              29.808169,
+              29.743467
+            ],
+            "bestLap": 29.743467,
+            "firstCrossingKmh": 51.443961,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t07",
+            "position": 9,
+            "laps": [
+              29.844592,
+              29.778534
+            ],
+            "bestLap": 29.778534,
+            "firstCrossingKmh": 51.443961,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t10",
+            "position": 10,
+            "laps": [
+              29.800722,
+              29.831924
+            ],
+            "bestLap": 29.800722,
+            "firstCrossingKmh": 51.443961,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t06",
+            "position": 11,
+            "laps": [
+              29.864554,
+              29.947782
+            ],
+            "bestLap": 29.864554,
+            "firstCrossingKmh": 51.443961,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t09",
+            "position": 12,
+            "laps": [
+              29.976454,
+              30.075331
+            ],
+            "bestLap": 29.976454,
+            "firstCrossingKmh": 51.443961,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t12",
+            "position": 13,
+            "laps": [
+              30.039583,
+              30.128328
+            ],
+            "bestLap": 30.039583,
+            "firstCrossingKmh": 51.443961,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          }
+        ]
+      }
+    },
+    {
+      "id": "korea",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            33.868434,
+            33.866669
+          ],
+          "flyingSeconds": 33.866669,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.330046,
+          "exitKmh": 113.549243,
+          "bridgeTicks": 592
+        },
+        {
+          "id": "t02",
+          "laps": [
+            33.868434,
+            33.866669
+          ],
+          "flyingSeconds": 33.866669,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.330046,
+          "exitKmh": 113.549243,
+          "bridgeTicks": 592
+        },
+        {
+          "id": "t03",
+          "laps": [
+            33.868434,
+            33.866669
+          ],
+          "flyingSeconds": 33.866669,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.330046,
+          "exitKmh": 113.549243,
+          "bridgeTicks": 592
+        },
+        {
+          "id": "t04",
+          "laps": [
+            33.868434,
+            33.866669
+          ],
+          "flyingSeconds": 33.866669,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.330046,
+          "exitKmh": 113.549243,
+          "bridgeTicks": 592
+        },
+        {
+          "id": "t05",
+          "laps": [
+            33.868434,
+            33.866669
+          ],
+          "flyingSeconds": 33.866669,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.330046,
+          "exitKmh": 113.549243,
+          "bridgeTicks": 592
+        },
+        {
+          "id": "t06",
+          "laps": [
+            33.868434,
+            33.866669
+          ],
+          "flyingSeconds": 33.866669,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.330046,
+          "exitKmh": 113.549243,
+          "bridgeTicks": 592
+        },
+        {
+          "id": "t07",
+          "laps": [
+            33.868434,
+            33.866669
+          ],
+          "flyingSeconds": 33.866669,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.330046,
+          "exitKmh": 113.549243,
+          "bridgeTicks": 592
+        },
+        {
+          "id": "t08",
+          "laps": [
+            33.868434,
+            33.866669
+          ],
+          "flyingSeconds": 33.866669,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.330046,
+          "exitKmh": 113.549243,
+          "bridgeTicks": 592
+        },
+        {
+          "id": "t09",
+          "laps": [
+            33.868434,
+            33.866669
+          ],
+          "flyingSeconds": 33.866669,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.330046,
+          "exitKmh": 113.549243,
+          "bridgeTicks": 592
+        },
+        {
+          "id": "t10",
+          "laps": [
+            33.868434,
+            33.866669
+          ],
+          "flyingSeconds": 33.866669,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.330046,
+          "exitKmh": 113.549243,
+          "bridgeTicks": 592
+        },
+        {
+          "id": "t11",
+          "laps": [
+            33.868434,
+            33.866669
+          ],
+          "flyingSeconds": 33.866669,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.330046,
+          "exitKmh": 113.549243,
+          "bridgeTicks": 592
+        },
+        {
+          "id": "t12",
+          "laps": [
+            33.868434,
+            33.866669
+          ],
+          "flyingSeconds": 33.866669,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.330046,
+          "exitKmh": 113.549243,
+          "bridgeTicks": 592
+        },
+        {
+          "id": "t13",
+          "laps": [
+            33.868434,
+            33.866669
+          ],
+          "flyingSeconds": 33.866669,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 112.330046,
+          "exitKmh": 113.549243,
+          "bridgeTicks": 592
+        }
+      ],
+      "qualifying": {
+        "format": "legacy-two-v1",
+        "spawnS": -22,
+        "rows": [
+          {
+            "id": "t04",
+            "position": 1,
+            "laps": [
+              33.776155,
+              33.811994
+            ],
+            "bestLap": 33.776155,
+            "firstCrossingKmh": 51.18605,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t01",
+            "position": 2,
+            "laps": [
+              33.78052,
+              33.788033
+            ],
+            "bestLap": 33.78052,
+            "firstCrossingKmh": 51.18605,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t03",
+            "position": 3,
+            "laps": [
+              33.792532,
+              33.804749
+            ],
+            "bestLap": 33.792532,
+            "firstCrossingKmh": 51.18605,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t02",
+            "position": 4,
+            "laps": [
+              33.821586,
+              33.819951
+            ],
+            "bestLap": 33.819951,
+            "firstCrossingKmh": 51.18605,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t08",
+            "position": 5,
+            "laps": [
+              34.003017,
+              34.037816
+            ],
+            "bestLap": 34.003017,
+            "firstCrossingKmh": 51.18605,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t05",
+            "position": 6,
+            "laps": [
+              34.006184,
+              34.031503
+            ],
+            "bestLap": 34.006184,
+            "firstCrossingKmh": 51.18605,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t11",
+            "position": 7,
+            "laps": [
+              34.125096,
+              34.150855
+            ],
+            "bestLap": 34.125096,
+            "firstCrossingKmh": 51.18605,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t13",
+            "position": 8,
+            "laps": [
+              34.344715,
+              34.251688
+            ],
+            "bestLap": 34.251688,
+            "firstCrossingKmh": 51.18605,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t10",
+            "position": 9,
+            "laps": [
+              34.445604,
+              34.303022
+            ],
+            "bestLap": 34.303022,
+            "firstCrossingKmh": 51.18605,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t07",
+            "position": 10,
+            "laps": [
+              34.479314,
+              34.422835
+            ],
+            "bestLap": 34.422835,
+            "firstCrossingKmh": 51.18605,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t06",
+            "position": 11,
+            "laps": [
+              34.557114,
+              34.599335
+            ],
+            "bestLap": 34.557114,
+            "firstCrossingKmh": 51.18605,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t09",
+            "position": 12,
+            "laps": [
+              34.691643,
+              34.815118
+            ],
+            "bestLap": 34.691643,
+            "firstCrossingKmh": 51.18605,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t12",
+            "position": 13,
+            "laps": [
+              34.807242,
+              34.921533
+            ],
+            "bestLap": 34.807242,
+            "firstCrossingKmh": 51.18605,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          }
+        ]
+      }
+    },
+    {
+      "id": "france",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            35.653922,
+            35.617891
+          ],
+          "flyingSeconds": 35.617891,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.975417,
+          "exitKmh": 112.543104,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            35.653922,
+            35.617891
+          ],
+          "flyingSeconds": 35.617891,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.975417,
+          "exitKmh": 112.543104,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            35.653922,
+            35.617891
+          ],
+          "flyingSeconds": 35.617891,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.975417,
+          "exitKmh": 112.543104,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            35.653922,
+            35.617891
+          ],
+          "flyingSeconds": 35.617891,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.975417,
+          "exitKmh": 112.543104,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            35.653922,
+            35.617891
+          ],
+          "flyingSeconds": 35.617891,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.975417,
+          "exitKmh": 112.543104,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            35.653922,
+            35.617891
+          ],
+          "flyingSeconds": 35.617891,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.975417,
+          "exitKmh": 112.543104,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            35.653922,
+            35.617891
+          ],
+          "flyingSeconds": 35.617891,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.975417,
+          "exitKmh": 112.543104,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            35.653922,
+            35.617891
+          ],
+          "flyingSeconds": 35.617891,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.975417,
+          "exitKmh": 112.543104,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            35.653922,
+            35.617891
+          ],
+          "flyingSeconds": 35.617891,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.975417,
+          "exitKmh": 112.543104,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            35.653922,
+            35.617891
+          ],
+          "flyingSeconds": 35.617891,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.975417,
+          "exitKmh": 112.543104,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            35.653922,
+            35.617891
+          ],
+          "flyingSeconds": 35.617891,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.975417,
+          "exitKmh": 112.543104,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            35.653922,
+            35.617891
+          ],
+          "flyingSeconds": 35.617891,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.975417,
+          "exitKmh": 112.543104,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            35.653922,
+            35.617891
+          ],
+          "flyingSeconds": 35.617891,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 108.975417,
+          "exitKmh": 112.543104,
+          "bridgeTicks": 0
+        }
+      ],
+      "qualifying": {
+        "format": "legacy-two-v1",
+        "spawnS": -22,
+        "rows": [
+          {
+            "id": "t01",
+            "position": 1,
+            "laps": [
+              35.595093,
+              35.7055
+            ],
+            "bestLap": 35.595093,
+            "firstCrossingKmh": 51.239694,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t02",
+            "position": 2,
+            "laps": [
+              35.659603,
+              35.666913
+            ],
+            "bestLap": 35.659603,
+            "firstCrossingKmh": 51.239694,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t03",
+            "position": 3,
+            "laps": [
+              35.663087,
+              35.732418
+            ],
+            "bestLap": 35.663087,
+            "firstCrossingKmh": 51.239694,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t04",
+            "position": 4,
+            "laps": [
+              35.710919,
+              35.687997
+            ],
+            "bestLap": 35.687997,
+            "firstCrossingKmh": 51.239694,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t08",
+            "position": 5,
+            "laps": [
+              36.123256,
+              36.062321
+            ],
+            "bestLap": 36.062321,
+            "firstCrossingKmh": 51.239694,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t05",
+            "position": 6,
+            "laps": [
+              36.207756,
+              36.209583
+            ],
+            "bestLap": 36.207756,
+            "firstCrossingKmh": 51.239694,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t11",
+            "position": 7,
+            "laps": [
+              36.454948,
+              36.317198
+            ],
+            "bestLap": 36.317198,
+            "firstCrossingKmh": 51.239694,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t13",
+            "position": 8,
+            "laps": [
+              36.535734,
+              36.565115
+            ],
+            "bestLap": 36.535734,
+            "firstCrossingKmh": 51.239694,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t07",
+            "position": 9,
+            "laps": [
+              36.773443,
+              36.797644
+            ],
+            "bestLap": 36.773443,
+            "firstCrossingKmh": 51.239694,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t10",
+            "position": 10,
+            "laps": [
+              36.780658,
+              36.827343
+            ],
+            "bestLap": 36.780658,
+            "firstCrossingKmh": 51.239694,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t06",
+            "position": 11,
+            "laps": [
+              37.003868,
+              36.944122
+            ],
+            "bestLap": 36.944122,
+            "firstCrossingKmh": 51.239694,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t09",
+            "position": 12,
+            "laps": [
+              37.190767,
+              37.262854
+            ],
+            "bestLap": 37.190767,
+            "firstCrossingKmh": 51.239694,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t12",
+            "position": 13,
+            "laps": [
+              37.325277,
+              37.301425
+            ],
+            "bestLap": 37.301425,
+            "firstCrossingKmh": 51.239694,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          }
+        ]
+      }
+    },
+    {
+      "id": "england",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            27.441221,
+            27.433233
+          ],
+          "flyingSeconds": 27.433233,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.063286,
+          "exitKmh": 111.252384,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            27.441221,
+            27.433233
+          ],
+          "flyingSeconds": 27.433233,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.063286,
+          "exitKmh": 111.252384,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            27.441221,
+            27.433233
+          ],
+          "flyingSeconds": 27.433233,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.063286,
+          "exitKmh": 111.252384,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            27.441221,
+            27.433233
+          ],
+          "flyingSeconds": 27.433233,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.063286,
+          "exitKmh": 111.252384,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            27.441221,
+            27.433233
+          ],
+          "flyingSeconds": 27.433233,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.063286,
+          "exitKmh": 111.252384,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            27.441221,
+            27.433233
+          ],
+          "flyingSeconds": 27.433233,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.063286,
+          "exitKmh": 111.252384,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            27.441221,
+            27.433233
+          ],
+          "flyingSeconds": 27.433233,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.063286,
+          "exitKmh": 111.252384,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            27.441221,
+            27.433233
+          ],
+          "flyingSeconds": 27.433233,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.063286,
+          "exitKmh": 111.252384,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            27.441221,
+            27.433233
+          ],
+          "flyingSeconds": 27.433233,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.063286,
+          "exitKmh": 111.252384,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            27.441221,
+            27.433233
+          ],
+          "flyingSeconds": 27.433233,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.063286,
+          "exitKmh": 111.252384,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            27.441221,
+            27.433233
+          ],
+          "flyingSeconds": 27.433233,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.063286,
+          "exitKmh": 111.252384,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            27.441221,
+            27.433233
+          ],
+          "flyingSeconds": 27.433233,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.063286,
+          "exitKmh": 111.252384,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            27.441221,
+            27.433233
+          ],
+          "flyingSeconds": 27.433233,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 107.063286,
+          "exitKmh": 111.252384,
+          "bridgeTicks": 0
+        }
+      ],
+      "qualifying": {
+        "format": "legacy-two-v1",
+        "spawnS": -22,
+        "rows": [
+          {
+            "id": "t01",
+            "position": 1,
+            "laps": [
+              27.385963,
+              27.325313
+            ],
+            "bestLap": 27.325313,
+            "firstCrossingKmh": 51.744682,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t04",
+            "position": 2,
+            "laps": [
+              27.472163,
+              27.39708
+            ],
+            "bestLap": 27.39708,
+            "firstCrossingKmh": 51.744682,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t02",
+            "position": 3,
+            "laps": [
+              27.458936,
+              27.405737
+            ],
+            "bestLap": 27.405737,
+            "firstCrossingKmh": 51.744682,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t03",
+            "position": 4,
+            "laps": [
+              27.429353,
+              27.459537
+            ],
+            "bestLap": 27.429353,
+            "firstCrossingKmh": 51.744682,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t05",
+            "position": 5,
+            "laps": [
+              27.789856,
+              27.731198
+            ],
+            "bestLap": 27.731198,
+            "firstCrossingKmh": 51.744682,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t08",
+            "position": 6,
+            "laps": [
+              27.777906,
+              27.770567
+            ],
+            "bestLap": 27.770567,
+            "firstCrossingKmh": 51.744682,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t11",
+            "position": 7,
+            "laps": [
+              28.05021,
+              28.019672
+            ],
+            "bestLap": 28.019672,
+            "firstCrossingKmh": 51.744682,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t13",
+            "position": 8,
+            "laps": [
+              28.149917,
+              28.066845
+            ],
+            "bestLap": 28.066845,
+            "firstCrossingKmh": 51.744682,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t10",
+            "position": 9,
+            "laps": [
+              28.279075,
+              28.334413
+            ],
+            "bestLap": 28.279075,
+            "firstCrossingKmh": 51.744682,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t07",
+            "position": 10,
+            "laps": [
+              28.355318,
+              28.383105
+            ],
+            "bestLap": 28.355318,
+            "firstCrossingKmh": 51.744682,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t06",
+            "position": 11,
+            "laps": [
+              28.485667,
+              28.438102
+            ],
+            "bestLap": 28.438102,
+            "firstCrossingKmh": 51.744682,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t09",
+            "position": 12,
+            "laps": [
+              28.698638,
+              28.70032
+            ],
+            "bestLap": 28.698638,
+            "firstCrossingKmh": 51.744682,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t12",
+            "position": 13,
+            "laps": [
+              28.735767,
+              28.7212
+            ],
+            "bestLap": 28.7212,
+            "firstCrossingKmh": 51.744682,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          }
+        ]
+      }
+    },
+    {
+      "id": "russia",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            37.486996,
+            37.487033
+          ],
+          "flyingSeconds": 37.487033,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.46593,
+          "exitKmh": 118.8,
+          "bridgeTicks": 1318
+        },
+        {
+          "id": "t02",
+          "laps": [
+            37.486996,
+            37.487033
+          ],
+          "flyingSeconds": 37.487033,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.46593,
+          "exitKmh": 118.8,
+          "bridgeTicks": 1318
+        },
+        {
+          "id": "t03",
+          "laps": [
+            37.486996,
+            37.487033
+          ],
+          "flyingSeconds": 37.487033,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.46593,
+          "exitKmh": 118.8,
+          "bridgeTicks": 1318
+        },
+        {
+          "id": "t04",
+          "laps": [
+            37.486996,
+            37.487033
+          ],
+          "flyingSeconds": 37.487033,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.46593,
+          "exitKmh": 118.8,
+          "bridgeTicks": 1318
+        },
+        {
+          "id": "t05",
+          "laps": [
+            37.486996,
+            37.487033
+          ],
+          "flyingSeconds": 37.487033,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.46593,
+          "exitKmh": 118.8,
+          "bridgeTicks": 1318
+        },
+        {
+          "id": "t06",
+          "laps": [
+            37.486996,
+            37.487033
+          ],
+          "flyingSeconds": 37.487033,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.46593,
+          "exitKmh": 118.8,
+          "bridgeTicks": 1318
+        },
+        {
+          "id": "t07",
+          "laps": [
+            37.486996,
+            37.487033
+          ],
+          "flyingSeconds": 37.487033,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.46593,
+          "exitKmh": 118.8,
+          "bridgeTicks": 1318
+        },
+        {
+          "id": "t08",
+          "laps": [
+            37.486996,
+            37.487033
+          ],
+          "flyingSeconds": 37.487033,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.46593,
+          "exitKmh": 118.8,
+          "bridgeTicks": 1318
+        },
+        {
+          "id": "t09",
+          "laps": [
+            37.486996,
+            37.487033
+          ],
+          "flyingSeconds": 37.487033,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.46593,
+          "exitKmh": 118.8,
+          "bridgeTicks": 1318
+        },
+        {
+          "id": "t10",
+          "laps": [
+            37.486996,
+            37.487033
+          ],
+          "flyingSeconds": 37.487033,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.46593,
+          "exitKmh": 118.8,
+          "bridgeTicks": 1318
+        },
+        {
+          "id": "t11",
+          "laps": [
+            37.486996,
+            37.487033
+          ],
+          "flyingSeconds": 37.487033,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.46593,
+          "exitKmh": 118.8,
+          "bridgeTicks": 1318
+        },
+        {
+          "id": "t12",
+          "laps": [
+            37.486996,
+            37.487033
+          ],
+          "flyingSeconds": 37.487033,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.46593,
+          "exitKmh": 118.8,
+          "bridgeTicks": 1318
+        },
+        {
+          "id": "t13",
+          "laps": [
+            37.486996,
+            37.487033
+          ],
+          "flyingSeconds": 37.487033,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 118.46593,
+          "exitKmh": 118.8,
+          "bridgeTicks": 1318
+        }
+      ],
+      "qualifying": {
+        "format": "legacy-two-v1",
+        "spawnS": -22,
+        "rows": [
+          {
+            "id": "t01",
+            "position": 1,
+            "laps": [
+              37.487345,
+              37.488983
+            ],
+            "bestLap": 37.487345,
+            "firstCrossingKmh": 51.32962,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t04",
+            "position": 2,
+            "laps": [
+              37.489711,
+              37.498393
+            ],
+            "bestLap": 37.489711,
+            "firstCrossingKmh": 51.32962,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t02",
+            "position": 3,
+            "laps": [
+              37.489811,
+              37.49761
+            ],
+            "bestLap": 37.489811,
+            "firstCrossingKmh": 51.32962,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t03",
+            "position": 4,
+            "laps": [
+              37.500474,
+              37.491832
+            ],
+            "bestLap": 37.491832,
+            "firstCrossingKmh": 51.32962,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t05",
+            "position": 5,
+            "laps": [
+              37.513192,
+              37.543111
+            ],
+            "bestLap": 37.513192,
+            "firstCrossingKmh": 51.32962,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t08",
+            "position": 6,
+            "laps": [
+              37.521317,
+              37.521176
+            ],
+            "bestLap": 37.521176,
+            "firstCrossingKmh": 51.32962,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t11",
+            "position": 7,
+            "laps": [
+              37.537881,
+              37.547221
+            ],
+            "bestLap": 37.537881,
+            "firstCrossingKmh": 51.32962,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t07",
+            "position": 8,
+            "laps": [
+              37.576718,
+              37.549156
+            ],
+            "bestLap": 37.549156,
+            "firstCrossingKmh": 51.32962,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t13",
+            "position": 9,
+            "laps": [
+              37.575489,
+              37.557072
+            ],
+            "bestLap": 37.557072,
+            "firstCrossingKmh": 51.32962,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t10",
+            "position": 10,
+            "laps": [
+              37.559205,
+              37.575255
+            ],
+            "bestLap": 37.559205,
+            "firstCrossingKmh": 51.32962,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t09",
+            "position": 11,
+            "laps": [
+              37.57996,
+              37.623004
+            ],
+            "bestLap": 37.57996,
+            "firstCrossingKmh": 51.32962,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t12",
+            "position": 12,
+            "laps": [
+              37.580097,
+              37.622648
+            ],
+            "bestLap": 37.580097,
+            "firstCrossingKmh": 51.32962,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t06",
+            "position": 13,
+            "laps": [
+              37.587819,
+              37.59062
+            ],
+            "bestLap": 37.587819,
+            "firstCrossingKmh": 51.32962,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          }
+        ]
+      }
+    },
+    {
+      "id": "italy",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            30.266554,
+            30.266676
+          ],
+          "flyingSeconds": 30.266676,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.420614,
+          "exitKmh": 118.617786,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            30.266554,
+            30.266676
+          ],
+          "flyingSeconds": 30.266676,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.420614,
+          "exitKmh": 118.617786,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            30.266554,
+            30.266676
+          ],
+          "flyingSeconds": 30.266676,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.420614,
+          "exitKmh": 118.617786,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            30.266554,
+            30.266676
+          ],
+          "flyingSeconds": 30.266676,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.420614,
+          "exitKmh": 118.617786,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            30.266554,
+            30.266676
+          ],
+          "flyingSeconds": 30.266676,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.420614,
+          "exitKmh": 118.617786,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            30.266554,
+            30.266676
+          ],
+          "flyingSeconds": 30.266676,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.420614,
+          "exitKmh": 118.617786,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            30.266554,
+            30.266676
+          ],
+          "flyingSeconds": 30.266676,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.420614,
+          "exitKmh": 118.617786,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            30.266554,
+            30.266676
+          ],
+          "flyingSeconds": 30.266676,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.420614,
+          "exitKmh": 118.617786,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            30.266554,
+            30.266676
+          ],
+          "flyingSeconds": 30.266676,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.420614,
+          "exitKmh": 118.617786,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            30.266554,
+            30.266676
+          ],
+          "flyingSeconds": 30.266676,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.420614,
+          "exitKmh": 118.617786,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            30.266554,
+            30.266676
+          ],
+          "flyingSeconds": 30.266676,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.420614,
+          "exitKmh": 118.617786,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            30.266554,
+            30.266676
+          ],
+          "flyingSeconds": 30.266676,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.420614,
+          "exitKmh": 118.617786,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            30.266554,
+            30.266676
+          ],
+          "flyingSeconds": 30.266676,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 113.420614,
+          "exitKmh": 118.617786,
+          "bridgeTicks": 0
+        }
+      ],
+      "qualifying": {
+        "format": "legacy-two-v1",
+        "spawnS": -22,
+        "rows": [
+          {
+            "id": "t01",
+            "position": 1,
+            "laps": [
+              30.23358,
+              30.261204
+            ],
+            "bestLap": 30.23358,
+            "firstCrossingKmh": 51.679558,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t02",
+            "position": 2,
+            "laps": [
+              30.23894,
+              30.251184
+            ],
+            "bestLap": 30.23894,
+            "firstCrossingKmh": 51.679558,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t03",
+            "position": 3,
+            "laps": [
+              30.23986,
+              30.256401
+            ],
+            "bestLap": 30.23986,
+            "firstCrossingKmh": 51.679558,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t04",
+            "position": 4,
+            "laps": [
+              30.245015,
+              30.288724
+            ],
+            "bestLap": 30.245015,
+            "firstCrossingKmh": 51.679558,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t08",
+            "position": 5,
+            "laps": [
+              30.373731,
+              30.415099
+            ],
+            "bestLap": 30.373731,
+            "firstCrossingKmh": 51.679558,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t05",
+            "position": 6,
+            "laps": [
+              30.397923,
+              30.412361
+            ],
+            "bestLap": 30.397923,
+            "firstCrossingKmh": 51.679558,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t11",
+            "position": 7,
+            "laps": [
+              30.465257,
+              30.508353
+            ],
+            "bestLap": 30.465257,
+            "firstCrossingKmh": 51.679558,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t13",
+            "position": 8,
+            "laps": [
+              30.615538,
+              30.526322
+            ],
+            "bestLap": 30.526322,
+            "firstCrossingKmh": 51.679558,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t10",
+            "position": 9,
+            "laps": [
+              30.654863,
+              30.632636
+            ],
+            "bestLap": 30.632636,
+            "firstCrossingKmh": 51.679558,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t07",
+            "position": 10,
+            "laps": [
+              30.674483,
+              30.661885
+            ],
+            "bestLap": 30.661885,
+            "firstCrossingKmh": 51.679558,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t06",
+            "position": 11,
+            "laps": [
+              30.753306,
+              30.819031
+            ],
+            "bestLap": 30.753306,
+            "firstCrossingKmh": 51.679558,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t09",
+            "position": 12,
+            "laps": [
+              30.804885,
+              30.923371
+            ],
+            "bestLap": 30.804885,
+            "firstCrossingKmh": 51.679558,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t12",
+            "position": 13,
+            "laps": [
+              30.880072,
+              30.901078
+            ],
+            "bestLap": 30.880072,
+            "firstCrossingKmh": 51.679558,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          }
+        ]
+      }
+    },
+    {
+      "id": "japan",
+      "solo": [
+        {
+          "id": "t01",
+          "laps": [
+            39.095877,
+            39.072263
+          ],
+          "flyingSeconds": 39.072263,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.065497,
+          "exitKmh": 113.342299,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            39.095877,
+            39.072263
+          ],
+          "flyingSeconds": 39.072263,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.065497,
+          "exitKmh": 113.342299,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            39.095877,
+            39.072263
+          ],
+          "flyingSeconds": 39.072263,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.065497,
+          "exitKmh": 113.342299,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            39.095877,
+            39.072263
+          ],
+          "flyingSeconds": 39.072263,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.065497,
+          "exitKmh": 113.342299,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            39.095877,
+            39.072263
+          ],
+          "flyingSeconds": 39.072263,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.065497,
+          "exitKmh": 113.342299,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            39.095877,
+            39.072263
+          ],
+          "flyingSeconds": 39.072263,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.065497,
+          "exitKmh": 113.342299,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            39.095877,
+            39.072263
+          ],
+          "flyingSeconds": 39.072263,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.065497,
+          "exitKmh": 113.342299,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            39.095877,
+            39.072263
+          ],
+          "flyingSeconds": 39.072263,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.065497,
+          "exitKmh": 113.342299,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            39.095877,
+            39.072263
+          ],
+          "flyingSeconds": 39.072263,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.065497,
+          "exitKmh": 113.342299,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            39.095877,
+            39.072263
+          ],
+          "flyingSeconds": 39.072263,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.065497,
+          "exitKmh": 113.342299,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            39.095877,
+            39.072263
+          ],
+          "flyingSeconds": 39.072263,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.065497,
+          "exitKmh": 113.342299,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            39.095877,
+            39.072263
+          ],
+          "flyingSeconds": 39.072263,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.065497,
+          "exitKmh": 113.342299,
+          "bridgeTicks": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            39.095877,
+            39.072263
+          ],
+          "flyingSeconds": 39.072263,
+          "peakKmh": 118.8,
+          "firstCrossingKmh": 118.8,
+          "wallSteps": 0,
+          "shoulderSteps": 0,
+          "technicalKmh": 109.065497,
+          "exitKmh": 113.342299,
+          "bridgeTicks": 0
+        }
+      ],
+      "qualifying": {
+        "format": "legacy-two-v1",
+        "spawnS": -22,
+        "rows": [
+          {
+            "id": "t04",
+            "position": 1,
+            "laps": [
+              39.047382,
+              39.094789
+            ],
+            "bestLap": 39.047382,
+            "firstCrossingKmh": 51.490822,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t03",
+            "position": 2,
+            "laps": [
+              39.078548,
+              39.089891
+            ],
+            "bestLap": 39.078548,
+            "firstCrossingKmh": 51.490822,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t02",
+            "position": 3,
+            "laps": [
+              39.081539,
+              39.079476
+            ],
+            "bestLap": 39.079476,
+            "firstCrossingKmh": 51.490822,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t01",
+            "position": 4,
+            "laps": [
+              39.087939,
+              39.114958
+            ],
+            "bestLap": 39.087939,
+            "firstCrossingKmh": 51.490822,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t05",
+            "position": 5,
+            "laps": [
+              39.41257,
+              39.403107
+            ],
+            "bestLap": 39.403107,
+            "firstCrossingKmh": 51.490822,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t08",
+            "position": 6,
+            "laps": [
+              39.421701,
+              39.422796
+            ],
+            "bestLap": 39.421701,
+            "firstCrossingKmh": 51.490822,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t11",
+            "position": 7,
+            "laps": [
+              39.689111,
+              39.686985
+            ],
+            "bestLap": 39.686985,
+            "firstCrossingKmh": 51.490822,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t13",
+            "position": 8,
+            "laps": [
+              39.922424,
+              39.820151
+            ],
+            "bestLap": 39.820151,
+            "firstCrossingKmh": 51.490822,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t10",
+            "position": 9,
+            "laps": [
+              40.056736,
+              39.988401
+            ],
+            "bestLap": 39.988401,
+            "firstCrossingKmh": 51.490822,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t07",
+            "position": 10,
+            "laps": [
+              40.074293,
+              40.044937
+            ],
+            "bestLap": 40.044937,
+            "firstCrossingKmh": 51.490822,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t06",
+            "position": 11,
+            "laps": [
+              40.172788,
+              40.408594
+            ],
+            "bestLap": 40.172788,
+            "firstCrossingKmh": 51.490822,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t09",
+            "position": 12,
+            "laps": [
+              40.532924,
+              40.636809
+            ],
+            "bestLap": 40.532924,
+            "firstCrossingKmh": 51.490822,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          },
+          {
+            "id": "t12",
+            "position": 13,
+            "laps": [
+              40.538675,
+              40.655407
+            ],
+            "bestLap": 40.538675,
+            "firstCrossingKmh": 51.490822,
+            "wallSteps": 0,
+            "shoulderSteps": 0,
+            "peakKmh": 118.8
+          }
+        ]
+      }
+    }
+  ]
+}

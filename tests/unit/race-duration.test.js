@@ -1,3 +1,4 @@
+import { withoutVehicleGripSource, unaffectedByVehicleWork } from "../helpers/vehicle-performance-source.js";
 import { withoutBahrainIteration2 } from "../helpers/bahrain-layout-source.js";
 import { withoutEnvironmentCameraOptions } from "../helpers/environment-camera.js";
 import { it, expect } from "vitest";
@@ -99,7 +100,7 @@ it("schützt Physik, Grafik und Daten trotz freigegebener KI-Änderungen bytegen
     "src/rendering/vehicles3d.js",
   ];
   for (const file of files) {
-    const current = withoutBahrainIteration2(file, read(file), baseline),
+    const current = withoutBahrainIteration2(file, withoutVehicleGripSource(file, read(file)), baseline),
       original = execFileSync("git", ["show", `${baseline}:${file}`], {
         cwd: ROOT,
         encoding: "utf8",

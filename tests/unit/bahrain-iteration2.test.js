@@ -1,3 +1,4 @@
+import { withoutVehicleGripSource, unaffectedByVehicleWork } from "../helpers/vehicle-performance-source.js";
 import { withoutStartLightsSource } from "../helpers/start-lights.js";
 import { it, expect } from "vitest";
 import { execFileSync } from "node:child_process";
@@ -50,9 +51,9 @@ it("Iteration 2: erhält 21 Strecken, Originalzeichnung, Rennsysteme und Breite;
     "slipstream",
     "catchup",
     "race-session",
-  ])
+  ].filter(file=>unaffectedByVehicleWork(`src/racing/${file}.js`)))
     expect(
-      (file === "race-session" ? withoutStartLightsSource(readFileSync(`src/racing/${file}.js`, "utf8")) : readFileSync(`src/racing/${file}.js`, "utf8")) ===
+      (file === "race-session" ? withoutStartLightsSource(readFileSync(`src/racing/${file}.js`, "utf8")) : withoutVehicleGripSource(`src/racing/${file}.js`,readFileSync(`src/racing/${file}.js`, "utf8"))) ===
         execFileSync("git", ["show", `${base}:src/racing/${file}.js`]).toString(),
     ).toBe(true);
 });

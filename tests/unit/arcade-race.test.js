@@ -70,7 +70,7 @@ it("stellt genau 13 unveränderte Teamidentitäten ohne Fahrzeug- oder Seilüber
         api.VehicleContacts.overlap(a.car, s.entries[j].car, race.parameters),
       ).toBe(null);
   }
-  expect(race.parameters).toBe(api.Physics.parameters);
+  expect(race.parameters).toBe(api.VehiclePerformance.get(race.snapshot().race.playerTeam).parameters);
 });
 
 it("hält bei Rot alle Fahrzeuge fest, friert den Countdown in Pause ein und startet erst bei Grün", () => {

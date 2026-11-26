@@ -132,7 +132,7 @@ it("erhält ohne Aufholhilfe den veröffentlichten Rennkern unter identischer Wi
   for (const name of ["opponents", "race-session"])
     runInNewContext(execFileSync("git", ["show", `2bc124a11c274c0f52eb516bd9a0f1ea9e0d377f:src/racing/${name}.js`], { cwd: ROOT, encoding: "utf8" }), scope);
   const track = api.TrackCatalog.get("bahrain"),
-    current = api.RaceSession.create(track, { catchup: false, laps: 3 }),
+    current = api.RaceSession.create(track, { catchup: false, laps: 3, performance:null }),
     prior = scope.CGPArcade.RaceSession.create(track, { laps: 3 });
   // The historical session predates the separately authorized seven-second
   // start gate. Apply that same wind rule in its temporary test context, so

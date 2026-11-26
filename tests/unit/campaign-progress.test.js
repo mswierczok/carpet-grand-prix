@@ -31,7 +31,7 @@ beforeAll(() => {
   const old = A.CampaignV1.create({ driverId: "d035" }),
     legacy = A.RaceWeekend.create(A.TrackCatalog.get("bahrain"), {
       playerTeam: old.teamId,
-      ...old.options,
+      ...old.options, performance:null, qualifyingFormat:null,
     });
   legacy.pause(false);
   legacy.advance({ throttle: 1, brake: 0, steer: 0 }, 0.1);

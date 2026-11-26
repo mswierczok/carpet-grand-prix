@@ -65,7 +65,7 @@
     const strength = 1 - smooth((lengths - settings.fadeLengths) / (settings.maxLengths - settings.fadeLengths));
     return { strength, sourceId: leader.id, distanceLengths: lengths, lateral };
   }
-  function update(entries, surface, p, dt) {
+  function update(entries, surface, p, dt, parametersFor = () => p) {
     return entries.map((entry) => {
       let best = null;
       for (const leader of entries) {
@@ -83,7 +83,7 @@
         tau = target.strength > previous ? settings.riseSeconds : settings.fallSeconds,
         strength = previous + (target.strength - previous) * (1 - Math.exp(-dt / tau));
       return strength < 1e-5 ? empty() : {
-        ...target, strength, dragReduction: strength * reduction(p),
+        ...target, strength, dragReduction: strength * reduction(parametersFor(entry)),
       };
     });
   }

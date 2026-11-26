@@ -52,7 +52,8 @@ Website. GitHub Pages veröffentlicht weiterhin den freigegebenen `main`-Stand.
   echte feste Simulationsschritte und historische Vergleichsfahrten.
 - Kontakte, Seile, Brücken und Boxengasse: tatsächliche Fahrzeuggeometrie,
   Ebenen und Fahrten, inklusive Korea, Russland und Bahrain-Unterbett.
-- Qualifying/Rennen: Auslaufrunde, zwei schnelle Runden, echte Hintergrundfahrer,
+- Qualifying/Rennen: echte Anfahrt, ein gewerteter Versuch, erhaltene alte
+  Auslaufrunde/zwei schnelle Runden, echte Hintergrundfahrer,
   Startaufstellung, Startampel und 13 Zieleinläufe.
 - Kampagne: acht Strecken, 39 eindeutige Fahrerplätze, Redwood, drei Startfahrer,
   Bahrain/Kanada, Migration, Archiv, Neuladen, Importfehler und Speichertrennung.
@@ -121,3 +122,36 @@ nativen Engine und normalen Eingaben. Pflichtqualifying und alle 13 Zieleinläuf
 bleiben vollständig; nur die vorhandene Ein-Runden-Option verkürzt lange Testfälle.
 Kein Test setzt Fahrzeugpositionen, Geschwindigkeiten oder Zielzeiten im Spiel.
 Abnahme und tatsächliche Screenshots: [ROGUELITE_RUN_SYSTEM.md](ROGUELITE_RUN_SYSTEM.md).
+
+## Fahrzeugleistung und Ein-Runden-Qualifying
+
+```sh
+npx vitest run tests/unit/vehicle-performance.test.js tests/unit/one-lap-qualifying.test.js tests/unit/performance-legacy-compatibility.test.js
+npx playwright test tests/browser/qualifying.spec.js
+node scripts/measure-vehicle-performance.js --stage=vehicles
+node scripts/measure-vehicle-performance.js --stage=qualifying
+node scripts/measure-vehicle-performance.js --stage=approach --tracks=all
+node scripts/measure-vehicle-performance.js --stage=traffic
+```
+
+Die Vorhermessung verlangt einen separaten unveränderten PR-55-Checkout per
+`--stage=baseline --baseline-root=/pfad/zum/checkout`. Sie darf keine veränderten
+Dateien als Baseline messen. Neue Referenz-Checkpoints stammen nachweislich aus
+`b4a797c7b9b390243db6b72213e99fffb081e876`; bestehende Fixtures bleiben erhalten.
+Die früheren Byte-Freeze-Prüfungen begrenzen Ausnahmen auf die ausdrücklich
+beauftragten Fahrzeug-/Qualifying-Module. Der übrige Physikkern, Daten, Geometrien
+und Assets werden weiterhin exakt verglichen; native alte Checkpoints werden
+mit identischen Folgezuständen wiederholt.
+
+Die Browserprüfungen fahren auf beiden Profilen alle acht Qualifyings mit
+normalen Eingaben und Autoübernahme, einschließlich Speichern/Neuladen während
+der schnellen Runde. Native Messungen erfassen zusätzlich alle 22 Anfahrten
+und volle Standardrennen mit/ohne Aufholhilfe. Messverfahren, Rohdaten und
+tatsächliche Spielansichten: [VEHICLE_PERFORMANCE_AND_QUALIFYING.md](VEHICLE_PERFORMANCE_AND_QUALIFYING.md).
+
+Der aktuelle Run-Browserfall bewertet im Finale die tatsächliche Platzierung
+mit dem neuen Fahrzeugmodell. Der Erfolgsbildschirm wird zusätzlich mit einem
+nativ gewonnenen PR-55-Run geprüft; damit bleibt ein alter Sieg ohne neue
+Zeit-/Positionszuweisung lesbar. Reproduktion der neuen Kompatibilitätsreferenzen:
+`node scripts/capture-performance-legacy-fixtures.js --source-root=/pfad/zum/PR55-Checkout`.
+Der Generator schreibt nach `dist/` und ersetzt keine bestehenden Test-Fixtures.

@@ -1,9 +1,10 @@
+import { withoutVehicleGripSource, unaffectedByVehicleWork } from "../helpers/vehicle-performance-source.js";
 import { it, expect } from "vitest";
 import { createWorld } from "../helpers/world3d.js";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 const base = "d5a9e933d648dc72e51ad3e029befecac92494db";
-it("erhält Rennsysteme, Daten und den abgenommenen Bahrain-Aufbau bytegenau", () => {
+it("erhält die übrigen Rennsysteme, Daten und den abgenommenen Bahrain-Aufbau bytegenau", () => {
   for (const file of [
     "physics",
     "bridge-physics",
@@ -18,8 +19,9 @@ it("erhält Rennsysteme, Daten und den abgenommenen Bahrain-Aufbau bytegenau", (
     "pitlane",
   ]) {
     const path = `src/racing/${file}.js`;
+    if (!unaffectedByVehicleWork(path)) continue;
     expect(
-      readFileSync(path).equals(
+      Buffer.from(withoutVehicleGripSource(path,readFileSync(path,"utf8"))).equals(
         execFileSync("git", ["show", `${base}:${path}`]),
       ),
       path,
@@ -33,7 +35,7 @@ it("erhält Rennsysteme, Daten und den abgenommenen Bahrain-Aufbau bytegenau", (
   ]) {
     const path = `src/data/${file}.js`;
     expect(
-      readFileSync(path).equals(
+      Buffer.from(withoutVehicleGripSource(path,readFileSync(path,"utf8"))).equals(
         execFileSync("git", ["show", `${base}:${path}`], {
           maxBuffer: 8 * 1024 * 1024,
         }),
@@ -51,7 +53,7 @@ it("erhält Rennsysteme, Daten und den abgenommenen Bahrain-Aufbau bytegenau", (
   ]) {
     const path = `src/rendering/${file}.js`;
     expect(
-      readFileSync(path).equals(
+      Buffer.from(withoutVehicleGripSource(path,readFileSync(path,"utf8"))).equals(
         execFileSync("git", ["show", `${base}:${path}`]),
       ),
       path,

@@ -21,13 +21,17 @@
     return signatures.get(trackId);
   }
   function config(v) {
-    keys(v, ["playerTeam", "difficulty", "catchup", "slipstream", "isolated", "qualifying", "laps", "gridOrder", "diagnostics"]);
+    keys(v, ["playerTeam", "difficulty", "catchup", "slipstream", "isolated", "qualifying", "laps", "gridOrder", "diagnostics", "performance", "qualifyingFormat", "qualifyingStartS"]);
+    if ("performance" in v) A.VehiclePerformance.validate(v.performance);
+    if ("qualifyingFormat" in v) need(v.qualifyingFormat === "flying-one-v1");
     need(ids().includes(v.playerTeam) && ["beginner", "normal", "hard", "expert"].includes(v.difficulty));
     for (const k of ["catchup", "slipstream", "isolated", "qualifying", "diagnostics"]) need(typeof v[k] === "boolean");
     need(integer(v.laps, 1, 100));
     need(v.gridOrder === null || (Array.isArray(v.gridOrder) && v.gridOrder.length === 13 && new Set(v.gridOrder).size === 13 && v.gridOrder.every(id => ids().includes(id))));
     if (v.isolated) need(!v.catchup && !v.slipstream);
-    if (v.qualifying) need(v.isolated && v.laps === 3);
+    if (v.qualifying) need(v.isolated && v.laps === (v.qualifyingFormat ? 1 : 3));
+    if (v.qualifying && v.qualifyingFormat) need(number(v.qualifyingStartS, -1e6, -80));
+    else need(!("qualifyingStartS" in v));
   }
   function car(v, bridge = false) {
     keys(v, ["x", "y", "heading", "vx", "vy", "s", "steering", "speed", "longitudinalSpeed", "reverseHold", "offroad", "hitWall", "hitCar", "understeer", "elevation", "pitch"]);
@@ -127,8 +131,11 @@
     return clone ? copy(v) : v;
   }
   function qualifying(value, clone = true) {
-    const v = value; keys(v, ["kind", "version", "race", "records"]);
+    const v = value; keys(v, ["kind", "version", "race", "records", "format"]);
     need(v.kind === "qualifying" && v.version === 1); race(v.race, false); need(v.race.config.qualifying);
+    if ("format" in v) need(v.format === "flying-one-v1");
+    need((v.format || null) === (v.race.config.qualifyingFormat || null));
+    const outLaps = v.format === "flying-one-v1" ? 0 : 1;
     need(Array.isArray(v.records) && v.records.length === 13 && new Set(v.records.map(r => r.id)).size === 13);
     for (const r of v.records) {
       keys(r, ["id", "name", "player", "seed", "completed", "laps"]);
@@ -136,16 +143,16 @@
       need(entry && r.name === CGPArcadeData.roster.teams.find(t => t.id === r.id).name);
       need(r.player === (r.id === v.race.config.playerTeam) && integer(r.seed, 0, 12) && r.completed === entry.timing.completed);
       need(r.seed === [...ids().filter(id => id !== v.race.config.playerTeam), v.race.config.playerTeam].indexOf(r.id));
-      need(Array.isArray(r.laps) && r.laps.length === Math.max(0, r.completed - 1) && r.laps.every(x => number(x, 1e-9)));
+      need(Array.isArray(r.laps) && r.laps.length === Math.max(0, r.completed - outLaps) && r.laps.every(x => number(x, 1e-9)));
     }
     return clone ? copy(v) : v;
   }
-  function result(v, playerTeam) {
+  function result(v, playerTeam, format) {
     need(Array.isArray(v) && v.length === 13 && new Set(v.map(e => e.id)).size === 13);
     for (const [i, e] of v.entries()) {
       keys(e, ["id", "name", "player", "seed", "completed", "laps", "bestLap", "position"]);
       need(ids().includes(e.id) && e.name === CGPArcadeData.roster.teams.find(t => t.id === e.id).name && e.player === (e.id === playerTeam));
-      need(e.position === i + 1 && integer(e.seed, 0, 12) && e.completed === 3 && Array.isArray(e.laps) && e.laps.length === 2 && e.laps.every(x => number(x, 1e-9)));
+      need(e.position === i + 1 && integer(e.seed, 0, 12) && e.completed === (format ? 1 : 3) && Array.isArray(e.laps) && e.laps.length === (format ? 1 : 2) && e.laps.every(x => number(x, 1e-9)));
       need(e.bestLap === Math.min(...e.laps));
     }
   }
@@ -154,9 +161,12 @@
     need(v.kind === "weekend" && v.version === 1 && typeof v.qualifying === "boolean"); config(v.config);
     const r = v.qualifying ? qualifying(v.session, false).race : race(v.session, false);
     need(r.config.qualifying === v.qualifying);
+    need((r.config.performance?.version || null) === (v.config.performance?.version || null) &&
+      (r.config.performance?.context || null) === (v.config.performance?.context || null));
+    need((r.config.qualifyingFormat || null) === (v.config.qualifyingFormat || null));
     need(r.trackId === v.trackId && r.config.playerTeam === v.config.playerTeam && r.config.difficulty === v.config.difficulty);
     if (!v.qualifying) need(r.config.catchup === v.config.catchup && r.config.slipstream === v.config.slipstream && r.config.laps === v.config.laps);
-    if (v.result !== null) result(v.result, v.config.playerTeam);
+    if (v.result !== null) result(v.result, v.config.playerTeam, v.config.qualifyingFormat);
     if (v.qualifying) need(v.result === null);
     return clone ? copy(v) : v;
   }

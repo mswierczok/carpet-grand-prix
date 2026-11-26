@@ -1,3 +1,4 @@
+import { withoutVehicleGripSource, unaffectedByVehicleWork } from "../helpers/vehicle-performance-source.js";
 import { withoutEnvironmentCameraOptions } from "../helpers/environment-camera.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
@@ -47,7 +48,7 @@ it("südliche Verlängerungen erhalten die anderen 20 Strecken samt Seilen sowie
     "src/rendering/camera3d.js",
     "src/rendering/vehicles3d.js",
   ]) {
-    const current = readFileSync(new URL(path, ROOT), "utf8");
+    const current = withoutVehicleGripSource(path, readFileSync(new URL(path, ROOT), "utf8"));
     expect(
       path === "src/rendering/camera3d.js"
           ? withoutEnvironmentCameraOptions(current)

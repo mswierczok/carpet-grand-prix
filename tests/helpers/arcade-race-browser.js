@@ -29,7 +29,7 @@ export function pilotRace({ stopOnQualifiedGrid = false, difficulty = "normal" }
     surface = A.Surface.create(
       A.TrackCatalog.get(document.getElementById("track").value),
     ),
-    p = A.Physics.parameters,
+    p = globalThis.__driveSnapshot?.entries.find(e=>e.player)?.performance?.parameters || A.Physics.parameters,
     driver = A.Opponents.create(surface, p, { difficulty }),
     memory = driver.memory(0, -6),
     held = new Set();

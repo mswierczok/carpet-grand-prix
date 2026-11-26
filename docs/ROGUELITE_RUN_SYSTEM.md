@@ -2,7 +2,9 @@
 
 Ausgangsbasis: `100d1835adbed180c92ac128172015341429f0be` (gemergter PR #54).
 Feature-Branch: `codex/roguelite-run-phase1`. Keine erneute Legacy-Bereinigung,
-keine neue Engine und keine Änderungen an Fahrwerten oder Rundenzahlen.
+keine neue Engine und keine Änderung der Rundenzahlen. Die spätere Erweiterung
+[Fahrzeugleistung und Ein-Runden-Qualifying](VEHICLE_PERFORMANCE_AND_QUALIFYING.md)
+gilt für neue Wochenenden; bereits laufende Sessions behalten ihr Format.
 
 ## Einstieg und tatsächlich implementierter Ablauf
 
@@ -104,8 +106,9 @@ wird nicht durch das Service-Testevent verändert.
 ## Rennwochenende, Ausscheiden und HUD
 
 `RunWeekend` umschließt den bestehenden `CampaignWeekend` und damit dieselbe
-native `RaceWeekend`-Session. Auslaufrunde und zwei schnelle Runden bleiben
-verpflichtend. Die fertige Startaufstellung wird einmalig übernommen und sofort
+native `RaceWeekend`-Session. Qualifying bleibt verpflichtend: neue Wochenenden
+fahren eine echte Anfahrt und einen gewerteten Versuch; alte Checkpoints behalten
+ihren ursprünglichen Ablauf. Die fertige Startaufstellung wird einmalig übernommen und sofort
 gespeichert; der Rennstart wartet auf den Spieler. Kein Ausscheiden im Qualifying.
 
 Mit „RENNEN STARTEN“ wird die Neustartsperre bereits vor dem ersten gewerteten
@@ -252,3 +255,9 @@ Viewportprüfungen: Desktop 1280×720, Smartphone 390×844, Querformat 844×390 
 kleines Smartphone 320×640; zusätzlich mobiles Chromium-Touchprofil. Es sind
 Browseremulationen, keine Tests auf einem physischen iPhone/Safari. Der endgültige
 CI-Status und konkrete Prüfresultate werden im Freigabe-PR verlinkt.
+
+Die ursprünglichen Sieg-Aufnahmen dokumentieren PR #55 mit uniformer Physik.
+Mit den aktuellen Fahrzeugprofilen prüft die Vier-Wochenenden-Fahrt die echte
+Finaleentscheidung; eine Niederlage bleibt endgültig. Der frühere native Sieger-Run
+bleibt separat als Speicher-/Erfolgsansicht-Regression erhalten. Details:
+[Leistungsmodell und Qualifying](VEHICLE_PERFORMANCE_AND_QUALIFYING.md).

@@ -508,7 +508,7 @@
     const resumed = resumeCountdown?.tick(now);
     // This frame's delta was spent paused, including after a delayed paint.
     if (!document.hidden) session.advance(controls.read(), resumed ? 0 : delta);
-    if (campaignMode && session.takeTransition?.()) {
+    if (session.takeTransition?.()) {
       controls.clear(); renderer.resetCamera?.(); dirty = true;
       gameUI?.changed(); updateUI();
     }

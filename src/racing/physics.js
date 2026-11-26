@@ -27,6 +27,13 @@
   });
   const clamp = (n, a, b) =>
     Math.max(a, Math.min(b, Number.isFinite(n) ? n : 0));
+  function lateralAcceleration(p, speed) {
+    return p.maxLateralAcceleration * (1 + (p.highSpeedGrip || 0) * Math.min(1, Math.abs(speed) / (p.gripSpeedReference || p.maxSpeed)) ** 2);
+  }
+  function cornerSpeedSquared(p, curvature, confidence = 1) {
+    const grip = p.maxLateralAcceleration * confidence;
+    return grip / Math.max(1e-9, curvature - grip * (p.highSpeedGrip || 0) / (p.gripSpeedReference || p.maxSpeed) ** 2);
+  }
   function spawn(surface, s = -surface.g.width * 0.9) {
     const p = surface.at(s);
     return {
@@ -114,7 +121,7 @@
       previous.steering +
       (targetSteering - previous.steering) * (1 - Math.exp(-response * dt));
     const desiredYaw = (longitudinalSpeed / p.wheelbase) * Math.tan(steering),
-      grip = p.maxLateralAcceleration * (offroad ? p.offroadGrip : 1),
+      grip = lateralAcceleration(p, speed) * (offroad ? p.offroadGrip : 1),
       yaw = clamp(
         desiredYaw,
         -grip / Math.max(speed, 1),
@@ -180,5 +187,5 @@
     proposed.offroad = nearest.distance > surface.roadRadius;
     return proposed;
   }
-  A.Physics = Object.freeze({ parameters, spawn, step });
+  A.Physics = Object.freeze({ parameters, spawn, step, lateralAcceleration, cornerSpeedSquared });
 })();

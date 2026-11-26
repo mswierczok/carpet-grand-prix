@@ -31,7 +31,8 @@ Laufzeitserver oder CDN ist notwendig. Relative URLs erhalten den Pages-Pfad
 | `src/ui/` | Hauptmenü, Kampagne, HUD, pausierte Dialoge, Ergebnisdetails und Fortsetzungs-Countdown |
 
 `RaceWeekend` koordiniert genau eine native Session. `QualifyingSession`
-verwendet dieselbe Einzelwagenphysik für Auslaufrunde und zwei schnelle Runden;
+verwendet dieselbe Einzelwagenphysik für eine echte Anfahrt und eine schnelle Runde;
+ältere gespeicherte Sessions behalten Auslaufrunde und zwei schnelle Runden.
 KI-Fahrzeuge werden unsichtbar ohne geteilten Verkehr gefahren. Das Rennen
 verwendet `RaceSession` mit allen 13 Fahrzeugen. Es gibt keine zweite Simulation.
 
@@ -61,8 +62,13 @@ und parallele Boxengasse. Originaldaten und erzeugte Dateien bleiben unveränder
 
 `campaign-config.js` definiert acht Strecken und 39 feste Fahrerplätze.
 Redwood ist anfänglich das einzige freie Team. Die Kampagnenprofile 64/72
-überschreiben historische Teamwerte nur im Kampagnenkontext, ohne Fahrwerte
-zu verändern. `CampaignWeekend` erzwingt Qualifying und die einmalige Übernahme
+überschreiben historische Teamwerte nur im Kampagnenkontext. `VehiclePerformance`
+leitet daraus versionierte teamabhängige Physikparameter ab; `Opponents` plant
+mit denselben Werten. `QualifyingApproach` ermittelt eine gemeinsame sichere
+Anfahrt pro Strecke und Feld. Neue Wochenenden übernehmen die Startaufstellung
+automatisch und speichern den Übergang. Fehlende Modell-/Formatkennungen
+erhalten das ursprüngliche Verhalten. Details und Messungen:
+[VEHICLE_PERFORMANCE_AND_QUALIFYING.md](VEHICLE_PERFORMANCE_AND_QUALIFYING.md). `CampaignWeekend` erzwingt Qualifying und die einmalige Übernahme
 seiner Startaufstellung. Kampagnenablauf und Speicherung: [CAMPAIGN.md](CAMPAIGN.md).
 
 ## Rendering und Assetquellen
@@ -102,7 +108,8 @@ Die Run-Kampagne setzt sich um den bestehenden Kampagnen-/Wochenendkontext.
 `RunMap` definiert die feste Topologie und Ziele, `RogueliteRun` den validierten
 Fortschritt, `RunWeekend` ausschließlich Sessionzugang und Neustartsperre.
 `RunStore` speichert aktive und archivierte Runs in einem neuen Bereich.
-Physik, KI, Rendering und alle historischen Daten bleiben gemeinsam und unverändert.
+Rennphysik und KI werden gemeinsam genutzt; das aktuelle versionierte
+Fahrzeug-/Qualifying-System gilt auch hier. Rendering und historische Daten bleiben erhalten.
 Start-/Eventangebote werden einmal pro Run erzeugt, Fähigkeiten bleiben Platzhalter.
 Team, Fahrer und Build-Slots liegen außerhalb der Phase; Phasenabschluss und
 Prototyp-Abschluss sind getrennte Metadaten. Details: [ROGUELITE_RUN_SYSTEM.md](ROGUELITE_RUN_SYSTEM.md).

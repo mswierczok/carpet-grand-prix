@@ -13,7 +13,7 @@ it("liefert vier unveränderliche Fahrkompetenzen ohne andere Fahrzeugphysik ode
   for (const profile of api.AIDifficulty.profiles) {
     expect(Object.isFrozen(profile)).toBe(true);
     const race = api.RaceSession.create(track, { difficulty: profile.id });
-    expect(race.parameters).toBe(api.Physics.parameters);
+    expect(race.parameters).toBe(api.VehiclePerformance.get(race.snapshot().race.playerTeam).parameters);
     expect(race.snapshot().race.laps).toBe(8);
     expect(race.snapshot().race.difficulty).toBe(profile.id);
     expect(race.snapshot().entries).toHaveLength(13);
