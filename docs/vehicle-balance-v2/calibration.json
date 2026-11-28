@@ -1,0 +1,933 @@
+{
+  "anchors": {
+    "acceleration": 0.94,
+    "topSpeed": 0.975,
+    "braking": 0.97,
+    "handling": 0.97,
+    "grip": 0.97,
+    "highSpeedGrip": 0
+  },
+  "centers": {
+    "acceleration": 0.91,
+    "topSpeed": 0.955,
+    "braking": 0.95,
+    "handling": 0.95,
+    "grip": 0.94,
+    "highSpeedGrip": 0
+  },
+  "protocol": "Identical Expert reference driver, no personality, two complete native laps; second measured. No traffic/wake/catchup. Standing spawn -220, ordinary inputs.",
+  "rows": [
+    {
+      "compression": 0,
+      "spread": 0,
+      "mean": 32.590047098410245,
+      "teams": [
+        {
+          "id": "t01",
+          "laps": [
+            32.616961105970255,
+            32.590047098410245
+          ],
+          "factors": {
+            "acceleration": 0.94,
+            "topSpeed": 0.975,
+            "braking": 0.97,
+            "handling": 0.97,
+            "grip": 0.97,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            32.616961105970255,
+            32.590047098410245
+          ],
+          "factors": {
+            "acceleration": 0.94,
+            "topSpeed": 0.975,
+            "braking": 0.97,
+            "handling": 0.97,
+            "grip": 0.97,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            32.616961105970255,
+            32.590047098410245
+          ],
+          "factors": {
+            "acceleration": 0.94,
+            "topSpeed": 0.975,
+            "braking": 0.97,
+            "handling": 0.97,
+            "grip": 0.97,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            32.616961105970255,
+            32.590047098410245
+          ],
+          "factors": {
+            "acceleration": 0.94,
+            "topSpeed": 0.975,
+            "braking": 0.97,
+            "handling": 0.97,
+            "grip": 0.97,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            32.616961105970255,
+            32.590047098410245
+          ],
+          "factors": {
+            "acceleration": 0.94,
+            "topSpeed": 0.975,
+            "braking": 0.97,
+            "handling": 0.97,
+            "grip": 0.97,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            32.616961105970255,
+            32.590047098410245
+          ],
+          "factors": {
+            "acceleration": 0.94,
+            "topSpeed": 0.975,
+            "braking": 0.97,
+            "handling": 0.97,
+            "grip": 0.97,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            32.616961105970255,
+            32.590047098410245
+          ],
+          "factors": {
+            "acceleration": 0.94,
+            "topSpeed": 0.975,
+            "braking": 0.97,
+            "handling": 0.97,
+            "grip": 0.97,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            32.616961105970255,
+            32.590047098410245
+          ],
+          "factors": {
+            "acceleration": 0.94,
+            "topSpeed": 0.975,
+            "braking": 0.97,
+            "handling": 0.97,
+            "grip": 0.97,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            32.616961105970255,
+            32.590047098410245
+          ],
+          "factors": {
+            "acceleration": 0.94,
+            "topSpeed": 0.975,
+            "braking": 0.97,
+            "handling": 0.97,
+            "grip": 0.97,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            32.616961105970255,
+            32.590047098410245
+          ],
+          "factors": {
+            "acceleration": 0.94,
+            "topSpeed": 0.975,
+            "braking": 0.97,
+            "handling": 0.97,
+            "grip": 0.97,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            32.616961105970255,
+            32.590047098410245
+          ],
+          "factors": {
+            "acceleration": 0.94,
+            "topSpeed": 0.975,
+            "braking": 0.97,
+            "handling": 0.97,
+            "grip": 0.97,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            32.616961105970255,
+            32.590047098410245
+          ],
+          "factors": {
+            "acceleration": 0.94,
+            "topSpeed": 0.975,
+            "braking": 0.97,
+            "handling": 0.97,
+            "grip": 0.97,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            32.616961105970255,
+            32.590047098410245
+          ],
+          "factors": {
+            "acceleration": 0.94,
+            "topSpeed": 0.975,
+            "braking": 0.97,
+            "handling": 0.97,
+            "grip": 0.97,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        }
+      ]
+    },
+    {
+      "compression": 0.16,
+      "spread": 0.46420940643884023,
+      "mean": 32.60517286667263,
+      "teams": [
+        {
+          "id": "t01",
+          "laps": [
+            32.340484973001395,
+            32.33944154027896
+          ],
+          "factors": {
+            "acceleration": 0.9583999999999999,
+            "topSpeed": 0.98348,
+            "braking": 0.9772,
+            "handling": 0.9772,
+            "grip": 0.9788,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            32.36825228092205,
+            32.3668083630269
+          ],
+          "factors": {
+            "acceleration": 0.9531478260869565,
+            "topSpeed": 0.9818939130434783,
+            "braking": 0.977304347826087,
+            "handling": 0.9781043478260869,
+            "grip": 0.9787652173913043,
+            "highSpeedGrip": 0.0064
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            32.454241729683986,
+            32.40038195903701
+          ],
+          "factors": {
+            "acceleration": 0.9558956521739129,
+            "topSpeed": 0.9822278260869565,
+            "braking": 0.9758086956521739,
+            "handling": 0.9758086956521739,
+            "grip": 0.9771304347826086,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            32.481469049675454,
+            32.47160070072689
+          ],
+          "factors": {
+            "acceleration": 0.9506434782608695,
+            "topSpeed": 0.9796817391304348,
+            "braking": 0.9799130434782608,
+            "handling": 0.9831130434782609,
+            "grip": 0.979975652173913,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            32.57947592325053,
+            32.599739629727516
+          ],
+          "factors": {
+            "acceleration": 0.9446260869565217,
+            "topSpeed": 0.9765930434782608,
+            "braking": 0.9695478260869566,
+            "handling": 0.9695478260869566,
+            "grip": 0.9696173913043478,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            32.80258378225583,
+            32.8036509467178
+          ],
+          "factors": {
+            "acceleration": 0.9293565217391304,
+            "topSpeed": 0.9690382608695652,
+            "braking": 0.9680869565217392,
+            "handling": 0.9712869565217391,
+            "grip": 0.9657843478260869,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            32.76098050016894,
+            32.776512247526206
+          ],
+          "factors": {
+            "acceleration": 0.9318608695652173,
+            "topSpeed": 0.9702904347826087,
+            "braking": 0.9694782608695652,
+            "handling": 0.9726782608695652,
+            "grip": 0.9674539130434783,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            32.535028252065054,
+            32.501203287581575
+          ],
+          "factors": {
+            "acceleration": 0.9471304347826086,
+            "topSpeed": 0.9778452173913044,
+            "braking": 0.9709391304347826,
+            "handling": 0.9709391304347826,
+            "grip": 0.9712869565217391,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            32.78112883625199,
+            32.758106024998206
+          ],
+          "factors": {
+            "acceleration": 0.9308521739130434,
+            "topSpeed": 0.9697060869565217,
+            "braking": 0.961895652173913,
+            "handling": 0.961895652173913,
+            "grip": 0.9604347826086956,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            32.73370562580021,
+            32.73336850462574
+          ],
+          "factors": {
+            "acceleration": 0.9331130434782609,
+            "topSpeed": 0.9709165217391305,
+            "braking": 0.9701739130434782,
+            "handling": 0.9733739130434782,
+            "grip": 0.9682886956521739,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            32.68525574529022,
+            32.63826024350996
+          ],
+          "factors": {
+            "acceleration": 0.9381217391304347,
+            "topSpeed": 0.9743808695652174,
+            "braking": 0.9689565217391304,
+            "handling": 0.9697565217391304,
+            "grip": 0.9687478260869565,
+            "highSpeedGrip": 0.0064
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            32.7006283927576,
+            32.69971173649923
+          ],
+          "factors": {
+            "acceleration": 0.9356173913043477,
+            "topSpeed": 0.9721686956521739,
+            "braking": 0.9715652173913043,
+            "handling": 0.9747652173913044,
+            "grip": 0.9699582608695652,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            32.787464389695394,
+            32.77846208248821
+          ],
+          "factors": {
+            "acceleration": 0.9296,
+            "topSpeed": 0.9690799999999999,
+            "braking": 0.9611999999999999,
+            "handling": 0.9611999999999999,
+            "grip": 0.9596,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        }
+      ]
+    },
+    {
+      "compression": 0.2,
+      "spread": 0.5638774842979188,
+      "mean": 32.61076970984691,
+      "teams": [
+        {
+          "id": "t01",
+          "laps": [
+            32.26864475408438,
+            32.27123255708982
+          ],
+          "factors": {
+            "acceleration": 0.963,
+            "topSpeed": 0.9856,
+            "braking": 0.979,
+            "handling": 0.979,
+            "grip": 0.981,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            32.360074368515704,
+            32.36288128588871
+          ],
+          "factors": {
+            "acceleration": 0.9564347826086956,
+            "topSpeed": 0.9836173913043478,
+            "braking": 0.9791304347826086,
+            "handling": 0.9801304347826086,
+            "grip": 0.9809565217391304,
+            "highSpeedGrip": 0.008
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            32.34501177149375,
+            32.33935062262953
+          ],
+          "factors": {
+            "acceleration": 0.9598695652173912,
+            "topSpeed": 0.9840347826086956,
+            "braking": 0.9772608695652174,
+            "handling": 0.9772608695652174,
+            "grip": 0.9789130434782608,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            32.424080804965485,
+            32.44322788330628
+          ],
+          "factors": {
+            "acceleration": 0.9533043478260869,
+            "topSpeed": 0.9808521739130435,
+            "braking": 0.9823913043478261,
+            "handling": 0.9863913043478261,
+            "grip": 0.9824695652173913,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            32.54562494976513,
+            32.60636072556882
+          ],
+          "factors": {
+            "acceleration": 0.9457826086956521,
+            "topSpeed": 0.9769913043478261,
+            "braking": 0.9694347826086956,
+            "handling": 0.9694347826086956,
+            "grip": 0.9695217391304347,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            32.88628029234298,
+            32.79571102573829
+          ],
+          "factors": {
+            "acceleration": 0.9266956521739129,
+            "topSpeed": 0.9675478260869566,
+            "braking": 0.9676086956521739,
+            "handling": 0.9716086956521739,
+            "grip": 0.9647304347826087,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            32.81618165051547,
+            32.81968851011064
+          ],
+          "factors": {
+            "acceleration": 0.9298260869565217,
+            "topSpeed": 0.9691130434782609,
+            "braking": 0.9693478260869565,
+            "handling": 0.9733478260869565,
+            "grip": 0.9668173913043479,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            32.53008519835947,
+            32.50588323966183
+          ],
+          "factors": {
+            "acceleration": 0.9489130434782608,
+            "topSpeed": 0.9785565217391304,
+            "braking": 0.9711739130434782,
+            "handling": 0.9711739130434782,
+            "grip": 0.9716086956521739,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            32.847877396753354,
+            32.835110041387736
+          ],
+          "factors": {
+            "acceleration": 0.9285652173913043,
+            "topSpeed": 0.9683826086956522,
+            "braking": 0.9598695652173913,
+            "handling": 0.9598695652173913,
+            "grip": 0.9580434782608696,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            32.772023089546266,
+            32.761023183423035
+          ],
+          "factors": {
+            "acceleration": 0.931391304347826,
+            "topSpeed": 0.969895652173913,
+            "braking": 0.9702173913043478,
+            "handling": 0.9742173913043478,
+            "grip": 0.9678608695652173,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            32.65776210244852,
+            32.629668660238735
+          ],
+          "factors": {
+            "acceleration": 0.9376521739130435,
+            "topSpeed": 0.9742260869565217,
+            "braking": 0.9686956521739131,
+            "handling": 0.9696956521739131,
+            "grip": 0.9684347826086956,
+            "highSpeedGrip": 0.008
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            32.75363486352721,
+            32.74352200504914
+          ],
+          "factors": {
+            "acceleration": 0.9345217391304347,
+            "topSpeed": 0.9714608695652174,
+            "braking": 0.9719565217391304,
+            "handling": 0.9759565217391304,
+            "grip": 0.9699478260869565,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            32.84905183851075,
+            32.82634648791732
+          ],
+          "factors": {
+            "acceleration": 0.9269999999999999,
+            "topSpeed": 0.9676,
+            "braking": 0.959,
+            "handling": 0.959,
+            "grip": 0.957,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        }
+      ]
+    },
+    {
+      "compression": 0.24,
+      "spread": 0.6049278376877254,
+      "mean": 32.60526585916454,
+      "teams": [
+        {
+          "id": "t01",
+          "laps": [
+            32.18922630982284,
+            32.28434738452234
+          ],
+          "factors": {
+            "acceleration": 0.9675999999999999,
+            "topSpeed": 0.98772,
+            "braking": 0.9808,
+            "handling": 0.9808,
+            "grip": 0.9832,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t02",
+          "laps": [
+            32.29657493290962,
+            32.26432191757498
+          ],
+          "factors": {
+            "acceleration": 0.9597217391304347,
+            "topSpeed": 0.9853408695652174,
+            "braking": 0.9809565217391304,
+            "handling": 0.9821565217391304,
+            "grip": 0.9831478260869565,
+            "highSpeedGrip": 0.0096
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t03",
+          "laps": [
+            32.3016225279699,
+            32.30752765519469
+          ],
+          "factors": {
+            "acceleration": 0.9638434782608695,
+            "topSpeed": 0.9858417391304347,
+            "braking": 0.9787130434782608,
+            "handling": 0.9787130434782608,
+            "grip": 0.980695652173913,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t04",
+          "laps": [
+            32.38357536118913,
+            32.386128051452104
+          ],
+          "factors": {
+            "acceleration": 0.9559652173913042,
+            "topSpeed": 0.9820226086956522,
+            "braking": 0.9848695652173913,
+            "handling": 0.9896695652173912,
+            "grip": 0.9849634782608695,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t05",
+          "laps": [
+            32.54144877385997,
+            32.53538385761159
+          ],
+          "factors": {
+            "acceleration": 0.9469391304347825,
+            "topSpeed": 0.9773895652173913,
+            "braking": 0.9693217391304347,
+            "handling": 0.9693217391304347,
+            "grip": 0.9694260869565217,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t06",
+          "laps": [
+            32.888238808174975,
+            32.86924975526271
+          ],
+          "factors": {
+            "acceleration": 0.9240347826086955,
+            "topSpeed": 0.9660573913043479,
+            "braking": 0.9671304347826087,
+            "handling": 0.9719304347826087,
+            "grip": 0.9636765217391304,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t07",
+          "laps": [
+            32.842158738592005,
+            32.86031289934336
+          ],
+          "factors": {
+            "acceleration": 0.927791304347826,
+            "topSpeed": 0.9679356521739131,
+            "braking": 0.9692173913043478,
+            "handling": 0.9740173913043478,
+            "grip": 0.9661808695652174,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t08",
+          "laps": [
+            32.5049768809097,
+            32.49420592198606
+          ],
+          "factors": {
+            "acceleration": 0.9506956521739129,
+            "topSpeed": 0.9792678260869565,
+            "braking": 0.9714086956521739,
+            "handling": 0.9714086956521739,
+            "grip": 0.9719304347826087,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t09",
+          "laps": [
+            32.83204984048419,
+            32.833084427427124
+          ],
+          "factors": {
+            "acceleration": 0.9262782608695651,
+            "topSpeed": 0.9670591304347826,
+            "braking": 0.9578434782608696,
+            "handling": 0.9578434782608696,
+            "grip": 0.9556521739130435,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t10",
+          "laps": [
+            32.79788033569066,
+            32.77513382727012
+          ],
+          "factors": {
+            "acceleration": 0.9296695652173912,
+            "topSpeed": 0.9688747826086956,
+            "braking": 0.9702608695652174,
+            "handling": 0.9750608695652174,
+            "grip": 0.9674330434782609,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t11",
+          "laps": [
+            32.63621122750854,
+            32.6502910230274
+          ],
+          "factors": {
+            "acceleration": 0.9371826086956521,
+            "topSpeed": 0.9740713043478261,
+            "braking": 0.9684347826086956,
+            "handling": 0.9696347826086956,
+            "grip": 0.9681217391304348,
+            "highSpeedGrip": 0.0096
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t12",
+          "laps": [
+            32.77179777612186,
+            32.766908772506135
+          ],
+          "factors": {
+            "acceleration": 0.9334260869565216,
+            "topSpeed": 0.9707530434782609,
+            "braking": 0.9723478260869565,
+            "handling": 0.9771478260869565,
+            "grip": 0.9699373913043479,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        },
+        {
+          "id": "t13",
+          "laps": [
+            32.89735112671483,
+            32.84156067596034
+          ],
+          "factors": {
+            "acceleration": 0.9243999999999999,
+            "topSpeed": 0.96612,
+            "braking": 0.9568,
+            "handling": 0.9568,
+            "grip": 0.9544,
+            "highSpeedGrip": 0
+          },
+          "wall": 0,
+          "offroad": 0
+        }
+      ]
+    }
+  ]
+}

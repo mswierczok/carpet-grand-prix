@@ -18,7 +18,7 @@ it('liefert 13 feste validierte Profile; verwendet 64/72 nur im Kampagnenkontext
     expect(p).not.toHaveProperty('developmentPotential');
   }
   expect(JSON.stringify(data.roster)).toBe(before);
-  for(const bad of [{version:2,context:'campaign'},{version:1,context:'bogus'},{version:1,context:'campaign',bonus:1},null])expect(()=>V.validate(bad)).toThrow();
+  for(const bad of [{version:3,context:'campaign'},{version:1,context:'bogus'},{version:1,context:'campaign',bonus:1},null])expect(()=>V.validate(bad)).toThrow();
   expect(()=>V.get('t99')).toThrow();
 });
 it('weist versehentlich vertauschte Kampagnen-/POV-Leistungskontexte im Speicher zurück',()=>{

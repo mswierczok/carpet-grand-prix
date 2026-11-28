@@ -41,12 +41,12 @@ test('Fahrer/Touch: Kampagnenprofil folgt echter Startliste durch Qualifying, Re
  const game=loadArcade({race:true}).api.Campaign.create({driverId:'d035',difficulty:'beginner'});
  await page.addInitScript(g=>{if(!localStorage.getItem('carpet_gp_campaign_v1'))localStorage.setItem('carpet_gp_campaign_v1',JSON.stringify(g));let module;Object.defineProperty(CGPArcade,'RaceWeekend',{configurable:true,get:()=>module,set(value){module={...value,create(track,opts={}){return value.create(track,{...opts,laps:1});}};}});},game);
  await page.goto('race.html?mode=campaign&quality=low');await page.clock.runFor(64);await page.locator('#startQualifying').tap();await page.clock.runFor(3200);
- const snapshot=await page.evaluate(()=>__driveSnapshot);for(const e of snapshot.entries)expect(e.driverId).toBe(game.lineup[e.id]);expect(snapshot.entries.find(e=>e.player).driverId).toBe('d035');
+ const snapshot=await page.evaluate(()=>__driveSnapshot);for(const e of snapshot.entries){expect(e.driverId).toBe(game.lineup[e.id]);expect(e.performance.version).toBe(2);}expect(snapshot.entries.find(e=>e.player).driverId).toBe('d035');
  await page.evaluate(pilotRace,{stopOnQualifiedGrid:true,difficulty:'expert'});
  for(let i=0;i<120;i++){await page.clock.runFor(1000);if(await page.evaluate(()=>!!__driveSnapshot.qualifyingResult))break;}
  expect(await page.evaluate(()=>__driveSnapshot.qualifyingResult.length)).toBe(13);
  expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('carpet_gp_campaign_v1')).weekend.result.length)).toBe(13);
- await page.reload();await page.clock.runFor(64);const restored=await page.evaluate(()=>__driveSnapshot.entries);for(const e of restored)expect(e.driverId).toBe(game.lineup[e.id]);
+ await page.reload();await page.clock.runFor(64);const restored=await page.evaluate(()=>__driveSnapshot.entries);for(const e of restored){expect(e.driverId).toBe(game.lineup[e.id]);expect(e.performance.version).toBe(2);}
  await page.locator('#pause').tap();await page.evaluate(pilotRace,{difficulty:'expert'});
  for(let i=0;i<150;i++){await page.clock.runFor(1000);if(await page.evaluate(()=>__driveSnapshot.race.phase==='finished'))break;}
  expect(await page.evaluate(()=>__driveSnapshot.race.finished)).toBe(13);const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('carpet_gp_campaign_v1')));expect(saved.completed).toHaveLength(1);for(const row of saved.completed[0].order)expect(row.driverId).toBe(game.lineup[row.teamId]);

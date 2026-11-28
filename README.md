@@ -84,3 +84,10 @@ Die technischen Fahrzeuggrenzen und manuelle Eingaben bleiben getrennt davon.
 Größere responsive Touchflächen unterstützen die Smartphone-Bedienung.
 Technik, Vergleichsmessungen und Kompatibilität:
 [Fahrerpersönlichkeiten und dynamische Rennen](docs/DRIVER_PERSONALITIES_AND_DYNAMIC_RACING.md).
+
+## Fahrzeugbalance V2
+
+Neue Wochenenden verwenden engere, weiterhin teamabhängige Fahrzeugprofile.
+Bereits gespeicherte V1-Wochenenden behalten ihre ursprünglichen Parameter.
+Formeln, acht Streckenvergleiche, vollständige Rennen und verbleibende
+Abstände: [VEHICLE_BALANCE_V2.md](docs/VEHICLE_BALANCE_V2.md).

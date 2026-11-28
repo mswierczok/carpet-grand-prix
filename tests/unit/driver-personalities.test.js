@@ -102,6 +102,6 @@ it('belegt vollständige native Vergleichsrennen auf allen acht Strecken und bin
  const key=r=>r.trackId+':'+r.condition;expect(new Set(before.weekends.map(key)).size).toBe(16);expect(after.weekends.map(key).sort()).toEqual(before.weekends.map(key).sort());
  for(const r of [...before.weekends,...after.weekends]){expect(r.laps).toBe(A.RaceFormats.get(r.trackId).laps);expect(r.order.map(e=>e.id).sort()).toEqual(ids);expect(r.qualifying.map(e=>e.id).sort()).toEqual(ids);expect(r.order.every(e=>e.finishTime>0&&e.completed===r.laps)).toBe(true);expect(r.qualifying.every(e=>e.bestLap>0)).toBe(true);}
  expect(solo.rows).toHaveLength(39);for(const row of solo.rows){expect(row.attributes).toEqual(A.DriverPersonalities.get(row.id));expect(row.qualifying.laps).toHaveLength(1);expect(row.race.laps).toHaveLength(4);}
- for(const[file,hash]of Object.entries(after.hashes))expect(createHash('sha256').update(readFileSync('src/'+file+'.js')).digest('hex')).toBe(hash);
+ for(const[file,hash]of Object.entries(after.hashes))expect(createHash('sha256').update(execFileSync('git',['show','622a1cf295437d38d9b12055a777e634777fb05d:src/'+file+'.js'])).digest('hex')).toBe(hash);
  for(const[file,hash]of Object.entries(before.hashes))expect(createHash('sha256').update(execFileSync('git',['show',before.baseCommit+':src/'+file+'.js'])).digest('hex')).toBe(hash);
 });
