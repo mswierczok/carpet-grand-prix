@@ -6,7 +6,7 @@ import {createHash} from 'node:crypto';
 const {api:A}=loadArcade({race:true}),surface=A.Surface.create(A.TrackCatalog.get('bahrain')),
  p=A.VehiclePerformance.get('t13',A.VehiclePerformance.campaign).parameters,
  controller=A.Opponents.create(surface,p,{difficulty:'expert'}),rows=[];
-const hashes=Object.fromEntries(['data/driver-attributes','racing/driver-personalities','racing/opponents','racing/physics','racing/vehicle-performance'].map(f=>[f,createHash('sha256').update(readFileSync('src/'+f+'.js')).digest('hex')]));
+const hashes=Object.fromEntries(['data/driver-attributes','racing/driver-personalities','racing/obstacle-avoidance','racing/opponents','racing/physics','racing/vehicle-performance'].map(f=>[f,createHash('sha256').update(readFileSync('src/'+f+'.js')).digest('hex')]));
 for(const driver of A.CampaignConfig.drivers){const result={id:driver.id,attributes:A.DriverPersonalities.get(driver.id)};
  for(const mode of ['qualifying','race']){
   let car=A.Physics.spawn(surface,-220),clock=A.Timing.create(),command,wallSteps=0,offroadSteps=0;

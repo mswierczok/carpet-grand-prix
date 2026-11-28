@@ -23,7 +23,7 @@ export async function threeLapRegression(page) {
     });
   });
 }
-export function pilotRace({ stopOnQualifiedGrid = false, difficulty = "normal" } = {}) {
+export function pilotRace({ stopOnQualifiedGrid = false, difficulty = "normal", throttleDuty = 1 } = {}) {
   globalThis.__racePilotPeakSpeeds = {};
   const A = CGPArcade,
     surface = A.Surface.create(
@@ -33,6 +33,7 @@ export function pilotRace({ stopOnQualifiedGrid = false, difficulty = "normal" }
     driver = A.Opponents.create(surface, p, { difficulty }),
     memory = driver.memory(0, -6),
     held = new Set();
+  let pedalFrame = 0;
   const key = (code, down) => {
     if (held.has(code) === down) return;
     down ? held.add(code) : held.delete(code);
@@ -79,7 +80,9 @@ export function pilotRace({ stopOnQualifiedGrid = false, difficulty = "normal" }
         car.steering * Math.sign(target) < Math.abs(target) - 0.003
           ? Math.sign(target)
           : 0;
-    key("KeyW", !!input.throttle);
+    // Optional intentionally slow HUMAN test inputs for loss/recovery cases.
+    // The normal pilot is unchanged; no car limits, timing or AI are altered.
+    key("KeyW", !!input.throttle && (pedalFrame++ % 10) < Math.max(0, Math.min(10, Math.round(throttleDuty * 10))));
     key("KeyS", !!input.brake);
     key("KeyA", direction < 0);
     key("KeyD", direction > 0);

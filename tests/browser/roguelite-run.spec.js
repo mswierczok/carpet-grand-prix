@@ -35,8 +35,8 @@ async function enterRace(page,id) {
   await page.clock.runFor(64);
   await expect(page.locator('#startQualifying')).toBeVisible();
 }
-async function drive(page, qualifying=false, difficulty='expert') {
-  await page.evaluate(pilotRace, { stopOnQualifiedGrid:qualifying, difficulty });
+async function drive(page, qualifying=false, difficulty='expert', throttleDuty=1) {
+  await page.evaluate(pilotRace, { stopOnQualifiedGrid:qualifying, difficulty, throttleDuty });
   for(let i=0;i<300;i++) {
     await page.clock.runFor(1000);
     const s=await page.evaluate(()=>globalThis.__driveSnapshot);
@@ -134,8 +134,13 @@ test('Roguelite: tatsächlich gewonnener PR55-Run bleibt mit allen vier Ergebnis
 });
 test('Roguelite: echte Niederlage, rote eigene Zeile, Reload-Schutz und Archiv beim neuen Run',async({page},info)=>{
   test.setTimeout(300000); await prepare(page,{threeD:true}); await create(page); await page.locator('#runAbilityOffers button').first().click();
-  const original=await current(page); await enterRace(page,'bahrain'); await page.locator('#startQualifying').click(); await drive(page,true);
-  await page.locator('#pause').click(); await page.clock.runFor(55000);
+  const original=await current(page); await enterRace(page,'bahrain'); await page.locator('#startQualifying').click();
+  // Driver personalities can now qualify behind the reference pilot. Drive an
+  // actually slow qualifying lap instead of assuming Redwood always starts last.
+  const q=await drive(page,true,'expert',.2);expect(q.qualifyingResult.find(e=>e.player).position).toBe(13);
+  await page.locator('#pause').click();await page.clock.runFor(3200);
+  expect(await page.evaluate(()=>__driveSnapshot.race.phase)).toBe('racing');
+  await page.clock.runFor(51800);
   await expect(page.locator('#relativeOrder .is-player')).toHaveClass(/is-eliminated/);
   await page.screenshot({path:`docs/roguelite/${info.project.name}-elimination-hud.png`});
   await openRaceMenu(page,'classification'); await expect(page.locator('#raceOrder .is-eliminated')).toHaveCount(3);

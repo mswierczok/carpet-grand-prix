@@ -9,7 +9,7 @@ const root=opt('--root',process.cwd()), stage=opt('--stage','after'),
   tracks=opt('--tracks','bahrain,canada,korea,france,england,russia,italy,japan').split(','),
   conditions=opt('--conditions','off,on').split(','), output=opt('--output',`docs/driver-racing/${stage}.json`);
 const {loadArcade}=await import(pathToFileURL(root+'/tests/helpers/arcade.js').href),{api:A,data}=loadArcade({race:true});
-const sources=['data/campaign-config','data/driver-attributes','racing/driver-personalities','racing/opponents','racing/race-session','racing/qualifying-session','racing/qualifying-drivers','racing/vehicle-performance','racing/physics'];
+const sources=['data/campaign-config','data/driver-attributes','racing/driver-personalities','racing/obstacle-avoidance','racing/opponents','racing/race-session','racing/qualifying-session','racing/qualifying-drivers','racing/vehicle-performance','racing/physics'];
 const hashes=Object.fromEntries(sources.filter(p=>existsSync(root+'/src/'+p+'.js')).map(p=>[p,createHash('sha256').update(readFileSync(root+'/src/'+p+'.js')).digest('hex')]));
 if(stage==='before') for(const [p,hash] of Object.entries(hashes)) {
   const original=execFileSync('git',['show',`d8c4d31cb7daacf594f24bbc08b367c601a4f03a:src/${p}.js`]);

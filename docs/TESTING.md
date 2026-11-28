@@ -7,7 +7,7 @@ Ein mobiles Chromium-Profil ersetzt keinen echten iPhone-/Safari-Test.
 
 Fahrerprofile/Touch: `npx vitest run tests/unit/driver-personalities.test.js` und
 `npx playwright test tests/browser/driver-touch.spec.js`. Neue native PR-56-
-Referenzen schützen die bisherigen KI-Entscheidungen. Messungen, alle 39 Profile,
+Referenzen schützen die bisherigen KI-Entscheidungen. Getrennte native Referenzen prüfen Fahrer-Modell v1/v2/v3; die Stillstandsprobe prüft Vorbeifahren und exaktes Wiederherstellen beim Rangieren. Messungen, alle 39 Profile,
 vollständige Vorher-/Nachher-Wochenenden und Solofahrten stehen unter
 [DRIVER_PERSONALITIES_AND_DYNAMIC_RACING.md](DRIVER_PERSONALITIES_AND_DYNAMIC_RACING.md).
 

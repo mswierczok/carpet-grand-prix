@@ -1,0 +1,1406 @@
+{
+  "hashes": {
+    "data/driver-attributes": "f679d009c9321644f4b2afb989564a7fafe2cb9c0d1519d8c08de604f3547212",
+    "racing/driver-personalities": "3cca9b395e710a02e51c1437f3249aa64bde1150e25f8cd4848dbd71b6f8f54d",
+    "racing/opponents": "32492665cbf9d1bf65d6286184d26ffad9f070daf31cb072e2ac54a3e43b890c",
+    "racing/physics": "932d4c840fe3e21f1611ab8392b80a7a0d30bd22a7ed1bf4e2717a81aa433ef2",
+    "racing/vehicle-performance": "14bccf0444bec1fcb285e644acf1908a78115dce20267948293736f5764015ac"
+  },
+  "seed": 4171,
+  "trackId": "bahrain",
+  "vehicle": {
+    "maxSpeed": 100.98,
+    "acceleration": 46.475,
+    "braking": 129.775,
+    "rollingDrag": 1.5,
+    "aeroDrag": 0.0015,
+    "wheelbase": 7.8,
+    "maxSteer": 0.58,
+    "steerResponse": 3.58,
+    "steerReturnResponse": 8.055,
+    "steerSpeedReference": 70,
+    "steerSpeedReduction": 0.65,
+    "maxReverseSpeed": 22,
+    "reverseAcceleration": 20,
+    "reverseDelay": 0.25,
+    "maxLateralAcceleration": 183.75,
+    "lateralDamping": 10,
+    "offroadDrag": 1.7,
+    "offroadGrip": 0.6,
+    "halfLength": 5.4,
+    "halfWidth": 2.5,
+    "metersPerUnit": 0.3,
+    "highSpeedGrip": 0,
+    "gripSpeedReference": 100.98
+  },
+  "protocol": "All 39 identities, same campaign Redwood v1, Expert, 120Hz physics/30Hz ordinary commands. Natural standing approach; qualifying one flying lap, race four complete clean-air laps. No traffic/wake/catchup. No modifications to physical limits, poses or times.",
+  "rows": [
+    {
+      "id": "d001",
+      "attributes": {
+        "qualifyingPace": 86,
+        "racePace": 85,
+        "consistency": 92,
+        "racecraft": 46,
+        "aggression": 47,
+        "defensiveSkill": 51,
+        "precision": 89,
+        "adaptability": 79,
+        "potential": 96
+      },
+      "qualifying": {
+        "laps": [
+          34.57977175814727
+        ],
+        "mean": 34.57977175814727,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.581050619466616,
+          34.630101088902904,
+          34.61556152047193,
+          34.60812552805375
+        ],
+        "mean": 34.6087096892238,
+        "sd": 0.017817862917514672,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d002",
+      "attributes": {
+        "qualifyingPace": 81,
+        "racePace": 88,
+        "consistency": 85,
+        "racecraft": 94,
+        "aggression": 43,
+        "defensiveSkill": 39,
+        "precision": 88,
+        "adaptability": 77,
+        "potential": 89
+      },
+      "qualifying": {
+        "laps": [
+          34.62505485744149
+        ],
+        "mean": 34.62505485744149,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.61504581610407,
+          34.57506902484438,
+          34.59259736122631,
+          34.60618462778241
+        ],
+        "mean": 34.59722420748929,
+        "sd": 0.015084418200732332,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d003",
+      "attributes": {
+        "qualifyingPace": 86,
+        "racePace": 79,
+        "consistency": 82,
+        "racecraft": 92,
+        "aggression": 39,
+        "defensiveSkill": 88,
+        "precision": 76,
+        "adaptability": 76,
+        "potential": 93
+      },
+      "qualifying": {
+        "laps": [
+          34.6020630804337
+        ],
+        "mean": 34.6020630804337,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.63082237559463,
+          34.659880277801925,
+          34.608091630183196,
+          34.597727221599555
+        ],
+        "mean": 34.62413037629483,
+        "sd": 0.023860041214819744,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d004",
+      "attributes": {
+        "qualifyingPace": 95,
+        "racePace": 88,
+        "consistency": 86,
+        "racecraft": 58,
+        "aggression": 68,
+        "defensiveSkill": 50,
+        "precision": 82,
+        "adaptability": 87,
+        "potential": 95
+      },
+      "qualifying": {
+        "laps": [
+          34.62273648572671
+        ],
+        "mean": 34.62273648572671,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.622163930947536,
+          34.5754143805689,
+          34.58960180859793,
+          34.57118214132848
+        ],
+        "mean": 34.58959056536071,
+        "sd": 0.020005365296998426,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d005",
+      "attributes": {
+        "qualifyingPace": 77,
+        "racePace": 94,
+        "consistency": 83,
+        "racecraft": 56,
+        "aggression": 64,
+        "defensiveSkill": 38,
+        "precision": 85,
+        "adaptability": 85,
+        "potential": 92
+      },
+      "qualifying": {
+        "laps": [
+          34.58567627818581
+        ],
+        "mean": 34.58567627818581,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.56552077741903,
+          34.5879685019058,
+          34.56815261086065,
+          34.57279614031218
+        ],
+        "mean": 34.57360950762441,
+        "sd": 0.00868975778982492,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d006",
+      "attributes": {
+        "qualifyingPace": 89,
+        "racePace": 91,
+        "consistency": 87,
+        "racecraft": 53,
+        "aggression": 59,
+        "defensiveSkill": 87,
+        "precision": 80,
+        "adaptability": 84,
+        "potential": 96
+      },
+      "qualifying": {
+        "laps": [
+          34.55905995837772
+        ],
+        "mean": 34.55905995837772,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.56308652704323,
+          34.61292094829506,
+          34.58312498344203,
+          34.57811908129844
+        ],
+        "mean": 34.58431288501969,
+        "sd": 0.01808835172153645,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d007",
+      "attributes": {
+        "qualifyingPace": 75,
+        "racePace": 63,
+        "consistency": 70,
+        "racecraft": 51,
+        "aggression": 55,
+        "defensiveSkill": 75,
+        "precision": 69,
+        "adaptability": 82,
+        "potential": 89
+      },
+      "qualifying": {
+        "laps": [
+          34.662728483633785
+        ],
+        "mean": 34.662728483633785,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.634344368574034,
+          34.669445949210555,
+          34.66328003564749,
+          34.62991875416027
+        ],
+        "mean": 34.64924727689809,
+        "sd": 0.017324788231366208,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d008",
+      "attributes": {
+        "qualifyingPace": 77,
+        "racePace": 83,
+        "consistency": 90,
+        "racecraft": 80,
+        "aggression": 84,
+        "defensiveSkill": 89,
+        "precision": 85,
+        "adaptability": 68,
+        "potential": 86
+      },
+      "qualifying": {
+        "laps": [
+          34.612769720764454
+        ],
+        "mean": 34.612769720764454,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.634209714869336,
+          34.60099959162896,
+          34.607404448221885,
+          34.598101469836976
+        ],
+        "mean": 34.61017880613929,
+        "sd": 0.014276743916518899,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d009",
+      "attributes": {
+        "qualifyingPace": 78,
+        "racePace": 69,
+        "consistency": 67,
+        "racecraft": 77,
+        "aggression": 80,
+        "defensiveSkill": 77,
+        "precision": 68,
+        "adaptability": 66,
+        "potential": 84
+      },
+      "qualifying": {
+        "laps": [
+          34.61975553380263
+        ],
+        "mean": 34.61975553380263,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.65736117728827,
+          34.61686286309776,
+          34.6135335152525,
+          34.5835238206171
+        ],
+        "mean": 34.61782034406391,
+        "sd": 0.026263199936761152,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d010",
+      "attributes": {
+        "qualifyingPace": 74,
+        "racePace": 80,
+        "consistency": 68,
+        "racecraft": 48,
+        "aggression": 57,
+        "defensiveSkill": 50,
+        "precision": 63,
+        "adaptability": 75,
+        "potential": 91
+      },
+      "qualifying": {
+        "laps": [
+          34.58334100936198
+        ],
+        "mean": 34.58334100936198,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.620088807055616,
+          34.56534666364017,
+          34.58194278806721,
+          34.669113381519495
+        ],
+        "mean": 34.609122910070624,
+        "sd": 0.039919376075420815,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d011",
+      "attributes": {
+        "qualifyingPace": 62,
+        "racePace": 60,
+        "consistency": 79,
+        "racecraft": 50,
+        "aggression": 61,
+        "defensiveSkill": 62,
+        "precision": 83,
+        "adaptability": 77,
+        "potential": 72
+      },
+      "qualifying": {
+        "laps": [
+          34.59946959136445
+        ],
+        "mean": 34.59946959136445,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.64902382455711,
+          34.69064706850306,
+          34.65869392680017,
+          34.655682009213564
+        ],
+        "mean": 34.663511707268476,
+        "sd": 0.016052583554225546,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d012",
+      "attributes": {
+        "qualifyingPace": 66,
+        "racePace": 58,
+        "consistency": 50,
+        "racecraft": 52,
+        "aggression": 65,
+        "defensiveSkill": 42,
+        "precision": 55,
+        "adaptability": 70,
+        "potential": 88
+      },
+      "qualifying": {
+        "laps": [
+          34.594161598764224
+        ],
+        "mean": 34.594161598764224,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.63329417082074,
+          34.616272584827904,
+          34.692171478289836,
+          34.716332191603044
+        ],
+        "mean": 34.66451760638538,
+        "sd": 0.04108519473644738,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d013",
+      "attributes": {
+        "qualifyingPace": 79,
+        "racePace": 66,
+        "consistency": 83,
+        "racecraft": 55,
+        "aggression": 69,
+        "defensiveSkill": 86,
+        "precision": 90,
+        "adaptability": 80,
+        "potential": 86
+      },
+      "qualifying": {
+        "laps": [
+          34.588013297199076
+        ],
+        "mean": 34.588013297199076,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.626647554231745,
+          34.617933660528685,
+          34.61287637080669,
+          34.64747026619307
+        ],
+        "mean": 34.62623196294005,
+        "sd": 0.013214309529181385,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d014",
+      "attributes": {
+        "qualifyingPace": 75,
+        "racePace": 77,
+        "consistency": 85,
+        "racecraft": 57,
+        "aggression": 73,
+        "defensiveSkill": 37,
+        "precision": 86,
+        "adaptability": 82,
+        "potential": 85
+      },
+      "qualifying": {
+        "laps": [
+          34.60161357329498
+        ],
+        "mean": 34.60161357329498,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.62620597374793,
+          34.651682673301366,
+          34.63601756897776,
+          34.6305710766119
+        ],
+        "mean": 34.63611932315974,
+        "sd": 0.009634388380440393,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d015",
+      "attributes": {
+        "qualifyingPace": 59,
+        "racePace": 52,
+        "consistency": 68,
+        "racecraft": 59,
+        "aggression": 77,
+        "defensiveSkill": 49,
+        "precision": 62,
+        "adaptability": 83,
+        "potential": 89
+      },
+      "qualifying": {
+        "laps": [
+          34.611228893458005
+        ],
+        "mean": 34.611228893458005,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.612213532308004,
+          34.65050697619184,
+          34.705486785458106,
+          34.71950564388108
+        ],
+        "mean": 34.671928234459756,
+        "sd": 0.04305375184349805,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d016",
+      "attributes": {
+        "qualifyingPace": 70,
+        "racePace": 78,
+        "consistency": 75,
+        "racecraft": 62,
+        "aggression": 81,
+        "defensiveSkill": 61,
+        "precision": 78,
+        "adaptability": 85,
+        "potential": 90
+      },
+      "qualifying": {
+        "laps": [
+          34.60353567629283
+        ],
+        "mean": 34.60353567629283,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.65889322066212,
+          34.57383368144623,
+          34.588888579903866,
+          34.61441065579423
+        ],
+        "mean": 34.60900653445161,
+        "sd": 0.032248052934537544,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d017",
+      "attributes": {
+        "qualifyingPace": 73,
+        "racePace": 55,
+        "consistency": 72,
+        "racecraft": 64,
+        "aggression": 85,
+        "defensiveSkill": 73,
+        "precision": 69,
+        "adaptability": 86,
+        "potential": 86
+      },
+      "qualifying": {
+        "laps": [
+          34.64484282518711
+        ],
+        "mean": 34.64484282518711,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.70100403120531,
+          34.63222003098158,
+          34.70117487929595,
+          34.63715551230503
+        ],
+        "mean": 34.66788861344696,
+        "sd": 0.03324672039603802,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d018",
+      "attributes": {
+        "qualifyingPace": 73,
+        "racePace": 69,
+        "consistency": 83,
+        "racecraft": 91,
+        "aggression": 58,
+        "defensiveSkill": 37,
+        "precision": 76,
+        "adaptability": 85,
+        "potential": 84
+      },
+      "qualifying": {
+        "laps": [
+          34.60920107882868
+        ],
+        "mean": 34.60920107882868,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.61374409725925,
+          34.5949396196472,
+          34.592982848611655,
+          34.6439260777512
+        ],
+        "mean": 34.61139816081733,
+        "sd": 0.020454682220263518,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d019",
+      "attributes": {
+        "qualifyingPace": 65,
+        "racePace": 75,
+        "consistency": 71,
+        "racecraft": 93,
+        "aggression": 62,
+        "defensiveSkill": 49,
+        "precision": 73,
+        "adaptability": 86,
+        "potential": 82
+      },
+      "qualifying": {
+        "laps": [
+          34.6069113945131
+        ],
+        "mean": 34.6069113945131,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.61081894405929,
+          34.65021846359485,
+          34.63256785495169,
+          34.566300816108765
+        ],
+        "mean": 34.61497651967865,
+        "sd": 0.031376978984339936,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d020",
+      "attributes": {
+        "qualifyingPace": 74,
+        "racePace": 63,
+        "consistency": 90,
+        "racecraft": 79,
+        "aggression": 38,
+        "defensiveSkill": 83,
+        "precision": 89,
+        "adaptability": 72,
+        "potential": 81
+      },
+      "qualifying": {
+        "laps": [
+          34.600186075412545
+        ],
+        "mean": 34.600186075412545,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.590962961538295,
+          34.60998594309608,
+          34.625301959047746,
+          34.63320038306733
+        ],
+        "mean": 34.61486281168736,
+        "sd": 0.0161262906935526,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d021",
+      "attributes": {
+        "qualifyingPace": 81,
+        "racePace": 79,
+        "consistency": 75,
+        "racecraft": 77,
+        "aggression": 34,
+        "defensiveSkill": 71,
+        "precision": 80,
+        "adaptability": 71,
+        "potential": 81
+      },
+      "qualifying": {
+        "laps": [
+          34.62417703080255
+        ],
+        "mean": 34.62417703080255,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.620800279598605,
+          34.646235781750214,
+          34.59749215268114,
+          34.62484891463798
+        ],
+        "mean": 34.622344282166985,
+        "sd": 0.01729948857670714,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d022",
+      "attributes": {
+        "qualifyingPace": 63,
+        "racePace": 59,
+        "consistency": 87,
+        "racecraft": 84,
+        "aggression": 46,
+        "defensiveSkill": 46,
+        "precision": 89,
+        "adaptability": 75,
+        "potential": 79
+      },
+      "qualifying": {
+        "laps": [
+          34.63013153668097
+        ],
+        "mean": 34.63013153668097,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.63187578203752,
+          34.68238310139565,
+          34.63525868490453,
+          34.62764625062604
+        ],
+        "mean": 34.64429095474094,
+        "sd": 0.02215725740863479,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d023",
+      "attributes": {
+        "qualifyingPace": 71,
+        "racePace": 75,
+        "consistency": 84,
+        "racecraft": 81,
+        "aggression": 42,
+        "defensiveSkill": 95,
+        "precision": 77,
+        "adaptability": 74,
+        "potential": 84
+      },
+      "qualifying": {
+        "laps": [
+          34.62323682558244
+        ],
+        "mean": 34.62323682558244,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.65119587615128,
+          34.63069128116054,
+          34.60761665070167,
+          34.604322268300066
+        ],
+        "mean": 34.62345651907839,
+        "sd": 0.018965987294641003,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d024",
+      "attributes": {
+        "qualifyingPace": 76,
+        "racePace": 61,
+        "consistency": 87,
+        "racecraft": 88,
+        "aggression": 54,
+        "defensiveSkill": 70,
+        "precision": 91,
+        "adaptability": 78,
+        "potential": 78
+      },
+      "qualifying": {
+        "laps": [
+          34.588643739755646
+        ],
+        "mean": 34.588643739755646,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.6276752044149,
+          34.627402045926196,
+          34.61415825258523,
+          34.63246543229745
+        ],
+        "mean": 34.62542523380594,
+        "sd": 0.006809541367224037,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d025",
+      "attributes": {
+        "qualifyingPace": 82,
+        "racePace": 92,
+        "consistency": 88,
+        "racecraft": 86,
+        "aggression": 50,
+        "defensiveSkill": 58,
+        "precision": 83,
+        "adaptability": 77,
+        "potential": 94
+      },
+      "qualifying": {
+        "laps": [
+          34.61210675466723
+        ],
+        "mean": 34.61210675466723,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.582612634086956,
+          34.560881877819654,
+          34.58343753045986,
+          34.578002696379755
+        ],
+        "mean": 34.57623368468656,
+        "sd": 0.009102111922897062,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d026",
+      "attributes": {
+        "qualifyingPace": 79,
+        "racePace": 93,
+        "consistency": 84,
+        "racecraft": 93,
+        "aggression": 62,
+        "defensiveSkill": 94,
+        "precision": 91,
+        "adaptability": 82,
+        "potential": 87
+      },
+      "qualifying": {
+        "laps": [
+          34.624530248947245
+        ],
+        "mean": 34.624530248947245,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.58572968813683,
+          34.60387322138406,
+          34.58024668018368,
+          34.60389034460634
+        ],
+        "mean": 34.59343498357772,
+        "sd": 0.010625138904801573,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d027",
+      "attributes": {
+        "qualifyingPace": 84,
+        "racePace": 83,
+        "consistency": 82,
+        "racecraft": 91,
+        "aggression": 58,
+        "defensiveSkill": 82,
+        "precision": 80,
+        "adaptability": 80,
+        "potential": 90
+      },
+      "qualifying": {
+        "laps": [
+          34.584644773293675
+        ],
+        "mean": 34.584644773293675,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.61307275363971,
+          34.605964907183626,
+          34.59635083229939,
+          34.610123744559544
+        ],
+        "mean": 34.60637805942057,
+        "sd": 0.006315953339732637,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d028",
+      "attributes": {
+        "qualifyingPace": 94,
+        "racePace": 95,
+        "consistency": 90,
+        "racecraft": 48,
+        "aggression": 70,
+        "defensiveSkill": 57,
+        "precision": 84,
+        "adaptability": 85,
+        "potential": 92
+      },
+      "qualifying": {
+        "laps": [
+          34.56758787451211
+        ],
+        "mean": 34.56758787451211,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.56758787451211,
+          34.563861765771094,
+          34.55178943395555,
+          34.565347243943975
+        ],
+        "mean": 34.56214657954568,
+        "sd": 0.006125036164489386,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d029",
+      "attributes": {
+        "qualifyingPace": 72,
+        "racePace": 77,
+        "consistency": 86,
+        "racecraft": 46,
+        "aggression": 66,
+        "defensiveSkill": 45,
+        "precision": 86,
+        "adaptability": 83,
+        "potential": 84
+      },
+      "qualifying": {
+        "laps": [
+          34.66616375954152
+        ],
+        "mean": 34.66616375954152,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.658562006755815,
+          34.611171197361685,
+          34.629643177963615,
+          34.605921149714305
+        ],
+        "mean": 34.62632438294885,
+        "sd": 0.020592412127600206,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d030",
+      "attributes": {
+        "qualifyingPace": 71,
+        "racePace": 74,
+        "consistency": 82,
+        "racecraft": 50,
+        "aggression": 46,
+        "defensiveSkill": 76,
+        "precision": 82,
+        "adaptability": 86,
+        "potential": 85
+      },
+      "qualifying": {
+        "laps": [
+          34.63070492231332
+        ],
+        "mean": 34.63070492231332,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.60274684739699,
+          34.60916027280309,
+          34.63221058400342,
+          34.57852698488851
+        ],
+        "mean": 34.605661172273,
+        "sd": 0.019117219870121476,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d031",
+      "attributes": {
+        "qualifyingPace": 88,
+        "racePace": 89,
+        "consistency": 70,
+        "racecraft": 52,
+        "aggression": 50,
+        "defensiveSkill": 88,
+        "precision": 64,
+        "adaptability": 87,
+        "potential": 92
+      },
+      "qualifying": {
+        "laps": [
+          34.54858767610383
+        ],
+        "mean": 34.54858767610383,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.606361573098425,
+          34.622283680402866,
+          34.680150807986806,
+          34.6302525758735
+        ],
+        "mean": 34.6347621593404,
+        "sd": 0.027580661270508632,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d032",
+      "attributes": {
+        "qualifyingPace": 78,
+        "racePace": 75,
+        "consistency": 83,
+        "racecraft": 45,
+        "aggression": 38,
+        "defensiveSkill": 52,
+        "precision": 81,
+        "adaptability": 83,
+        "potential": 86
+      },
+      "qualifying": {
+        "laps": [
+          34.606837163903556
+        ],
+        "mean": 34.606837163903556,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.62820192847841,
+          34.60322530819406,
+          34.64463282763177,
+          34.657605193148896
+        ],
+        "mean": 34.63341631436329,
+        "sd": 0.0203076260335461,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d033",
+      "attributes": {
+        "qualifyingPace": 74,
+        "racePace": 86,
+        "consistency": 83,
+        "racecraft": 47,
+        "aggression": 42,
+        "defensiveSkill": 64,
+        "precision": 90,
+        "adaptability": 84,
+        "potential": 86
+      },
+      "qualifying": {
+        "laps": [
+          34.559920925524686
+        ],
+        "mean": 34.559920925524686,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.620022453490755,
+          34.61092245412287,
+          34.612452162409184,
+          34.613585413686124
+        ],
+        "mean": 34.614245620927235,
+        "sd": 0.0034665400305546883,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d034",
+      "attributes": {
+        "qualifyingPace": 70,
+        "racePace": 78,
+        "consistency": 72,
+        "racecraft": 90,
+        "aggression": 29,
+        "defensiveSkill": 89,
+        "precision": 67,
+        "adaptability": 79,
+        "potential": 97
+      },
+      "qualifying": {
+        "laps": [
+          34.57524077835604
+        ],
+        "mean": 34.57524077835604,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.62361843554341,
+          34.59022244609837,
+          34.56493641905908,
+          34.600858037173964
+        ],
+        "mean": 34.59490883446871,
+        "sd": 0.021094680183294145,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d035",
+      "attributes": {
+        "qualifyingPace": 61,
+        "racePace": 60,
+        "consistency": 42,
+        "racecraft": 72,
+        "aggression": 91,
+        "defensiveSkill": 48,
+        "precision": 50,
+        "adaptability": 57,
+        "potential": 79
+      },
+      "qualifying": {
+        "laps": [
+          34.54192676612987
+        ],
+        "mean": 34.54192676612987,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.63426040640368,
+          34.69147500436925,
+          34.66137003677542,
+          34.714644879101854
+        ],
+        "mean": 34.67543758166255,
+        "sd": 0.030363904068063514,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d036",
+      "attributes": {
+        "qualifyingPace": 73,
+        "racePace": 75,
+        "consistency": 84,
+        "racecraft": 86,
+        "aggression": 87,
+        "defensiveSkill": 65,
+        "precision": 77,
+        "adaptability": 76,
+        "potential": 86
+      },
+      "qualifying": {
+        "laps": [
+          34.66538976474069
+        ],
+        "mean": 34.66538976474069,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.652566031682724,
+          34.610776732999454,
+          34.56619168357858,
+          34.592924431329905
+        ],
+        "mean": 34.605614719897666,
+        "sd": 0.03140975674113767,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d037",
+      "attributes": {
+        "qualifyingPace": 70,
+        "racePace": 63,
+        "consistency": 72,
+        "racecraft": 88,
+        "aggression": 25,
+        "defensiveSkill": 77,
+        "precision": 73,
+        "adaptability": 78,
+        "potential": 91
+      },
+      "qualifying": {
+        "laps": [
+          34.64323204117026
+        ],
+        "mean": 34.64323204117026,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.65342548400357,
+          34.677665910899194,
+          34.625908876961915,
+          34.6127290991746
+        ],
+        "mean": 34.64243234275982,
+        "sd": 0.025087651741914314,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "d038",
+      "attributes": {
+        "qualifyingPace": 85,
+        "racePace": 81,
+        "consistency": 67,
+        "racecraft": 81,
+        "aggression": 79,
+        "defensiveSkill": 41,
+        "precision": 72,
+        "adaptability": 73,
+        "potential": 91
+      },
+      "qualifying": {
+        "laps": [
+          34.60517748851761
+        ],
+        "mean": 34.60517748851761,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.63551139289089,
+          34.618216171542414,
+          34.580151141696234,
+          34.59646045063495
+        ],
+        "mean": 34.60758478919112,
+        "sd": 0.02103138968357416,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    },
+    {
+      "id": "campaign-veteran-001",
+      "attributes": {
+        "qualifyingPace": 56,
+        "racePace": 61,
+        "consistency": 90,
+        "racecraft": 80,
+        "aggression": 30,
+        "defensiveSkill": 86,
+        "precision": 86,
+        "adaptability": 80,
+        "potential": 64
+      },
+      "qualifying": {
+        "laps": [
+          34.62933940578478
+        ],
+        "mean": 34.62933940578478,
+        "sd": 0,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      },
+      "race": {
+        "laps": [
+          34.632014801747374,
+          34.6384579250621,
+          34.61822516840566,
+          34.62754680074799
+        ],
+        "mean": 34.62906117399078,
+        "sd": 0.007360964457530607,
+        "wallSteps": 0,
+        "offroadSteps": 0
+      }
+    }
+  ],
+  "driverModel": 1,
+  "sourceCommit": "9a092d69c24b47df7376575aab942b6740b4ff39"
+}

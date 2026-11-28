@@ -67,9 +67,9 @@ Parameterpakete des Modells v1 sind automatisiert geprüft.
 [Vertrag und Messungen](VEHICLE_PERFORMANCE_AND_QUALIFYING.md).
 
 
-## Optionales KI-Fahrermodell v2
+## Optionales KI-Fahrermodell v3
 
-Neue Kampagnenwochenenden enthalten `config.driving` mit `version: 2`, einem
+Neue Kampagnenwochenenden enthalten `config.driving` mit `version: 3`, einem
 gespeicherten 32-Bit-Seed und der tatsächlichen 13-Team-Startliste (`lineup`).
 Der native KI-Speicher jedes Fahrzeugs speichert die passende Fahrer-ID, denselben
 Seed und die Sessionart. Kampagne, Wochenende und Session müssen übereinstimmen.
@@ -84,6 +84,6 @@ werden zurückgewiesen; bestehende gültige Slots und historische Zeiten bleiben
 erhalten. Es gibt keine Änderung der Root-Speicherschlüssel oder Run-Map.
 Details: [Fahrerpersönlichkeiten](DRIVER_PERSONALITIES_AND_DYNAMIC_RACING.md).
 
-Die erste Entwicklungsfassung `driving` v1 bleibt ebenfalls exakt fortsetzbar.
+Die Entwicklungsfassungen `driving` v1 und v2 bleiben ebenfalls exakt fortsetzbar.
 Version 2 berücksichtigt zusätzlich schnelle Kurven bei der fahrerabhängigen
-Ausführung. Das ist unabhängig vom unveränderten Fahrzeugmodell v1.
+Ausführung. Version 3 ergänzt langsames, physikalisch gefahrenes Umfahren stehender Fahrzeuge sowie den dafür gespeicherten Ausweichzustand. Das ist unabhängig vom unveränderten Fahrzeugmodell v1.
