@@ -37,6 +37,7 @@ export function loadArcade({
           "racing/vehicle-performance",
           "data/driver-attributes",
           "racing/driver-personalities",
+          "racing/obstacle-avoidance",
           "persistence/pov-checkpoint",
           "racing/vehicle-contacts",
           "racing/opponent-line",

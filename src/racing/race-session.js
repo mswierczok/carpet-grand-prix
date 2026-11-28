@@ -64,7 +64,7 @@
     function driverMemory(team, lane) {
       const memory = controller.memory(driverSeeds.get(team.id), lane),
         variation = options.qualifyingDrivers?.[team.id];
-      if (driving) memory.personality = {id:driving.lineup[team.id],seed:driving.seed,mode:options.qualifyingDrivers?'qualifying':'race',...(driving.version===2?{model:2}:{})};
+      if (driving) memory.personality = {id:driving.lineup[team.id],seed:driving.seed,mode:options.qualifyingDrivers?'qualifying':'race',...(driving.version>=2?{model:driving.version}:{})};
       else if (variation) memory.qualifying = variation;
       return memory;
     }

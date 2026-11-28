@@ -54,16 +54,20 @@
   }
   function command(v) { keys(v, ["throttle", "brake", "steer"]); need(number(v.throttle, 0, 1) && number(v.brake, 0, 1) && number(v.steer, -1, 1)); }
   function driver(v, qualifying, personality) {
-    keys(v, ["lane", "hold", "index", "defending", "blocked", "trafficBlocked", "retreat", "qualifying", "telemetry", "personality", "defenseLock", "attacking"]);
+    keys(v, ["lane", "hold", "index", "defending", "blocked", "trafficBlocked", "retreat", "qualifying", "telemetry", "personality", "defenseLock", "attacking", "avoidance", "avoidanceWait"]);
     need(number(v.lane, -10, 10) && number(v.hold, 0, 10) && integer(v.index, 0, 12));
     if ("defending" in v) need(v.defending === null || ids().includes(v.defending));
     for (const k of ["blocked", "trafficBlocked", "retreat"]) if (k in v) need(number(v[k], 0, 100));
     if (personality) {
       keys(v.personality,['id','seed','mode','model']);
       need(v.personality.id===personality.id&&v.personality.seed===personality.seed&&v.personality.mode===(qualifying?'qualifying':'race'));
-      need(personality.version===2?v.personality.model===2:!('model' in v.personality));
+      need(personality.version>=2?v.personality.model===personality.version:!('model' in v.personality));
       need(!('qualifying' in v));
     } else need(!('personality' in v)&&!('defenseLock' in v)&&!('attacking' in v));
+    if(personality?.version>=3){
+      if('avoidanceWait' in v)need(number(v.avoidanceWait,0));
+      if('avoidance' in v){keys(v.avoidance,['id','lane']);need(ids().includes(v.avoidance.id)&&number(v.avoidance.lane,-10,10));}
+    }else need(!('avoidanceWait' in v)&&!('avoidance' in v));
     for(const key of ['defenseLock','attacking'])if(key in v)need(v[key]===null||ids().includes(v[key]));
     if (qualifying && !personality) {
       keys(v.qualifying, ["brakeLead", "caution", "execution", "phase", "rhythm"]);

@@ -85,7 +85,7 @@
         lane,
         distance: Math.hypot(car.x - point.x, car.y - point.y),
         pace: planned,
-        ...(state.personality?.model===2?{cornering:Math.abs(Math.atan2(
+        ...(state.personality?.model>=2?{cornering:Math.abs(Math.atan2(
           Math.sin(route.at(s+32).ang-point.ang),Math.cos(route.at(s+32).ang-point.ang)))/32>.0035}:{}),
       };
     }
@@ -210,11 +210,14 @@
         }
       }
       path = motion(car, state);
+      const avoidance=state.personality?.model>=3?A.ObstacleAvoidance.plan(surface,p,
+        {...car,lane},traffic,path,state,dt,safeLane):null;
+      if(avoidance)path={...path,lane:avoidance.lane};
       if(personality && state.attacking && !traffic.some(v=>v.car.id===state.attacking&&v.gap>-30&&v.gap<120))state.attacking=null;
       const lineOffset = personality && !traffic.some(v=>Math.abs(v.gap)<30) ? personality.lineOffset : 0;
       const look = clamp(8 + car.speed * profile.look, 12, 35),
         baseTarget = path.route.at(path.s + look),
-        target = lineOffset ? {...baseTarget,x:baseTarget.x-Math.sin(baseTarget.ang)*lineOffset,y:baseTarget.y+Math.cos(baseTarget.ang)*lineOffset} : baseTarget,
+        target = avoidance?.target || (lineOffset ? {...baseTarget,x:baseTarget.x-Math.sin(baseTarget.ang)*lineOffset,y:baseTarget.y+Math.cos(baseTarget.ang)*lineOffset} : baseTarget),
         error = Math.atan2(
           Math.sin(
             Math.atan2(target.y - car.y, target.x - car.x) - car.heading,
@@ -241,7 +244,7 @@
           -1,
           1,
         );
-      let desired = path.pace,
+      let desired = avoidance?Math.min(path.pace,avoidance.speed):path.pace,
         reason = desired < p.maxSpeed ? "corner-preview" : "straight";
       // A merge can start far from its new path. Settle onto it before using
       // qualifying pace, rather than running wide with the old steering angle.
@@ -333,7 +336,7 @@
       // standing still with steering alone cannot change a vehicle's heading.
       state.trafficBlocked = blocker && blocker.car.speed < 1 &&
         blocker.gap < 2 * p.halfLength + 4 && car.speed < 0.5 && desired < 1 &&
-        path.distance > p.halfWidth * 2
+        (path.distance > p.halfWidth * 2 || state.personality?.model>=3)
           ? (state.trafficBlocked || 0) + dt : 0;
       if (state.trafficBlocked > 1.2) {
         state.retreat = 0.9;
