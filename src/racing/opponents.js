@@ -18,7 +18,7 @@
         } });
     }
     const p = parameters,
-      profile = A.AIDifficulty.forTrack(options.difficulty, surface.id),
+      profile = A.AIDifficulty.forDriving(options.difficulty, surface.id,options.drivingVersion),
       returnAnticipation = profile.steeringAnticipation > 0
         ? 1 / Math.expm1(p.steerReturnResponse * Math.log1p(1 / profile.steeringAnticipation) / p.steerResponse) : 0,
       stride = 5,
@@ -27,8 +27,9 @@
     if (!planCache.has(surface)) planCache.set(surface, new WeakMap());
     const cached = planCache.get(surface);
     if (!cached.has(p)) cached.set(p, new Map());
-    if (!cached.get(p).has(profile.id)) cached.get(p).set(profile.id, new Map());
-    const plans = cached.get(p).get(profile.id);
+    const planKey=profile.cacheKey||profile.id;
+    if (!cached.get(p).has(planKey)) cached.get(p).set(planKey, new Map());
+    const plans = cached.get(p).get(planKey);
     function plan(lane) {
       if (plans.has(lane)) return plans.get(lane);
       const route = lines.route(lane),
@@ -73,7 +74,10 @@
         index = Math.min(samples - 1, Math.floor(Math.max(0, s - precision) / stride)),
         aheadIndex = variation ? Math.min(samples - 1,
           Math.floor(Math.max(0, s - precision + variation.brakeLead) / stride)) : index,
-        planned = variation ? Math.min(speedTable[index], speedTable[aheadIndex]) : speedTable[index],
+        sample=s=>{const at=((s%route.length)+route.length)%route.length,i=Math.min(samples-1,Math.floor(at/stride)),
+          width=i===samples-1?route.length-i*stride:stride,f=(at-i*stride)/width;
+          return speedTable[i]+(speedTable[(i+1)%samples]-speedTable[i])*f;},
+        planned = state.personality?.model===4?sample(s-precision+variation.brakeLead):variation ? Math.min(speedTable[index], speedTable[aheadIndex]) : speedTable[index],
         point = route.at(s),
         road = surface.at(point.trackS),
         lane =
@@ -88,6 +92,16 @@
         ...(state.personality?.model>=2?{cornering:Math.abs(Math.atan2(
           Math.sin(route.at(s+32).ang-point.ang),Math.cos(route.at(s+32).ang-point.ang)))/32>.0035}:{}),
       };
+    }
+    function passingCostV4(car,target,currentLane) {
+      const candidate=plan(target),start=candidate.route.project(car),
+        end=candidate.route.project({...surface.at(car.s+120),s:car.s+120}),
+        distance=((end-start)%candidate.route.length+candidate.route.length)%candidate.route.length;
+      let cost=Math.abs(currentLane-target)/Math.max(40,car.speed)*.2;
+      for(let d=0;d<distance;d+=20){const at=(start+d)%candidate.route.length,
+        index=Math.min(candidate.samples-1,Math.floor(at/stride));
+        cost+=Math.min(20,distance-d)/Math.max(10,candidate.speedTable[index]);}
+      return cost;
     }
     const memory = (index, lane = 0) => ({
       lane,
@@ -121,6 +135,8 @@
             return {
               car: other,
               gap: surface.gap(car.s, other.s),
+              ...(state.personality?.model===4?{clearance:p.halfWidth*(Math.abs(Math.cos(car.heading-projection.ang))+Math.abs(Math.cos(other.heading-projection.ang)))+
+                p.halfLength*(Math.abs(Math.sin(car.heading-projection.ang))+Math.abs(Math.sin(other.heading-projection.ang)))+.8}:{}),
               lane:
                 other.lane ??
                 -(other.x - road.x) * Math.sin(road.ang) +
@@ -133,19 +149,23 @@
           )
           .sort((a, b) => a.gap - b.gap)[0];
       state.hold = Math.max(0, state.hold - dt);
-      const safeLane = (target, behind = personality?.safeRear ?? -16) => !traffic.some((v) =>
-        (v.gap > behind && v.gap < 35 && Math.abs(v.lane - target) < 6.5) ||
+      // A V4 passing route is relative to the racing line. Safety always uses
+      // its actual road-space destination, not the logical route offset.
+      const actualLane=target=>profile.relativePassing?motion(car,{...state,lane:target}).lane:target,
+        safePhysicalLane = (target, behind = personality?.safeRear ?? -16) => !traffic.some((v) =>
+        (v.gap > behind && v.gap < 35 && Math.abs(v.lane - target) < Math.max(6.5,v.clearance||0)) ||
         // Check the swept lateral corridor too; never move across an adjacent
         // car just because the destination lane itself is vacant.
         (personality && Math.abs(v.gap) < 2*p.halfLength+5 &&
-          v.lane > Math.min(lane,target)-2*p.halfWidth-1 && v.lane < Math.max(lane,target)+2*p.halfWidth+1));
+          v.lane > Math.min(lane,target)-Math.max(2*p.halfWidth+1,v.clearance||0) && v.lane < Math.max(lane,target)+Math.max(2*p.halfWidth+1,v.clearance||0))),
+        safeLane=(target,behind)=>safePhysicalLane(actualLane(target),behind);
       const rear = car.inRace === false ? null : traffic.find((v) => v.car.inRace !== false && v.gap < -2 * p.halfLength - 8 &&
         v.gap > -profile.defenseDistance * (personality ? .65 + personality.profile.defensiveSkill*.0065 : 1) && v.car.speed > car.speed + 2);
       if(personality && state.defenseLock && !traffic.some(v=>v.car.id===state.defenseLock&&v.car.inRace!==false&&v.gap>-150&&v.gap<25))state.defenseLock=null;
       if (state.defending && (car.inRace === false || !traffic.some((v) => v.car.inRace !== false && v.car.id === state.defending && v.gap < -12 && v.gap > -60)))
         state.defending = null;
       if(personality && state.attacking && state.lane!==0 &&
-        traffic.some(v=>v.gap>0&&v.gap<24&&Math.abs(v.lane-state.lane)<6.5)&&safeLane(0)) {
+        traffic.some(v=>v.gap>0&&v.gap<24&&Math.abs(v.lane-(profile.relativePassing?actualLane(state.lane):state.lane))<6.5)&&safeLane(0)) {
         // A newly blocked passing lane is not a commitment to collide. Return
         // only through a clear corridor; otherwise the normal blocker brake wins.
         state.lane=0;state.attacking=null;state.hold=.6;
@@ -165,19 +185,31 @@
       }
       let path = motion(car, state);
       const passing = ahead && Math.abs(path.lane - ahead.lane) > 6.5;
+      // Compare equal TRACK progress, not equal distances on different-radius
+      // routes. A racecraft driver can exploit a genuinely shorter clear line
+      // before a speed difference has appeared; there is no assigned overtake.
+      if(state.personality?.model===4&&ahead&&!passing&&state.hold===0&&profile.smartPassing&&personality.smartPassing&&ahead.gap<60){
+        const choices=[-passingOffset,passingOffset].filter(target=>Math.abs(actualLane(target)-lane)>3&&safeLane(target));
+        choices.sort((a,b)=>passingCostV4(car,a,state.lane)-passingCostV4(car,b,state.lane));
+        if(choices.length&&passingCostV4(car,choices[0],state.lane)+.012+(100-personality.profile.racecraft)*.0003<passingCostV4(car,state.lane,state.lane)){
+          state.lane=choices[0];state.hold=personality.maneuverHold;state.attacking=ahead.car.id;
+        }
+      }
       if (
         ahead &&
         !passing &&
         state.hold === 0 &&
-        (ahead.car.speed < path.pace - (personality?.closingThreshold ?? 2) || ahead.gap < 20)
+        (ahead.car.speed < (state.personality?.model===4?car.speed:path.pace) - (personality?.closingThreshold ?? 2) ||
+          (state.personality?.model===4?ahead.gap<18+personality.risk*6&&car.speed>=ahead.car.speed-.2:ahead.gap < 20))
       ) {
         const choices = [-passingOffset, passingOffset].filter(
           (target) =>
-            Math.abs(target - lane) > 3 &&
+            Math.abs(actualLane(target) - lane) > 3 &&
             safeLane(target),
         );
         if (choices.length) {
           const cost = (target) => {
+            if(state.personality?.model===4&&profile.smartPassing&&personality.smartPassing)return passingCostV4(car,target,state.lane);
             if (!profile.smartPassing || (personality && !personality.smartPassing)) return Math.abs(target - lane);
             const candidate = plan(target), at = candidate.route.project(car);
             let seconds = Math.abs(target - lane) / Math.max(40, car.speed) * 0.2;
@@ -211,7 +243,7 @@
       }
       path = motion(car, state);
       const avoidance=state.personality?.model>=3?A.ObstacleAvoidance.plan(surface,p,
-        {...car,lane},traffic,path,state,dt,safeLane):null;
+        {...car,lane},traffic,path,state,dt,profile.relativePassing?safePhysicalLane:safeLane):null;
       if(avoidance)path={...path,lane:avoidance.lane};
       if(personality && state.attacking && !traffic.some(v=>v.car.id===state.attacking&&v.gap>-30&&v.gap<120))state.attacking=null;
       const lineOffset = personality && !traffic.some(v=>Math.abs(v.gap)<30) ? personality.lineOffset : 0;
@@ -246,6 +278,10 @@
         );
       let desired = avoidance?Math.min(path.pace,avoidance.speed):path.pace,
         reason = desired < p.maxSpeed ? "corner-preview" : "straight";
+      // Signed V4 execution changes the corner plan before all settling,
+      // traffic, edge and recovery safeguards. A good phase cannot undo them.
+      if(state.personality?.model===4&&!avoidance&&desired>=40&&(desired<p.maxSpeed||path.cornering))
+        desired=Math.min(p.maxSpeed,desired*personality.cornerScale);
       // A merge can start far from its new path. Settle onto it before using
       // qualifying pace, rather than running wide with the old steering angle.
       if (path.distance > profile.settleDistance && Math.abs(error) > profile.settleAngle) {
@@ -258,7 +294,7 @@
           (v) =>
             v.gap > 0 &&
             v.gap < 80 &&
-            (Math.abs(v.lane - path.lane) < 6 || Math.abs(v.lane - lane) < 6),
+            (Math.abs(v.lane - path.lane) < Math.max(6,v.clearance||0) || Math.abs(v.lane - lane) < Math.max(6,v.clearance||0)),
         )
         .sort((a, b) => a.gap - b.gap)[0];
       if (blocker) {
@@ -272,7 +308,7 @@
           buffer =
             2 * p.halfLength +
             (personality?.reactionGap ?? 2) +
-            car.speed * 0.035 +
+            car.speed * (state.personality?.model===4?.055:.035) +
             closing * 0.15 +
             (closing * closing) / (2 * p.braking * 0.8);
         if (blocker.gap < buffer)
@@ -326,7 +362,9 @@
         }
       }
       if (Math.abs(error) > 0.9 && desired > 40) {
-        desired = Math.min(desired, 40);
+        const recovery=state.personality?.model===4&&Math.abs(error)<1.4&&path.distance<profile.settleDistance
+          ? clamp(Math.sqrt(A.Physics.lateralAcceleration(p,car.speed)*chord*.85/(2*Math.max(.2,Math.abs(Math.sin(error))))),40,65):40;
+        desired = Math.min(desired, recovery);
         reason = "heading-recovery";
       }
       state.blocked =
@@ -367,7 +405,7 @@
       // Retain each driver's execution after the shared recovery/settling
       // limits, which otherwise made every free-lap driver converge to the
       // same 65-unit corner target. A clear straight retains the shared cap.
-      if ((state.qualifying || personality) && desired >= 40 && (desired < p.maxSpeed || path.cornering) && !blocker) {
+      if (state.personality?.model!==4 && (state.qualifying || personality) && desired >= 40 && (desired < p.maxSpeed || path.cornering) && !blocker) {
         const execution = personality || A.QualifyingDrivers.at(state.qualifying, car.s / surface.g.len);
         desired *= execution.cornerScale;
       }
@@ -383,10 +421,20 @@
         ),
         steer,
       };
+      if(state.personality?.model===4&&desired<p.maxSpeed){
+        // Track a corner target with ordinary analogue pedals. Full-brake
+        // pulses used to throw away several speed units for a tiny overshoot.
+        const error=desired-car.speed,step=Math.max(1/120,Math.min(.05,dt)),
+          drag=p.rollingDrag+p.aeroDrag*car.longitudinalSpeed**2;
+        command.throttle=clamp((error/step+drag)/p.acceleration,0,1);
+        command.brake=car.longitudinalSpeed>.25?clamp((-error/step-drag)/p.braking,0,1):0;
+        if(command.brake>0)command.throttle=0;
+      }
       if (options.diagnostics) state.telemetry = { reason, speed: car.speed,
         desiredSpeed: desired, freeTarget: path.pace, pathError: path.distance,
         headingError: error, lane: state.lane, blockerGap: blocker?.gap ?? null,
-        ...(personality ? {driverId:state.personality.id,tactic:state.defending?'defend':state.attacking?'attack':'line'} : {}), ...command };
+        ...(personality ? {driverId:state.personality.id,tactic:state.defending?'defend':state.attacking?'attack':'line'} : {}),
+        ...(state.personality?.model===4?{executionScale:personality.cornerScale,executionWave:personality.executionWave,executionError:personality.executionError,brakeLead:personality.brakeLead}:{}),...command };
       return command;
     }
     // Build every racing/passing profile before the countdown. Input updates

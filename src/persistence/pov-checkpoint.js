@@ -74,7 +74,8 @@
       for (const key of ["brakeLead", "caution", "execution", "phase", "rhythm"]) need(number(v.qualifying[key], 0, 10));
     } else need(!("qualifying" in v));
     if (v.telemetry) {
-      keys(v.telemetry, ["reason", "speed", "desiredSpeed", "freeTarget", "pathError", "headingError", "lane", "blockerGap", "throttle", "brake", "steer", "driverId", "tactic"]);
+      keys(v.telemetry, ["reason", "speed", "desiredSpeed", "freeTarget", "pathError", "headingError", "lane", "blockerGap", "throttle", "brake", "steer", "driverId", "tactic",...(personality?.version===4?['executionScale','executionWave','executionError','brakeLead']:[])]);
+      for(const[k,min,max]of [['executionScale',.9,1.055],['executionWave',-1,1],['executionError',0,1],['brakeLead',-8,8]])if(k in v.telemetry)need(number(v.telemetry[k],min,max));
       if('driverId' in v.telemetry||'tactic' in v.telemetry)need(personality&&v.telemetry.driverId===personality.id&&['line','attack','defend'].includes(v.telemetry.tactic));
       need(["corner-preview", "straight", "settling", "traffic", "edge-preview", "heading-recovery", "reverse-recovery"].includes(v.telemetry.reason));
       for (const key of ["speed", "desiredSpeed", "freeTarget", "pathError", "headingError", "lane", "throttle", "brake", "steer"]) need(number(v.telemetry[key]));
