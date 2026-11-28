@@ -5,6 +5,12 @@ Node.js 24 LTS und die Lockdatei verwenden. `npm ci`, anschließend
 `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium`.
 Ein mobiles Chromium-Profil ersetzt keinen echten iPhone-/Safari-Test.
 
+Fahrerprofile/Touch: `npx vitest run tests/unit/driver-personalities.test.js` und
+`npx playwright test tests/browser/driver-touch.spec.js`. Neue native PR-56-
+Referenzen schützen die bisherigen KI-Entscheidungen. Messungen, alle 39 Profile,
+vollständige Vorher-/Nachher-Wochenenden und Solofahrten stehen unter
+[DRIVER_PERSONALITIES_AND_DYNAMIC_RACING.md](DRIVER_PERSONALITIES_AND_DYNAMIC_RACING.md).
+
 ## Standardbefehle
 
 | Befehl | Prüfung |

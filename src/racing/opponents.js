@@ -67,7 +67,8 @@
     function motion(car, state) {
       const { route, speedTable, samples } = plan(state.lane),
         s = route.project(car),
-        variation = state.qualifying ? A.QualifyingDrivers.at(state.qualifying, car.s / surface.g.len) : null,
+        variation = state.personality ? A.DriverPersonalities.decision(state.personality, car.s / surface.g.len, surface.id)
+          : state.qualifying ? A.QualifyingDrivers.at(state.qualifying, car.s / surface.g.len) : null,
         precision = profile.inconsistency * (1 + Math.sin(car.s * 6 * Math.PI / surface.g.len + state.index)),
         index = Math.min(samples - 1, Math.floor(Math.max(0, s - precision) / stride)),
         aheadIndex = variation ? Math.min(samples - 1,
@@ -103,6 +104,8 @@
       });
     }
     function input(car, others, state, dt = 1 / 30) {
+      const personality = state.personality ? A.DriverPersonalities.decision(state.personality, car.s / surface.g.len, surface.id) : null,
+        attackDistance = personality ? profile.attackDistance * (.75 + personality.attackDistance / 240) : profile.attackDistance;
       const projection = surface.project(car, car.s),
         lane =
           car.lane ??
@@ -124,17 +127,28 @@
           }),
         ahead = traffic
           .filter(
-            (v) => v.gap > 0 && v.gap < profile.attackDistance && Math.abs(v.lane - lane) < 5.8,
+            (v) => v.gap > 0 && v.gap < attackDistance && Math.abs(v.lane - lane) < 5.8,
           )
           .sort((a, b) => a.gap - b.gap)[0];
       state.hold = Math.max(0, state.hold - dt);
-      const safeLane = (target, behind = -16) => !traffic.some((v) =>
-        v.gap > behind && v.gap < 35 && Math.abs(v.lane - target) < 6.5);
+      const safeLane = (target, behind = personality?.safeRear ?? -16) => !traffic.some((v) =>
+        (v.gap > behind && v.gap < 35 && Math.abs(v.lane - target) < 6.5) ||
+        // Check the swept lateral corridor too; never move across an adjacent
+        // car just because the destination lane itself is vacant.
+        (personality && Math.abs(v.gap) < 2*p.halfLength+5 &&
+          v.lane > Math.min(lane,target)-2*p.halfWidth-1 && v.lane < Math.max(lane,target)+2*p.halfWidth+1));
       const rear = car.inRace === false ? null : traffic.find((v) => v.car.inRace !== false && v.gap < -2 * p.halfLength - 8 &&
-        v.gap > -profile.defenseDistance && v.car.speed > car.speed + 2);
+        v.gap > -profile.defenseDistance * (personality ? .65 + personality.profile.defensiveSkill*.0065 : 1) && v.car.speed > car.speed + 2);
+      if(personality && state.defenseLock && !traffic.some(v=>v.car.id===state.defenseLock&&v.car.inRace!==false&&v.gap>-150&&v.gap<25))state.defenseLock=null;
       if (state.defending && (car.inRace === false || !traffic.some((v) => v.car.inRace !== false && v.car.id === state.defending && v.gap < -12 && v.gap > -60)))
         state.defending = null;
-      if (!ahead && !state.defending && rear && state.hold === 0) {
+      if(personality && state.attacking && state.lane!==0 &&
+        traffic.some(v=>v.gap>0&&v.gap<24&&Math.abs(v.lane-state.lane)<6.5)&&safeLane(0)) {
+        // A newly blocked passing lane is not a commitment to collide. Return
+        // only through a clear corridor; otherwise the normal blocker brake wins.
+        state.lane=0;state.attacking=null;state.hold=.6;
+      }
+      if (!ahead && !state.defending && rear && state.hold === 0 && (!personality || state.defenseLock!==rear.car.id)) {
         const a = surface.at(car.s + 20), b = surface.at(car.s + 90),
           bend = Math.atan2(Math.sin(b.ang - a.ang), Math.cos(b.ang - a.ang)),
           inside = Math.sign(bend) * passingOffset;
@@ -144,6 +158,7 @@
           state.lane = inside;
           state.hold = 1.5;
           state.defending = rear.car.id;
+          if(personality)state.defenseLock=rear.car.id;
         }
       }
       let path = motion(car, state);
@@ -152,7 +167,7 @@
         ahead &&
         !passing &&
         state.hold === 0 &&
-        (ahead.car.speed < path.pace - 2 || ahead.gap < 20)
+        (ahead.car.speed < path.pace - (personality?.closingThreshold ?? 2) || ahead.gap < 20)
       ) {
         const choices = [-passingOffset, passingOffset].filter(
           (target) =>
@@ -161,7 +176,7 @@
         );
         if (choices.length) {
           const cost = (target) => {
-            if (!profile.smartPassing) return Math.abs(target - lane);
+            if (!profile.smartPassing || (personality && !personality.smartPassing)) return Math.abs(target - lane);
             const candidate = plan(target), at = candidate.route.project(car);
             let seconds = Math.abs(target - lane) / Math.max(40, car.speed) * 0.2;
             for (let look = 0; look <= 80; look += 20) {
@@ -172,7 +187,8 @@
           };
           choices.sort((a, b) => cost(a) - cost(b));
           state.lane = choices[0];
-          state.hold = 2;
+          state.hold = personality?.maneuverHold ?? 2;
+          if(personality)state.attacking=ahead.car.id;
         }
       } else if (!ahead && !state.defending && state.hold === 0 && state.lane !== 0) {
         const nominal = motion(car, { ...state, lane: 0 });
@@ -188,11 +204,15 @@
         if (!busy) {
           state.lane = 0;
           state.hold = 0.6;
+          if(personality)state.attacking=null;
         }
       }
       path = motion(car, state);
+      if(personality && state.attacking && !traffic.some(v=>v.car.id===state.attacking&&v.gap>-30&&v.gap<120))state.attacking=null;
+      const lineOffset = personality && !traffic.some(v=>Math.abs(v.gap)<30) ? personality.lineOffset : 0;
       const look = clamp(8 + car.speed * profile.look, 12, 35),
-        target = path.route.at(path.s + look),
+        baseTarget = path.route.at(path.s + look),
+        target = lineOffset ? {...baseTarget,x:baseTarget.x-Math.sin(baseTarget.ang)*lineOffset,y:baseTarget.y+Math.cos(baseTarget.ang)*lineOffset} : baseTarget,
         error = Math.atan2(
           Math.sin(
             Math.atan2(target.y - car.y, target.x - car.x) - car.heading,
@@ -246,7 +266,7 @@
           ),
           buffer =
             2 * p.halfLength +
-            2 +
+            (personality?.reactionGap ?? 2) +
             car.speed * 0.035 +
             closing * 0.15 +
             (closing * closing) / (2 * p.braking * 0.8);
@@ -342,8 +362,8 @@
       // Retain each driver's execution after the shared recovery/settling
       // limits, which otherwise made every free-lap driver converge to the
       // same 65-unit corner target. A clear straight retains the shared cap.
-      if (state.qualifying && desired >= 40 && desired < p.maxSpeed && !blocker) {
-        const execution = A.QualifyingDrivers.at(state.qualifying, car.s / surface.g.len);
+      if ((state.qualifying || personality) && desired >= 40 && desired < p.maxSpeed && !blocker) {
+        const execution = personality || A.QualifyingDrivers.at(state.qualifying, car.s / surface.g.len);
         desired *= execution.cornerScale;
       }
       const aerodynamicHeadroom = desired >= p.maxSpeed && car.slipstream
@@ -360,7 +380,8 @@
       };
       if (options.diagnostics) state.telemetry = { reason, speed: car.speed,
         desiredSpeed: desired, freeTarget: path.pace, pathError: path.distance,
-        headingError: error, lane: state.lane, blockerGap: blocker?.gap ?? null, ...command };
+        headingError: error, lane: state.lane, blockerGap: blocker?.gap ?? null,
+        ...(personality ? {driverId:state.personality.id,tactic:state.defending?'defend':state.attacking?'attack':'line'} : {}), ...command };
       return command;
     }
     // Build every racing/passing profile before the countdown. Input updates

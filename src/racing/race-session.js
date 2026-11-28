@@ -11,6 +11,7 @@
     const performance = options.performance === null ? null : A.VehiclePerformance.validate(options.performance ?? A.VehiclePerformance.historical),
       profilesByTeam = Object.freeze(Object.fromEntries(teams.map(t => [t.id, A.VehiclePerformance.get(t.id, performance)]))),
       parametersByTeam = Object.freeze(Object.fromEntries(teams.map(t => [t.id, profilesByTeam[t.id].parameters])));
+    const driving = options.driving ? A.DriverPersonalities.validate(options.driving) : null;
     const qualifyingFormat = options.qualifyingFormat || null,
       qualifyingStartS = options.qualifyingDrivers && qualifyingFormat === "flying-one-v1"
         ? options.qualifyingStartS ?? A.QualifyingApproach.select(surface, parametersByTeam).s : null;
@@ -39,6 +40,7 @@
         (c.qualifyingFormat || null) !== qualifyingFormat ||
         (c.qualifyingStartS ?? null) !== qualifyingStartS || JSON.stringify(c.gridOrder) !== JSON.stringify(grid))
         throw Error("Die Wiederherstellung darf das gespeicherte Renn- oder Fahrzeugmodell nicht ändern.");
+      if(JSON.stringify(c.driving || null)!==JSON.stringify(driving))throw Error('Die Wiederherstellung darf das gespeicherte Fahrermodell nicht ändern.');
     }
     let playerTeam = options.playerTeam || teams[0].id,
       driverSeeds,
@@ -62,7 +64,8 @@
     function driverMemory(team, lane) {
       const memory = controller.memory(driverSeeds.get(team.id), lane),
         variation = options.qualifyingDrivers?.[team.id];
-      if (variation) memory.qualifying = variation;
+      if (driving) memory.personality = {id:driving.lineup[team.id],seed:driving.seed,mode:options.qualifyingDrivers?'qualifying':'race'};
+      else if (variation) memory.qualifying = variation;
       return memory;
     }
     function restart() {
@@ -278,6 +281,7 @@
             name: e.team.name,
             player: e.player,
             ...(performance ? { performance: profilesByTeam[e.id] } : {}),
+            ...(driving ? {driverId:driving.lineup[e.id],driverAttributes:A.DriverPersonalities.get(driving.lineup[e.id])} : {}),
             car: { ...e.car },
             visual: {
               ...e.car,
@@ -358,6 +362,7 @@
         config: { playerTeam, difficulty: difficulty.id, catchup: catchupEnabled, slipstream: slipstreamEnabled,
           isolated, qualifying: !!options.qualifyingDrivers, laps, gridOrder: grid, diagnostics: !!options.diagnostics,
           ...(performance ? { performance } : {}),
+          ...(driving ? { driving } : {}),
           ...(qualifyingFormat ? { qualifyingFormat } : {}),
           ...(qualifyingStartS !== null ? { qualifyingStartS } : {}) },
         state: { phase, countdown, elapsed, accumulator, paused, tick, pairs: [...pairs], playerContacts,

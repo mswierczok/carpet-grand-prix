@@ -61,6 +61,12 @@ und parallele Boxengasse. Originaldaten und erzeugte Dateien bleiben unveränder
 `race-formats.js` stammt separat aus dokumentierten Referenzrunden.
 
 `campaign-config.js` definiert acht Strecken und 39 feste Fahrerplätze.
+`driver-attributes.js` hält deren feste Attribute; `DriverPersonalities` leitet
+sessionabhängige KI-Entscheidungen ohne Fahrzeugmodifikationen ab. Neue
+Kampagnenwochenenden speichern Modellversion, Seed und die tatsächliche Startliste.
+Fehlende `driving`-Kennung erhält die bisherige KI, einschließlich PR-56-Sessions.
+Die manuelle Steuerung sowie freie Rennen und POV-Meisterschaft bleiben unabhängig.
+Diagnose und mobile Touchflächen: [DRIVER_PERSONALITIES_AND_DYNAMIC_RACING.md](DRIVER_PERSONALITIES_AND_DYNAMIC_RACING.md).
 Redwood ist anfänglich das einzige freie Team. Die Kampagnenprofile 64/72
 überschreiben historische Teamwerte nur im Kampagnenkontext. `VehiclePerformance`
 leitet daraus versionierte teamabhängige Physikparameter ab; `Opponents` plant

@@ -30,6 +30,12 @@
   Auslaufrunde + zwei schnelle Runden. Formeln/Overlays nur mit neuer Modellversion
   ändern; alte Checkpoints und Archivzeiten erhalten. Messungen und Vertrag:
   `docs/VEHICLE_PERFORMANCE_AND_QUALIFYING.md`.
+- Neue Kampagnenwochenenden verwenden zusätzlich `driving` v1 mit gespeichertem
+  Seed und tatsächlicher Startliste. Fehlende Kennung erhält PR-56-KI; freie
+  Rennen/POV-Meisterschaft erhalten keine stillen Fahrerboni. Fahrerattribute
+  verändern normale KI-Entscheidungen, niemals manuelle Eingaben oder Fahrzeugwerte.
+  Modelländerungen benötigen eine neue Version; keine alten Referenzen ersetzen.
+  Vertrag/Messungen: `docs/DRIVER_PERSONALITIES_AND_DYNAMIC_RACING.md`.
 - Run-Speicher (`carpet_gp_roguelite_run_v1`) und frühere Kampagne niemals
   automatisch ineinander migrieren. Gespeicherte Angebote/Route/Ergebnisse und
   Niederlagen schützen; gewertete Run-Rennen können nicht neu gestartet werden.

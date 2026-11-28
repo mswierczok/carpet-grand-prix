@@ -4,7 +4,7 @@
   function create(run, options = {}) {
     A.RogueliteRun.validate(run, false);
     if (!A.RogueliteRun.canOpenWeekend(run)) throw Error("Dieses Run-Wochenende ist nicht verfügbar. Bitte zur Run-Map zurückkehren.");
-    const native = A.CampaignWeekend.create(run.campaign, options);
+    const native = A.CampaignWeekend.create(run.campaign, {...options, driverSeed:run.seed});
     let committed = run.raceCommitted;
     const canRestart = () => {
       if (committed) return false;

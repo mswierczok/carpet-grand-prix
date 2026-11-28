@@ -2,10 +2,13 @@
   "use strict";
   const A = globalThis.CGPArcade;
   // Campaign flow around the native weekend; no simulation, forces or clocks.
-  function create(game, { diagnostics = false } = {}) {
+  function create(game, { diagnostics = false, driverSeed = null } = {}) {
     game = A.Campaign.validate(game, false);
+    if(driverSeed!==null&&(!Number.isInteger(driverSeed)||driverSeed<0||driverSeed>4294967295))throw Error('Ungültiger Fahrer-Seed.');
     const track = A.TrackCatalog.get(game.trackId),
-      options = { playerTeam: game.teamId, ...game.options, diagnostics, performance: A.VehiclePerformance.campaign };
+      options = { playerTeam: game.teamId, ...game.options, diagnostics, performance: A.VehiclePerformance.campaign,
+        driving: A.DriverPersonalities.create(game.lineup,A.DriverPersonalities.hash(driverSeed===null
+          ? game.teamId+':'+game.driverId+':'+game.trackId+':'+game.savedAt : driverSeed+':'+game.trackId)) };
     let weekend = game.weekend
         ? A.RaceWeekend.restore(game.weekend)
         : A.RaceWeekend.create(track, options),

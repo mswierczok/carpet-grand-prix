@@ -2,6 +2,7 @@
 // 13-car finish. Reorder its finish-time DTOs only to exercise exact rank gates;
 // retarget cloned checkpoints for graph validation. Never installed in the app.
 import { loadArcade } from './arcade.js';
+import {retargetDriverDTO} from './driver-fixtures.js';
 export const clone = v => JSON.parse(JSON.stringify(v));
 export function setupRun() {
   const { api: A } = loadArcade({ race: true });
@@ -19,6 +20,12 @@ export function driveNative(A, weekend, stop, maxSeconds = 400) {
 export function finishDTO(A, template, trackId, position) {
   const w = clone(template);
   w.trackId = w.session.trackId = trackId; w.session.signature = A.POVCheckpoint.signature(trackId);
+  if(w.config.driving) {
+    // This is explicitly a retargeted domain DTO, not a driven result. Keep
+    // the new identity contract consistent with the destination's real lineup.
+    const lineup=A.CampaignConfig.lineup(w.config.playerTeam,w.config.driving.lineup[w.config.playerTeam],trackId);
+    retargetDriverDTO(A,w,lineup);
+  }
   // Bridge DTOs require explicit elevation/pitch, unlike the flat Bahrain seed.
   if (A.TrackCatalog.get(trackId).bridgeU?.length) for (const e of w.session.state.entries) {
     Object.assign(e.car, { elevation: 0, pitch: 0 }); Object.assign(e.previous, { elevation: 0, pitch: 0 });

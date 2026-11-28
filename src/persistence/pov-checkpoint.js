@@ -21,7 +21,8 @@
     return signatures.get(trackId);
   }
   function config(v) {
-    keys(v, ["playerTeam", "difficulty", "catchup", "slipstream", "isolated", "qualifying", "laps", "gridOrder", "diagnostics", "performance", "qualifyingFormat", "qualifyingStartS"]);
+    keys(v, ["playerTeam", "difficulty", "catchup", "slipstream", "isolated", "qualifying", "laps", "gridOrder", "diagnostics", "performance", "qualifyingFormat", "qualifyingStartS", "driving"]);
+    if ("driving" in v) { A.DriverPersonalities.validate(v.driving); need(v.performance?.context==='campaign'); }
     if ("performance" in v) A.VehiclePerformance.validate(v.performance);
     if ("qualifyingFormat" in v) need(v.qualifyingFormat === "flying-one-v1");
     need(ids().includes(v.playerTeam) && ["beginner", "normal", "hard", "expert"].includes(v.difficulty));
@@ -52,17 +53,24 @@
     if (!v.started) need(v.nextGate === 0);
   }
   function command(v) { keys(v, ["throttle", "brake", "steer"]); need(number(v.throttle, 0, 1) && number(v.brake, 0, 1) && number(v.steer, -1, 1)); }
-  function driver(v, qualifying) {
-    keys(v, ["lane", "hold", "index", "defending", "blocked", "trafficBlocked", "retreat", "qualifying", "telemetry"]);
+  function driver(v, qualifying, personality) {
+    keys(v, ["lane", "hold", "index", "defending", "blocked", "trafficBlocked", "retreat", "qualifying", "telemetry", "personality", "defenseLock", "attacking"]);
     need(number(v.lane, -10, 10) && number(v.hold, 0, 10) && integer(v.index, 0, 12));
     if ("defending" in v) need(v.defending === null || ids().includes(v.defending));
     for (const k of ["blocked", "trafficBlocked", "retreat"]) if (k in v) need(number(v[k], 0, 100));
-    if (qualifying) {
+    if (personality) {
+      keys(v.personality,['id','seed','mode']);
+      need(v.personality.id===personality.id&&v.personality.seed===personality.seed&&v.personality.mode===(qualifying?'qualifying':'race'));
+      need(!('qualifying' in v));
+    } else need(!('personality' in v)&&!('defenseLock' in v)&&!('attacking' in v));
+    for(const key of ['defenseLock','attacking'])if(key in v)need(v[key]===null||ids().includes(v[key]));
+    if (qualifying && !personality) {
       keys(v.qualifying, ["brakeLead", "caution", "execution", "phase", "rhythm"]);
       for (const key of ["brakeLead", "caution", "execution", "phase", "rhythm"]) need(number(v.qualifying[key], 0, 10));
     } else need(!("qualifying" in v));
     if (v.telemetry) {
-      keys(v.telemetry, ["reason", "speed", "desiredSpeed", "freeTarget", "pathError", "headingError", "lane", "blockerGap", "throttle", "brake", "steer"]);
+      keys(v.telemetry, ["reason", "speed", "desiredSpeed", "freeTarget", "pathError", "headingError", "lane", "blockerGap", "throttle", "brake", "steer", "driverId", "tactic"]);
+      if('driverId' in v.telemetry||'tactic' in v.telemetry)need(personality&&v.telemetry.driverId===personality.id&&['line','attack','defend'].includes(v.telemetry.tactic));
       need(["corner-preview", "straight", "settling", "traffic", "edge-preview", "heading-recovery", "reverse-recovery"].includes(v.telemetry.reason));
       for (const key of ["speed", "desiredSpeed", "freeTarget", "pathError", "headingError", "lane", "throttle", "brake", "steer"]) need(number(v.telemetry[key]));
       need(v.telemetry.blockerGap === null || number(v.telemetry.blockerGap));
@@ -116,7 +124,7 @@
     need(s.entries.every((e,i) => e.id === expectedOrder[i]));
     for (const e of s.entries) {
       keys(e, ["id", "car", "previous", "timing", "finishTime", "lastSafe", "driver", "command", "slipstream", "catchup"]);
-      need(ids().includes(e.id) && e.driver?.index === defaultOrder.indexOf(e.id)); car(e.car, CGPArcadeData.tracks[v.trackId].bridgeU.length > 0); car(e.previous, CGPArcadeData.tracks[v.trackId].bridgeU.length > 0); timing(e.timing, v.config.laps); driver(e.driver, v.config.qualifying); command(e.command);
+      need(ids().includes(e.id) && e.driver?.index === defaultOrder.indexOf(e.id)); car(e.car, CGPArcadeData.tracks[v.trackId].bridgeU.length > 0); car(e.previous, CGPArcadeData.tracks[v.trackId].bridgeU.length > 0); timing(e.timing, v.config.laps); driver(e.driver, v.config.qualifying, v.config.driving ? {id:v.config.driving.lineup[e.id],seed:v.config.driving.seed} : null); command(e.command);
       need(number(e.lastSafe) && (e.finishTime === null || number(e.finishTime, 0, s.elapsed + 1e-6)));
       need((e.finishTime !== null) === (e.timing.completed === v.config.laps));
       if (e.finishTime !== null) need(e.finishTime === e.timing.lapStart);
@@ -164,6 +172,7 @@
     need((r.config.performance?.version || null) === (v.config.performance?.version || null) &&
       (r.config.performance?.context || null) === (v.config.performance?.context || null));
     need((r.config.qualifyingFormat || null) === (v.config.qualifyingFormat || null));
+    need(JSON.stringify(r.config.driving||null)===JSON.stringify(v.config.driving||null));
     need(r.trackId === v.trackId && r.config.playerTeam === v.config.playerTeam && r.config.difficulty === v.config.difficulty);
     if (!v.qualifying) need(r.config.catchup === v.config.catchup && r.config.slipstream === v.config.slipstream && r.config.laps === v.config.laps);
     if (v.result !== null) result(v.result, v.config.playerTeam, v.config.qualifyingFormat);

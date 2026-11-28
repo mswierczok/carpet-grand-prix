@@ -65,3 +65,21 @@ abgelehnt. Archivzeiten werden nicht neu berechnet.
 Echte PR-55-Checkpoints und deren exakte Fortsetzung sowie die festen
 Parameterpakete des Modells v1 sind automatisiert geprüft.
 [Vertrag und Messungen](VEHICLE_PERFORMANCE_AND_QUALIFYING.md).
+
+
+## Optionales KI-Fahrermodell v1
+
+Neue Kampagnenwochenenden enthalten `config.driving` mit `version: 1`, einem
+gespeicherten 32-Bit-Seed und der tatsächlichen 13-Team-Startliste (`lineup`).
+Der native KI-Speicher jedes Fahrzeugs speichert die passende Fahrer-ID, denselben
+Seed und die Sessionart. Kampagne, Wochenende und Session müssen übereinstimmen.
+Die Run-Kampagne leitet den Wochenend-Seed aus dem bereits gespeicherten Run-Seed
+und der Strecke ab. Die bisherige Kampagne speichert ebenfalls den einmal
+bestimmten Seed im nativen Wochenende.
+
+Fehlendes `driving` bleibt die bisherige KI: laufende PR-56-Wochenenden werden
+nicht auf Fahrerattribute umgestellt. Physikmodell und Qualifying-Format werden
+unabhängig davon geprüft. Unbekannte Versionen und widersprüchliche Fahrerlisten
+werden zurückgewiesen; bestehende gültige Slots und historische Zeiten bleiben
+erhalten. Es gibt keine Änderung der Root-Speicherschlüssel oder Run-Map.
+Details: [Fahrerpersönlichkeiten](DRIVER_PERSONALITIES_AND_DYNAMIC_RACING.md).
