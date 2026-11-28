@@ -117,7 +117,7 @@ it('färbt ausschließlich tatsächliche Run-Rennpositionen; Qualifying und frei
 
 it('übernimmt keine alte Qualifying-Ausnahme in einen Run', () => {
   const old = A.CampaignV1.create({ driverId:'d012' });
-  const w = A.RaceWeekend.create(A.TrackCatalog.get('bahrain'), { playerTeam:'t13' });
+  const w = A.RaceWeekend.create(A.TrackCatalog.get('bahrain'), { playerTeam:'t13', performance:null, qualifyingFormat:null });
   w.pause(false); w.advance({},.1);
   const migrated = A.Campaign.migrate(A.CampaignV1.capture(old,w.exportState()));
   expect(migrated.legacyWeekend).toBe(true);

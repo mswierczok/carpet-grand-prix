@@ -68,6 +68,7 @@
     need(["beginner", "normal", "hard", "expert"].includes(g.options.difficulty) && typeof g.options.catchup === "boolean" && typeof g.options.slipstream === "boolean");
     if (g.weekend !== null) {
       A.POVCheckpoint.weekend(g.weekend, false);
+      need(!g.weekend.config.performance || g.weekend.config.performance.context === "historical");
       need(g.weekend.trackId === g.trackId && g.weekend.config.playerTeam === g.teamId && g.weekend.config.difficulty === g.options.difficulty && g.weekend.config.catchup === g.options.catchup && g.weekend.config.slipstream === g.options.slipstream);
     }
     function results(list) {

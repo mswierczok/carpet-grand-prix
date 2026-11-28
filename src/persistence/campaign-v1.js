@@ -1,4 +1,4 @@
-/* Frozen v1 schema adapter: validate before explicit, lossless migration. */
+/* v1 root schema adapter: validate native versioned checkpoints before lossless migration. */
 (() => {
   "use strict";
   const A = globalThis.CGPArcade,
@@ -169,6 +169,7 @@
     else {
       A.POVCheckpoint.weekend(g.weekend, false);
       const config = g.weekend.config;
+      need(!config.performance || config.performance.context === "campaign");
       need(
         g.stage !== "ready" &&
           g.weekend.trackId === g.trackId &&

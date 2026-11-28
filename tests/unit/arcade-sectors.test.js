@@ -1,3 +1,4 @@
+import { withoutVehicleGripSource, unaffectedByVehicleWork } from "../helpers/vehicle-performance-source.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -115,7 +116,7 @@ it("fährt mit der KI spürbar schneller als der veröffentlichte Gegner, ohne S
     }),
     scope,
   );
-  expect(readFileSync(new URL("src/racing/physics.js", ROOT), "utf8")).toBe(
+  expect(withoutVehicleGripSource("src/racing/physics.js", readFileSync(new URL("src/racing/physics.js", ROOT), "utf8"))).toBe(
     execFileSync("git", ["show", baseline + ":src/racing/physics.js"], {
       cwd: ROOT,
       encoding: "utf8",

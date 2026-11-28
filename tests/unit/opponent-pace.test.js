@@ -1,3 +1,4 @@
+import { withoutVehicleGripSource, unaffectedByVehicleWork } from "../helpers/vehicle-performance-source.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -13,7 +14,7 @@ it("hält bei allen zwölf KI-Profilen auf freier Gerade das volle Spielertempo 
   const { api, data } = loadArcade({ race: true }),
     surface = api.Surface.create(data.tracks.bahrain),
     p = api.Physics.parameters;
-  expect(readFileSync(new URL("src/racing/physics.js", ROOT), "utf8")).toBe(
+  expect(withoutVehicleGripSource("src/racing/physics.js", readFileSync(new URL("src/racing/physics.js", ROOT), "utf8"))).toBe(
     execFileSync("git", ["show", `${paceBaseline}:src/racing/physics.js`], {
       cwd: ROOT,
       encoding: "utf8",

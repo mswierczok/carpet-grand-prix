@@ -1,3 +1,4 @@
+import { withoutVehicleGripSource, unaffectedByVehicleWork } from "../helpers/vehicle-performance-source.js";
 import { withoutBahrainIteration2 } from "../helpers/bahrain-layout-source.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
@@ -6,7 +7,7 @@ import * as THREE from "three";
 import { createWorld as setup } from "../helpers/world3d.js";
 const base = "34a7c07ac683ababd4e5f130b3a75e9029448560";
 
-it("erhält sämtliche Rennsysteme, Stammdaten, Speicherformate und 35 Original-PNGs bytegenau", () => {
+it("erhält die übrigen Rennsysteme, Stammdaten, Speicherformate und 35 Original-PNGs bytegenau", () => {
   const files = [
     "physics",
     "opponents",
@@ -32,9 +33,9 @@ it("erhält sämtliche Rennsysteme, Stammdaten, Speicherformate und 35 Original-
           `assets/drivers/portraits/d${String(i + 1).padStart(3, "0")}.png`,
       ),
     ]);
-  for (const path of files)
+  for (const path of files.filter(unaffectedByVehicleWork))
     expect(
-      withoutBahrainIteration2(path, readFileSync(path, "utf8"), base) ===
+      withoutBahrainIteration2(path, withoutVehicleGripSource(path, readFileSync(path, "utf8")), base) ===
         execFileSync("git", ["show", `${base}:${path}`], {maxBuffer:8*1024*1024}).toString(),
       path,
     ).toBe(true);

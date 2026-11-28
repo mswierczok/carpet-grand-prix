@@ -1,3 +1,4 @@
+import { withoutVehicleGripSource, unaffectedByVehicleWork } from "../helpers/vehicle-performance-source.js";
 import { it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -143,7 +144,7 @@ it("erhält die historische Bahrain-Referenz und Kanada samt gemeinsamer Physik 
     "src/racing/physics.js",
     "src/racing/timing.js",
   ])
-    expect(readFileSync(new URL(path, ROOT), "utf8")).toBe(published(path));
+    expect(withoutVehicleGripSource(path,readFileSync(new URL(path, ROOT), "utf8"))).toBe(published(path));
 });
 
 it("behält die historische Bahrain-Referenz für denselben eingefrorenen KI-Regler exakt bei", () => {
@@ -424,7 +425,8 @@ it.each(ids.slice(1))(
       p = race.parameters,
       driver = api.Opponents.create(race.surface, p),
       memory = driver.memory(0, -6);
-    expect(p).toBe(api.Physics.parameters);
+    expect(p).toBe(api.VehiclePerformance.get(race.snapshot().race.playerTeam).parameters);
+    expect(p.halfWidth).toBe(api.Physics.parameters.halfWidth);
     race.pause(false);
     let snapshot = race.snapshot();
     for (let frame = 0; frame < 300 * 30; frame++) {

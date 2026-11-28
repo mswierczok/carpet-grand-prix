@@ -143,19 +143,19 @@
           row.remove();
       set(
         "classificationTitle",
-        q ? "Qualifying-Klassement" : "Vollständiges Klassement",
+        model.qualifying ? "Qualifying-Klassement" : "Vollständiges Klassement",
       );
       set(
         "classificationNote",
-        q
+        model.qualifying
           ? "Beste schnelle Runde · Abstand zur Bestzeit"
           : "Zeitabstände aus echten Passagen. Ohne verlässliche Messung: —. Überrundungen als Rundendifferenz.",
       );
       set(
         "classificationGapTitle",
-        q ? "Bestzeit / Abstand" : "Abstand / Zeit",
+        model.qualifying ? "Bestzeit / Abstand" : "Abstand / Zeit",
       );
-      root.querySelector(".classification-head").lastElementChild.hidden = !!q;
+      root.querySelector(".classification-head").lastElementChild.hidden = !!model.qualifying;
       for (const e of model.rows) {
         let row = field.get(e.id);
         if (!row) {
@@ -191,15 +191,15 @@
         write(row.children[1].children[1], e.teamName);
         write(
           row.children[1].children[2],
-          `${e.completed} R · ${e.status}${q ? "" : " · Start P" + e.startPosition}`,
+          `${e.completed} R · ${e.status}${model.qualifying ? "" : " · Start P" + e.startPosition}`,
         );
         write(
           row.children[2].children[0],
-          q ? (e.bestLap === null ? "—" : format(e.bestLap)) : e.gap,
+          model.qualifying ? (e.bestLap === null ? "—" : format(e.bestLap)) : e.gap,
         );
         write(
           row.children[2].children[1],
-          q && e.bestLap !== null
+          model.qualifying && e.bestLap !== null
             ? e.position === 1
               ? "Bestzeit"
               : e.gap
@@ -208,7 +208,7 @@
         write(row.children[3], e.completed);
         write(row.children[4], e.status);
         write(row.children[5], "P" + e.startPosition);
-        row.children[5].hidden = !!q;
+        row.children[5].hidden = !!model.qualifying;
         if (el("raceOrder").children[e.position - 1] !== row)
           el("raceOrder").insertBefore(
             row,

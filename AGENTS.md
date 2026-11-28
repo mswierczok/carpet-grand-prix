@@ -25,6 +25,11 @@
   22 Strecken, acht Kampagnenstrecken und Originalillustrationen erhalten.
   Datenquelle: `src/data/historical/`; versionierte Exporte mit
   `npm run check:arcade-data` prüfen. Kein Build liest Simulations-HTML.
+- Fahrzeugmodell v1 und `flying-one-v1` gelten für neue Wochenenden.
+  Fehlende Leistungs-/Qualifying-Kennungen erhalten alte uniforme Physik und
+  Auslaufrunde + zwei schnelle Runden. Formeln/Overlays nur mit neuer Modellversion
+  ändern; alte Checkpoints und Archivzeiten erhalten. Messungen und Vertrag:
+  `docs/VEHICLE_PERFORMANCE_AND_QUALIFYING.md`.
 - Run-Speicher (`carpet_gp_roguelite_run_v1`) und frühere Kampagne niemals
   automatisch ineinander migrieren. Gespeicherte Angebote/Route/Ergebnisse und
   Niederlagen schützen; gewertete Run-Rennen können nicht neu gestartet werden.

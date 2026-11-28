@@ -52,8 +52,12 @@
       };
     }
     function update(s) {
-      const q = s.qualifying,
-        r = s.race,
+      const r = s.race,
+        q = s.qualifying || (r.phase === "grid" && s.qualifyingResult ? {
+          standings: s.qualifyingResult, finished: true,
+          timedLaps: s.qualifyingResult[0].laps.length,
+          format: s.qualifyingResult[0].completed === 1 ? "flying-one-v1" : null,
+        } : null),
         eliminationLimit = !q && s.campaignPhase !== "qualifying-ready" ? A.RogueliteRun?.cutoff(getRun()) : null,
         key = track().id + ":" + !!q + ":" + r.playerTeam;
       if (
@@ -153,7 +157,9 @@
         own: rows[index],
         best,
         lap: q
-          ? s.timing.completed === 0
+          ? q.format === "flying-one-v1"
+            ? q.finished || s.timing.completed >= 1 ? "QUALIFYING ABGESCHLOSSEN" : s.timing.started ? "SCHNELLE RUNDE 1/1" : "ANFAHRT"
+            : q.finished ? "Qualifying beendet" : s.timing.completed === 0
             ? "Auslaufrunde"
             : s.timing.completed > q.timedLaps
               ? "Qualifying beendet"

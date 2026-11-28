@@ -4,11 +4,18 @@
   function create(track, options = {}) {
     const config = { ...options }, teams = config.teams || CGPArcadeData.roster.teams;
     const restored = options.restore ? A.POVCheckpoint.weekend(options.restore) : null;
+    if (restored && restored.trackId !== track.id) throw Error("Falsche Strecke im Wochenend-Spielstand.");
     delete config.restore;
-    let qualifying = restored?.qualifying || false, result = restored?.result || null,
+    config.performance = restored ? restored.config.performance || null
+      : options.performance === null ? null : A.VehiclePerformance.validate(options.performance ?? A.VehiclePerformance.historical);
+    if (options.qualifyingFormat !== undefined && options.qualifyingFormat !== null && options.qualifyingFormat !== "flying-one-v1")
+      throw Error("Unbekanntes Qualifying-Format.");
+    config.qualifyingFormat = restored ? restored.config.qualifyingFormat || null
+      : options.qualifyingFormat === null ? null : "flying-one-v1";
+    let qualifying = restored?.qualifying || false, result = restored?.result || null, transitioned = false,
       session = restored ? (qualifying ? A.QualifyingSession : A.RaceSession).restore(restored.session)
         : A.RaceSession.create(track, config);
-    const surface = session.surface, parameters = session.parameters;
+    const surface = session.surface;
     const copy = () => result ? result.map((e) => ({ ...e, laps: [...e.laps] })) : null;
     function snapshot() {
       return { ...session.snapshot(), ...(result ? { qualifyingResult: copy() } : {}) };
@@ -36,6 +43,13 @@
       session = A.RaceSession.create(track, config);
       return true;
     }
+    function advance(...args) {
+      session.advance(...args);
+      if (config.qualifyingFormat && qualifying && session.snapshot().qualifying.finished && acceptQualifying()) {
+        session.pause(true);
+        transitioned = true;
+      }
+    }
     function select(key, value) {
       if (session.snapshot().race.phase !== "grid") return false;
       if (key === "playerTeam" && !teams.some((t) => t.id === value)) return false;
@@ -47,7 +61,8 @@
       return true;
     }
     function exportState() {
-      const raw = session.exportState(), actual = qualifying ? raw.race.config : raw.config;
+      const raw = session.exportState(), actual = { ...(qualifying ? raw.race.config : raw.config) };
+      delete actual.qualifyingStartS;
       return { kind: "weekend", version: 1, trackId: track.id,
         config: { ...actual, playerTeam: config.playerTeam || teams[0].id,
           difficulty: config.difficulty || A.AIDifficulty.defaultId, catchup: config.catchup !== false,
@@ -55,8 +70,9 @@
           laps: config.laps ?? A.RaceFormats.get(track.id).laps, gridOrder: config.gridOrder ? [...config.gridOrder] : null },
         qualifying, result: copy(), session: raw };
     }
-    return Object.freeze({ exportState, surface, parameters, snapshot, startQualifying, acceptQualifying, cancelQualifying,
-      advance: (...args) => session.advance(...args), pause: (...args) => session.pause(...args),
+    return Object.freeze({ exportState, surface, get parameters() { return session.parameters; }, snapshot, startQualifying, acceptQualifying, cancelQualifying,
+      advance, pause: (...args) => session.pause(...args),
+      takeTransition() { const changed = transitioned; transitioned = false; return changed; },
       recover: () => session.recover(), restart: () => session.restart(),
       selectTeam: (id) => select("playerTeam", id), selectDifficulty: (id) => select("difficulty", id),
       selectCatchup: (enabled) => select("catchup", enabled) });

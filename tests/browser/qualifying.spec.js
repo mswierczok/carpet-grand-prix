@@ -1,13 +1,14 @@
-import { driveButton, raceAction } from "../helpers/racing-menu.js";
+import { driveButton, raceAction, closeRaceMenu, openRaceMenu } from "../helpers/racing-menu.js";
 import { test, expect } from "@playwright/test";
+import { mkdirSync } from 'node:fs';
 import { selectDriveSetting, switchToTopDown, capture2D, capture3D } from "../helpers/arcade-browser.js";
 import { pilotRace } from "../helpers/arcade-race-browser.js";
 
 async function finishSession(page) {
-  await page.evaluate(pilotRace);
+  await page.evaluate(pilotRace,{stopOnQualifiedGrid:true});
   for (let i = 0; i < 160; i++) {
     await page.clock.runFor(1000);
-    if (await page.evaluate(() => __driveSnapshot.race.phase === "finished")) return;
+    if (await page.evaluate(() => __driveSnapshot.race.phase === "finished" || (__driveSnapshot.race.phase === "grid" && !!__driveSnapshot.qualifyingResult))) return;
   }
   throw Error("Session did not finish through keyboard controls");
 }
@@ -66,8 +67,8 @@ for (const offline of [false, true]) test(`Qualifying: echte Bestzeiten und Star
           }
         } };
       } }; } });
-    // Public race-length option only; qualifying still drives its real outlap
-    // and two timed laps. No changed poses, sector state or generated times.
+    // Public race-length option only; qualifying still drives its real approach
+    // and one timed lap. No changed poses, sector state or generated times.
     let module;
     Object.defineProperty(CGPArcade, "RaceWeekend", { configurable: true,
       get: () => module, set(value) { module = { ...value,
@@ -101,31 +102,34 @@ for (const offline of [false, true]) test(`Qualifying: echte Bestzeiten und Star
   }
   await finishSession(page);
   const q = await page.evaluate(() => __driveSnapshot);
-  expect(q.qualifying.finished).toBe(true);
-  expect(q.visibleEntries.map((e) => e.id)).toEqual([q.race.playerTeam]);
+  expect(q.qualifying).toBeUndefined();
+  expect(q.race.phase).toBe("grid");expect(q.paused).toBe(true);
+  expect(q.visibleEntries).toBeUndefined();
   expect(q.contacts).toBe(0);
-  expect(q.entries.every((e) => e.timing.completed === 3 && !e.slipstream && !e.catchup)).toBe(true);
-  expect(q.qualifying.standings.every((e) => e.laps.length === 2 && e.bestLap === Math.min(...e.laps))).toBe(true);
-  const opponentTimes = q.qualifying.standings.filter((e) => !e.player).map((e) => e.bestLap);
+  expect(q.entries.every((e) => e.timing.completed === 0 && e.car.speed === 0)).toBe(true);
+  expect(q.qualifyingResult.every((e) => e.laps.length === 1 && e.bestLap === Math.min(...e.laps))).toBe(true);
+  const opponentTimes = q.qualifyingResult.filter((e) => !e.player).map((e) => e.bestLap);
   expect(new Set(opponentTimes.map((t) => t.toFixed(3))).size).toBeGreaterThanOrEqual(10);
   expect(Math.max(...opponentTimes) - Math.min(...opponentTimes)).toBeGreaterThan(0.3);
+  await raceAction(page,"showResults",{close:false});
   await expect(page.locator("#qualifyingResults")).toBeVisible();
   await expect(page.locator("#qualifyingRows tr")).toHaveCount(13);
-  await expect(page.locator("#acceptQualifying")).toBeVisible();
+  await expect(page.locator("#acceptQualifying")).toBeHidden();
   const sprites = await page.evaluate(() => __soloSprites);
   expect(sprites.qFrames).toBeGreaterThan(0);
   expect(sprites.qMax).toBe(1);
   expect(sprites.qWrongTeam).toBe(0);
-  await raceAction(page, "acceptQualifying");
+  await page.locator("#closeResults").click();
+  await closeRaceMenu(page);
   await page.clock.runFor(32);
   const grid = await page.evaluate(() => __driveSnapshot);
   expect(grid.race.phase).toBe("grid");
   expect(grid.visibleEntries).toBeUndefined();
   expect(await page.evaluate(() => __soloSprites.raceMax)).toBe(13);
-  expect(grid.entries.map((e) => e.id)).toEqual(q.qualifying.standings.map((e) => e.id));
-  expect(grid.race.position).toBe(q.qualifying.player.position);
+  expect(grid.entries.map((e) => e.id)).toEqual(q.qualifyingResult.map((e) => e.id));
+  expect(grid.race.position).toBe(q.qualifyingResult.find(e=>e.player).position);
   expect(grid.entries.every((e) => e.car.speed === 0 && e.timing.completed === 0)).toBe(true);
-  await expect(page.locator("#sessionPrompt")).toContainText("Startplatz P" + q.qualifying.player.position);
+  await expect(page.locator("#sessionPrompt")).toContainText("Startplatz P" + q.qualifyingResult.find(e=>e.player).position);
   await driveButton(page);
   await finishSession(page);
   expect(await page.evaluate(() => __driveSnapshot.race.finished)).toBe(13);
@@ -144,4 +148,54 @@ for (const offline of [false, true]) test(`Qualifying: echte Bestzeiten und Star
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   expect(requests).toEqual([]);
   expect(errors).toEqual([]);
+});
+
+for(const track of ['bahrain','canada','korea','france','england','russia','italy','japan'])test(`Qualifying: eine fliegende Runde mit Fahrzeugprofil, Anfahrt und automatischer Startaufstellung auf ${track}`,async({page},info)=>{
+  test.setTimeout(180000);const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  if(track==='bahrain')await capture3D(page,{renderEvery:20});else{
+    await capture2D(page,{renderEvery:20});await page.addInitScript(()=>{const original=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(type,...args){return type==='webgl2'?null:original.call(this,type,...args);};});
+  }
+  await page.addInitScript(()=>{localStorage.setItem('carpet_gp_v072','legacy-sentinel');localStorage.setItem('carpet_gp_campaign_v1','campaign-sentinel');localStorage.setItem('carpet_gp_roguelite_run_v1','run-sentinel');});
+  await page.goto(`race.html?new=single&track=${track}&team=t13&difficulty=expert&catchup=0&quality=low`);await page.clock.runFor(64);
+  const profile=await page.evaluate(()=>__driveSnapshot.entries.find(e=>e.player).performance);
+  expect(profile.context).toBe('historical');expect(profile.strength).toBe(72);
+  await page.locator('#startQualifying').click();await page.clock.runFor(64);
+  const gridStart=await page.evaluate(()=>__driveSnapshot);
+  expect(gridStart.entries.every(e=>e.car.s===gridStart.car.s&&e.car.speed===0)).toBe(true);
+  await page.clock.runFor(3136);
+  const approach=await page.evaluate(()=>__driveSnapshot);expect(approach.car.speed).toBe(0);expect(approach.car.s).toBeLessThan(-100);expect(approach.timing.started).toBe(false);
+  await expect(page.locator('#hudLap')).toHaveText('ANFAHRT');
+  if(track==='bahrain'){mkdirSync('docs/vehicle-performance/screenshots',{recursive:true});await page.screenshot({path:`docs/vehicle-performance/screenshots/${info.project.name}-approach.png`});}
+  await page.evaluate(pilotRace,{stopOnQualifiedGrid:true,difficulty:'expert'});
+  let crossed=false,done=false;
+  for(let i=0;i<240;i++){
+    await page.clock.runFor(500);const s=await page.evaluate(()=>__driveSnapshot);
+    if(!crossed&&s.qualifying&&s.timing.started){crossed=true;expect(s.timing.completed).toBe(0);expect(s.qualifying.player.bestLap).toBeNull();
+      await expect(page.locator('#hudLap')).toHaveText('SCHNELLE RUNDE 1/1');
+      if(track==='bahrain'){
+        await page.screenshot({path:`docs/vehicle-performance/screenshots/${info.project.name}-flying.png`});
+        await openRaceMenu(page,'save');await page.locator('#savePOV').click();
+        const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('carpet_gp_pov_game_v1')));
+        expect(saved.weekend.session.format).toBe('flying-one-v1');expect(saved.weekend.session.race.config.laps).toBe(1);
+        await page.reload();await page.clock.runFor(64);expect(await page.evaluate(()=>__driveSnapshot.paused)).toBe(true);
+        expect(await page.evaluate(()=>__driveSnapshot.qualifying.format)).toBe('flying-one-v1');
+        expect(await page.evaluate(()=>__driveSnapshot.entries.find(e=>e.player).performance)).toEqual(profile);
+        await openRaceMenu(page);await closeRaceMenu(page);await page.clock.runFor(3040);await page.evaluate(pilotRace,{stopOnQualifiedGrid:true,difficulty:'expert'});
+      }
+    }
+    if(s.qualifyingResult&&s.race.phase==='grid'){done=true;break;}
+  }
+  expect(crossed&&done).toBe(true);const grid=await page.evaluate(()=>__driveSnapshot);
+  expect(grid.paused).toBe(true);expect(grid.qualifying).toBeUndefined();expect(grid.qualifyingResult).toHaveLength(13);
+  expect(grid.qualifyingResult.every(e=>e.completed===1&&e.laps.length===1&&e.bestLap===e.laps[0])).toBe(true);
+  expect(grid.entries.map(e=>e.id)).toEqual(grid.qualifyingResult.map(e=>e.id));
+  expect(grid.entries.every(e=>e.car.speed===0&&e.timing.completed===0)).toBe(true);
+  expect(grid.entries.find(e=>e.player).performance).toEqual(profile);
+  await expect(page.locator('#pause')).toBeVisible();await expect(page.locator('#startQualifying')).toBeHidden();await expect(page.locator('#hudLap')).toHaveText('QUALIFYING ABGESCHLOSSEN');
+  expect(await page.evaluate(()=>{const a=document.querySelector('.relative-hud').getBoundingClientRect(),b=document.querySelector('#hudLap').getBoundingClientRect();return b.left>=a.right&&b.right<=innerWidth;})).toBe(true);
+  await openRaceMenu(page,'classification');await expect(page.locator('#raceOrder li')).toHaveCount(13);await expect(page.locator('#classificationTitle')).toHaveText('Qualifying-Klassement');
+  await expect(page.locator('#raceOrder .is-eliminated')).toHaveCount(0);
+  if(track==='bahrain'){await page.screenshot({path:`docs/vehicle-performance/screenshots/${info.project.name}-classification.png`});await closeRaceMenu(page);await closeRaceMenu(page);await expect(page.locator('#raceSettings')).not.toBeVisible();await page.screenshot({path:`docs/vehicle-performance/screenshots/${info.project.name}-qualifying-grid.png`});await page.setViewportSize({width:844,height:390});await page.screenshot({path:`docs/vehicle-performance/screenshots/${info.project.name}-landscape.png`});}
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth&&document.documentElement.scrollHeight<=innerHeight)).toBe(true);
+  expect(await page.evaluate(()=>localStorage.getItem('carpet_gp_v072'))).toBe('legacy-sentinel');expect(await page.evaluate(()=>localStorage.getItem('carpet_gp_campaign_v1'))).toBe('campaign-sentinel');expect(await page.evaluate(()=>localStorage.getItem('carpet_gp_roguelite_run_v1'))).toBe('run-sentinel');expect(errors).toEqual([]);
 });

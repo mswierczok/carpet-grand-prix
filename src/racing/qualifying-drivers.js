@@ -6,14 +6,14 @@
     for (const char of id) h = Math.imul(h ^ char.charCodeAt(0), 16777619);
     return h >>> 0;
   }
-  function create(teams) {
+  function create(teams, { technical = false } = {}) {
     return Object.freeze(Object.fromEntries(teams.map((team) => {
-      const seed = hash(team.id), skill = clamp(((Number.isFinite(team.baseStrength) ? team.baseStrength : 75) - 64) / 23),
+      const seed = hash(team.id), skill = technical ? null : clamp(((Number.isFinite(team.baseStrength) ? team.baseStrength : 75) - 64) / 23),
         style = (seed % 997) / 997;
       return [team.id, Object.freeze({
-        brakeLead: (1 - skill) * 4 + ((seed >>> 8) % 1000) / 1000 * 0.5,
-        caution: 0.003 + (1 - skill) * 0.18 + style * 0.01,
-        execution: 0.004 + (1 - skill) * 0.012,
+        brakeLead: (technical ? 0.5 : (1 - skill) * 4) + ((seed >>> 8) % 1000) / 1000 * 0.5,
+        caution: (technical ? 0.018 : 0.003 + (1 - skill) * 0.18) + style * 0.01,
+        execution: technical ? 0.006 : 0.004 + (1 - skill) * 0.012,
         phase: ((seed >>> 16) % 1000) / 1000 * 2 * Math.PI,
         rhythm: 1.3 + ((seed >>> 2) % 1000) / 1000 * 0.7,
       })];

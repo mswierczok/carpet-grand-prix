@@ -66,10 +66,16 @@ it("löst die nahezu gleichen Expertenzeiten mit realen unterschiedlichen Solo-R
   expect(snap.race.finished).toBe(12);
   expect(snap.qualifying.player.bestLap).toBeNull();
   expect(snap.visibleEntries).toHaveLength(1);
-  expect(drivers.every((e) => e.laps.length === 2 && e.bestLap === Math.min(...e.laps))).toBe(true);
+  expect(drivers.every((e) => e.laps.length === 1 && e.bestLap === Math.min(...e.laps))).toBe(true);
   expect(new Set(times.map((t) => t.toFixed(3))).size).toBeGreaterThanOrEqual(10);
   expect(Math.max(...times) - Math.min(...times)).toBeGreaterThan(0.3);
-  expect(drivers.filter((e) => Math.abs(e.laps[0] - e.laps[1]) > 0.001).length).toBeGreaterThanOrEqual(8);
   expect(walls).toBe(0);
-  expect(peak).toBeCloseTo(118.8, 5);
+  expect(peak).toBeCloseTo(Math.max(...drivers.map(e=>api.VehiclePerformance.get(e.id).parameters.maxSpeed))*kmh,5);
 }, 120000);
+
+it("trennt bei technischer Fahrzeugleistung die Fahrerausführung von der Team-Basisstärke",()=>{
+  const {api,data}=loadArcade({race:true}),teams=data.roster.teams;
+  const a=api.QualifyingDrivers.create(teams,{technical:true});
+  const b=api.QualifyingDrivers.create(teams.map(t=>({...t,baseStrength:150-t.baseStrength})),{technical:true});
+  expect(plain(a)).toEqual(plain(b));expect(new Set(Object.values(a).map(x=>JSON.stringify(x))).size).toBe(13);
+});

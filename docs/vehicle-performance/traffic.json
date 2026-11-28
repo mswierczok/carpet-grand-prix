@@ -1,0 +1,2572 @@
+{
+  "stage": "traffic",
+  "baseCommit": "b4a797c7b9b390243db6b72213e99fffb081e876",
+  "difficulty": "expert",
+  "hz": 120,
+  "hashes": {
+    "src/racing/physics.js": "932d4c840fe3e21f1611ab8392b80a7a0d30bd22a7ed1bf4e2717a81aa433ef2",
+    "src/racing/vehicle-performance.js": "14bccf0444bec1fcb285e644acf1908a78115dce20267948293736f5764015ac",
+    "src/racing/qualifying-approach.js": "7d6ec3ae2a6026f2d5c104a083ad623a73ba38ff1886fb41460730b48a38cfee",
+    "src/racing/opponents.js": "fcbb071f7289f5e5d9dd7726d826d8d0059b52b104e4fca362ac2adb73a47e2a",
+    "src/racing/qualifying-drivers.js": "b283a5cb0d61b8dac1664f465795e3582c418d9feff3cae1c8a09517de340daf",
+    "src/racing/qualifying-session.js": "f86334ae03e17d747e808cb4a3e724ce340854bffae909063bd247d6184625b5",
+    "src/racing/race-session.js": "755a962d8c88b21bc86a7c88593e2a8e905378380088fb9e3aaee79dd710e8e7",
+    "src/racing/race-weekend.js": "b0b383849109bda90d407f361b213bab746930a12835e163646d61e97f17a27f",
+    "src/racing/slipstream.js": "9732cde2de282f47e8545698af908edb691c1f95ecc4383e46560b152c98ca37",
+    "src/racing/catchup.js": "de512d62d18328762223637b5895a16ae6625495d578b8f87aefa05a3f3c88b9",
+    "src/data/arcade-roster.js": "9e64b6cc8693a96a4cdd6924200055bb4840adde58b13c8f117bc476142b0920",
+    "src/data/arcade-tracks.js": "af32cf5939d3dc1b1c7cd0a93a01e3e782db8eb7e7be66203cfe2fbd8414677b"
+  },
+  "protocol": "Native Physics.step, ordinary 30Hz inputs, 120Hz fixed steps. Solo: identical expert controller, no execution variation, no traffic/wake/catchup, two full laps after standing launch (second measured). Bench: flat straight, ordinary acceleration to 100km/h then ordinary full brake. Traffic: all 13 native vehicles and normal race lengths, catchup off/on. Qualifying: actual isolated sessions; player reference uses ordinary expert inputs. First crossing speeds interpolate native velocity components at the exact Timing crossing fraction, before any entrant finishes. Timing observer returns the unmodified original Timing result. No pose/speed/gate/time writes.",
+  "teams": [
+    {
+      "id": "t01",
+      "name": "Vauclair Motorsport",
+      "historicalStrength": 87,
+      "developmentPotential": 95,
+      "focus": "power",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t01",
+        "strength": 87,
+        "focus": "power",
+        "developmentPotential": 95,
+        "factors": {
+          "acceleration": 1.025,
+          "topSpeed": 1.008,
+          "braking": 0.995,
+          "handling": 0.995,
+          "grip": 0.995,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 110.88,
+          "acceleration": 56.37499999999999,
+          "braking": 144.275,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.98,
+          "steerReturnResponse": 8.955,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 208.95,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 110.88
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.425,
+        "zeroTo100Seconds": 1.841667,
+        "topKmh": 119.7504,
+        "brakeStartKmh": 100.069099,
+        "brakeMeters": 8.343251
+      }
+    },
+    {
+      "id": "t02",
+      "name": "Alderwick Racing",
+      "historicalStrength": 86,
+      "developmentPotential": 95,
+      "focus": "aero",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t02",
+        "strength": 86,
+        "focus": "aero",
+        "developmentPotential": 95,
+        "factors": {
+          "acceleration": 0.9921739130434782,
+          "topSpeed": 0.9980869565217392,
+          "braking": 0.9956521739130435,
+          "handling": 1.0006521739130434,
+          "grip": 0.9947826086956522,
+          "highSpeedGrip": 0.04
+        },
+        "parameters": {
+          "maxSpeed": 109.78956521739131,
+          "acceleration": 54.5695652173913,
+          "braking": 144.3695652173913,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 4.002608695652174,
+          "steerReturnResponse": 9.00586956521739,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 208.90434782608696,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0.04,
+          "gripSpeedReference": 109.78956521739131
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.475,
+        "zeroTo100Seconds": 1.916667,
+        "topKmh": 118.57273,
+        "brakeStartKmh": 100.326295,
+        "brakeMeters": 8.379527
+      }
+    },
+    {
+      "id": "t03",
+      "name": "Falkenheim GP",
+      "historicalStrength": 85,
+      "developmentPotential": 94,
+      "focus": "power",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t03",
+        "strength": 85,
+        "focus": "power",
+        "developmentPotential": 94,
+        "factors": {
+          "acceleration": 1.0093478260869564,
+          "topSpeed": 1.0001739130434781,
+          "braking": 0.986304347826087,
+          "handling": 0.986304347826087,
+          "grip": 0.9845652173913043,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 110.0191304347826,
+          "acceleration": 55.5141304347826,
+          "braking": 143.01413043478263,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.945217391304348,
+          "steerReturnResponse": 8.876739130434784,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 206.7586956521739,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 110.0191304347826
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.45,
+        "zeroTo100Seconds": 1.875,
+        "topKmh": 118.820661,
+        "brakeStartKmh": 100.115101,
+        "brakeMeters": 8.421597
+      }
+    },
+    {
+      "id": "t04",
+      "name": "Scuderia Bellarossa",
+      "historicalStrength": 84,
+      "developmentPotential": 96,
+      "focus": "handling",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t04",
+        "strength": 84,
+        "focus": "handling",
+        "developmentPotential": 96,
+        "factors": {
+          "acceleration": 0.9765217391304347,
+          "topSpeed": 0.9842608695652174,
+          "braking": 1.0119565217391304,
+          "handling": 1.0319565217391304,
+          "grip": 1.0023478260869565,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 108.26869565217392,
+          "acceleration": 53.70869565217391,
+          "braking": 146.7336956521739,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 4.127826086956522,
+          "steerReturnResponse": 9.287608695652175,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 210.49304347826086,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 108.26869565217392
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.508333,
+        "zeroTo100Seconds": 1.95,
+        "topKmh": 116.930191,
+        "brakeStartKmh": 100.25812,
+        "brakeMeters": 8.23851
+      }
+    },
+    {
+      "id": "t05",
+      "name": "Eisenbach Motorsport",
+      "historicalStrength": 76,
+      "developmentPotential": 92,
+      "focus": "power",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t05",
+        "strength": 76,
+        "focus": "power",
+        "developmentPotential": 92,
+        "factors": {
+          "acceleration": 0.9389130434782609,
+          "topSpeed": 0.9649565217391305,
+          "braking": 0.9471739130434783,
+          "handling": 0.9471739130434783,
+          "grip": 0.9376086956521739,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 106.14521739130436,
+          "acceleration": 51.64021739130435,
+          "braking": 137.34021739130435,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.7886956521739132,
+          "steerReturnResponse": 8.524565217391304,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 196.8978260869565,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 106.14521739130436
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.566667,
+        "zeroTo100Seconds": 2.033333,
+        "topKmh": 114.636835,
+        "brakeStartKmh": 100.015717,
+        "brakeMeters": 8.738765
+      }
+    },
+    {
+      "id": "t06",
+      "name": "Orange",
+      "historicalStrength": 67,
+      "developmentPotential": 89,
+      "focus": "handling",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t06",
+        "strength": 67,
+        "focus": "handling",
+        "developmentPotential": 89,
+        "factors": {
+          "acceleration": 0.8434782608695651,
+          "topSpeed": 0.9177391304347826,
+          "braking": 0.9380434782608696,
+          "handling": 0.9580434782608697,
+          "grip": 0.9136521739130435,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 100.95130434782608,
+          "acceleration": 46.39130434782608,
+          "braking": 136.0163043478261,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.8321739130434787,
+          "steerReturnResponse": 8.622391304347827,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 191.86695652173916,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 100.95130434782608
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.766667,
+        "zeroTo100Seconds": 2.308333,
+        "topKmh": 109.027409,
+        "brakeStartKmh": 100.265021,
+        "brakeMeters": 8.862684
+      }
+    },
+    {
+      "id": "t07",
+      "name": "Ragos Racing",
+      "historicalStrength": 69,
+      "developmentPotential": 93,
+      "focus": "handling",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t07",
+        "strength": 69,
+        "focus": "handling",
+        "developmentPotential": 93,
+        "factors": {
+          "acceleration": 0.8591304347826086,
+          "topSpeed": 0.9255652173913044,
+          "braking": 0.9467391304347826,
+          "handling": 0.9667391304347827,
+          "grip": 0.9240869565217391,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 101.81217391304348,
+          "acceleration": 47.25217391304348,
+          "braking": 137.27717391304347,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.8669565217391306,
+          "steerReturnResponse": 8.700652173913044,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 194.0582608695652,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 101.81217391304348
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.733333,
+        "zeroTo100Seconds": 2.258333,
+        "topKmh": 109.957148,
+        "brakeStartKmh": 100.22569,
+        "brakeMeters": 8.777846
+      }
+    },
+    {
+      "id": "t08",
+      "name": "Mugan",
+      "historicalStrength": 78,
+      "developmentPotential": 95,
+      "focus": "power",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t08",
+        "strength": 78,
+        "focus": "power",
+        "developmentPotential": 95,
+        "factors": {
+          "acceleration": 0.9545652173913043,
+          "topSpeed": 0.9727826086956523,
+          "braking": 0.9558695652173913,
+          "handling": 0.9558695652173913,
+          "grip": 0.9480434782608695,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 107.00608695652174,
+          "acceleration": 52.50108695652174,
+          "braking": 138.60108695652173,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.823478260869565,
+          "steerReturnResponse": 8.602826086956522,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 199.08913043478262,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 107.00608695652174
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.541667,
+        "zeroTo100Seconds": 2,
+        "topKmh": 115.566574,
+        "brakeStartKmh": 100.20948,
+        "brakeMeters": 8.694648
+      }
+    },
+    {
+      "id": "t09",
+      "name": "Lincoln",
+      "historicalStrength": 65,
+      "developmentPotential": 88,
+      "focus": "power",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t09",
+        "strength": 65,
+        "focus": "power",
+        "developmentPotential": 88,
+        "factors": {
+          "acceleration": 0.8528260869565217,
+          "topSpeed": 0.9219130434782609,
+          "braking": 0.8993478260869565,
+          "handling": 0.8993478260869565,
+          "grip": 0.8802173913043478,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 101.41043478260869,
+          "acceleration": 46.905434782608694,
+          "braking": 130.4054347826087,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.597391304347826,
+          "steerReturnResponse": 8.094130434782608,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 184.84565217391304,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 101.41043478260869
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.741667,
+        "zeroTo100Seconds": 2.275,
+        "topKmh": 109.52327,
+        "brakeStartKmh": 100.128697,
+        "brakeMeters": 9.203142
+      }
+    },
+    {
+      "id": "t10",
+      "name": "Panther Racing",
+      "historicalStrength": 70,
+      "developmentPotential": 90,
+      "focus": "handling",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t10",
+        "strength": 70,
+        "focus": "handling",
+        "developmentPotential": 90,
+        "factors": {
+          "acceleration": 0.8669565217391304,
+          "topSpeed": 0.9294782608695652,
+          "braking": 0.9510869565217391,
+          "handling": 0.9710869565217392,
+          "grip": 0.929304347826087,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 102.24260869565217,
+          "acceleration": 47.68260869565217,
+          "braking": 137.9076086956522,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.8843478260869566,
+          "steerReturnResponse": 8.739782608695652,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 195.15391304347827,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 102.24260869565217
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.716667,
+        "zeroTo100Seconds": 2.233333,
+        "topKmh": 110.422017,
+        "brakeStartKmh": 100.177312,
+        "brakeMeters": 8.731405
+      }
+    },
+    {
+      "id": "t11",
+      "name": "Rivage Racing",
+      "historicalStrength": 74,
+      "developmentPotential": 89,
+      "focus": "aero",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t11",
+        "strength": 74,
+        "focus": "aero",
+        "developmentPotential": 89,
+        "factors": {
+          "acceleration": 0.8982608695652173,
+          "topSpeed": 0.9511304347826087,
+          "braking": 0.9434782608695652,
+          "handling": 0.9484782608695652,
+          "grip": 0.9321739130434783,
+          "highSpeedGrip": 0.04
+        },
+        "parameters": {
+          "maxSpeed": 104.62434782608696,
+          "acceleration": 49.404347826086955,
+          "braking": 136.80434782608697,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.793913043478261,
+          "steerReturnResponse": 8.536304347826087,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 195.75652173913045,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0.04,
+          "gripSpeedReference": 104.62434782608696
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.65,
+        "zeroTo100Seconds": 2.141667,
+        "topKmh": 112.994296,
+        "brakeStartKmh": 100.104887,
+        "brakeMeters": 8.786337
+      }
+    },
+    {
+      "id": "t12",
+      "name": "Scuderia Vespera",
+      "historicalStrength": 64,
+      "developmentPotential": 92,
+      "focus": "handling",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t12",
+        "strength": 72,
+        "focus": "handling",
+        "developmentPotential": 92,
+        "factors": {
+          "acceleration": 0.8826086956521738,
+          "topSpeed": 0.937304347826087,
+          "braking": 0.9597826086956522,
+          "handling": 0.9797826086956523,
+          "grip": 0.9397391304347826,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 103.10347826086957,
+          "acceleration": 48.54347826086956,
+          "braking": 139.16847826086956,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.919130434782609,
+          "steerReturnResponse": 8.81804347826087,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 197.34521739130435,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 103.10347826086957
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.683333,
+        "zeroTo100Seconds": 2.183333,
+        "topKmh": 111.351757,
+        "brakeStartKmh": 100.022412,
+        "brakeMeters": 8.629683
+      }
+    },
+    {
+      "id": "t13",
+      "name": "Redwood GP",
+      "historicalStrength": 72,
+      "developmentPotential": 93,
+      "focus": "power",
+      "profile": {
+        "version": 1,
+        "context": "campaign",
+        "teamId": "t13",
+        "strength": 64,
+        "focus": "power",
+        "developmentPotential": 93,
+        "factors": {
+          "acceleration": 0.845,
+          "topSpeed": 0.918,
+          "braking": 0.895,
+          "handling": 0.895,
+          "grip": 0.875,
+          "highSpeedGrip": 0
+        },
+        "parameters": {
+          "maxSpeed": 100.98,
+          "acceleration": 46.475,
+          "braking": 129.775,
+          "rollingDrag": 1.5,
+          "aeroDrag": 0.0015,
+          "wheelbase": 7.8,
+          "maxSteer": 0.58,
+          "steerResponse": 3.58,
+          "steerReturnResponse": 8.055,
+          "steerSpeedReference": 70,
+          "steerSpeedReduction": 0.65,
+          "maxReverseSpeed": 22,
+          "reverseAcceleration": 20,
+          "reverseDelay": 0.25,
+          "maxLateralAcceleration": 183.75,
+          "lateralDamping": 10,
+          "offroadDrag": 1.7,
+          "offroadGrip": 0.6,
+          "halfLength": 5.4,
+          "halfWidth": 2.5,
+          "metersPerUnit": 0.3,
+          "highSpeedGrip": 0,
+          "gripSpeedReference": 100.98
+        }
+      },
+      "bench": {
+        "zeroTo80Seconds": 1.766667,
+        "zeroTo100Seconds": 2.3,
+        "topKmh": 109.0584,
+        "brakeStartKmh": 100.144161,
+        "brakeMeters": 9.248429
+      }
+    }
+  ],
+  "tracks": [
+    {
+      "id": "bahrain",
+      "races": [
+        {
+          "catchup": false,
+          "laps": 8,
+          "seconds": 289.516667,
+          "contacts": 88,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 255.048187,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 2,
+              "finishTime": 258.122924,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 3,
+              "finishTime": 262.148411,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 4,
+              "finishTime": 263.241662,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 5,
+              "finishTime": 268.450465,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 1
+            },
+            {
+              "id": "t13",
+              "position": 6,
+              "finishTime": 280.442829,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 7,
+              "finishTime": 281.642204,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 8,
+              "finishTime": 283.066125,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 9,
+              "finishTime": 284.003243,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 10,
+              "finishTime": 285.197151,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t11",
+              "position": 11,
+              "finishTime": 286.192302,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 12,
+              "finishTime": 287.753049,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 12
+            },
+            {
+              "id": "t09",
+              "position": 13,
+              "finishTime": 289.512574,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 10
+            }
+          ]
+        },
+        {
+          "catchup": true,
+          "laps": 8,
+          "seconds": 288.558333,
+          "contacts": 87,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 255.03647,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 2,
+              "finishTime": 258.122924,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 3,
+              "finishTime": 262.148411,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 4,
+              "finishTime": 263.262796,
+              "maxPace": 0.0013301295782394789,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 5,
+              "finishTime": 268.34083,
+              "maxPace": 0.0019999999999999792,
+              "wallFrames": 0,
+              "shoulderFrames": 1
+            },
+            {
+              "id": "t13",
+              "position": 6,
+              "finishTime": 280.413467,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 7,
+              "finishTime": 281.850273,
+              "maxPace": 0.003701858107362761,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 8,
+              "finishTime": 282.495366,
+              "maxPace": 0.003039307637658378,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 9,
+              "finishTime": 283.916129,
+              "maxPace": 0.003184544759444146,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 10,
+              "finishTime": 285.168365,
+              "maxPace": 0.005065933557142712,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 11,
+              "finishTime": 285.83869,
+              "maxPace": 0.005844083620927408,
+              "wallFrames": 0,
+              "shoulderFrames": 12
+            },
+            {
+              "id": "t11",
+              "position": 12,
+              "finishTime": 286.8309,
+              "maxPace": 0.007445012497136247,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 13,
+              "finishTime": 288.553693,
+              "maxPace": 0.00884159086899515,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "canada",
+      "races": [
+        {
+          "catchup": false,
+          "laps": 6,
+          "seconds": 203.758333,
+          "contacts": 63,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 178.194208,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 2,
+              "finishTime": 180.149316,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 3,
+              "finishTime": 181.152577,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 4,
+              "finishTime": 183.658994,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 5,
+              "finishTime": 187.490285,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 6,
+              "finishTime": 196.267173,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 7,
+              "finishTime": 196.575311,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 6
+            },
+            {
+              "id": "t13",
+              "position": 8,
+              "finishTime": 198.358627,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 9,
+              "finishTime": 199.361446,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 10,
+              "finishTime": 200.27759,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 4
+            },
+            {
+              "id": "t11",
+              "position": 11,
+              "finishTime": 200.864825,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 12,
+              "finishTime": 201.862097,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 13,
+              "finishTime": 203.755213,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        },
+        {
+          "catchup": true,
+          "laps": 6,
+          "seconds": 204.041667,
+          "contacts": 89,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 178.194208,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 2,
+              "finishTime": 180.149316,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 3,
+              "finishTime": 181.152577,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 4,
+              "finishTime": 183.643595,
+              "maxPace": 0.0007880037761003253,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 5,
+              "finishTime": 187.396198,
+              "maxPace": 0.001939515202050609,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 6,
+              "finishTime": 196.486249,
+              "maxPace": 0.0018865874175972846,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 7,
+              "finishTime": 197.22192,
+              "maxPace": 0.00571994557451685,
+              "wallFrames": 0,
+              "shoulderFrames": 12
+            },
+            {
+              "id": "t13",
+              "position": 8,
+              "finishTime": 199.144823,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 9,
+              "finishTime": 200.310234,
+              "maxPace": 0.0018730284839489433,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 10,
+              "finishTime": 201.123124,
+              "maxPace": 0.004600830331458222,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t11",
+              "position": 11,
+              "finishTime": 201.346317,
+              "maxPace": 0.004814207636376761,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 12,
+              "finishTime": 203.193683,
+              "maxPace": 0.0024668750743972,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 13,
+              "finishTime": 204.038615,
+              "maxPace": 0.002519256348975065,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "korea",
+      "races": [
+        {
+          "catchup": false,
+          "laps": 5,
+          "seconds": 197.491667,
+          "contacts": 142,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 170.182328,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 2,
+              "finishTime": 171.817118,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 3,
+              "finishTime": 174.283075,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 4,
+              "finishTime": 176.002921,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t13",
+              "position": 5,
+              "finishTime": 187.134911,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 6,
+              "finishTime": 188.263409,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 7,
+              "finishTime": 189.056174,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 8,
+              "finishTime": 191.900803,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t11",
+              "position": 9,
+              "finishTime": 192.883772,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 10,
+              "finishTime": 195.291342,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 11,
+              "finishTime": 196.170536,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 12,
+              "finishTime": 197.182242,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 13,
+              "finishTime": 197.48608,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        },
+        {
+          "catchup": true,
+          "laps": 5,
+          "seconds": 195.941667,
+          "contacts": 157,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 170.182328,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 2,
+              "finishTime": 171.817118,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 3,
+              "finishTime": 174.283075,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 4,
+              "finishTime": 175.96572,
+              "maxPace": 0.000886074535199294,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t13",
+              "position": 5,
+              "finishTime": 187.114151,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 6,
+              "finishTime": 188.079178,
+              "maxPace": 0.0010988511513781605,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 7,
+              "finishTime": 189.157587,
+              "maxPace": 0.0030120704057024204,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 8,
+              "finishTime": 190.878654,
+              "maxPace": 0.002952454246502362,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 9,
+              "finishTime": 191.870344,
+              "maxPace": 0.0026011999352752,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 10,
+              "finishTime": 192.846609,
+              "maxPace": 0.004739361196646832,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t11",
+              "position": 11,
+              "finishTime": 194.048831,
+              "maxPace": 0.004654474788489872,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 12,
+              "finishTime": 194.917644,
+              "maxPace": 0.006437203200591971,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 13,
+              "finishTime": 195.940257,
+              "maxPace": 0.007098799968689367,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "france",
+      "races": [
+        {
+          "catchup": false,
+          "laps": 5,
+          "seconds": 206.65,
+          "contacts": 72,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 178.33152,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 2,
+              "finishTime": 179.934568,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 3,
+              "finishTime": 182.547767,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 4,
+              "finishTime": 188.927931,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 5,
+              "finishTime": 191.71435,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t13",
+              "position": 6,
+              "finishTime": 198.100086,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 7,
+              "finishTime": 198.864398,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 8,
+              "finishTime": 200.212749,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 9,
+              "finishTime": 201.315972,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 10,
+              "finishTime": 203.270127,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 11,
+              "finishTime": 204.439231,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t11",
+              "position": 12,
+              "finishTime": 205.403775,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 13,
+              "finishTime": 206.641731,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        },
+        {
+          "catchup": true,
+          "laps": 5,
+          "seconds": 207.1,
+          "contacts": 80,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 178.33152,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 2,
+              "finishTime": 179.934568,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 3,
+              "finishTime": 183.014432,
+              "maxPace": 4.219565519600365e-08,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 4,
+              "finishTime": 189.564673,
+              "maxPace": 0.0014423143724193084,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 5,
+              "finishTime": 190.945713,
+              "maxPace": 0.0015181695472324885,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t13",
+              "position": 6,
+              "finishTime": 197.76676,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 7,
+              "finishTime": 201.400272,
+              "maxPace": 0.002143936211526496,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 8,
+              "finishTime": 201.804413,
+              "maxPace": 0.0018123219797534758,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 9,
+              "finishTime": 202.688186,
+              "maxPace": 0.003092379463834258,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 10,
+              "finishTime": 203.805242,
+              "maxPace": 0.008179859165223414,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 11,
+              "finishTime": 204.933961,
+              "maxPace": 0.004594805610871561,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t11",
+              "position": 12,
+              "finishTime": 206.024587,
+              "maxPace": 0.004371095945691228,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 13,
+              "finishTime": 207.092852,
+              "maxPace": 0.006780794091426105,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "england",
+      "races": [
+        {
+          "catchup": false,
+          "laps": 6,
+          "seconds": 192.241667,
+          "contacts": 137,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 164.566078,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 2,
+              "finishTime": 166.2216,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 3,
+              "finishTime": 167.587003,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 4,
+              "finishTime": 169.758566,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 5,
+              "finishTime": 174.618013,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t13",
+              "position": 6,
+              "finishTime": 184.063685,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 7,
+              "finishTime": 185.495515,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t11",
+              "position": 8,
+              "finishTime": 186.463075,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 9,
+              "finishTime": 187.361368,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 10,
+              "finishTime": 188.516145,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 11,
+              "finishTime": 189.976438,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 12,
+              "finishTime": 191.065947,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 13,
+              "finishTime": 192.237665,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        },
+        {
+          "catchup": true,
+          "laps": 6,
+          "seconds": 189.7,
+          "contacts": 108,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 164.566078,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 2,
+              "finishTime": 166.2216,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 3,
+              "finishTime": 167.587003,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 4,
+              "finishTime": 169.929371,
+              "maxPace": 0.0007563850123342478,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 5,
+              "finishTime": 174.03353,
+              "maxPace": 0.001971362969941623,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 6,
+              "finishTime": 180.440836,
+              "maxPace": 0.0019999999999999792,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t13",
+              "position": 7,
+              "finishTime": 183.156278,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 8,
+              "finishTime": 184.493609,
+              "maxPace": 0.0034541199449825764,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t11",
+              "position": 9,
+              "finishTime": 185.451428,
+              "maxPace": 0.0024228448799620077,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 10,
+              "finishTime": 186.440669,
+              "maxPace": 0.004531643629209736,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 11,
+              "finishTime": 187.413021,
+              "maxPace": 0.006413840605772232,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 12,
+              "finishTime": 188.424183,
+              "maxPace": 0.006089946970839876,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 13,
+              "finishTime": 189.696753,
+              "maxPace": 0.006899682270699366,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "russia",
+      "races": [
+        {
+          "catchup": false,
+          "laps": 5,
+          "seconds": 212.95,
+          "contacts": 97,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 188.032558,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 2,
+              "finishTime": 190.571531,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 3,
+              "finishTime": 195.571888,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 4,
+              "finishTime": 199.409998,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 5,
+              "finishTime": 200.619992,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 6,
+              "finishTime": 205.632004,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 7,
+              "finishTime": 206.221013,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t13",
+              "position": 8,
+              "finishTime": 207.721875,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t11",
+              "position": 9,
+              "finishTime": 208.29637,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 10,
+              "finishTime": 210.679989,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 11,
+              "finishTime": 210.83655,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 12,
+              "finishTime": 211.780822,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 13,
+              "finishTime": 212.944488,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        },
+        {
+          "catchup": true,
+          "laps": 5,
+          "seconds": 212.2,
+          "contacts": 98,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 188.032558,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 2,
+              "finishTime": 190.571531,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 3,
+              "finishTime": 196.42523,
+              "maxPace": 4.450003800080575e-05,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 4,
+              "finishTime": 196.754789,
+              "maxPace": 0.000465710936549713,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 5,
+              "finishTime": 198.917921,
+              "maxPace": 0.0019999999999999792,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 6,
+              "finishTime": 201.505951,
+              "maxPace": 0.0019999999999999792,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 7,
+              "finishTime": 205.342923,
+              "maxPace": 0.0049999999999999585,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t13",
+              "position": 8,
+              "finishTime": 207.770546,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 9,
+              "finishTime": 208.525723,
+              "maxPace": 0.001513242478319468,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 10,
+              "finishTime": 209.381257,
+              "maxPace": 0.002249999999999979,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t11",
+              "position": 11,
+              "finishTime": 209.950793,
+              "maxPace": 0.002249999999999979,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 12,
+              "finishTime": 211.518704,
+              "maxPace": 0.0034146763328706162,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 13,
+              "finishTime": 212.198245,
+              "maxPace": 0.003414676332875792,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "italy",
+      "races": [
+        {
+          "catchup": false,
+          "laps": 6,
+          "seconds": 209.508333,
+          "contacts": 60,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 182.081883,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 2,
+              "finishTime": 183.966992,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 3,
+              "finishTime": 187.874694,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 4,
+              "finishTime": 189.271341,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 5,
+              "finishTime": 192.685982,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t13",
+              "position": 6,
+              "finishTime": 200.600126,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 7,
+              "finishTime": 200.804207,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 8,
+              "finishTime": 202.74145,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 9,
+              "finishTime": 205.649307,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 10,
+              "finishTime": 208.239692,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 11,
+              "finishTime": 208.580017,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t11",
+              "position": 12,
+              "finishTime": 208.789874,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 13,
+              "finishTime": 209.501011,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        },
+        {
+          "catchup": true,
+          "laps": 6,
+          "seconds": 207.858333,
+          "contacts": 27,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 182.081883,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 2,
+              "finishTime": 183.966992,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 3,
+              "finishTime": 187.282394,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 4,
+              "finishTime": 188.274598,
+              "maxPace": 0.0007587532142788576,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 5,
+              "finishTime": 192.179385,
+              "maxPace": 0.0014851498878408701,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 6,
+              "finishTime": 193.361651,
+              "maxPace": 0.0015620572351069555,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t13",
+              "position": 7,
+              "finishTime": 200.688345,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 8,
+              "finishTime": 201.802453,
+              "maxPace": 0.0026121396156465223,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 9,
+              "finishTime": 202.634646,
+              "maxPace": 0.002612139501976622,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 10,
+              "finishTime": 203.540574,
+              "maxPace": 0.004422102319148784,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 11,
+              "finishTime": 204.692439,
+              "maxPace": 0.0033555920836164845,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t11",
+              "position": 12,
+              "finishTime": 205.421087,
+              "maxPace": 0.008856493853993962,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 13,
+              "finishTime": 207.855402,
+              "maxPace": 0.008999999999999916,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "japan",
+      "races": [
+        {
+          "catchup": false,
+          "laps": 4,
+          "seconds": 185.216667,
+          "contacts": 109,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 156.667683,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 2,
+              "finishTime": 158.860485,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 3,
+              "finishTime": 160.44761,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t13",
+              "position": 4,
+              "finishTime": 173.341584,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 5,
+              "finishTime": 173.400321,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 6,
+              "finishTime": 174.870318,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 7,
+              "finishTime": 176.439038,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 8,
+              "finishTime": 177.171354,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 9,
+              "finishTime": 178.482846,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t11",
+              "position": 10,
+              "finishTime": 179.329004,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 11,
+              "finishTime": 181.776716,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 12,
+              "finishTime": 184.369459,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 13,
+              "finishTime": 185.213269,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        },
+        {
+          "catchup": true,
+          "laps": 4,
+          "seconds": 183.55,
+          "contacts": 107,
+          "rows": [
+            {
+              "id": "t01",
+              "position": 1,
+              "finishTime": 156.667683,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t02",
+              "position": 2,
+              "finishTime": 158.860485,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t03",
+              "position": 3,
+              "finishTime": 160.44761,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t04",
+              "position": 4,
+              "finishTime": 165.366466,
+              "maxPace": 0.0018547220798395025,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t13",
+              "position": 5,
+              "finishTime": 173.441648,
+              "maxPace": 0,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t05",
+              "position": 6,
+              "finishTime": 174.090696,
+              "maxPace": 0.0019999981592570726,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t06",
+              "position": 7,
+              "finishTime": 176.879134,
+              "maxPace": 0.004663697935024438,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t08",
+              "position": 8,
+              "finishTime": 177.871292,
+              "maxPace": 0.003313534284516298,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t07",
+              "position": 9,
+              "finishTime": 179.784983,
+              "maxPace": 0.0030589705268562243,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t10",
+              "position": 10,
+              "finishTime": 179.950389,
+              "maxPace": 0.004955433027621912,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t12",
+              "position": 11,
+              "finishTime": 181.135575,
+              "maxPace": 0.0049363892988731894,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t11",
+              "position": 12,
+              "finishTime": 182.07276,
+              "maxPace": 0.005390486999969011,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            },
+            {
+              "id": "t09",
+              "position": 13,
+              "finishTime": 183.54444,
+              "maxPace": 0.00739939519839013,
+              "wallFrames": 0,
+              "shoulderFrames": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

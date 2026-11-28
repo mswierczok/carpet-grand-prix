@@ -50,3 +50,18 @@ CAS-Prüfung verhindert konkurrierende Überschreibungen. Angebote, gewählte F�
 Route, Ergebnisse und terminale Zustände desselben Run-IDs dürfen nicht zurückgesetzt
 werden. Ein gewerteter Rennstart benötigt einen dauerhaft gesicherten Checkpoint.
 Die frühere Kampagne bleibt in ihrem ursprünglichen Schlüssel unverändert erhalten.
+
+## Fahrzeugleistung und Qualifying-Format
+
+Neue native Checkpoints tragen `performance: {version: 1, context: "campaign" |
+"historical"}` und `qualifyingFormat: "flying-one-v1"`. Neue Qualifying-Sessions
+speichern zusätzlich `format: "flying-one-v1"` und einen validierten negativen
+`qualifyingStartS`; sie zählen genau eine vollständige Runde nach der ersten
+Zielpassage. Fehlende Kennungen bedeuten das uniforme alte Fahrzeugmodell und
+die alte Auslaufrunde plus zwei schnelle Runden. Root-Speicherschlüssel und
+Versionen bleiben erhalten; gemischte/neue unbekannte Unterformate werden
+abgelehnt. Archivzeiten werden nicht neu berechnet.
+
+Echte PR-55-Checkpoints und deren exakte Fortsetzung sowie die festen
+Parameterpakete des Modells v1 sind automatisiert geprüft.
+[Vertrag und Messungen](VEHICLE_PERFORMANCE_AND_QUALIFYING.md).

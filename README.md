@@ -17,6 +17,9 @@ Kompatibilitätszugang lesbar und fortsetzbar; sie werden nicht in Runs umgerech
 
 `race.html` nutzt eine gemeinsame Engine für Qualifying und Rennen mit
 13 Fahrzeugen, manueller Steuerung, Verfolgungskamera und Touchbedienung.
+Neue Wochenenden nutzen teamabhängige Fahrzeugwerte und eine echte Anfahrt
+mit genau einer schnellen Qualifying-Runde. Laufende ältere Wochenenden behalten
+ihr Leistungs- und Qualifying-Format.
 `arcade.html` und `arcade3d.html` sind zusätzliche technische Fahrtests.
 Das Spiel läuft statisch auf GitHub Pages; Spieler benötigen keine Installation.
 
@@ -49,6 +52,7 @@ spielbare Offline-/Review-Pakete bereit. Alle benötigten Assets sind eingebette
 ## Orientierung
 
 - [Architektur und aktive Einstiegspunkte](docs/ARCHITECTURE.md)
+- [Fahrzeugleistung, Ein-Runden-Qualifying und Messdaten](docs/VEHICLE_PERFORMANCE_AND_QUALIFYING.md)
 - [Tests und reproduzierbare Builds](docs/TESTING.md)
 - [Run-System, feste Karte und Ergebnisarchiv](docs/ROGUELITE_RUN_SYSTEM.md)
 - [Frühere Kampagne und ihr Ergebnisarchiv](docs/CAMPAIGN.md)

@@ -71,7 +71,7 @@ test('Roguelite: einmalige Startangebote, feste komplette Karte, erreichbarer Fo
   await openRaceMenu(page,'classification'); await expect(page.locator('#raceOrder li')).toHaveCount(13); await expect(page.locator('#raceOrder .is-eliminated')).toHaveCount(0);
   await unchanged(page); expect(errors).toEqual([]);
 });
-test('Roguelite: vier echte Wochenenden, drei bindende Testevents und erfolgreicher Phase-1-Abschluss', async({page},info)=>{
+test('Roguelite: vier echte Wochenenden, drei bindende Testevents und endgültige Finaleentscheidung', async({page},info)=>{
   test.setTimeout(600000); const errors=[]; page.on('pageerror',e=>errors.push(e.message));
   await prepare(page); await create(page); await page.locator('#runAbilityOffers button').first().click();
   const route=[['bahrain','event-a'],['canada','event-d'],['england','event-f'],['italy',null]];
@@ -89,7 +89,7 @@ test('Roguelite: vier echte Wochenenden, drei bindende Testevents und erfolgreic
     const run=await current(page); expect(run.campaign.result.order).toHaveLength(13);
     if(!identity) identity={driver:run.campaign.driverId,ability:run.startAbility};
     expect(run.campaign.driverId).toBe(identity.driver); expect(run.startAbility).toBe(identity.ability);
-    expect(run.campaign.result.order.find(r=>r.teamId===run.campaign.teamId).position).toBeLessThanOrEqual(CGPRule(track));
+    if(event)expect(run.campaign.result.order.find(r=>r.teamId===run.campaign.teamId).position).toBeLessThanOrEqual(CGPRule(track));
     await page.locator('#continueCampaignAfterRace').click();
     if(event) {
       await page.locator(`[data-node="${event}"]`).click();
@@ -102,9 +102,10 @@ test('Roguelite: vier echte Wochenenden, drei bindende Testevents und erfolgreic
       const complete=await current(page); expect(complete.build).toEqual(run.build);
     }
   }
-  const done=await current(page); expect(done.status).toBe('won'); expect(done.phase.status).toBe('completed'); expect(done.campaign.completed).toHaveLength(4); expect(done.decisions).toHaveLength(3);
-  await expect(page.locator('#runOutcomeTitle')).toContainText('oben'); await expect(page.locator('#runMapBoard button:enabled')).toHaveCount(0);
-  await page.screenshot({path:`docs/roguelite/${info.project.name}-phase-success.png`,fullPage:true});
+  const done=await current(page),place=done.campaign.result.order.find(r=>r.teamId===done.campaign.teamId).position;
+  expect(done.status).toBe(place===1?'won':'failed');expect(done.phase.status).toBe(place===1?'completed':'failed');expect(done.outcome.reason).toBe(place===1?'prototype-complete':'eliminated');expect(done.campaign.completed).toHaveLength(4);expect(done.decisions).toHaveLength(3);
+  await expect(page.locator('#runOutcomeTitle')).toContainText(place===1?'oben':'hier'); await expect(page.locator('#runMapBoard button:enabled')).toHaveCount(0);
+  await page.screenshot({path:`docs/roguelite/${info.project.name}-phase-finale.png`,fullPage:true});
   await page.locator('[data-run-tab="results"]').click(); await expect(page.locator('#runArchive .run-result-card')).toHaveCount(4);
   await page.locator('#runArchive button').first().click(); await expect(page.locator('[data-archive-rows="race"] tr')).toHaveCount(13);
   await page.locator('[data-archive-tab="qualifying"]').click(); await expect(page.locator('[data-archive-rows="qualifying"] .is-eliminated')).toHaveCount(0);
@@ -112,6 +113,19 @@ test('Roguelite: vier echte Wochenenden, drei bindende Testevents und erfolgreic
   await unchanged(page); expect(errors).toEqual([]);
 });
 function CGPRule(track){return track==='bahrain'?10:track==='canada'?8:track==='england'?5:1;}
+test('Roguelite: tatsächlich gewonnener PR55-Run bleibt mit allen vier Ergebnissen lesbar',async({page})=>{
+  await prepare(page);const fixture=JSON.parse(readFileSync('tests/fixtures/vehicle-performance-legacy-won-run.json','utf8'));
+  expect(fixture.sourceCommit).toBe('b4a797c7b9b390243db6b72213e99fffb081e876');
+  await page.addInitScript(({key,save})=>localStorage.setItem(key,JSON.stringify(save)),{key,save:fixture.save});
+  await page.goto('run.html');await expect(page.locator('#runOutcomeTitle')).toContainText('oben');
+  const run=await current(page);expect(run.status).toBe('won');expect(run.campaign.completed).toHaveLength(4);expect(run.campaign.weekend.config.performance).toBeUndefined();
+  await expect(page.locator('#runMapBoard button:enabled')).toHaveCount(0);
+  const before=await page.evaluate(k=>localStorage.getItem(k),key);
+  await page.locator('[data-run-tab="results"]').click();await expect(page.locator('#runArchive .run-result-card')).toHaveCount(4);
+  await page.locator('#runArchive button').first().click();await expect(page.locator('[data-archive-rows="race"] tr')).toHaveCount(13);
+  await page.locator('[data-archive-tab="qualifying"]').click();await expect(page.locator('[data-archive-rows="qualifying"] tr')).toHaveCount(13);
+  expect(await page.evaluate(k=>localStorage.getItem(k),key)).toBe(before);await unchanged(page);
+});
 test('Roguelite: echte Niederlage, rote eigene Zeile, Reload-Schutz und Archiv beim neuen Run',async({page},info)=>{
   test.setTimeout(300000); await prepare(page,{threeD:true}); await create(page); await page.locator('#runAbilityOffers button').first().click();
   const original=await current(page); await enterRace(page,'bahrain'); await page.locator('#startQualifying').click(); await drive(page,true);

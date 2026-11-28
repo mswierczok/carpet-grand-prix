@@ -1,33 +1,57 @@
 (() => {
   "use strict";
   const A = globalThis.CGPArcade,
-    clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+    clamp = (n, a, b) => Math.max(a, Math.min(b, n)), planCache = new WeakMap(), previewCache = new WeakMap();
   function create(surface, parameters, options = {}) {
+    if (options.parametersByTeam) {
+      const delegates = new Map(), byTeam = new Map();
+      for (const [id, p] of Object.entries(options.parametersByTeam)) {
+        if (!delegates.has(p)) delegates.set(p, create(surface, p, { ...options, parametersByTeam: null }));
+        byTeam.set(id, delegates.get(p));
+      }
+      const first = delegates.values().next().value;
+      return Object.freeze({ memory: first.memory, prepare: first.prepare, diagnostics: first.diagnostics,
+        input(car, others, memory, dt) {
+          const driver = byTeam.get(car.id);
+          if (!driver) throw Error("Fahrzeugparameter fehlen für die KI-Planung.");
+          return driver.input(car, others, memory, dt);
+        } });
+    }
     const p = parameters,
       profile = A.AIDifficulty.forTrack(options.difficulty, surface.id),
       returnAnticipation = profile.steeringAnticipation > 0
         ? 1 / Math.expm1(p.steerReturnResponse * Math.log1p(1 / profile.steeringAnticipation) / p.steerResponse) : 0,
       stride = 5,
       passingOffset = Math.min(8, surface.roadRadius - p.halfWidth - 3),
-      lines = A.OpponentLine.create(surface, profile),
-      plans = new Map();
+      lines = A.OpponentLine.create(surface, profile);
+    if (!planCache.has(surface)) planCache.set(surface, new WeakMap());
+    const cached = planCache.get(surface);
+    if (!cached.has(p)) cached.set(p, new Map());
+    if (!cached.get(p).has(profile.id)) cached.get(p).set(profile.id, new Map());
+    const plans = cached.get(p).get(profile.id);
     function plan(lane) {
       if (plans.has(lane)) return plans.get(lane);
       const route = lines.route(lane),
-        samples = Math.ceil(route.length / stride),
+        samples = Math.ceil(route.length / stride);
+      // All team profiles use the same geometric route. Sample its curvature
+      // once, then solve each vehicle's own grip/braking limits from that data.
+      // The calculation order and preview positions remain unchanged.
+      if (!previewCache.has(route)) {
+        const curvature = new Float64Array(samples * 20);
+        for (let i = 0; i < samples; i++) for (let ahead = 0; ahead < 100; ahead += 5) {
+          const a = route.at(i * stride + ahead), b = route.at(i * stride + ahead + 8),
+            turn = Math.atan2(Math.sin(b.ang - a.ang), Math.cos(b.ang - a.ang));
+          curvature[i * 20 + ahead / 5] = Math.max(.001, Math.abs(turn) / 8);
+        }
+        previewCache.set(route, curvature);
+      }
+      const curvatureTable = previewCache.get(route),
         speedTable = Array.from({ length: samples }, (_, i) => {
           let allowed = p.maxSpeed;
           for (let ahead = 0; ahead < 100; ahead += 5) {
-            const a = route.at(i * stride + ahead),
-              b = route.at(i * stride + ahead + 8),
-              turn = Math.atan2(
-                Math.sin(b.ang - a.ang),
-                Math.cos(b.ang - a.ang),
-              );
-            const curvature = Math.max(0.001, Math.abs(turn) / 8),
+            const curvature = curvatureTable[i * 20 + ahead / 5],
               cornerSquared =
-                (p.maxLateralAcceleration * (lane === 0 ? profile.cornerConfidence : profile.passingConfidence)) /
-                curvature,
+                A.Physics.cornerSpeedSquared(p, curvature, lane === 0 ? profile.cornerConfidence : profile.passingConfidence),
               brakingDistance = Math.max(0, ahead - profile.brakeDistance);
             allowed = Math.min(
               allowed,
@@ -264,7 +288,7 @@
             ? p.steerReturnResponse : p.steerResponse,
           meanSteering = targetSteering + (car.steering - targetSteering) *
             (-Math.expm1(-response * tau)) / (response * tau),
-          grip = p.maxLateralAcceleration * (car.offroad ? p.offroadGrip : 1),
+          grip = A.Physics.lateralAcceleration(p, v) * (car.offroad ? p.offroadGrip : 1),
           omega = clamp(v / p.wheelbase * Math.tan(meanSteering), -grip / v, grip / v),
           h = car.heading, w = h + omega * tau,
           future = { ...car,

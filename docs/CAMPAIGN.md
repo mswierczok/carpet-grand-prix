@@ -11,8 +11,9 @@ Bahrain-Zwischenstand und die weiterhin geltenden 39 Fahrerplätze.
 ## Ablauf
 
 `play.html` → Kampagne → Redwood GP → einer von drei festen Fahrern → Bahrain.
-Jedes neue Wochenende beginnt verbindlich mit einer Auslaufrunde und zwei
-schnellen Qualifying-Runden. Erst wenn alle 13 echten Hintergrundfahrer ihre
+Jedes neue Wochenende beginnt verbindlich mit einer echten Anfahrt und einer
+schnellen Qualifying-Runde. Alte gespeicherte Qualifyings behalten ihre Auslaufrunde
+und zwei schnellen Runden. Erst wenn alle 13 echten Hintergrundfahrer ihre
 Zeiten beendet haben, übernimmt der Kampagnenadapter die Startaufstellung.
 Das Rennen wartet danach **pausiert** auf „RENNEN STARTEN“.
 
@@ -29,7 +30,9 @@ gewählt werden. Nach Ausschöpfung des achtteiligen Pools erscheint lediglich
 Meisterschaftspunkte, Belohnungen, Items, Freischaltungen oder Run-Map.
 
 Die Kampagnen-Teamprofile bleiben Redwood 64 / Vespera 72; die historischen
-Stammdaten bleiben 72 / 64. Profile und Fahrerwahl verändern keine Fahrwerte.
+Stammdaten bleiben 72 / 64. Die Teamprofile bestimmen nun die tatsächliche
+Fahrzeugleistung neuer Wochenenden. Die Fahrerwahl verändert weiterhin keine
+Fahrwerte. [Leistungsmodell und Formatkompatibilität](VEHICLE_PERFORMANCE_AND_QUALIFYING.md).
 Die 92 historischen Identitäten und Originalporträts bleiben unangetastet.
 
 ## Getrennte Oberfläche

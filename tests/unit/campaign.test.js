@@ -1,3 +1,4 @@
+import { withoutVehicleGripSource, unaffectedByVehicleWork } from "../helpers/vehicle-performance-source.js";
 import { it, expect } from "vitest";
 import { readFileSync, existsSync } from "node:fs";
 import { execFileSync } from "node:child_process";
@@ -207,7 +208,7 @@ it("setzt das verpflichtende native Qualifying pausiert fort, ohne eigene Physik
   const { A, g } = setup(),
     track = A.TrackCatalog.get(g.trackId),
     p = { ...A.Physics.parameters };
-  const w = A.RaceWeekend.create(track, { playerTeam: g.teamId, ...g.options });
+  const w = A.RaceWeekend.create(track, { playerTeam: g.teamId, ...g.options, performance:A.VehiclePerformance.campaign });
   expect(w.snapshot().entries).toHaveLength(13);
   w.selectDifficulty("expert");
   w.selectCatchup(false);
@@ -223,7 +224,7 @@ it("setzt das verpflichtende native Qualifying pausiert fort, ohne eigene Physik
     w.snapshot().entries.map((e) => e.car),
   );
   expect(resumed.snapshot().paused).toBe(true);
-  const q = A.RaceWeekend.create(track, { playerTeam: g.teamId, ...g.options });
+  const q = A.RaceWeekend.create(track, { playerTeam: g.teamId, ...g.options, performance:A.VehiclePerformance.campaign });
   q.startQualifying();
   for (let i = 0; i < 160; i++)
     q.advance({ throttle: 1, brake: 0, steer: 0 }, 1 / 30);
@@ -239,7 +240,7 @@ it("migriert ein vollständig gefahrenes älteres 13er-Feld in einen wiederholba
     w = A.RaceWeekend.create(A.TrackCatalog.get(g.trackId), {
       playerTeam: g.teamId,
       ...g.options,
-      laps: 1,
+      performance:null, qualifyingFormat:null, laps: 1,
     });
   const driver = A.Opponents.create(w.surface, w.parameters),
     memory = driver.memory(12);
@@ -266,7 +267,7 @@ it("migriert ein vollständig gefahrenes älteres 13er-Feld in einen wiederholba
   expect(next.trackId).toBe("bahrain");
   expect(next.result.qualifying).toBeNull();
 }, 120000);
-it("ändert keine Renn-, KI-, Kamera-, Team-, Strecken- oder bestehenden Speichermodule", () => {
+it("erhält die nicht vom Fahrzeug-/Qualifying-Auftrag betroffenen Kamera-, Team-, Strecken- und Speichermodule", () => {
   const files = [
     "src/racing/physics.js",
     "src/racing/rope-contact.js",
@@ -282,12 +283,12 @@ it("ändert keine Renn-, KI-, Kamera-, Team-, Strecken- oder bestehenden Speiche
     "src/persistence/pov-game-store.js",
     "src/persistence/pov-checkpoint.js",
   ];
-  for (const file of files) {
+  for (const file of files.filter(unaffectedByVehicleWork)) {
     const baseline = execFileSync(
       "git",
       ["show", `414ce81b057fe52138e7a4ba165677ef190609e6:${file}`],
       { maxBuffer: 16 * 1024 * 1024 },
     );
-    expect(readFileSync(file).equals(baseline), file).toBe(true);
+    expect(Buffer.from(withoutVehicleGripSource(file,readFileSync(file,"utf8"))).equals(baseline), file).toBe(true);
   }
 });
