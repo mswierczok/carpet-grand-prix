@@ -57,5 +57,18 @@
     if (trackId === "bahrain" && Object.hasOwn(bahrainProfiles, id)) return bahrainProfiles[id];
     return id === "expert" && experts.has(trackId) ? experts.get(trackId) : profile;
   }
-  A.AIDifficulty = Object.freeze({ profiles: Object.freeze(profiles), get, forTrack, trackReserves, trackLines, defaultId: "normal" });
+  const drivingV4 = new Map();
+  function forDriving(id,trackId,version) {
+    if(version!==4)return forTrack(id,trackId);
+    const key=id+':'+trackId;
+    if(!drivingV4.has(key)){
+      const prior=forTrack(id,trackId),expert=id==='expert',hard=id==='hard';
+      drivingV4.set(key,Object.freeze({...prior,cacheKey:key+':driving4',relativePassing:true,
+        ...(trackId==='bahrain'&&expert?{steeringAnticipation:3,cornerConfidence:1.6,passingConfidence:1.55,iterations:2400}:{}),
+        ...(trackId==='bahrain'&&hard?{steeringAnticipation:1.2}:{}),
+      }));
+    }
+    return drivingV4.get(key);
+  }
+  A.AIDifficulty = Object.freeze({ profiles: Object.freeze(profiles), get, forTrack, forDriving, trackReserves, trackLines, defaultId: "normal" });
 })();

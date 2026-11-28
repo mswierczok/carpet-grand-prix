@@ -18,7 +18,8 @@
   function create(surface, profile = A.AIDifficulty.get()) {
     if (!cache.has(surface)) cache.set(surface, new Map());
     const cached = cache.get(surface);
-    if (cached.has(profile.id)) return cached.get(profile.id);
+    const cacheKey=profile.cacheKey||profile.id;
+    if (cached.has(cacheKey)) return cached.get(cacheKey);
     const n = Math.ceil(surface.g.len / 8),
       stride = surface.g.len / n,
       base = Array.from({ length: n }, (_, i) => surface.at(i * stride)),
@@ -68,7 +69,8 @@
       minimumRadius = vehicle.wheelbase / Math.tan(vehicle.maxSteer),
       bends = base.map((b, i) =>
         Math.abs(curvature(base[(i + n - 1) % n], b, base[(i + 1) % n])),
-      );
+      ),
+      signedBends=profile.relativePassing?base.map((b,i)=>curvature(base[(i+n-1)%n],b,base[(i+1)%n])):null;
     function route(lane = 0) {
       if (routes.has(lane)) return routes.get(lane);
       const pts =
@@ -79,9 +81,12 @@
                 // Even a wide road can have an inner passing radius smaller
                 // than the vehicle can steer. Merge by local curvature on every
                 // track; road width alone does not describe a hairpin.
-                let bend = 0;
-                for (let d = -3; d <= 3; d++)
-                  bend = Math.max(bend, bends[(i + d + n) % n]);
+                let bend = 0,turn=0;
+                for (let d = -3; d <= 3; d++){
+                  const index=(i+d+n)%n;
+                  if(signedBends&&bends[index]>bend)turn=signedBends[index];
+                  bend = Math.max(bend, bends[index]);
+                }
                 const merge = clamp(
                   bend *
                     2 *
@@ -90,6 +95,11 @@
                   0,
                   1,
                 );
+                // Only the INNER route loses steering radius. Collapsing the
+                // outer line as well unnecessarily turned every hairpin into
+                // one lane. V4 keeps a geometrically available outside route.
+                if(profile.relativePassing)return pos(i,clamp(offsets[i]+lane*(1-(lane*turn>0?merge:0)),
+                  -surface.roadRadius+profile.edgeMargin,surface.roadRadius-profile.edgeMargin));
                 return {
                   x: side.x + (points[i].x - side.x) * merge,
                   y: side.y + (points[i].y - side.y) * merge,
@@ -161,7 +171,7 @@
       return result;
     }
     const result = Object.freeze({ route });
-    cached.set(profile.id, result);
+    cached.set(cacheKey, result);
     return result;
   }
   A.OpponentLine = Object.freeze({ create });

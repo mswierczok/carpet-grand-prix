@@ -55,7 +55,7 @@
       playerContacts;
     if (!teams.some((t) => t.id === playerTeam))
       throw Error("Unbekanntes Spielerteam.");
-    controller = A.Opponents.create(surface, parameters, { difficulty: difficulty.id, diagnostics: !!options.diagnostics, parametersByTeam });
+    controller = A.Opponents.create(surface, parameters, { difficulty: difficulty.id, diagnostics: !!options.diagnostics, parametersByTeam,drivingVersion:driving?.version });
     function pose(s, lane) {
       const car = A.Physics.spawn(surface, s),
         at = surface.at(s, lane);
@@ -119,7 +119,7 @@
     function selectDifficulty(id) {
       if (phase !== "grid" || !A.AIDifficulty.profiles.some((p) => p.id === id)) return false;
       difficulty = A.AIDifficulty.get(id);
-      controller = A.Opponents.create(surface, parameters, { difficulty: id, diagnostics: !!options.diagnostics, parametersByTeam });
+      controller = A.Opponents.create(surface, parameters, { difficulty: id, diagnostics: !!options.diagnostics, parametersByTeam,drivingVersion:driving?.version });
       restart();
       return true;
     }
