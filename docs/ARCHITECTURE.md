@@ -69,12 +69,14 @@ Die manuelle Steuerung sowie freie Rennen und POV-Meisterschaft bleiben unabhän
 Diagnose und mobile Touchflächen: [DRIVER_PERSONALITIES_AND_DYNAMIC_RACING.md](DRIVER_PERSONALITIES_AND_DYNAMIC_RACING.md).
 Redwood ist anfänglich das einzige freie Team. Die Kampagnenprofile 64/72
 überschreiben historische Teamwerte nur im Kampagnenkontext. `VehiclePerformance`
-leitet daraus versionierte teamabhängige Physikparameter ab; `Opponents` plant
+leitet daraus versionierte teamabhängige Physikparameter ab (V2 für neue
+Wochenenden, V1 für gespeicherte V1-Sessions); `Opponents` plant
 mit denselben Werten. `QualifyingApproach` ermittelt eine gemeinsame sichere
 Anfahrt pro Strecke und Feld. Neue Wochenenden übernehmen die Startaufstellung
 automatisch und speichern den Übergang. Fehlende Modell-/Formatkennungen
 erhalten das ursprüngliche Verhalten. Details und Messungen:
-[VEHICLE_PERFORMANCE_AND_QUALIFYING.md](VEHICLE_PERFORMANCE_AND_QUALIFYING.md). `CampaignWeekend` erzwingt Qualifying und die einmalige Übernahme
+[VEHICLE_PERFORMANCE_AND_QUALIFYING.md](VEHICLE_PERFORMANCE_AND_QUALIFYING.md) und
+[VEHICLE_BALANCE_V2.md](VEHICLE_BALANCE_V2.md). `CampaignWeekend` erzwingt Qualifying und die einmalige Übernahme
 seiner Startaufstellung. Kampagnenablauf und Speicherung: [CAMPAIGN.md](CAMPAIGN.md).
 
 ## Rendering und Assetquellen

@@ -7,12 +7,19 @@ export function loadArcade({
   formats = true,
   historicalBahrain = false,
   ropeContacts = true,
+  sourceRoot = ROOT,
+  processRealm = false,
 } = {}) {
   const math = Object.create(Math);
   math.random = () => {
     throw Error("Der Fahrtest darf keine Zufallssteuerung verwenden.");
   };
-  const scope = createContext({ Math: math });
+  // Batch measurements can use one engine per dedicated Node process. This
+  // avoids cross-realm Math overhead; ordinary tests retain their isolated VM.
+  if(processRealm&&(historicalBahrain||globalThis.CGPArcade||globalThis.CGPArcadeData))
+    throw Error("Prozessmessungen benötigen einen eigenen frischen Node-Prozess.");
+  const scope = processRealm ? globalThis : createContext({ Math: math });
+  if(processRealm)Math.random=math.random;
   for (const file of [
     "data/arcade-tracks",
     "data/arcade-roster",
@@ -66,10 +73,10 @@ export function loadArcade({
           "ui/race-presentation",
         ]
       : []),
-  ])
-    new Script(
-      readFileSync(new URL(`src/${file}.js`, ROOT), "utf8"),
-    ).runInContext(scope);
+  ]) {
+    const script=new Script(readFileSync(new URL(`src/${file}.js`,sourceRoot),"utf8"));
+    if(processRealm)script.runInThisContext();else script.runInContext(scope);
+  }
   if (historicalBahrain) {
     // A named, immutable regression track for old pace/projection comparisons.
     // The normal helper and every gameplay/browser test use the new layout.

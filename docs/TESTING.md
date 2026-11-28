@@ -161,3 +161,25 @@ nativ gewonnenen PR-55-Run geprüft; damit bleibt ein alter Sieg ohne neue
 Zeit-/Positionszuweisung lesbar. Reproduktion der neuen Kompatibilitätsreferenzen:
 `node scripts/capture-performance-legacy-fixtures.js --source-root=/pfad/zum/PR55-Checkout`.
 Der Generator schreibt nach `dist/` und ersetzt keine bestehenden Test-Fixtures.
+
+## Fahrzeugbalance V2
+
+`npx vitest run tests/unit/vehicle-balance-v2.test.js` prüft neue Standardmodelle,
+V1-Erhalt, tatsächliche V2-Physik-/KI-Parameter, Hilfelimits, deterministische
+Fortsetzung und die vollständige Messmatrix. `tests/browser/vehicle-balance.spec.js`
+lädt zusätzlich ein echtes älteres V1-Qualifying auf Desktop und Mobilprofil.
+Die vorhandene Fahrer-/Touch-Wochenendprüfung kontrolliert nun explizit V2 vor
+und nach Reload, einschließlich vollständigem Rennen/Archiv.
+
+Die älteren `measure-vehicle-performance.js`-Ausgaben und PR-57-Berichte bleiben
+V1-Belege; sie werden nicht überschrieben. Aktuelle Messung und Reproduktion:
+[VEHICLE_BALANCE_V2.md](VEHICLE_BALANCE_V2.md). Diagramme werden optional mit
+`scripts/plot-vehicle-balance.py` und Matplotlib erzeugt; Spiel/Build benötigen
+keine neue Python- oder JavaScript-Abhängigkeit.
+
+Für große Balance-Messungen unterstützt der Testloader optional einen eigenen
+Node-Prozess mit identischer Scriptliste (`--realm=process` im Messwerkzeug).
+`balance-measurement-loader.test.js` prüft zehn native Referenzfortsetzungen
+mit exakt gleichen Werten. Die normalen Tests behalten die isolierte VM.
+Die Quelle eines separaten unveränderten Checkouts wird über `sourceRoot`
+geladen; die Balance-Messung validiert zusätzlich die Runtime-Quellhashes.

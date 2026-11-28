@@ -53,7 +53,7 @@ Die frühere Kampagne bleibt in ihrem ursprünglichen Schlüssel unverändert er
 
 ## Fahrzeugleistung und Qualifying-Format
 
-Neue native Checkpoints tragen `performance: {version: 1, context: "campaign" |
+Neue native Checkpoints tragen `performance: {version: 2, context: "campaign" |
 "historical"}` und `qualifyingFormat: "flying-one-v1"`. Neue Qualifying-Sessions
 speichern zusätzlich `format: "flying-one-v1"` und einen validierten negativen
 `qualifyingStartS`; sie zählen genau eine vollständige Runde nach der ersten
@@ -64,7 +64,13 @@ abgelehnt. Archivzeiten werden nicht neu berechnet.
 
 Echte PR-55-Checkpoints und deren exakte Fortsetzung sowie die festen
 Parameterpakete des Modells v1 sind automatisiert geprüft.
-[Vertrag und Messungen](VEHICLE_PERFORMANCE_AND_QUALIFYING.md).
+[V1-Vertrag und Messungen](VEHICLE_PERFORMANCE_AND_QUALIFYING.md).
+
+V1-Kennungen bleiben exakt V1, auch beim Neustart desselben Wochenendes.
+Nur ein neuer Grand Prix ohne native Session beginnt mit V2; das gilt ebenfalls
+für einen älteren Run nach abgeschlossenem V1-Wochenende. Route, Fahrerwahl,
+Events und Ergebnisse werden dabei nicht migriert. Ein gespeichertes Grid ist
+bereits Teil seines versionierten Wochenendes. Details: [V2-Vertrag](VEHICLE_BALANCE_V2.md#speichervertrag-und-übergang).
 
 
 ## Optionales KI-Fahrermodell v3

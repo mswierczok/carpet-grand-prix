@@ -1,5 +1,9 @@
 # Fahrzeugleistung und fliegendes Ein-Runden-Qualifying
 
+> Unveränderter V1-Vertrag und damalige Messungen. Neue Wochenenden verwenden
+> inzwischen [Fahrzeugbalance V2](VEHICLE_BALANCE_V2.md); gespeicherte V1-Sessions
+> behalten die hier dokumentierten Parameter.
+
 Ausgangscommit: `b4a797c7b9b390243db6b72213e99fffb081e876` (gemergter PR #55).
 Branch: `codex/vehicle-performance-one-lap`. Fahrzeugprofile wurden zuerst auf allen acht Kampagnenstrecken gemessen; danach folgte das neue Qualifying. Keine Änderung an historischen Stammdaten, Strecken, Rundentabelle, Run-Map, Platzierungszielen oder den vier KI-Schwierigkeitsprofilen.
 

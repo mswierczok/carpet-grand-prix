@@ -28,3 +28,8 @@ Die Quellhashes und die exakten Folgezustände werden geprüft. Kein vorhandenes
 Referenzfile wurde dafür ersetzt. Die Generatoren `capture-driver-legacy-fixtures.js`
 und `capture-driver-profile-reference.js` schreiben ausschließlich nach `dist/`;
 die manuelle Übernahme neuer, eindeutig benannter Referenzen bleibt sichtbar.
+
+`vehicle-balance-v2-checkpoints.json` ergänzt echte V2-Folgezustände aus
+`9a3ebb5c25ec7fe29b4f3799a178b877d5568fe3`, ohne V1-Referenzen zu ändern.
+Der Generator `capture-vehicle-v2-reference.js` prüft jeden Quellhash gegen den
+unveränderten Commit und schreibt ausschließlich nach `dist/vehicle-balance/`.

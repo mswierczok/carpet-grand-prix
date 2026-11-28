@@ -11,7 +11,7 @@
     config.driving = restored ? restored.config.driving || null
       : options.driving ? A.DriverPersonalities.validate(options.driving) : null;
     config.performance = restored ? restored.config.performance || null
-      : options.performance === null ? null : A.VehiclePerformance.validate(options.performance ?? A.VehiclePerformance.historical);
+      : options.performance === null ? null : A.VehiclePerformance.validate(options.performance ?? A.VehiclePerformance.current.historical);
     if (options.qualifyingFormat !== undefined && options.qualifyingFormat !== null && options.qualifyingFormat !== "flying-one-v1")
       throw Error("Unbekanntes Qualifying-Format.");
     config.qualifyingFormat = restored ? restored.config.qualifyingFormat || null

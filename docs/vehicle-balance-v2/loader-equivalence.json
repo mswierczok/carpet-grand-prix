@@ -1,0 +1,29 @@
+{
+  "protocol": "Same unmodified engine scripts, ordinary inputs/fixed steps. Complete race/qualifying observations compared exactly; 104 technical solos and benches compared exactly. Separately, the unit child process compares 10 native checkpoint follow-ups with every saved pose/clock/memory value.",
+  "weekends": [
+    {
+      "version": 1,
+      "trackId": "bahrain",
+      "seed": 4171,
+      "condition": "natural",
+      "vmObservationSHA256": "f17a40aedc3f116e7b26545989ada656d8e8e0852de60137fe7f5d5bbd5c8d43",
+      "processObservationSHA256": "f17a40aedc3f116e7b26545989ada656d8e8e0852de60137fe7f5d5bbd5c8d43",
+      "benchesEqual": true
+    },
+    {
+      "version": 2,
+      "trackId": "bahrain",
+      "seed": 4171,
+      "condition": "natural",
+      "vmObservationSHA256": "c3c90b8df5cc041d361783100c5d7e8e932accb173b6ab60351422752c1ac663",
+      "processObservationSHA256": "c3c90b8df5cc041d361783100c5d7e8e932accb173b6ab60351422752c1ac663",
+      "benchesEqual": true
+    }
+  ],
+  "technicalSolos": {
+    "count": 104,
+    "version": 2,
+    "vmSHA256": "b11f1b572d576d75fc15e4e208dd0cdc1b4973e8ad2c9134198bd32e63d6fe8f",
+    "processSHA256": "b11f1b572d576d75fc15e4e208dd0cdc1b4973e8ad2c9134198bd32e63d6fe8f"
+  }
+}

@@ -25,11 +25,13 @@
   22 Strecken, acht Kampagnenstrecken und Originalillustrationen erhalten.
   Datenquelle: `src/data/historical/`; versionierte Exporte mit
   `npm run check:arcade-data` prüfen. Kein Build liest Simulations-HTML.
-- Fahrzeugmodell v1 und `flying-one-v1` gelten für neue Wochenenden.
+- Fahrzeugmodell v2 und `flying-one-v1` gelten für neue Wochenenden.
+  Gespeicherte v1-Wochenenden und deren Neustarts bleiben v1; explizite alte
+  API-Deskriptoren bleiben gepinnt, aktuelle stehen unter `VehiclePerformance.current`.
   Fehlende Leistungs-/Qualifying-Kennungen erhalten alte uniforme Physik und
   Auslaufrunde + zwei schnelle Runden. Formeln/Overlays nur mit neuer Modellversion
   ändern; alte Checkpoints und Archivzeiten erhalten. Messungen und Vertrag:
-  `docs/VEHICLE_PERFORMANCE_AND_QUALIFYING.md`.
+  `docs/VEHICLE_PERFORMANCE_AND_QUALIFYING.md` und `docs/VEHICLE_BALANCE_V2.md`.
 - Neue Kampagnenwochenenden verwenden zusätzlich `driving` v3 mit gespeichertem
   Seed und tatsächlicher Startliste. Fehlende Kennung erhält PR-56-KI; freie
   Rennen/POV-Meisterschaft erhalten keine stillen Fahrerboni. Fahrerattribute
