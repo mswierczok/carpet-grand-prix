@@ -8,7 +8,7 @@
       parameters = A.Physics.parameters,
       teams = options.teams || CGPArcadeData.roster.teams,
       laps = options.laps ?? A.RaceFormats.get(track.id).laps;
-    const performance = options.performance === null ? null : A.VehiclePerformance.validate(options.performance ?? A.VehiclePerformance.historical),
+    const performance = options.performance === null ? null : A.VehiclePerformance.validate(options.performance ?? A.VehiclePerformance.current.historical),
       profilesByTeam = Object.freeze(Object.fromEntries(teams.map(t => [t.id, A.VehiclePerformance.get(t.id, performance)]))),
       parametersByTeam = Object.freeze(Object.fromEntries(teams.map(t => [t.id, profilesByTeam[t.id].parameters])));
     const driving = options.driving ? A.DriverPersonalities.validate(options.driving) : null;

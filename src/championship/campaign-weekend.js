@@ -6,7 +6,7 @@
     game = A.Campaign.validate(game, false);
     if(driverSeed!==null&&(!Number.isInteger(driverSeed)||driverSeed<0||driverSeed>4294967295))throw Error('Ungültiger Fahrer-Seed.');
     const track = A.TrackCatalog.get(game.trackId),
-      options = { playerTeam: game.teamId, ...game.options, diagnostics, performance: A.VehiclePerformance.campaign,
+      options = { playerTeam: game.teamId, ...game.options, diagnostics, performance: A.VehiclePerformance.current.campaign,
         driving: A.DriverPersonalities.create(game.lineup,A.DriverPersonalities.hash(driverSeed===null
           ? game.teamId+':'+game.driverId+':'+game.trackId+':'+game.savedAt : driverSeed+':'+game.trackId)) };
     let weekend = game.weekend
