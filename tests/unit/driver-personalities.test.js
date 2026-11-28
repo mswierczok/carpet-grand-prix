@@ -25,7 +25,7 @@ it('trennt Qualifying/Rennpace, konstante Identität, Seed und begrenzte kontinu
 it('erzeugt mit verschiedenen Fahrern echte andere Eingaben bei identischen Fahrzeuggrenzen',()=>{
  const {api:A}=loadArcade({race:true}),surface=A.Surface.create(A.TrackCatalog.get('bahrain')),p=A.VehiclePerformance.get('t13',A.VehiclePerformance.campaign).parameters,
    controller=A.Opponents.create(surface,p,{difficulty:'expert'}),sequences=[];
- for(const id of A.CampaignConfig.starters){let car=A.Physics.spawn(surface,-220),state=controller.memory(12);state.personality={id,seed:17,mode:'race'};const commands=[];
+ for(const id of A.CampaignConfig.starters){let car=A.Physics.spawn(surface,-220),state=controller.memory(12);state.personality={id,seed:17,mode:'race',model:2};const commands=[];
   for(let frame=0;frame<300;frame++){const cars=controller.prepare([{...car,id:'t13'}]),input=controller.input(cars[0],cars,state);commands.push(input);for(let n=0;n<4;n++)car=A.Physics.step(car,input,surface,p,1/120);}
   sequences.push(JSON.stringify(commands));
  }
@@ -54,16 +54,16 @@ it('setzt reale PR56-Rennen und Ein-Runden-Qualifyings ohne neue Fahrerlogik exa
 it('schert physikalisch passend aus und fährt einem bereits benachbarten Fahrzeug nicht quer in die Spur',()=>{
  const{api:A}=loadArcade({race:true}),surface=A.Surface.create(A.TrackCatalog.get('bahrain')),p=A.VehiclePerformance.get('t13',A.VehiclePerformance.campaign).parameters,c=A.Opponents.create(surface,p,{difficulty:'expert',diagnostics:true});
  const car=(id,s,lane,speed)=>{const pose=A.Physics.spawn(surface,s),at=surface.at(s,lane);return{...pose,id,x:at.x,y:at.y,heading:at.ang,speed,longitudinalSpeed:speed,vx:Math.cos(at.ang)*speed,vy:Math.sin(at.ang)*speed,inRace:true};};
- let state=c.memory(12);state.personality={id:'d035',seed:17,mode:'race'};
+ let state=c.memory(12);state.personality={id:'d035',seed:17,mode:'race',model:2};
  const a=car('t13',30,0,70),b=car('t12',64,0,35);c.input(a,c.prepare([a,b]),state);expect(state.attacking).toBe('t12');expect(state.lane).not.toBe(0);
- state=c.memory(12);state.personality={id:'d035',seed:17,mode:'race'};
+ state=c.memory(12);state.personality={id:'d035',seed:17,mode:'race',model:2};
  const left=car('t11',32,-8,70),right=car('t10',32,8,70);c.input(a,c.prepare([a,b,left,right]),state);expect(state.lane).toBe(0);expect(state.attacking).toBeUndefined();
 });
 it('verteidigt höchstens einmal pro Verfolgerkontakt und wechselt neben einem Auto nicht quer',()=>{
  const{api:A}=loadArcade({race:true}),surface=A.Surface.create(A.TrackCatalog.get('bahrain')),p=A.VehiclePerformance.get('t13',A.VehiclePerformance.campaign).parameters,c=A.Opponents.create(surface,p,{difficulty:'expert'});
  let s=0,bend=0;for(;s<surface.g.len;s+=5){const a=surface.at(s+20),b=surface.at(s+90);bend=Math.atan2(Math.sin(b.ang-a.ang),Math.cos(b.ang-a.ang));if(Math.abs(bend)>.25)break;}
  const inside=Math.sign(bend)*8,make=(id,at,lane,speed)=>{const car=A.Physics.spawn(surface,at),pose=surface.at(at,lane);return{...car,id,x:pose.x,y:pose.y,heading:pose.ang,speed,longitudinalSpeed:speed,inRace:true};},a=make('t13',s,-inside,50),rear=make('t12',s-30,-inside,60),state=c.memory(12,-inside);
- state.personality={id:'campaign-veteran-001',seed:1,mode:'race'};c.input(a,c.prepare([a,rear]),state);expect(state.defenseLock).toBe('t12');expect(state.lane).toBe(inside);
+ state.personality={id:'campaign-veteran-001',seed:1,mode:'race',model:2};c.input(a,c.prepare([a,rear]),state);expect(state.defenseLock).toBe('t12');expect(state.lane).toBe(inside);
  state.hold=0;state.defending=null;c.input(a,c.prepare([a,rear]),state);expect(state.defending).toBeNull();expect(state.defenseLock).toBe('t12');
  const blocked=c.memory(12,-inside);blocked.personality=state.personality;const adjacent=make('t11',s+1,inside,50);c.input(a,c.prepare([a,rear,adjacent]),blocked);expect(blocked.defenseLock).toBeUndefined();
 });
@@ -74,4 +74,9 @@ it('verwendet den gespeicherten Run-Seed, erhält ihn beim Reload und verweigert
  expect(w.exportState().config.driving.seed).not.toBe(v.exportState().config.driving.seed);
  const saved=R.capture(a,w.exportState(),1000);expect(A.RunWeekend.create(saved).exportState().config.driving).toEqual(w.exportState().config.driving);
  const bad=plain(saved),config=bad.campaign.weekend.config.driving;config.lineup.t01='d002';bad.campaign.weekend.session.config.driving.lineup.t01='d002';bad.campaign.weekend.session.state.entries.find(e=>e.id==='t01').driver.personality.id='d002';expect(()=>R.validate(bad)).toThrow();
+});
+it('bindet Fahrer-v1 an echte gespeicherte native Folgezustände des unveränderten Implementierungscommits',()=>{
+ const{api:A}=loadArcade({race:true}),f=JSON.parse(readFileSync(new URL('../fixtures/driver-v1-checkpoints.json',import.meta.url)));
+ for(const[file,hash]of Object.entries(f.hashes))expect(createHash('sha256').update(execFileSync('git',['show',f.sourceCommit+':src/'+file])).digest('hex')).toBe(hash);
+ for(const c of f.cases){const w=A.RaceWeekend.restore(c.before);expect(w.exportState()).toEqual(c.before);w.pause(false);for(let i=0;i<60;i++)w.advance({throttle:1,brake:0,steer:0},1/30);w.pause(true);expect(w.exportState()).toEqual(c.after);}
 });

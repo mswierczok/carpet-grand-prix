@@ -85,6 +85,8 @@
         lane,
         distance: Math.hypot(car.x - point.x, car.y - point.y),
         pace: planned,
+        ...(state.personality?.model===2?{cornering:Math.abs(Math.atan2(
+          Math.sin(route.at(s+32).ang-point.ang),Math.cos(route.at(s+32).ang-point.ang)))/32>.0035}:{}),
       };
     }
     const memory = (index, lane = 0) => ({
@@ -362,7 +364,7 @@
       // Retain each driver's execution after the shared recovery/settling
       // limits, which otherwise made every free-lap driver converge to the
       // same 65-unit corner target. A clear straight retains the shared cap.
-      if ((state.qualifying || personality) && desired >= 40 && desired < p.maxSpeed && !blocker) {
+      if ((state.qualifying || personality) && desired >= 40 && (desired < p.maxSpeed || path.cornering) && !blocker) {
         const execution = personality || A.QualifyingDrivers.at(state.qualifying, car.s / surface.g.len);
         desired *= execution.cornerScale;
       }

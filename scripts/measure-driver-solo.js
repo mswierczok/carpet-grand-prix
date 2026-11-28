@@ -10,7 +10,7 @@ const hashes=Object.fromEntries(['data/driver-attributes','racing/driver-persona
 for(const driver of A.CampaignConfig.drivers){const result={id:driver.id,attributes:A.DriverPersonalities.get(driver.id)};
  for(const mode of ['qualifying','race']){
   let car=A.Physics.spawn(surface,-220),clock=A.Timing.create(),command,wallSteps=0,offroadSteps=0;
-  const memory=controller.memory(0),laps=[];memory.personality={id:driver.id,seed:4171,mode};
+ const memory=controller.memory(0),laps=[];memory.personality={id:driver.id,seed:4171,mode,model:A.DriverPersonalities.version};
   for(let tick=0;tick<240*120;tick++){
    if(tick%4===0){const cars=controller.prepare([{...car,id:'t13'}]);command=controller.input(cars[0],cars,memory);}
    const next=A.Physics.step(car,command,surface,p,1/120),timing=A.Timing.step(clock,car,next,surface,1/120);

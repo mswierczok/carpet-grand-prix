@@ -99,7 +99,7 @@ Die vorhandene 5-Einheiten-Vorschautabelle und ihre fahrzeugeigenen Brems- und
 Gripgrenzen bleiben maßgeblich. `brakeLead` verschiebt nur den Blick in diese
 Tabelle. `cornerScale` verändert den regulären Kurven-Sollwert nach den bestehenden
 Sicherheitsreglern, nicht die physikalischen Parameter. Bei blockierter Fahrbahn
-hat die Verkehrssicherung Vorrang. Auf freier Gerade bleiben Vollgas und das
+hat die Verkehrssicherung Vorrang. Modell v2 erfasst zusätzlich schnelle Kurven, wenn sich der Routenwinkel über 32 Einheiten mit einer Krümmung über 0,0035 ändert; dadurch bleiben Pace-Unterschiede nicht auf die bereits langsamen Kurven begrenzt. Auf freier Gerade bleiben Vollgas und das
 eigene technische Limit erhalten. Der kleine seitliche Fehler betrifft nur das
 Lenkziel und ist bei Verkehr innerhalb von 30 Streckeneinheiten abgeschaltet.
 Kein Geschwindigkeits-, Positions- oder Zeitwert wird zugewiesen oder korrigiert.
@@ -137,7 +137,7 @@ Auch nach einem Manöver muss die normale Ideallinie frei sein, bevor die KI zur
 Native Wochenenden/Sessionkonfigurationen erhalten optional:
 
 ```json
-{"driving":{"version":1,"seed":4171,"lineup":{"t01":"d001","…":"…"}}}
+{"driving":{"version":2,"seed":4171,"lineup":{"t01":"d001","…":"…"}}}
 ```
 
 Die echte Liste enthält genau 13 eindeutige Fahrer aus ihren festen Teampools.
@@ -159,7 +159,7 @@ Wochenenden und noch ältere Stände werden nicht umgestellt. Freies Rennen,
 POV-Meisterschaft und technische Fahrtests behalten ihre bestehende KI ohne
 neue leistungsrelevante Fahrerzuordnung. Historische Archive werden nicht neu
 berechnet. Ein späteres Attribut-/Formelbalancing benötigt eine neue Modellversion
-mit erhaltener v1-Implementierung.
+mit erhaltener Implementierung bisheriger Versionen. Auch die erste Entwicklungsfassung v1 bleibt separat fortsetzbar.
 
 ## Reproduzierbare Entwicklungsdiagnose
 
@@ -221,7 +221,7 @@ gleichzeitiges Loslassen und Abbruch werden geprüft.
 
 Die Kernprüfungen vergleichen neue native Fortsetzungen mit gespeicherten
 Fahrerphasen und wiederholen echte alte PR-56-Renn-/Qualifying-Checkpoints exakt.
-Die bisherigen PR-55-Referenzen und Archive bleiben unverändert. Neue PR-56-
+Die bisherigen PR-55-Referenzen und Archive bleiben unverändert. Ein zusätzlicher echter Checkpoint aus dem unveränderten Implementierungscommit `9a092d69c24b47df7376575aab942b6740b4ff39` schützt die erste Fahrer-Modellversion v1, auch nach Einführung von v2. Neue PR-56-
 Referenzen tragen Quellhashes; ihr Generator schreibt ausschließlich nach `dist/`.
 Geometrische Eingabe-Szenarien prüfen Ausscheren, geschützte benachbarte Autos
 und einmalige Verteidigung, ohne daraus gefahrene Rennergebnisse zu behaupten.

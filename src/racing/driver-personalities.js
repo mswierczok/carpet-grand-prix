@@ -9,13 +9,13 @@
     return p;
   }
   function validate(value) {
-    if(!value||typeof value!=='object'||Array.isArray(value)||Object.keys(value).length!==3||value.version!==1||!Number.isInteger(value.seed)||value.seed<0||value.seed>4294967295)throw Error('Unbekanntes KI-Fahrermodell.');
+    if(!value||typeof value!=='object'||Array.isArray(value)||Object.keys(value).length!==3||![1,2].includes(value.version)||!Number.isInteger(value.seed)||value.seed<0||value.seed>4294967295)throw Error('Unbekanntes KI-Fahrermodell.');
     const lineup=value.lineup, teams=CGPArcadeData.roster.teams;
     if(!lineup||Object.keys(lineup).length!==13||new Set(Object.values(lineup)).size!==13||teams.some(t=>!A.CampaignConfig.pools[t.id].includes(lineup[t.id])))throw Error('Ungültige KI-Fahrerzuordnung.');
     for(const id of Object.values(lineup))get(id);
-    return Object.freeze({version:1,seed:value.seed,lineup:Object.freeze({...lineup})});
+    return Object.freeze({version:value.version,seed:value.seed,lineup:Object.freeze({...lineup})});
   }
-  const create=(lineup,seed)=>validate({version:1,seed,lineup});
+  const create=(lineup,seed)=>validate({version:2,seed,lineup});
   function decision(memory,progress,trackId) {
     const p=get(memory.id), phase=hash(memory.id+':'+memory.seed)/4294967296*Math.PI*2,
       qualifying=memory.mode==='qualifying', pace=qualifying?p.qualifyingPace:p.racePace,
@@ -40,5 +40,5 @@
       risk:p.aggression/100,
       profile:p};
   }
-  A.DriverPersonalities=Object.freeze({version:1,attributes,get,hash,validate,create,decision});
+  A.DriverPersonalities=Object.freeze({version:2,attributes,get,hash,validate,create,decision});
 })();

@@ -40,7 +40,13 @@ async function drive(page, qualifying=false, difficulty='expert') {
   for(let i=0;i<300;i++) {
     await page.clock.runFor(1000);
     const s=await page.evaluate(()=>globalThis.__driveSnapshot);
-    if(qualifying ? s.qualifyingResult && s.race.phase==='grid' : s.race.phase==='finished') return s;
+    if(qualifying ? s.qualifyingResult && s.race.phase==='grid' : s.race.phase==='finished') {
+      // Let the ordinary test pilot observe the paused qualified grid and
+      // release its keys before the next session can start. Different driver
+      // timings must not leave that interval driving the following race.
+      if(qualifying){await page.clock.runFor(80);expect(await page.evaluate(()=>__racePilotDone)).toBe(true);}
+      return s;
+    }
   }
   throw Error('Native Run-Browserfahrt nicht abgeschlossen');
 }

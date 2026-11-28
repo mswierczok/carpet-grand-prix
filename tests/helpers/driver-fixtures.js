@@ -1,7 +1,7 @@
 // Retarget explicitly synthetic domain DTOs only; never simulation evidence.
 export function retargetDriverDTO(A, weekend, lineup) {
   if(!weekend.config.driving)return;
-  const model=A.DriverPersonalities.create(lineup,weekend.config.driving.seed);
+  const model=A.DriverPersonalities.validate({...weekend.config.driving,lineup});
   weekend.config.driving=structuredClone(model);
   weekend.session.config.driving=structuredClone(model);
   for(const e of weekend.session.state.entries){

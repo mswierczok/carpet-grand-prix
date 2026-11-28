@@ -59,8 +59,9 @@
     if ("defending" in v) need(v.defending === null || ids().includes(v.defending));
     for (const k of ["blocked", "trafficBlocked", "retreat"]) if (k in v) need(number(v[k], 0, 100));
     if (personality) {
-      keys(v.personality,['id','seed','mode']);
+      keys(v.personality,['id','seed','mode','model']);
       need(v.personality.id===personality.id&&v.personality.seed===personality.seed&&v.personality.mode===(qualifying?'qualifying':'race'));
+      need(personality.version===2?v.personality.model===2:!('model' in v.personality));
       need(!('qualifying' in v));
     } else need(!('personality' in v)&&!('defenseLock' in v)&&!('attacking' in v));
     for(const key of ['defenseLock','attacking'])if(key in v)need(v[key]===null||ids().includes(v[key]));
@@ -124,7 +125,7 @@
     need(s.entries.every((e,i) => e.id === expectedOrder[i]));
     for (const e of s.entries) {
       keys(e, ["id", "car", "previous", "timing", "finishTime", "lastSafe", "driver", "command", "slipstream", "catchup"]);
-      need(ids().includes(e.id) && e.driver?.index === defaultOrder.indexOf(e.id)); car(e.car, CGPArcadeData.tracks[v.trackId].bridgeU.length > 0); car(e.previous, CGPArcadeData.tracks[v.trackId].bridgeU.length > 0); timing(e.timing, v.config.laps); driver(e.driver, v.config.qualifying, v.config.driving ? {id:v.config.driving.lineup[e.id],seed:v.config.driving.seed} : null); command(e.command);
+      need(ids().includes(e.id) && e.driver?.index === defaultOrder.indexOf(e.id)); car(e.car, CGPArcadeData.tracks[v.trackId].bridgeU.length > 0); car(e.previous, CGPArcadeData.tracks[v.trackId].bridgeU.length > 0); timing(e.timing, v.config.laps); driver(e.driver, v.config.qualifying, v.config.driving ? {id:v.config.driving.lineup[e.id],seed:v.config.driving.seed,version:v.config.driving.version} : null); command(e.command);
       need(number(e.lastSafe) && (e.finishTime === null || number(e.finishTime, 0, s.elapsed + 1e-6)));
       need((e.finishTime !== null) === (e.timing.completed === v.config.laps));
       if (e.finishTime !== null) need(e.finishTime === e.timing.lapStart);

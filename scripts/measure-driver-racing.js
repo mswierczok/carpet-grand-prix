@@ -15,7 +15,7 @@ if(stage==='before') for(const [p,hash] of Object.entries(hashes)) {
   const original=execFileSync('git',['show',`d8c4d31cb7daacf594f24bbc08b367c601a4f03a:src/${p}.js`]);
   if(createHash('sha256').update(original).digest('hex')!==hash)throw Error('Baseline modified: '+p);
 }
-const result={stage,baseCommit:'d8c4d31cb7daacf594f24bbc08b367c601a4f03a',hashes,
+const result={stage,driverModel:stage==='before'?null:A.DriverPersonalities.version,baseCommit:'d8c4d31cb7daacf594f24bbc08b367c601a4f03a',hashes,
   driverIntentAvailable:stage==='after',
   protocol:'Expert; full default race lengths; 13 real native participants; campaign vehicle v1. Two conditions: catchup off/seed4171 and on/seed9011. Same manual player reference uses normal AI commands and full traffic, with the selected driver profile in after. Qualifying is isolated; natural standing approach and exactly one flying lap. Observation 30Hz; contacts observed at native 120Hz by transparent resolve wrapper. No state/time/position edits. Track gaps use native passage history; alone = no active opponent within 30m along the circuit, lapping included, separate late fraction from completed lap3. Passing requires full-body clearance, excludes lapping and finished cars; position changes also reported, not equated with overtakes.',weekends:[]};
 mkdirSync(output.slice(0,output.lastIndexOf('/'))||'.',{recursive:true});
@@ -27,7 +27,7 @@ for(const trackId of tracks)for(const condition of conditions){
   function pilot(qualifying){
     const controller=A.Opponents.create(weekend.surface,weekend.parameters,{difficulty:'expert',diagnostics:true}),memory=controller.memory(12);
     if(qualifying)memory.qualifying=A.QualifyingDrivers.create(data.roster.teams,{technical:true}).t13;
-    if(driving) {delete memory.qualifying; memory.personality={id:lineup.t13,seed,mode:qualifying?'qualifying':'race'};}
+    if(driving) {delete memory.qualifying; memory.personality={id:lineup.t13,seed,mode:qualifying?'qualifying':'race',model:driving.version};}
     return {input(s){const traffic=controller.prepare((qualifying?s.entries.filter(e=>e.player):s.entries).map(e=>({...e.car,id:e.id,inRace:e.finishTime===null,slipstream:e.slipstream,catchup:e.catchup})));return controller.input(traffic.find(e=>e.id==='t13'),traffic,memory);},memory};
   }
   let player=pilot(true), q=weekend.snapshot();
