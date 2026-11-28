@@ -22,7 +22,12 @@ it("bewahrt das aktuelle Rennspiel samt 3D-Welt, Daten, Assets, Speicher und bes
   // separately verified against immutable PR55 fixtures with source hashes.
   const runHosts = new Set(["arcade.html", "arcade3d.html", "campaign.html", "play.html", "src/racing/physics.js", "src/racing/race-session.js", "src/racing/race-weekend.js", "src/racing/qualifying-session.js", "src/racing/qualifying-drivers.js", "src/racing/opponents.js", "src/racing/slipstream.js", "src/persistence/pov-checkpoint.js", "src/persistence/campaign-v1.js", "src/championship/pov-career.js", "src/championship/campaign-weekend.js","race.html", "src/arcade-main.js", "src/ui/racing-hud.js", "src/ui/race-presentation.js", "src/ui/result-details.js", "styles/racing-hud.css"]);
   const existing = new Set(execFileSync("git", ["ls-tree", "-r", "--name-only", baseline], { cwd: ROOT, encoding: "utf8" }).trim().split("\n"));
-  const protectedPaths = [...new Set(paths)].filter(path => !runHosts.has(path) && (existing.has(path) || path.startsWith(":(") || ["assets", "scripts/lib"].includes(path)));
+  // Protect every original library file (including deletion), while permitting
+  // new development diagnostics. A directory-wide diff would also forbid new
+  // independent tools and is not a check of the preserved historical sources.
+  const originalLibraries = [...existing].filter(path => path.startsWith("scripts/lib/"));
+  const protectedPaths = [...new Set(paths.flatMap(path => path === "scripts/lib" ? originalLibraries : [path]))]
+    .filter(path => !runHosts.has(path) && (existing.has(path) || path.startsWith(":(") || path === "assets"));
   // Phase 1 explicitly authorizes run-only integration and elimination colors in
   // these hosts. Their free/career/old-campaign behavior is covered by regressions.
   const fixtures = execFileSync("git", ["ls-tree", "-r", "--name-only", baseline, "--", "tests/fixtures"], { cwd: ROOT, encoding: "utf8" })

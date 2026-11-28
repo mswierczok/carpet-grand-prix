@@ -1,3 +1,4 @@
+import {retargetDriverDTO} from '../helpers/driver-fixtures.js';
 import { beforeAll, expect, it } from "vitest";
 import { loadArcade } from "../helpers/arcade.js";
 const clone = (value) => JSON.parse(JSON.stringify(value));
@@ -178,6 +179,7 @@ it("zählt nach acht archivierten Strecken keine zusätzliche Station, Punkte od
   );
   all.weekend.trackId = all.weekend.session.trackId = "italy";
   all.weekend.session.signature = A.POVCheckpoint.signature("italy");
+  retargetDriverDTO(A,all.weekend,all.lineup);
   const last = all.completed.at(-1);
   for (const row of [...last.order, ...last.qualifying]) {
     row.driverId = all.lineup[row.teamId];

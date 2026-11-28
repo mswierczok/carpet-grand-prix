@@ -549,6 +549,35 @@ body.racing-page {
     top: 53%;
   }
 }
+/* Thumb controls: reserve real viewport space instead of shrinking every
+   portrait button to the old 52px. The speed badge sits above the controls
+   whenever four comfortable targets leave no clear centre gap. */
+@media (pointer: coarse), (max-width: 700px) {
+  .racing-screen .touch-controls {
+    --drive-size: min(88px, calc((100vw - 48px - env(safe-area-inset-left) - env(safe-area-inset-right)) / 4));
+    gap: 8px;
+  }
+  .racing-screen .touch-controls > div { gap: 4px; }
+  .racing-screen .touch-controls button,
+  .racing-screen .touch-controls [data-drive="brake"],
+  .racing-screen .touch-controls .gas {
+    box-sizing: border-box;
+    width: var(--drive-size);
+    min-width: var(--drive-size);
+    height: 86px;
+    padding: 4px;
+    font-size: 38px;
+  }
+  .racing-screen .touch-controls [data-drive="brake"],
+  .racing-screen .touch-controls .gas { font-size: clamp(16px, 4.5vw, 21px); }
+  .racing-screen .touch-controls [data-drive="brake"] small { font-size: 10px; }
+  .hud-speed { bottom: calc(max(14px, env(safe-area-inset-bottom)) + 98px); }
+  .racing-screen .touch-controls button:active,
+  .racing-screen .touch-controls button.is-held { filter: brightness(1.22); }
+}
+@media (pointer: coarse) and (min-width: 701px) and (max-height: 480px) {
+  .hud-speed { bottom: max(14px, env(safe-area-inset-bottom)); }
+}
 .racing-screen #raceSettings {
   width: min(
     760px,

@@ -76,3 +76,11 @@ Der Legacy-Cleanup ist abgeschlossen. Gemeinsame Fahrzeug-/Porträtquellen und
 historische Stammdaten bleiben bewusst erhalten; die alte Anwendung ist nur im
 Git-Archiv wiederherstellbar. Weitere Run-Phasen, echte Fähigkeiten, Items, Crew,
 Freischaltbedingungen und die endgültige mehrphasige Run-Länge benötigen eigene Entwicklungsaufträge.
+
+## Fahrerprofile und Touchsteuerung
+
+Neue Kampagnenwochenenden verwenden individuelle, gespeicherte KI-Fahrerprofile.
+Die technischen Fahrzeuggrenzen und manuelle Eingaben bleiben getrennt davon.
+Größere responsive Touchflächen unterstützen die Smartphone-Bedienung.
+Technik, Vergleichsmessungen und Kompatibilität:
+[Fahrerpersönlichkeiten und dynamische Rennen](docs/DRIVER_PERSONALITIES_AND_DYNAMIC_RACING.md).

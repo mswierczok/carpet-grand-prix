@@ -6,6 +6,10 @@
     const restored = options.restore ? A.POVCheckpoint.weekend(options.restore) : null;
     if (restored && restored.trackId !== track.id) throw Error("Falsche Strecke im Wochenend-Spielstand.");
     delete config.restore;
+    // Absence in an existing weekend is a preserved legacy mode. Generic free
+    // races do not silently acquire campaign driver identities.
+    config.driving = restored ? restored.config.driving || null
+      : options.driving ? A.DriverPersonalities.validate(options.driving) : null;
     config.performance = restored ? restored.config.performance || null
       : options.performance === null ? null : A.VehiclePerformance.validate(options.performance ?? A.VehiclePerformance.historical);
     if (options.qualifyingFormat !== undefined && options.qualifyingFormat !== null && options.qualifyingFormat !== "flying-one-v1")

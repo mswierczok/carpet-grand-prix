@@ -20,3 +20,11 @@ Aussagen ohne den alten Spieladapter überprüfbar.
 Referenzen nicht automatisch in CI erzeugen und nicht zum Beseitigen roter
 Tests überschreiben. Änderungen brauchen einen belegten Ausgangsstand und
 bei geändertem Spielverhalten eine ausdrückliche Freigabe.
+
+Die Ergänzungen `driver-pr56-legacy.json` und `driver-v1/v2/v3-checkpoints.json`
+sind neue, getrennte native Renn- und Qualifying-Referenzen. Sie wurden mit normalen
+Fahrbefehlen aus unveränderten, im jeweiligen JSON dokumentierten Commits erfasst.
+Die Quellhashes und die exakten Folgezustände werden geprüft. Kein vorhandenes
+Referenzfile wurde dafür ersetzt. Die Generatoren `capture-driver-legacy-fixtures.js`
+und `capture-driver-profile-reference.js` schreiben ausschließlich nach `dist/`;
+die manuelle Übernahme neuer, eindeutig benannter Referenzen bleibt sichtbar.

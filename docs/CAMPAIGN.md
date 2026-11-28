@@ -34,6 +34,10 @@ Stammdaten bleiben 72 / 64. Die Teamprofile bestimmen nun die tatsächliche
 Fahrzeugleistung neuer Wochenenden. Die Fahrerwahl verändert weiterhin keine
 Fahrwerte. [Leistungsmodell und Formatkompatibilität](VEHICLE_PERFORMANCE_AND_QUALIFYING.md).
 Die 92 historischen Identitäten und Originalporträts bleiben unangetastet.
+Neue Wochenenden verwenden die individuellen KI-Fahrerattribute genau dieser
+Startliste. Manuelle Spielereingaben bleiben unangetastet. Laufende gespeicherte
+Wochenenden ohne `driving`-Kennung behalten ihre bisherige KI.
+[Fahrerprofile, Speicherung und Messungen](DRIVER_PERSONALITIES_AND_DYNAMIC_RACING.md).
 
 ## Getrennte Oberfläche
 

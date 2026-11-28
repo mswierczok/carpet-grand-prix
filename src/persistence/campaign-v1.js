@@ -170,6 +170,7 @@
       A.POVCheckpoint.weekend(g.weekend, false);
       const config = g.weekend.config;
       need(!config.performance || config.performance.context === "campaign");
+      if(config.driving)need(C.teams.every(t=>config.driving.lineup[t.id]===g.lineup[t.id]));
       need(
         g.stage !== "ready" &&
           g.weekend.trackId === g.trackId &&
